@@ -63,8 +63,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
     },
     onSuccess: (data: any) => {
       // Redirect to BOG payment page
-      if (data.approvalUrl) {
-        window.location.href = data.approvalUrl;
+      if (data.paymentUrl) {
+        window.location.href = data.paymentUrl;
       } else {
         toast({
           title: "Payment Error",
