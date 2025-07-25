@@ -44,9 +44,10 @@ export default function CheckoutPage() {
   });
 
   const [sameBilling, setSameBilling] = useState(true);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'installment' | 'bnpl'>('card');
 
   const paymentMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (paymentMethod: 'card' | 'installment' | 'bnpl') => {
       const items = cartItems.map((item: CartItem & { product: Product }) => ({
         productId: item.productId,
         quantity: item.quantity
@@ -57,7 +58,8 @@ export default function CheckoutPage() {
       const response = await apiRequest("POST", "/api/payments/initiate", {
         shippingAddress: JSON.stringify(shippingForm),
         billingAddress: JSON.stringify(billingAddress),
-        items
+        items,
+        paymentMethod
       });
 
       return response;
@@ -100,10 +102,7 @@ export default function CheckoutPage() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate required fields
+  const validateForm = (): boolean => {
     const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode'];
     const isShippingValid = requiredFields.every(field => shippingForm[field as keyof typeof shippingForm]);
     
@@ -113,7 +112,7 @@ export default function CheckoutPage() {
         description: "Please fill in all shipping information fields.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
 
     if (!sameBilling) {
@@ -124,11 +123,16 @@ export default function CheckoutPage() {
           description: "Please fill in all billing information fields.",
           variant: "destructive",
         });
-        return;
+        return false;
       }
     }
 
-    paymentMutation.mutate();
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Form validation is now handled by individual payment buttons
   };
 
   const calculateTotal = () => {
@@ -380,24 +384,87 @@ export default function CheckoutPage() {
                     Back to Cart
                   </Button>
                 </Link>
-                <Button
-                  type="submit"
-                  className="flex-1 bg-gradient-to-r from-gold to-deep-gold text-navy font-playfair font-semibold hover:shadow-lg transition-all duration-300"
-                  disabled={paymentMutation.isPending}
-                >
-                  {paymentMutation.isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <CreditCard className="mr-2 h-4 w-4" />
-                      Complete Payment ₾{total.toFixed(2)}
-                    </>
-                  )}
-                </Button>
               </div>
+
+              {/* Payment Method Selection */}
+              <div className="bg-white p-6 rounded-lg border border-gold/20">
+                <h3 className="font-playfair text-xl text-navy mb-6">Select Payment Method</h3>
+                <div className="space-y-4">
+                  {/* Card Payment Button */}
+                  <Button
+                    type="button"
+                    onClick={() => validateForm() && paymentMutation.mutate('card')}
+                    className="w-full h-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-blue-600 font-bold text-sm">BOG</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Card Payment</div>
+                        <div className="text-sm opacity-90">Pay with your debit or credit card</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90">One-time payment</div>
+                    </div>
+                  </Button>
+
+                  {/* Installment Payment Button */}
+                  <Button
+                    type="button"
+                    onClick={() => validateForm() && paymentMutation.mutate('installment')}
+                    className="w-full h-16 bg-gradient-to-r from-green-600 to-green-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-green-600 font-bold text-xs">LOAN</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">BOG Installments</div>
+                        <div className="text-sm opacity-90">Pay in monthly installments</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{(total / 12).toFixed(2)}/mo</div>
+                      <div className="text-sm opacity-90">for 12 months</div>
+                    </div>
+                  </Button>
+
+                  {/* Part-by-Part Payment Button */}
+                  <Button
+                    type="button"
+                    onClick={() => validateForm() && paymentMutation.mutate('bnpl')}
+                    className="w-full h-16 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-purple-600 font-bold text-xs">BNPL</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">BOG Part-by-Part</div>
+                        <div className="text-sm opacity-90">Buy now, pay later in parts</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{(total / 4).toFixed(2)} × 4</div>
+                      <div className="text-sm opacity-90">Interest-free parts</div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Processing State */}
+              {paymentMutation.isPending && (
+                <div className="bg-pastel-pink/20 p-4 rounded-lg border border-gold/20 flex items-center justify-center">
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin text-gold" />
+                  <span className="text-navy font-playfair">Processing your payment request...</span>
+                </div>
+              )}
             </form>
           </div>
 

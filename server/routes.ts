@@ -12,6 +12,20 @@ import {
   insertContactMessageSchema
 } from "@shared/schema";
 
+// Helper function to map payment method to BOG payment_method array
+function getPaymentMethods(paymentMethod: string): string[] {
+  switch (paymentMethod) {
+    case 'card':
+      return ['card'];
+    case 'installment':
+      return ['bog_loan']; // BOG installment loans
+    case 'bnpl':
+      return ['bnpl']; // Buy now pay later / part-by-part
+    default:
+      return ['card'];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
@@ -169,7 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payments/initiate", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      const { shippingAddress, billingAddress, items } = req.body;
+      const { shippingAddress, billingAddress, items, paymentMethod = 'card' } = req.body;
       
       // Calculate total
       let total = 0;
@@ -223,6 +237,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60, // 60 minutes to complete payment
+        payment_method: getPaymentMethods(paymentMethod), // Set payment method based on user selection
         capture: 'automatic', // Immediate capture
         application_type: 'web'
       };
