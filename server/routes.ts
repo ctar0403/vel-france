@@ -19,12 +19,12 @@ function getBOGPaymentConfig(paymentMethod: string): { payment_method: string[],
       return { payment_method: ['card'] };
     case 'installment':
       return { 
-        payment_method: ['card'], // Use card payment method
+        payment_method: ['bnpl'], // Use bnpl payment method
         bnpl: false // Show only standard installment plan
       };
     case 'bnpl':
       return { 
-        payment_method: ['card'], // Use card payment method
+        payment_method: ['bnpl'], // Use bnpl payment method
         bnpl: true // Show only payment in installments (part-by-part)
       };
     default:
