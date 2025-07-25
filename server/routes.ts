@@ -26,6 +26,18 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
   switch (paymentMethod) {
     case 'card':
       return { payment_method: ['card'] };
+    case 'google_pay':
+      // Google Pay includes both google_pay and card options for customers
+      return { payment_method: ['google_pay', 'card'] };
+    case 'apple_pay':
+      // Apple Pay includes both apple_pay and card options for customers
+      return { payment_method: ['apple_pay', 'card'] };
+    case 'bog_p2p':
+      // Bank of Georgia P2P transfer (internet/mobile banking)
+      return { payment_method: ['bog_p2p'] };
+    case 'bog_loyalty':
+      // Payment by BOG MR/Plus points
+      return { payment_method: ['bog_loyalty'] };
     case 'installment':
       return { 
         payment_method: ['bnpl'], // Use bnpl payment method

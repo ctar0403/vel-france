@@ -61,10 +61,10 @@ export default function CheckoutPage() {
   });
 
   const [sameBilling, setSameBilling] = useState(true);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'installment' | 'bnpl'>('card');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'google_pay' | 'apple_pay' | 'bog_p2p' | 'bog_loyalty' | 'installment' | 'bnpl'>('card');
 
   const paymentMutation = useMutation({
-    mutationFn: async (paymentData: {paymentMethod: 'card', calculatorResult?: never} | {paymentMethod: 'installment' | 'bnpl', calculatorResult: any}) => {
+    mutationFn: async (paymentData: {paymentMethod: 'card' | 'google_pay' | 'apple_pay' | 'bog_p2p' | 'bog_loyalty', calculatorResult?: never} | {paymentMethod: 'installment' | 'bnpl', calculatorResult: any}) => {
       const items = cartItems.map((item: CartItem & { product: Product }) => ({
         productId: item.productId,
         quantity: item.quantity
@@ -172,10 +172,30 @@ export default function CheckoutPage() {
 
   const total = calculateTotal();
 
-  // BOG Calculator handlers
+  // Payment method handlers
   const handleCardPayment = () => {
     if (!validateForm()) return;
     paymentMutation.mutate({ paymentMethod: 'card' });
+  };
+
+  const handleGooglePayment = () => {
+    if (!validateForm()) return;
+    paymentMutation.mutate({ paymentMethod: 'google_pay' });
+  };
+
+  const handleApplePayment = () => {
+    if (!validateForm()) return;
+    paymentMutation.mutate({ paymentMethod: 'apple_pay' });
+  };
+
+  const handleBogP2PPayment = () => {
+    if (!validateForm()) return;
+    paymentMutation.mutate({ paymentMethod: 'bog_p2p' });
+  };
+
+  const handleBogLoyaltyPayment = () => {
+    if (!validateForm()) return;
+    paymentMutation.mutate({ paymentMethod: 'bog_loyalty' });
   };
 
   const handleInstallmentPayment = () => {
@@ -560,6 +580,94 @@ export default function CheckoutPage() {
                     <div className="text-right">
                       <div className="text-lg font-bold">₾{(total / 4).toFixed(2)} × 4</div>
                       <div className="text-sm opacity-90">Interest-free parts</div>
+                    </div>
+                  </Button>
+
+                  {/* Google Pay Button */}
+                  <Button
+                    type="button"
+                    onClick={handleGooglePayment}
+                    className="w-full h-16 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-gray-700 font-bold text-xs">G Pay</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Google Pay</div>
+                        <div className="text-sm opacity-90">Pay with Google Pay or card</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90">One-time payment</div>
+                    </div>
+                  </Button>
+
+                  {/* Apple Pay Button */}
+                  <Button
+                    type="button"
+                    onClick={handleApplePayment}
+                    className="w-full h-16 bg-gradient-to-r from-black to-gray-900 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-black font-bold text-xs">🍎 Pay</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Apple Pay</div>
+                        <div className="text-sm opacity-90">Pay with Apple Pay or card</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90">One-time payment</div>
+                    </div>
+                  </Button>
+
+                  {/* BOG P2P Button */}
+                  <Button
+                    type="button"
+                    onClick={handleBogP2PPayment}
+                    className="w-full h-16 bg-gradient-to-r from-orange-600 to-orange-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-orange-600 font-bold text-xs">P2P</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">BOG Transfer</div>
+                        <div className="text-sm opacity-90">Pay via BOG internet/mobile banking</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90">Bank transfer</div>
+                    </div>
+                  </Button>
+
+                  {/* BOG Loyalty Button */}
+                  <Button
+                    type="button"
+                    onClick={handleBogLoyaltyPayment}
+                    className="w-full h-16 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
+                        <span className="text-amber-600 font-bold text-xs">MR+</span>
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">BOG Loyalty Points</div>
+                        <div className="text-sm opacity-90">Pay with BOG MR/Plus points</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90">Points payment</div>
                     </div>
                   </Button>
                 </div>
