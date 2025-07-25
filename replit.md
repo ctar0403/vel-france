@@ -1,0 +1,136 @@
+# Vel France - Luxury Perfume E-commerce Platform
+
+## Overview
+
+This is a full-stack luxury perfume e-commerce platform built with React/TypeScript frontend and Express.js backend. The application features a sophisticated French perfume boutique theme with product browsing, cart management, order processing, and admin functionality. The system integrates Replit's authentication system and uses PostgreSQL with Drizzle ORM for data persistence.
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+## System Architecture
+
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite for fast development and optimized builds
+- **Routing**: Wouter for lightweight client-side routing
+- **State Management**: TanStack Query (React Query) for server state management
+- **UI Framework**: Radix UI primitives with Tailwind CSS for styling
+- **Component Library**: shadcn/ui components with custom theming
+- **Animation**: Framer Motion for sophisticated animations
+
+### Backend Architecture
+- **Runtime**: Node.js with Express.js framework
+- **Language**: TypeScript with ES modules
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: Replit's OpenID Connect authentication system
+- **Session Management**: Express sessions with PostgreSQL store
+- **API Design**: RESTful API with structured error handling
+
+### Key Components
+
+#### Authentication System
+- **Provider**: Replit OpenID Connect integration
+- **Session Storage**: PostgreSQL-backed sessions with connect-pg-simple
+- **Authorization**: Role-based access control (admin/user roles)
+- **Security**: HTTP-only cookies with secure flags
+
+#### Database Schema
+- **Users**: Profile information with admin flags
+- **Products**: Luxury perfume catalog with categories (women/men/unisex)
+- **Cart Items**: User shopping cart persistence
+- **Orders**: Complete order history with line items
+- **Newsletter**: Email subscription management
+- **Contact Messages**: Customer inquiry system
+- **Sessions**: Authentication session storage
+
+#### Product Management
+- **Categories**: Gender-based product categorization
+- **Inventory**: Stock tracking and availability
+- **Pricing**: Decimal precision for accurate pricing
+- **Media**: Image URL storage for product photos
+- **Descriptions**: Rich product information including fragrance notes
+
+#### Shopping Cart & Orders
+- **Persistent Cart**: User cart items stored in database
+- **Order Processing**: Complete checkout flow with address collection
+- **Order Tracking**: Status management and history
+- **Inventory Integration**: Stock validation during checkout
+
+#### Admin Panel
+- **Product CRUD**: Full product management capabilities
+- **Order Management**: View and update order statuses
+- **User Management**: Access to user information
+- **Content Management**: Newsletter and contact message handling
+
+## Data Flow
+
+### User Authentication Flow
+1. User clicks login → Redirects to Replit OAuth
+2. Replit validates credentials → Returns user profile
+3. System creates/updates user record → Establishes session
+4. Frontend receives user data → Updates UI state
+
+### Shopping Flow
+1. Browse products → Fetch from database via API
+2. Add to cart → Store in user's cart table
+3. Checkout process → Collect shipping/billing info
+4. Place order → Create order and order items records
+5. Clear cart → Remove items from cart table
+
+### Admin Management Flow
+1. Admin authentication → Verify admin role
+2. CRUD operations → Direct database manipulation
+3. Real-time updates → Query invalidation and refetch
+4. Status changes → Update order/product status
+
+## External Dependencies
+
+### Core Dependencies
+- **@neondatabase/serverless**: PostgreSQL database driver
+- **drizzle-orm**: Type-safe database ORM
+- **@tanstack/react-query**: Server state management
+- **@radix-ui/***: Accessible UI primitives
+- **framer-motion**: Animation library
+- **tailwindcss**: Utility-first CSS framework
+
+### Authentication & Security
+- **openid-client**: OpenID Connect authentication
+- **passport**: Authentication middleware
+- **express-session**: Session management
+- **connect-pg-simple**: PostgreSQL session store
+
+### Development Tools
+- **vite**: Frontend build tool with HMR
+- **tsx**: TypeScript execution for development
+- **esbuild**: Production backend bundling
+- **drizzle-kit**: Database migration tool
+
+## Deployment Strategy
+
+### Development Environment
+- **Frontend**: Vite dev server with HMR and error overlay
+- **Backend**: tsx for TypeScript execution with file watching
+- **Database**: PostgreSQL with Drizzle migrations
+- **Environment**: Replit-specific plugins for cartographer and error handling
+
+### Production Build Process
+1. **Frontend Build**: Vite builds optimized React bundle to `dist/public`
+2. **Backend Build**: esbuild bundles server code to `dist/index.js`
+3. **Database Setup**: Drizzle migrations ensure schema consistency
+4. **Asset Serving**: Express serves static files from build directory
+
+### Environment Configuration
+- **DATABASE_URL**: PostgreSQL connection string
+- **SESSION_SECRET**: Session encryption key
+- **REPL_ID**: Replit environment identifier
+- **ISSUER_URL**: OpenID Connect provider URL
+- **NODE_ENV**: Environment flag for development/production
+
+### Scaling Considerations
+- **Database**: Uses connection pooling with @neondatabase/serverless
+- **Sessions**: PostgreSQL-backed for horizontal scaling
+- **Static Assets**: Served through Express with proper caching headers
+- **API Rate Limiting**: Ready for implementation with Express middleware
+
+The application follows a monorepo structure with shared types and schemas, enabling type safety across the full stack while maintaining clear separation between frontend, backend, and shared concerns.
