@@ -141,13 +141,6 @@ class BOGPaymentService {
         throw new Error(`BOG order creation failed: ${response.status} - ${errorText}`);
       }
 
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const responseText = await response.text();
-        console.error('Non-JSON order response from BOG API:', responseText);
-        throw new Error('BOG API returned non-JSON order response');
-      }
-
       const orderData: BOGCreateOrderResponse = await response.json();
       return orderData;
     } catch (error) {
