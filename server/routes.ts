@@ -224,6 +224,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Create BOG payment order using official BOG Payment API
       const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const paymentConfig = getBOGPaymentConfig(paymentMethod);
       const bogOrderRequest: BOGCreateOrderRequest = {
         callback_url: `${baseUrl}/api/payments/callback`,
         external_order_id: order.id,
@@ -243,10 +244,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60, // 60 minutes to complete payment
-        ...getBOGPaymentConfig(paymentMethod), // Set payment method and bnpl config
+        ...paymentConfig, // Set payment method and bnpl config
         capture: 'automatic', // Immediate capture
         application_type: 'web'
       };
+
+      // Debug: Log the complete BOG order request
+      console.log(`Creating BOG order for payment method: ${paymentMethod}`);
+      console.log("BOG Order Request:", JSON.stringify(bogOrderRequest, null, 2));
 
       // Create BOG order (using real BOG Payment API)
       const bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
