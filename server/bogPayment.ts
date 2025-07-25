@@ -41,6 +41,13 @@ export interface BOGCreateOrderRequest {
     masked_phone?: string;
   };
   application_type?: 'web' | 'mobile';
+  config?: {
+    loan?: {
+      amount?: number;
+      month?: number;
+      discount_code?: string;
+    };
+  };
 }
 
 export interface BOGCreateOrderResponse {
