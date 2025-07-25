@@ -205,33 +205,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create BOG payment
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const bogPaymentRequest: BOGPaymentRequest = {
-        callback_url: `${baseUrl}/api/payments/callback`,
-        external_order_id: order.id,
-        purchase_units: {
-          basket: orderItems.map((item, index) => ({
-            product_id: item.productId,
-            quantity: item.quantity,
-            unit_price: Math.round(parseFloat(item.price) * 100) // Convert to tetri (BOG uses tetri, 1 GEL = 100 tetri)
-          })),
-          total_amount: Math.round(total * 100) // Convert to tetri
-        },
-        redirect_urls: {
-          success: `${baseUrl}/payment/success?orderId=${order.id}`,
-          fail: `${baseUrl}/payment/cancel?orderId=${order.id}`
-        }
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            currency_code: 'GEL',
+            value: total.toFixed(2)
+          }
+        }],
+        items: orderItems.map((item, index) => ({
+          product_id: item.productId,
+          name: `Product ${index + 1}`,
+          quantity: item.quantity,
+          unit_amount: {
+            currency_code: 'GEL',
+            value: item.price
+          }
+        })),
+        shop_order_id: order.id,
+        callback_url: `${baseUrl}/api/payments/callback`
       };
 
       // Create BOG payment (using real BOG API only)
       const bogPayment = await bogPaymentService.createPayment(bogPaymentRequest);
       
       // Update order with payment ID
-      await storage.updateOrderPayment(order.id, bogPayment.id, 'pending');
+      await storage.updateOrderPayment(order.id, bogPayment.order_id, 'pending');
       
       const approvalUrl = bogPaymentService.getApprovalUrl(bogPayment);
       
       res.json({
         orderId: order.id,
-        paymentId: bogPayment.id,
+        paymentId: bogPayment.order_id,
+        paymentHash: bogPayment.payment_hash,
         approvalUrl,
         status: bogPayment.status
       });

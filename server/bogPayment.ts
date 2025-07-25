@@ -1,25 +1,30 @@
 import crypto from 'crypto';
 
 export interface BOGPaymentRequest {
-  callback_url: string;
-  external_order_id: string;
+  intent: 'CAPTURE' | 'AUTHORIZE';
   purchase_units: {
-    basket: {
-      product_id: string;
-      quantity: number;
-      unit_price: number;
-    }[];
-    total_amount: number;
-  };
-  redirect_urls: {
-    success: string;
-    fail: string;
-  };
+    amount: {
+      currency_code: string;
+      value: string;
+    };
+  }[];
+  items?: {
+    product_id: string;
+    name: string;
+    quantity: number;
+    unit_amount: {
+      currency_code: string;
+      value: string;
+    };
+  }[];
+  shop_order_id?: string;
+  callback_url?: string;
 }
 
 export interface BOGPaymentResponse {
-  id: string;
   status: 'CREATED' | 'APPROVED' | 'COMPLETED' | 'CANCELLED' | 'FAILED';
+  payment_hash: string;
+  order_id: string;
   links: {
     rel: string;
     href: string;
@@ -58,13 +63,13 @@ class BOGPaymentService {
     try {
       const credentials = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64');
       
-      const response = await fetch(`${this.baseUrl}/oauth/token`, {
+      const response = await fetch(`https://account.bog.ge/auth/realms/bog/protocol/openid-connect/token`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${credentials}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'grant_type=client_credentials'
+        body: `grant_type=client_credentials&client_id=${this.clientId}&client_secret=${this.clientSecret}`
       });
 
       if (!response.ok) {
@@ -96,7 +101,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/orders`, {
+      const response = await fetch(`${this.baseUrl}/checkout/orders`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -130,7 +135,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/orders/${paymentId}`, {
+      const response = await fetch(`${this.baseUrl}/checkout/orders/${paymentId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -155,7 +160,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/orders/${paymentId}/capture`, {
+      const response = await fetch(`${this.baseUrl}/checkout/payment/${paymentId}/pre-auth/completion`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -177,7 +182,7 @@ class BOGPaymentService {
   }
 
   getApprovalUrl(paymentResponse: BOGPaymentResponse): string | null {
-    const approvalLink = paymentResponse.links.find(link => link.rel === 'approval_url');
+    const approvalLink = paymentResponse.links.find(link => link.rel === 'approve');
     return approvalLink ? approvalLink.href : null;
   }
 }
