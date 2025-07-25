@@ -1,56 +1,80 @@
 import crypto from 'crypto';
 
-export interface BOGPaymentRequest {
-  intent: 'CAPTURE' | 'AUTHORIZE';
+// BOG Payment API interfaces based on official documentation
+export interface BOGCreateOrderRequest {
+  callback_url: string;
+  external_order_id?: string;
   purchase_units: {
-    amount: {
-      currency_code: string;
-      value: string;
+    currency?: string; // GEL, USD, EUR, GBP - defaults to GEL
+    total_amount: number;
+    basket: {
+      product_id: string;
+      description?: string;
+      quantity: number;
+      unit_price: number;
+      unit_discount_price?: number;
+      vat?: number;
+      vat_percent?: number;
+      total_price?: number;
+      image?: string;
+      package_code?: string;
+      tin?: string;
+      pinfl?: string;
+      product_discount_id?: string;
+    }[];
+    delivery?: {
+      amount?: number;
     };
-  }[];
-  items?: {
-    product_id: string;
-    name: string;
-    quantity: number;
-    unit_amount: {
-      currency_code: string;
-      value: string;
-    };
-  }[];
-  shop_order_id?: string;
-  callback_url?: string;
+    total_discount_amount?: number;
+  };
+  redirect_urls?: {
+    success?: string;
+    fail?: string;
+  };
+  ttl?: number; // minutes (2-1440, default 15)
+  payment_method?: string[]; // card, google_pay, apple_pay, bog_p2p, bog_loyalty, bnpl, bog_loan, gift_card
+  capture?: 'automatic' | 'manual'; // defaults to automatic
+  buyer?: {
+    full_name?: string;
+    masked_email?: string;
+    masked_phone?: string;
+  };
+  application_type?: 'web' | 'mobile';
 }
 
-export interface BOGPaymentResponse {
-  status: 'CREATED' | 'APPROVED' | 'COMPLETED' | 'CANCELLED' | 'FAILED';
-  payment_hash: string;
-  order_id: string;
-  links: {
-    rel: string;
-    href: string;
-    method: string;
-  }[];
+export interface BOGCreateOrderResponse {
+  id: string; // order_id
+  _links: {
+    details: {
+      href: string; // API endpoint to get payment details
+    };
+    redirect: {
+      href: string; // URL to redirect customer for payment
+    };
+  };
 }
 
 export interface BOGTokenResponse {
   access_token: string;
-  token_type: string;
+  token_type: string; // "Bearer"
   expires_in: number;
 }
 
 class BOGPaymentService {
-  private baseUrl = 'https://ipay.ge/opay/api/v1';
+  // Correct BOG Payment API endpoints based on official documentation
+  private authUrl = 'https://oauth2.bog.ge/auth/realms/bog/protocol/openid-connect/token';
+  private apiBaseUrl = 'https://api.bog.ge/payments/v1';
   private clientId: string;
   private clientSecret: string;
   private accessToken?: string;
   private tokenExpiry?: number;
 
   constructor() {
-    // Use correct BOG iPay credentials
+    // Use official BOG Payment API credentials
     this.clientId = '10001216';
     this.clientSecret = 'vNx6Sx1bge5g';
     
-    console.log('Using BOG iPay credentials - Client ID:', this.clientId, 'Merchant ID: 00000000981292N');
+    console.log('Using BOG Payment API credentials - Client ID:', this.clientId, 'Merchant ID: 00000000981292N');
   }
 
   private async getAccessToken(): Promise<string> {
@@ -60,9 +84,10 @@ class BOGPaymentService {
     }
 
     try {
+      // HTTP Basic Auth: base64 encode client_id:client_secret
       const credentials = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64');
       
-      const response = await fetch(`${this.baseUrl}/oauth2/token`, {
+      const response = await fetch(this.authUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${credentials}`,
@@ -96,45 +121,46 @@ class BOGPaymentService {
     }
   }
 
-  async createPayment(paymentRequest: BOGPaymentRequest): Promise<BOGPaymentResponse> {
+  async createOrder(orderRequest: BOGCreateOrderRequest): Promise<BOGCreateOrderResponse> {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/checkout/orders`, {
+      const response = await fetch(`${this.apiBaseUrl}/ecommerce/orders`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
+          'Accept-Language': 'en', // English interface
         },
-        body: JSON.stringify(paymentRequest)
+        body: JSON.stringify(orderRequest)
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('BOG Payment Creation Error:', errorText);
-        throw new Error(`BOG payment creation failed: ${response.status} - ${errorText}`);
+        console.error('BOG Order Creation Error:', errorText);
+        throw new Error(`BOG order creation failed: ${response.status} - ${errorText}`);
       }
 
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         const responseText = await response.text();
-        console.error('Non-JSON payment response from BOG API:', responseText);
-        throw new Error('BOG API returned non-JSON payment response');
+        console.error('Non-JSON order response from BOG API:', responseText);
+        throw new Error('BOG API returned non-JSON order response');
       }
 
-      const paymentData: BOGPaymentResponse = await response.json();
-      return paymentData;
+      const orderData: BOGCreateOrderResponse = await response.json();
+      return orderData;
     } catch (error) {
-      console.error('Error creating BOG payment:', error);
+      console.error('Error creating BOG order:', error);
       throw error;
     }
   }
 
-  async getPayment(paymentId: string): Promise<BOGPaymentResponse> {
+  async getOrderDetails(orderId: string): Promise<any> {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/checkout/orders/${paymentId}`, {
+      const response = await fetch(`${this.apiBaseUrl}/receipt/${orderId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -144,45 +170,23 @@ class BOGPaymentService {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`BOG payment retrieval failed: ${response.status} - ${errorText}`);
+        throw new Error(`BOG order details retrieval failed: ${response.status} - ${errorText}`);
       }
 
-      const paymentData: BOGPaymentResponse = await response.json();
-      return paymentData;
+      const orderData = await response.json();
+      return orderData;
     } catch (error) {
-      console.error('Error retrieving BOG payment:', error);
+      console.error('Error retrieving BOG order details:', error);
       throw error;
     }
   }
 
-  async capturePayment(paymentId: string): Promise<BOGPaymentResponse> {
-    try {
-      const token = await this.getAccessToken();
-      
-      const response = await fetch(`${this.baseUrl}/checkout/payment/${paymentId}/pre-auth/completion`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`BOG payment capture failed: ${response.status} - ${errorText}`);
-      }
-
-      const paymentData: BOGPaymentResponse = await response.json();
-      return paymentData;
-    } catch (error) {
-      console.error('Error capturing BOG payment:', error);
-      throw error;
-    }
+  getPaymentUrl(orderResponse: BOGCreateOrderResponse): string {
+    return orderResponse._links.redirect.href;
   }
 
-  getApprovalUrl(paymentResponse: BOGPaymentResponse): string | null {
-    const approvalLink = paymentResponse.links.find(link => link.rel === 'approve');
-    return approvalLink ? approvalLink.href : null;
+  getDetailsUrl(orderResponse: BOGCreateOrderResponse): string {
+    return orderResponse._links.details.href;
   }
 }
 

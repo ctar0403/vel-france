@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { bogPaymentService } from "./bogPayment";
+import { bogPaymentService, BOGCreateOrderRequest } from "./bogPayment";
 import { 
   insertProductSchema,
   insertCartItemSchema,
@@ -202,43 +202,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const order = await storage.createOrder(orderData, orderItems as any);
 
-      // Create BOG payment
+      // Create BOG payment order using official BOG Payment API
       const baseUrl = `${req.protocol}://${req.get('host')}`;
-      const bogPaymentRequest: BOGPaymentRequest = {
-        intent: 'CAPTURE',
-        purchase_units: [{
-          amount: {
-            currency_code: 'GEL',
-            value: total.toFixed(2)
-          }
-        }],
-        items: orderItems.map((item, index) => ({
-          product_id: item.productId,
-          name: `Product ${index + 1}`,
-          quantity: item.quantity,
-          unit_amount: {
-            currency_code: 'GEL',
-            value: item.price
-          }
-        })),
-        shop_order_id: order.id,
-        callback_url: `${baseUrl}/api/payments/callback`
+      const bogOrderRequest: BOGCreateOrderRequest = {
+        callback_url: `${baseUrl}/api/payments/callback`,
+        external_order_id: order.id,
+        purchase_units: {
+          currency: 'GEL',
+          total_amount: total,
+          basket: orderItems.map((item) => ({
+            product_id: item.productId,
+            description: `Product ${item.productId}`, // You might want to get actual product name
+            quantity: item.quantity,
+            unit_price: parseFloat(item.price),
+            total_price: item.quantity * parseFloat(item.price)
+          }))
+        },
+        redirect_urls: {
+          success: `${baseUrl}/payment-success`,
+          fail: `${baseUrl}/payment-cancel`
+        },
+        ttl: 60, // 60 minutes to complete payment
+        capture: 'automatic', // Immediate capture
+        application_type: 'web'
       };
 
-      // Create BOG payment (using real BOG API only)
-      const bogPayment = await bogPaymentService.createPayment(bogPaymentRequest);
+      // Create BOG order (using real BOG Payment API)
+      const bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
       
       // Update order with payment ID
-      await storage.updateOrderPayment(order.id, bogPayment.order_id, 'pending');
+      await storage.updateOrderPayment(order.id, bogOrder.id, 'pending');
       
-      const approvalUrl = bogPaymentService.getApprovalUrl(bogPayment);
+      const paymentUrl = bogPaymentService.getPaymentUrl(bogOrder);
       
       res.json({
         orderId: order.id,
-        paymentId: bogPayment.order_id,
-        paymentHash: bogPayment.payment_hash,
-        approvalUrl,
-        status: bogPayment.status
+        paymentId: bogOrder.id,
+        paymentUrl,
+        status: 'created'
       });
     } catch (error) {
       console.error("Error initiating payment:", error);
