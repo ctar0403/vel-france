@@ -246,8 +246,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create BOG payment order using calculator results
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       
-      // Use the BOG Calculator result to configure payment according to official API docs
-      // When using calculator results, BOG API expects specific loan config structure
+      // Use the BOG Calculator result to configure payment according to API interface
+      // The discount_code from calculator becomes the type field in loan config
       let paymentConfig: any = {};
       
       if (paymentMethod === 'bnpl') {
@@ -257,7 +257,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           bnpl: true,
           config: {
             loan: {
-              discount_code: calculatorResult.discount_code,
+              type: calculatorResult.discount_code,
               month: calculatorResult.month
             }
           }
@@ -269,14 +269,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           bnpl: false,
           config: {
             loan: {
-              discount_code: calculatorResult.discount_code,
+              type: calculatorResult.discount_code,
               month: calculatorResult.month
             }
           }
         };
       }
       
-      console.log(`Using BOG Calculator: ${calculatorResult.discount_code} for ${calculatorResult.month} months (${paymentMethod})`);
+      console.log(`Using BOG Calculator: ${calculatorResult.discount_code} as type for ${calculatorResult.month} months (${paymentMethod})`);
 
       const bogOrderRequest: BOGCreateOrderRequest = {
         callback_url: `${baseUrl}/api/payments/callback`,
