@@ -39,18 +39,22 @@ export interface BOGTokenResponse {
 }
 
 class BOGPaymentService {
-  private baseUrl = 'https://dev.ipay.ge/opay/api/v1';
+  private baseUrl = 'https://ipay.ge/opay/api/v1';
   private clientId: string;
   private clientSecret: string;
   private accessToken?: string;
   private tokenExpiry?: number;
 
   constructor() {
-    // Use official BOG test credentials for development testing
-    this.clientId = '1006';
-    this.clientSecret = '581ba5eeadd657c8ccddc74c839bd3ad';
+    // Use your actual BOG production credentials
+    this.clientId = process.env.BOG_CLIENT_ID!;
+    this.clientSecret = process.env.BOG_CLIENT_SECRET!;
     
-    console.log('Using BOG test credentials for development');
+    if (!this.clientId || !this.clientSecret) {
+      throw new Error('BOG_CLIENT_ID and BOG_CLIENT_SECRET must be provided');
+    }
+    
+    console.log('Using BOG production credentials with client ID:', this.clientId);
   }
 
   private async getAccessToken(): Promise<string> {
