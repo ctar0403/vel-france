@@ -1,13 +1,12 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import PaymentModal from "./PaymentModal";
 import type { Product, CartItem } from "@shared/schema";
-import { X, Plus, Minus, Trash2, ShoppingCart, CreditCard } from "lucide-react";
+import { X, Plus, Minus, Trash2, ShoppingCart, CreditCard, Eye } from "lucide-react";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -18,7 +17,6 @@ interface CartSidebarProps {
 
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
   const { toast } = useToast();
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -214,20 +212,34 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               
               {/* Footer */}
               {cartItems.length > 0 && (
-                <div className="border-t border-gray-200 p-6">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="border-t border-gray-200 p-6 space-y-4">
+                  <div className="flex items-center justify-between">
                     <span className="font-playfair text-lg text-navy">Total:</span>
                     <span className="font-playfair text-2xl font-bold text-gold">
                       ₾{total.toFixed(2)}
                     </span>
                   </div>
-                  <Button
-                    className="w-full bg-gold hover:bg-deep-gold text-navy py-3 font-playfair font-semibold transition-colors"
-                    onClick={() => setIsPaymentModalOpen(true)}
-                  >
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Proceed to Payment
-                  </Button>
+                  
+                  <div className="space-y-3">
+                    <Link href="/cart" onClick={onClose}>
+                      <Button
+                        variant="outline"
+                        className="w-full border-navy text-navy hover:bg-navy hover:text-white py-2 font-playfair font-semibold transition-colors"
+                      >
+                        <Eye className="mr-2 h-4 w-4" />
+                        View Cart
+                      </Button>
+                    </Link>
+                    
+                    <Link href="/checkout" onClick={onClose}>
+                      <Button
+                        className="w-full bg-gradient-to-r from-gold to-deep-gold text-navy py-2 font-playfair font-semibold hover:shadow-lg transition-all duration-300"
+                      >
+                        <CreditCard className="mr-2 h-4 w-4" />
+                        Checkout
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               )}
             </motion.div>
@@ -235,13 +247,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
         )}
       </AnimatePresence>
 
-      {/* Payment Modal */}
-      <PaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        cartItems={cartItems}
-        totalAmount={total}
-      />
+
     </>
   );
 }
