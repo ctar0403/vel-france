@@ -17,7 +17,7 @@ export default function CheckoutPage() {
   const [, setLocation] = useLocation();
   
   // Fetch cart items
-  const { data: cartItems = [], isLoading } = useQuery({
+  const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
   });
 
@@ -425,7 +425,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="text-left">
                         <div className="font-semibold">BOG Installments</div>
-                        <div className="text-sm opacity-90">Pay in monthly installments</div>
+                        <div className="text-sm opacity-90">Pay in monthly installments*</div>
                       </div>
                     </div>
                     <div className="text-right">
@@ -447,7 +447,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="text-left">
                         <div className="font-semibold">BOG Part-by-Part</div>
-                        <div className="text-sm opacity-90">Buy now, pay later in parts</div>
+                        <div className="text-sm opacity-90">Buy now, pay later in parts*</div>
                       </div>
                     </div>
                     <div className="text-right">
@@ -465,6 +465,14 @@ export default function CheckoutPage() {
                   <span className="text-navy font-playfair">Processing your payment request...</span>
                 </div>
               )}
+
+              {/* Payment Method Disclaimer */}
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <p className="text-sm text-blue-800">
+                  <span className="font-semibold">*Note:</span> Installment and Part-by-Part payments require BOG merchant account approval. 
+                  If these options are not available for your account, the system will automatically redirect you to standard card payment.
+                </p>
+              </div>
             </form>
           </div>
 
