@@ -25,19 +25,10 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
 } {
   switch (paymentMethod) {
     case 'card':
-      return { payment_method: ['card'] };
-    case 'google_pay':
-      // Google Pay includes both google_pay and card options for customers
-      return { payment_method: ['google_pay', 'card'] };
-    case 'apple_pay':
-      // Apple Pay includes both apple_pay and card options for customers
-      return { payment_method: ['apple_pay', 'card'] };
-    case 'bog_p2p':
-      // Bank of Georgia P2P transfer (internet/mobile banking)
-      return { payment_method: ['bog_p2p'] };
-    case 'bog_loyalty':
-      // Payment by BOG MR/Plus points
-      return { payment_method: ['bog_loyalty'] };
+      // Card payment includes all available payment methods on BOG gateway
+      return { 
+        payment_method: ['card', 'google_pay', 'apple_pay', 'bog_p2p', 'bog_loyalty'] 
+      };
     case 'installment':
       return { 
         payment_method: ['bnpl'], // Use bnpl payment method
@@ -268,8 +259,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           bnpl: true,
           config: {
             loan: {
-              type: 'zero',
-              month: calculatorResult.month
+              type: calculatorResult.discount_code || 'zero',
+              month: calculatorResult.month || 6
             }
           }
         };
@@ -279,8 +270,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           payment_method: ['bog_loan'],  // Use bog_loan for standard installments
           config: {
             loan: {
-              type: 'standard',
-              month: calculatorResult.month
+              type: calculatorResult.discount_code || 'standard',
+              month: calculatorResult.month || 12
             }
           }
         };
