@@ -206,7 +206,100 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Payment initiation route
+  // BOG Payment with Calculator Results
+  app.post("/api/payments/initiate-with-calculator", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { shippingAddress, billingAddress, items, calculatorResult } = req.body;
+      
+      // Calculate total
+      let total = 0;
+      const orderItems = [];
+      
+      for (const item of items) {
+        const product = await storage.getProduct(item.productId);
+        if (!product) {
+          return res.status(400).json({ message: `Product ${item.productId} not found` });
+        }
+        
+        const itemTotal = parseFloat(product.price) * item.quantity;
+        total += itemTotal;
+        
+        orderItems.push({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: product.price
+        });
+      }
+
+      // Create order with pending payment status
+      const orderData = insertOrderSchema.parse({
+        userId,
+        total: total.toString(),
+        shippingAddress,
+        billingAddress,
+        paymentStatus: "pending"
+      });
+
+      const order = await storage.createOrder(orderData, orderItems as any);
+
+      // Create BOG payment order using calculator results
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const bogOrderRequest: BOGCreateOrderRequest = {
+        callback_url: `${baseUrl}/api/payments/callback`,
+        external_order_id: order.id,
+        purchase_units: {
+          currency: 'GEL',
+          total_amount: total,
+          basket: orderItems.map((item) => ({
+            product_id: item.productId,
+            description: `Product ${item.productId}`,
+            quantity: item.quantity,
+            unit_price: parseFloat(item.price),
+            total_price: item.quantity * parseFloat(item.price)
+          }))
+        },
+        redirect_urls: {
+          success: `${baseUrl}/payment-success`,
+          fail: `${baseUrl}/payment-cancel`
+        },
+        ttl: 60,
+        payment_method: ['bnpl'],
+        config: {
+          loan: {
+            type: calculatorResult.discount_code,
+            month: calculatorResult.month
+          }
+        },
+        capture: 'automatic',
+        application_type: 'web'
+      };
+
+      console.log(`Creating BOG order with calculator result:`, calculatorResult);
+      console.log("BOG Order Request:", JSON.stringify(bogOrderRequest, null, 2));
+
+      const bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
+      console.log("BOG Order Response:", JSON.stringify(bogOrder, null, 2));
+      
+      await storage.updateOrderPayment(order.id, bogOrder.id, 'pending');
+      
+      const paymentUrl = bogPaymentService.getPaymentUrl(bogOrder);
+      
+      const response = {
+        orderId: order.id,
+        paymentId: bogOrder.id,
+        paymentUrl,
+        status: 'created'
+      };
+      
+      res.json(response);
+    } catch (error) {
+      console.error("Error initiating calculator payment:", error);
+      res.status(500).json({ message: "Failed to initiate payment" });
+    }
+  });
+
+  // Payment initiation route (for card payments only)
   app.post("/api/payments/initiate", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;

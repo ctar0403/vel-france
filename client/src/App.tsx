@@ -21,8 +21,8 @@ function Router() {
       {isLoading || !isAuthenticated ? (
         <>
           <Route path="/" component={Landing} />
-          <Route path="/payment/success" component={PaymentSuccess} />
-          <Route path="/payment/cancel" component={PaymentCancel} />
+          <Route path="/payment-success" component={PaymentSuccess} />
+          <Route path="/payment-cancel" component={PaymentCancel} />
         </>
       ) : (
         <>

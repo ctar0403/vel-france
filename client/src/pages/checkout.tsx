@@ -12,6 +12,23 @@ import { apiRequest } from "@/lib/queryClient";
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
 import type { CartItem, Product } from "@shared/schema";
 
+// Declare BOG global for TypeScript
+declare global {
+  interface Window {
+    BOG: {
+      Calculator: {
+        open: (config: {
+          amount: number;
+          bnpl?: boolean;
+          onClose?: () => void;
+          onRequest?: (selected: { amount: number; month: number; discount_code: string }, successCb: (orderId: string) => void, closeCb: () => void) => void;
+          onComplete?: (data: { redirectUrl: string }) => boolean;
+        }) => void;
+      };
+    };
+  }
+}
+
 export default function CheckoutPage() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
@@ -47,7 +64,7 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'installment' | 'bnpl'>('card');
 
   const paymentMutation = useMutation({
-    mutationFn: async (paymentMethod: 'card' | 'installment' | 'bnpl') => {
+    mutationFn: async (paymentData: {paymentMethod: 'card', calculatorResult?: never} | {paymentMethod: 'installment' | 'bnpl', calculatorResult: any}) => {
       const items = cartItems.map((item: CartItem & { product: Product }) => ({
         productId: item.productId,
         quantity: item.quantity
@@ -55,14 +72,25 @@ export default function CheckoutPage() {
 
       const billingAddress = sameBilling ? shippingForm : billingForm;
 
-      const response = await apiRequest("POST", "/api/payments/initiate", {
-        shippingAddress: JSON.stringify(shippingForm),
-        billingAddress: JSON.stringify(billingAddress),
-        items,
-        paymentMethod
-      });
-
-      return response;
+      // Use different endpoints based on payment method
+      if (paymentData.paymentMethod === 'card') {
+        const response = await apiRequest("POST", "/api/payments/initiate", {
+          shippingAddress: JSON.stringify(shippingForm),
+          billingAddress: JSON.stringify(billingAddress),
+          items,
+          paymentMethod: 'card'
+        });
+        return response;
+      } else {
+        // Use calculator endpoint for installment/bnpl
+        const response = await apiRequest("POST", "/api/payments/initiate-with-calculator", {
+          shippingAddress: JSON.stringify(shippingForm),
+          billingAddress: JSON.stringify(billingAddress),
+          items,
+          calculatorResult: paymentData.calculatorResult
+        });
+        return response;
+      }
     },
     onSuccess: (data: any) => {
       // Debug: Log the complete response
@@ -142,6 +170,84 @@ export default function CheckoutPage() {
   };
 
   const total = calculateTotal();
+
+  // BOG Calculator handlers
+  const handleCardPayment = () => {
+    if (!validateForm()) return;
+    paymentMutation.mutate({ paymentMethod: 'card' });
+  };
+
+  const handleInstallmentPayment = () => {
+    if (!validateForm()) return;
+    
+    if (!window.BOG) {
+      toast({
+        title: "Payment Error",
+        description: "BOG payment system is not available. Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    window.BOG.Calculator.open({
+      amount: total,
+      bnpl: false, // Standard installment plan
+      onClose: () => {
+        console.log("BOG Calculator closed");
+      },
+      onRequest: (selected, successCb, closeCb) => {
+        console.log("BOG Calculator selection:", selected);
+        
+        // Use the calculator results to create payment
+        paymentMutation.mutate({ 
+          paymentMethod: 'installment', 
+          calculatorResult: selected 
+        });
+        
+        // Close the modal since we're handling the flow ourselves
+        closeCb();
+      },
+      onComplete: ({ redirectUrl }) => {
+        return false; // Prevent automatic redirect
+      }
+    });
+  };
+
+  const handleBnplPayment = () => {
+    if (!validateForm()) return;
+    
+    if (!window.BOG) {
+      toast({
+        title: "Payment Error",
+        description: "BOG payment system is not available. Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    window.BOG.Calculator.open({
+      amount: total,
+      bnpl: true, // Part-by-part plan
+      onClose: () => {
+        console.log("BOG Calculator closed");
+      },
+      onRequest: (selected, successCb, closeCb) => {
+        console.log("BOG Calculator selection:", selected);
+        
+        // Use the calculator results to create payment
+        paymentMutation.mutate({ 
+          paymentMethod: 'bnpl', 
+          calculatorResult: selected 
+        });
+        
+        // Close the modal since we're handling the flow ourselves
+        closeCb();
+      },
+      onComplete: ({ redirectUrl }) => {
+        return false; // Prevent automatic redirect
+      }
+    });
+  };
 
   if (isLoading) {
     return (
@@ -393,7 +499,7 @@ export default function CheckoutPage() {
                   {/* Card Payment Button */}
                   <Button
                     type="button"
-                    onClick={() => validateForm() && paymentMutation.mutate('card')}
+                    onClick={handleCardPayment}
                     className="w-full h-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
                     disabled={paymentMutation.isPending}
                   >
@@ -415,7 +521,7 @@ export default function CheckoutPage() {
                   {/* Installment Payment Button */}
                   <Button
                     type="button"
-                    onClick={() => validateForm() && paymentMutation.mutate('installment')}
+                    onClick={handleInstallmentPayment}
                     className="w-full h-16 bg-gradient-to-r from-green-600 to-green-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
                     disabled={paymentMutation.isPending}
                   >
@@ -437,7 +543,7 @@ export default function CheckoutPage() {
                   {/* Part-by-Part Payment Button */}
                   <Button
                     type="button"
-                    onClick={() => validateForm() && paymentMutation.mutate('bnpl')}
+                    onClick={handleBnplPayment}
                     className="w-full h-16 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
                     disabled={paymentMutation.isPending}
                   >
