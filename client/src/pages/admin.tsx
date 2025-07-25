@@ -17,6 +17,7 @@ import { Plus, Edit, Trash2, Package, Users, MessageSquare, Settings } from "luc
 
 export default function Admin() {
   const { user, isLoading: authLoading } = useAuth();
+  const typedUser = user as any;
   const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState("products");
   const [isProductDialogOpen, setIsProductDialogOpen] = useState(false);
@@ -34,10 +35,10 @@ export default function Admin() {
 
   // Redirect if not admin
   useEffect(() => {
-    if (!authLoading && (!user || !user.isAdmin)) {
+    if (!authLoading && (!typedUser || !typedUser.isAdmin)) {
       toast({
-        title: "Accès refusé",
-        description: "Vous n'avez pas les permissions d'administrateur.",
+        title: "Access Denied",
+        description: "You do not have administrator permissions.",
         variant: "destructive",
       });
       setTimeout(() => {
@@ -219,19 +220,19 @@ export default function Admin() {
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold mx-auto mb-4"></div>
-          <p className="font-playfair text-navy">Vérification des permissions...</p>
+          <p className="font-playfair text-navy">Checking permissions...</p>
         </div>
       </div>
     );
   }
 
-  if (!user || !user.isAdmin) {
+  if (!typedUser || !typedUser.isAdmin) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
-            <h1 className="font-playfair text-2xl text-navy mb-4">Accès Refusé</h1>
-            <p className="text-gray-600">Vous n'avez pas les permissions d'administrateur.</p>
+            <h1 className="font-playfair text-2xl text-navy mb-4">Access Denied</h1>
+            <p className="text-gray-600">You do not have administrator permissions.</p>
           </CardContent>
         </Card>
       </div>
@@ -253,21 +254,21 @@ export default function Admin() {
             </div>
             <div className="flex items-center space-x-4">
               <span className="font-playfair text-navy">
-                Bonjour, {user.firstName || user.email}
+                Hello, {typedUser.firstName || typedUser.email}
               </span>
               <Button
                 variant="outline"
                 onClick={() => window.location.href = "/"}
                 className="border-gold text-navy hover:bg-gold hover:text-navy"
               >
-                Retour au site
+                Back to Site
               </Button>
               <Button
                 variant="outline"
                 onClick={() => window.location.href = "/api/logout"}
                 className="border-navy text-navy hover:bg-navy hover:text-white"
               >
-                Déconnexion
+                Logout
               </Button>
             </div>
           </div>
@@ -278,8 +279,8 @@ export default function Admin() {
         {/* Navigation Tabs */}
         <div className="flex flex-wrap gap-4 mb-8">
           {[
-            { key: 'products', label: 'Produits', icon: Package, count: products.length },
-            { key: 'orders', label: 'Commandes', icon: Settings, count: pendingOrders },
+            { key: 'products', label: 'Products', icon: Package, count: products.length },
+            { key: 'orders', label: 'Orders', icon: Settings, count: pendingOrders },
             { key: 'messages', label: 'Messages', icon: MessageSquare, count: unreadMessages },
           ].map(({ key, label, icon: Icon, count }) => (
             <Button
@@ -356,7 +357,7 @@ export default function Admin() {
                     </div>
                     
                     <div>
-                      <label className="block text-navy font-playfair mb-2">Catégorie</label>
+                      <label className="block text-navy font-playfair mb-2">Category</label>
                       <Select
                         value={productForm.category}
                         onValueChange={(value: 'women' | 'men' | 'unisex') => 
@@ -367,27 +368,27 @@ export default function Admin() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="women">Femme</SelectItem>
-                          <SelectItem value="men">Homme</SelectItem>
-                          <SelectItem value="unisex">Mixte</SelectItem>
+                          <SelectItem value="women">Women</SelectItem>
+                          <SelectItem value="men">Men</SelectItem>
+                          <SelectItem value="unisex">Unisex</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div>
-                      <label className="block text-navy font-playfair mb-2">Description courte</label>
+                      <label className="block text-navy font-playfair mb-2">Short Description</label>
                       <Input
-                        value={productForm.shortDescription}
+                        value={productForm.shortDescription || ""}
                         onChange={(e) => setProductForm({...productForm, shortDescription: e.target.value})}
                         className="border-gold/30 focus:border-gold"
-                        placeholder="Résumé du parfum en quelques mots"
+                        placeholder="Brief perfume summary"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-navy font-playfair mb-2">Description complète</label>
+                      <label className="block text-navy font-playfair mb-2">Full Description</label>
                       <Textarea
-                        value={productForm.description}
+                        value={productForm.description || ""}
                         onChange={(e) => setProductForm({...productForm, description: e.target.value})}
                         className="border-gold/30 focus:border-gold resize-none"
                         rows={4}
@@ -396,21 +397,21 @@ export default function Admin() {
                     </div>
 
                     <div>
-                      <label className="block text-navy font-playfair mb-2">Notes olfactives</label>
+                      <label className="block text-navy font-playfair mb-2">Fragrance Notes</label>
                       <Textarea
-                        value={productForm.notes}
+                        value={productForm.notes || ""}
                         onChange={(e) => setProductForm({...productForm, notes: e.target.value})}
                         className="border-gold/30 focus:border-gold resize-none"
                         rows={3}
-                        placeholder="Tête: ... • Cœur: ... • Fond: ..."
+                        placeholder="Top: ... • Heart: ... • Base: ..."
                       />
                     </div>
 
                     <div>
-                      <label className="block text-navy font-playfair mb-2">URL de l'image</label>
+                      <label className="block text-navy font-playfair mb-2">Image URL</label>
                       <Input
                         type="url"
-                        value={productForm.imageUrl}
+                        value={productForm.imageUrl || ""}
                         onChange={(e) => setProductForm({...productForm, imageUrl: e.target.value})}
                         className="border-gold/30 focus:border-gold"
                         placeholder="https://images.unsplash.com/..."
@@ -421,12 +422,12 @@ export default function Admin() {
                       <input
                         type="checkbox"
                         id="inStock"
-                        checked={productForm.inStock}
+                        checked={productForm.inStock || false}
                         onChange={(e) => setProductForm({...productForm, inStock: e.target.checked})}
                         className="rounded border-gold"
                       />
                       <label htmlFor="inStock" className="text-navy font-playfair">
-                        En stock
+                        In Stock
                       </label>
                     </div>
 
@@ -437,14 +438,14 @@ export default function Admin() {
                         onClick={() => setIsProductDialogOpen(false)}
                         className="border-gray-300"
                       >
-                        Annuler
+                        Cancel
                       </Button>
                       <Button
                         type="submit"
                         className="bg-navy hover:bg-navy/90 text-white"
                         disabled={productMutation.isPending}
                       >
-                        {productMutation.isPending ? 'Sauvegarde...' : 'Sauvegarder'}
+                        {productMutation.isPending ? 'Saving...' : 'Save'}
                       </Button>
                     </div>
                   </form>
@@ -566,7 +567,7 @@ export default function Admin() {
               <div className="text-center py-16">
                 <Settings className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600 font-playfair text-lg">
-                  Aucune commande pour le moment
+                  No orders yet
                 </p>
               </div>
             ) : (
@@ -577,19 +578,19 @@ export default function Admin() {
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <h3 className="font-playfair text-lg text-navy">
-                            Commande #{order.id.slice(0, 8)}
+                            Order #{order.id.slice(0, 8)}
                           </h3>
                           <p className="text-gray-600">
                             {order.user?.firstName} {order.user?.lastName} ({order.user?.email})
                           </p>
                           <p className="text-sm text-gray-500">
-                            {new Date(order.createdAt).toLocaleDateString('fr-FR', {
+                            {order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'long',
                               day: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit'
-                            })}
+                            }) : 'Date not available'}
                           </p>
                         </div>
                         <div className="text-right">
@@ -602,21 +603,21 @@ export default function Admin() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="pending">En attente</SelectItem>
-                              <SelectItem value="confirmed">Confirmée</SelectItem>
-                              <SelectItem value="shipped">Expédiée</SelectItem>
-                              <SelectItem value="delivered">Livrée</SelectItem>
+                              <SelectItem value="pending">Pending</SelectItem>
+                              <SelectItem value="confirmed">Confirmed</SelectItem>
+                              <SelectItem value="shipped">Shipped</SelectItem>
+                              <SelectItem value="delivered">Delivered</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                       </div>
                       
                       <div className="border-t pt-4">
-                        <h4 className="font-playfair text-navy mb-2">Articles commandés:</h4>
+                        <h4 className="font-playfair text-navy mb-2">Ordered Items:</h4>
                         <div className="space-y-2">
                           {order.orderItems?.map((item) => (
                             <div key={item.id} className="flex justify-between items-center">
-                              <span>{item.product?.name || 'Produit supprimé'}</span>
+                              <span>{item.product?.name || 'Deleted Product'}</span>
                               <span>
                                 {item.quantity}x €{item.price} = €{(parseFloat(item.price) * item.quantity).toFixed(2)}
                               </span>
@@ -666,7 +667,7 @@ export default function Admin() {
               <div className="text-center py-16">
                 <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600 font-playfair text-lg">
-                  Aucun message pour le moment
+                  No messages yet
                 </p>
               </div>
             ) : (
@@ -689,18 +690,18 @@ export default function Admin() {
                               {message.firstName} {message.lastName}
                             </h3>
                             {!message.isRead && (
-                              <Badge className="bg-gold text-navy">Nouveau</Badge>
+                              <Badge className="bg-gold text-navy">New</Badge>
                             )}
                           </div>
                           <p className="text-gray-600">{message.email}</p>
                           <p className="text-sm text-gray-500">
-                            {new Date(message.createdAt).toLocaleDateString('fr-FR', {
+                            {message.createdAt ? new Date(message.createdAt).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'long',
                               day: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit'
-                            })}
+                            }) : 'Date not available'}
                           </p>
                         </div>
                         <Badge variant="outline" className="border-navy text-navy">

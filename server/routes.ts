@@ -197,7 +197,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         billingAddress
       });
 
-      const order = await storage.createOrder(orderData, orderItems);
+      const order = await storage.createOrder(orderData, orderItems as any);
       
       // Clear cart after successful order
       await storage.clearCart(userId);

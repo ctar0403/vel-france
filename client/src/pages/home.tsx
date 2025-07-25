@@ -15,8 +15,8 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Product, CartItem, Order } from "@shared/schema";
-import { ShoppingBag, User, Package } from "lucide-react";
+import type { Product, CartItem, Order, User } from "@shared/schema";
+import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
 
 export default function Home() {
   const { user } = useAuth();
@@ -122,8 +122,8 @@ export default function Home() {
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du message.",
+        title: "Error",
+        description: "An error occurred while sending the message.",
         variant: "destructive",
       });
     },
@@ -181,12 +181,12 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-vibes text-6xl md:text-8xl mb-4 gold-shimmer">Bienvenue</h2>
+          <h2 className="font-vibes text-6xl md:text-8xl mb-4 gold-shimmer">Welcome</h2>
           <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6">
-            {user?.firstName || user?.email || 'Cher Client'}
+            {(user as User)?.firstName || (user as User)?.email || 'Dear Client'}
           </h1>
           <p className="text-xl md:text-2xl mb-8 font-light max-w-2xl mx-auto">
-            Découvrez notre collection exclusive de parfums d'exception
+            Discover our exclusive collection of exceptional perfumes
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -194,14 +194,14 @@ export default function Home() {
               onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />
-              Explorer la Boutique
+              Explore Shop
             </Button>
             <Button
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-6 py-4 rounded-full font-playfair transition-all duration-300"
               onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <User className="mr-2 h-5 w-5" />
-              Mon Compte
+              <UserIcon className="mr-2 h-5 w-5" />
+              My Account
             </Button>
           </div>
         </motion.div>
@@ -217,9 +217,9 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Mon Compte</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">My Account</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Gérez vos commandes et découvrez votre historique d'achats
+              Manage your orders and discover your purchase history
             </p>
           </motion.div>
           
@@ -232,9 +232,9 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <ShoppingBag className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Panier Actuel</h3>
+              <h3 className="font-playfair text-2xl text-navy mb-2">Current Cart</h3>
               <p className="text-3xl font-bold text-gold">{cartItemCount}</p>
-              <p className="text-gray-600">articles</p>
+              <p className="text-gray-600">items</p>
             </motion.div>
             
             <motion.div
@@ -245,7 +245,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <Package className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Commandes</h3>
+              <h3 className="font-playfair text-2xl text-navy mb-2">Orders</h3>
               <p className="text-3xl font-bold text-gold">{orders.length}</p>
               <p className="text-gray-600">total</p>
             </motion.div>
@@ -257,12 +257,12 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <User className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Membre depuis</h3>
+              <UserIcon className="h-12 w-12 text-gold mx-auto mb-4" />
+              <h3 className="font-playfair text-2xl text-navy mb-2">Member Since</h3>
               <p className="text-lg font-bold text-gold">
-                {user?.createdAt ? new Date(user.createdAt).getFullYear() : '2024'}
+                {(user as User)?.createdAt ? new Date((user as User).createdAt!).getFullYear() : '2024'}
               </p>
-              <p className="text-gray-600">Client privilégié</p>
+              <p className="text-gray-600">Premium Client</p>
             </motion.div>
           </div>
 
@@ -274,15 +274,15 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-playfair text-3xl text-navy mb-8 text-center">Mes Dernières Commandes</h3>
+              <h3 className="font-playfair text-3xl text-navy mb-8 text-center">My Recent Orders</h3>
               <div className="grid gap-6">
                 {orders.slice(0, 3).map((order) => (
                   <div key={order.id} className="bg-white rounded-xl shadow-lg p-6 border border-gold/20">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <p className="font-playfair text-lg text-navy">Commande #{order.id.slice(0, 8)}</p>
+                        <p className="font-playfair text-lg text-navy">Order #{order.id.slice(0, 8)}</p>
                         <p className="text-gray-600">
-                          {new Date(order.createdAt).toLocaleDateString('fr-FR')}
+                          {new Date(order.createdAt!).toLocaleDateString('en-US')}
                         </p>
                       </div>
                       <div className="text-right">
@@ -291,15 +291,15 @@ export default function Home() {
                           variant={order.status === 'delivered' ? 'default' : 'secondary'}
                           className={order.status === 'delivered' ? 'bg-green-100 text-green-800' : ''}
                         >
-                          {order.status === 'pending' && 'En attente'}
-                          {order.status === 'confirmed' && 'Confirmée'}
-                          {order.status === 'shipped' && 'Expédiée'}
-                          {order.status === 'delivered' && 'Livrée'}
+                          {order.status === 'pending' && 'Pending'}
+                          {order.status === 'confirmed' && 'Confirmed'}
+                          {order.status === 'shipped' && 'Shipped'}
+                          {order.status === 'delivered' && 'Delivered'}
                         </Badge>
                       </div>
                     </div>
                     <div className="text-gray-600">
-                      {order.orderItems?.length || 0} article(s)
+                      {order.orderItems?.length || 0} item(s)
                     </div>
                   </div>
                 ))}
@@ -319,9 +319,9 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Nos Créations</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Our Creations</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Une sélection exclusive de parfums artisanaux créés avec les plus précieux ingrédients
+              An exclusive selection of artisanal perfumes crafted with the most precious ingredients
             </p>
           </motion.div>
           
@@ -355,19 +355,19 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Collection Complète</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Complete Collection</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Explorez notre gamme complète de parfums d'exception
+              Explore our complete range of exceptional perfumes
             </p>
           </motion.div>
           
           {/* Product Filters */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {[
-              { key: 'all', label: 'Tous' },
-              { key: 'women', label: 'Femme' },
-              { key: 'men', label: 'Homme' },
-              { key: 'unisex', label: 'Mixte' }
+              { key: 'all', label: 'All' },
+              { key: 'women', label: 'Women' },
+              { key: 'men', label: 'Men' },
+              { key: 'unisex', label: 'Unisex' }
             ].map(({ key, label }) => (
               <Button
                 key={key}
@@ -402,7 +402,7 @@ export default function Home() {
             ) : filteredProducts.length === 0 ? (
               <div className="col-span-full text-center py-16">
                 <p className="text-gray-600 font-playfair text-lg">
-                  Aucun produit trouvé dans cette catégorie
+                  No products found in this category
                 </p>
               </div>
             ) : (
@@ -436,26 +436,26 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-vibes text-5xl text-navy mb-6">Notre Histoire</h2>
-              <h3 className="font-playfair text-2xl text-navy mb-6">L'Art de la Parfumerie Française</h3>
+              <h2 className="font-vibes text-5xl text-navy mb-6">Our Story</h2>
+              <h3 className="font-playfair text-2xl text-navy mb-6">The Art of French Perfumery</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Depuis 1932, Vel France perpétue la tradition de la parfumerie française d'exception. 
-                Nos maîtres parfumeurs créent des compositions uniques en utilisant les ingrédients 
-                les plus raffinés, récoltés aux quatre coins du monde.
+                Since 1932, Vel France has perpetuated the tradition of exceptional French perfumery. 
+                Our master perfumers create unique compositions using the finest ingredients, 
+                sourced from around the world.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Chaque parfum raconte une histoire, évoque une émotion, capture un moment d'éternité. 
-                Notre savoir-faire artisanal se transmet de génération en génération, préservant 
-                l'authenticité et l'excellence de la parfumerie française.
+                Each perfume tells a story, evokes an emotion, captures a moment of eternity. 
+                Our artisanal craftsmanship is passed down from generation to generation, preserving 
+                the authenticity and excellence of French perfumery.
               </p>
               <div className="flex items-center space-x-8 mt-8">
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">90+</div>
-                  <div className="text-sm text-gray-600">Années d'Excellence</div>
+                  <div className="text-sm text-gray-600">Years of Excellence</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">50+</div>
-                  <div className="text-sm text-gray-600">Créations Uniques</div>
+                  <div className="text-sm text-gray-600">Unique Creations</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">100%</div>
@@ -476,7 +476,7 @@ export default function Home() {
                 className="rounded-2xl shadow-2xl w-full h-96 object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-gold text-navy p-6 rounded-2xl shadow-xl">
-                <div className="font-vibes text-2xl">Fait à la main</div>
+                <div className="font-vibes text-2xl">Handcrafted</div>
                 <div className="font-playfair text-sm">Paris, France</div>
               </div>
             </motion.div>
@@ -494,9 +494,9 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Contactez-Nous</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Contact Us</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Nous serions ravis de vous accompagner dans votre quête du parfum parfait
+              We would be delighted to accompany you in your quest for the perfect perfume
             </p>
           </motion.div>
           
@@ -510,7 +510,7 @@ export default function Home() {
               <form onSubmit={handleContactSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-navy font-playfair mb-2">Prénom</label>
+                    <label className="block text-navy font-playfair mb-2">First Name</label>
                     <Input 
                       value={contactForm.firstName}
                       onChange={(e) => setContactForm({...contactForm, firstName: e.target.value})}
@@ -519,7 +519,7 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label className="block text-navy font-playfair mb-2">Nom</label>
+                    <label className="block text-navy font-playfair mb-2">Last Name</label>
                     <Input 
                       value={contactForm.lastName}
                       onChange={(e) => setContactForm({...contactForm, lastName: e.target.value})}
@@ -539,7 +539,7 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label className="block text-navy font-playfair mb-2">Sujet</label>
+                  <label className="block text-navy font-playfair mb-2">Subject</label>
                   <Select 
                     value={contactForm.subject} 
                     onValueChange={(value) => setContactForm({...contactForm, subject: value})}
@@ -548,10 +548,10 @@ export default function Home() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Conseil personnalisé">Conseil personnalisé</SelectItem>
-                      <SelectItem value="Information produit">Information produit</SelectItem>
-                      <SelectItem value="Service client">Service client</SelectItem>
-                      <SelectItem value="Autre">Autre</SelectItem>
+                      <SelectItem value="Personal consultation">Personal consultation</SelectItem>
+                      <SelectItem value="Product information">Product information</SelectItem>
+                      <SelectItem value="Customer service">Customer service</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -570,7 +570,7 @@ export default function Home() {
                   className="w-full bg-navy hover:bg-navy/90 text-white py-3 font-playfair font-semibold"
                   disabled={contactMutation.isPending}
                 >
-                  {contactMutation.isPending ? "Envoi..." : "Envoyer le Message"}
+                  {contactMutation.isPending ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </motion.div>
@@ -582,19 +582,19 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="bg-cream rounded-2xl shadow-xl p-8 mb-8">
-                <h3 className="font-playfair text-2xl text-navy mb-6">Nos Coordonnées</h3>
+                <h3 className="font-playfair text-2xl text-navy mb-6">Our Contact Info</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-map-marker-alt text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Adresse</div>
+                      <div className="font-playfair text-navy">Address</div>
                       <div className="text-gray-600">25 Place Vendôme, 75001 Paris</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-phone text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Téléphone</div>
+                      <div className="font-playfair text-navy">Phone</div>
                       <div className="text-gray-600">+33 1 42 60 30 70</div>
                     </div>
                   </div>
@@ -608,8 +608,8 @@ export default function Home() {
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-clock text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Horaires</div>
-                      <div className="text-gray-600">Lun-Sam: 10h-19h</div>
+                      <div className="font-playfair text-navy">Hours</div>
+                      <div className="text-gray-600">Mon-Sat: 10am-7pm</div>
                     </div>
                   </div>
                 </div>
@@ -640,14 +640,14 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-4xl mb-4">Rejoignez Notre Newsletter</h2>
+            <h2 className="font-vibes text-4xl mb-4">Join Our Newsletter</h2>
             <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Découvrez en exclusivité nos nouvelles créations et bénéficiez d'offres privilégiées
+              Discover our new creations exclusively and benefit from privileged offers
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex flex-col md:flex-row max-w-md mx-auto gap-4">
               <Input 
                 type="email" 
-                placeholder="Votre adresse email" 
+                placeholder="Your email address" 
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
                 className="flex-1 text-navy bg-white border-none"
@@ -658,7 +658,7 @@ export default function Home() {
                 className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-playfair font-semibold"
                 disabled={newsletterMutation.isPending}
               >
-                {newsletterMutation.isPending ? "..." : "S'inscrire"}
+                {newsletterMutation.isPending ? "..." : "Subscribe"}
               </Button>
             </form>
           </motion.div>
