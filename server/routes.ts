@@ -246,35 +246,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create BOG payment order using calculator results
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       
-      // BOG API requires type field in loan config - try different valid type values
-      // The calculator discount_code might not be directly usable as type
+      // BOG API type values: "standard" for installments, "zero" for part-by-part
       let paymentConfig: any = {};
       
-      // Try common BOG installment type values instead of calculator discount_code
-      const installmentType = calculatorResult.month <= 6 ? 'consumer' : 'extended';
-      
       if (paymentMethod === 'bnpl') {
-        // For Buy Now Pay Later (part-by-part) - try without loan config
+        // For Buy Now Pay Later (part-by-part) - use type "zero"
         paymentConfig = {
           payment_method: ['bnpl'],
-          bnpl: true
-          // No config.loan for BNPL as per some BOG implementations
+          bnpl: true,
+          config: {
+            loan: {
+              type: 'zero',
+              month: calculatorResult.month
+            }
+          }
         };
       } else {
-        // For standard installments - use type field as required by API
+        // For standard installments - use type "standard"
         paymentConfig = {
           payment_method: ['bnpl'],  // BOG uses 'bnpl' for both installments and part-by-part
           bnpl: false,
           config: {
             loan: {
-              type: installmentType, // Use consumer/extended instead of STANDARD
+              type: 'standard',
               month: calculatorResult.month
             }
           }
         };
       }
       
-      console.log(`Using BOG Calculator: ${calculatorResult.month} months (${paymentMethod}), type: ${installmentType}, original discount_code: ${calculatorResult.discount_code}`);
+      console.log(`Using BOG Calculator: ${calculatorResult.month} months (${paymentMethod}), type: ${paymentMethod === 'bnpl' ? 'zero' : 'standard'}`);
 
       const bogOrderRequest: BOGCreateOrderRequest = {
         callback_url: `${baseUrl}/api/payments/callback`,
