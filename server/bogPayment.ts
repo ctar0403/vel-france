@@ -34,7 +34,7 @@ export interface BOGTokenResponse {
 }
 
 class BOGPaymentService {
-  private baseUrl = 'https://api.bog.ge';
+  private baseUrl = 'https://api.bog.ge/v1';
   private clientId: string;
   private clientSecret: string;
   private accessToken?: string;
@@ -58,18 +58,26 @@ class BOGPaymentService {
     try {
       const credentials = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64');
       
-      const response = await fetch(`${this.baseUrl}/oauth2/token`, {
+      const response = await fetch(`${this.baseUrl}/oauth/token`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${credentials}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'grant_type=client_credentials'
+        body: 'grant_type=client_credentials&scope=payment'
       });
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('BOG API Response:', errorText);
         throw new Error(`BOG token request failed: ${response.status} - ${errorText}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const responseText = await response.text();
+        console.error('Non-JSON response from BOG API:', responseText);
+        throw new Error('BOG API returned non-JSON response');
       }
 
       const tokenData: BOGTokenResponse = await response.json();
@@ -88,7 +96,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/v1/payment`, {
+      const response = await fetch(`${this.baseUrl}/payments/payment`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -99,7 +107,15 @@ class BOGPaymentService {
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('BOG Payment Creation Error:', errorText);
         throw new Error(`BOG payment creation failed: ${response.status} - ${errorText}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const responseText = await response.text();
+        console.error('Non-JSON payment response from BOG API:', responseText);
+        throw new Error('BOG API returned non-JSON payment response');
       }
 
       const paymentData: BOGPaymentResponse = await response.json();
@@ -114,7 +130,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/v1/payment/${paymentId}`, {
+      const response = await fetch(`${this.baseUrl}/payments/payment/${paymentId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -139,7 +155,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/v1/payment/${paymentId}/capture`, {
+      const response = await fetch(`${this.baseUrl}/payments/payment/${paymentId}/capture`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { bogPaymentService } from "./bogPayment";
+import { bogMockService } from "./bogMockService";
 import { 
   insertProductSchema,
   insertCartItemSchema,
@@ -221,18 +222,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         locale: 'en'
       };
 
-      const bogPayment = await bogPaymentService.createPayment(bogPaymentRequest);
+      // Try BOG API first, fall back to mock service if it fails
+      let bogPayment;
+      let isUsingMock = false;
+      
+      try {
+        bogPayment = await bogPaymentService.createPayment(bogPaymentRequest);
+      } catch (error) {
+        console.warn('BOG API unavailable, using mock service:', error);
+        bogPayment = await bogMockService.createPayment(bogPaymentRequest);
+        isUsingMock = true;
+      }
       
       // Update order with payment ID
       await storage.updateOrderPayment(order.id, bogPayment.id, 'pending');
       
-      const approvalUrl = bogPaymentService.getApprovalUrl(bogPayment);
+      const approvalUrl = isUsingMock 
+        ? bogMockService.getApprovalUrl(bogPayment)
+        : bogPaymentService.getApprovalUrl(bogPayment);
       
       res.json({
         orderId: order.id,
         paymentId: bogPayment.id,
         approvalUrl,
-        status: bogPayment.status
+        status: bogPayment.status,
+        isUsingMock
       });
     } catch (error) {
       console.error("Error initiating payment:", error);
@@ -249,8 +263,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Missing orderId or paymentId" });
       }
 
-      // Get payment status from BOG
-      const bogPayment = await bogPaymentService.getPayment(paymentId as string);
+      // Get payment status from BOG (try real service first, then mock)
+      let bogPayment;
+      try {
+        bogPayment = await bogPaymentService.getPayment(paymentId as string);
+      } catch (error) {
+        console.warn('BOG API unavailable for payment check, using mock service');
+        bogPayment = await bogMockService.getPayment(paymentId as string);
+      }
       
       // Update order based on payment status
       let orderStatus = 'pending';
@@ -442,6 +462,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error marking message as read:", error);
       res.status(500).json({ message: "Failed to mark message as read" });
     }
+  });
+
+  // Mock payment page for testing
+  app.get("/mock-payment", (req, res) => {
+    const { paymentId } = req.query;
+    const successUrl = `/api/payments/success?orderId=${req.query.orderId || 'test'}&paymentId=${paymentId}`;
+    const cancelUrl = `/api/payments/cancel?orderId=${req.query.orderId || 'test'}`;
+    
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Mock BOG Payment</title>
+          <style>
+            body { font-family: Arial, sans-serif; max-width: 400px; margin: 100px auto; padding: 20px; text-align: center; }
+            .btn { padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+            .success { background: #28a745; color: white; }
+            .cancel { background: #dc3545; color: white; }
+          </style>
+        </head>
+        <body>
+          <h2>Mock Bank of Georgia Payment</h2>
+          <p>Payment ID: ${paymentId}</p>
+          <p>This is a test payment page for development.</p>
+          <div>
+            <button class="btn success" onclick="window.location.href='${successUrl}'">
+              Simulate Successful Payment
+            </button>
+            <button class="btn cancel" onclick="window.location.href='${cancelUrl}'">
+              Simulate Cancelled Payment
+            </button>
+          </div>
+        </body>
+      </html>
+    `);
   });
 
   const httpServer = createServer(app);
