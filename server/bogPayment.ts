@@ -42,11 +42,8 @@ export interface BOGCreateOrderRequest {
   };
   application_type?: 'web' | 'mobile';
   config?: {
-    loan?: {
-      amount?: number;
-      month?: number;
-      discount_code?: string;
-    };
+    discount_code?: string;
+    month?: number;
   };
 }
 

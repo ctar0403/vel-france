@@ -17,11 +17,8 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
   payment_method: string[], 
   bnpl?: boolean,
   config?: {
-    loan?: {
-      amount?: number;
-      month?: number;
-      discount_code?: string;
-    };
+    discount_code?: string;
+    month?: number;
   };
 } {
   switch (paymentMethod) {
@@ -32,11 +29,8 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
         payment_method: ['bnpl'], // Use bnpl payment method
         bnpl: false, // Show only standard installment plan
         config: {
-          loan: {
-            amount: Math.round(totalAmount / 12), // 12-month installment plan
-            month: 12,
-            discount_code: undefined
-          }
+          month: 12, // 12-month installment plan
+          discount_code: undefined // Will be provided by BOG calculator
         }
       };
     case 'bnpl':
@@ -44,11 +38,8 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
         payment_method: ['bnpl'], // Use bnpl payment method
         bnpl: true, // Show only payment in installments (part-by-part)
         config: {
-          loan: {
-            amount: Math.round(totalAmount / 6), // 6-month part-by-part plan
-            month: 6,
-            discount_code: undefined
-          }
+          month: 6, // 6-month part-by-part plan
+          discount_code: undefined // Will be provided by BOG calculator
         }
       };
     default:
