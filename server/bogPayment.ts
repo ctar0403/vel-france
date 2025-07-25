@@ -1,20 +1,20 @@
 import crypto from 'crypto';
 
 export interface BOGPaymentRequest {
-  intent: 'CAPTURE' | 'AUTHORIZE';
+  callback_url: string;
+  external_order_id: string;
   purchase_units: {
-    amount: {
-      currency_code: string;
-      value: string;
-    };
-    reference_id?: string;
-    description?: string;
-  }[];
-  redirect_urls: {
-    success_url: string;
-    cancel_url: string;
+    basket: {
+      product_id: string;
+      quantity: number;
+      unit_price: number;
+    }[];
+    total_amount: number;
   };
-  locale?: string;
+  redirect_urls: {
+    success: string;
+    fail: string;
+  };
 }
 
 export interface BOGPaymentResponse {
@@ -34,7 +34,7 @@ export interface BOGTokenResponse {
 }
 
 class BOGPaymentService {
-  private baseUrl = 'https://api.bog.ge/v1';
+  private baseUrl = 'https://ipay.ge/opay/api/v1';
   private clientId: string;
   private clientSecret: string;
   private accessToken?: string;
@@ -64,7 +64,7 @@ class BOGPaymentService {
           'Authorization': `Basic ${credentials}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'grant_type=client_credentials&scope=payment'
+        body: 'grant_type=client_credentials'
       });
 
       if (!response.ok) {
@@ -96,7 +96,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/payment`, {
+      const response = await fetch(`${this.baseUrl}/orders`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -130,7 +130,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/payment/${paymentId}`, {
+      const response = await fetch(`${this.baseUrl}/orders/${paymentId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -155,7 +155,7 @@ class BOGPaymentService {
     try {
       const token = await this.getAccessToken();
       
-      const response = await fetch(`${this.baseUrl}/payments/payment/${paymentId}/capture`, {
+      const response = await fetch(`${this.baseUrl}/orders/${paymentId}/capture`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
