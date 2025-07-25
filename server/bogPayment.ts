@@ -62,13 +62,13 @@ class BOGPaymentService {
     try {
       const credentials = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64');
       
-      const response = await fetch(`https://account.bog.ge/auth/realms/bog/protocol/openid-connect/token`, {
+      const response = await fetch(`${this.baseUrl}/oauth2/token`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${credentials}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `grant_type=client_credentials&client_id=${this.clientId}&client_secret=${this.clientSecret}`
+        body: 'grant_type=client_credentials'
       });
 
       if (!response.ok) {
