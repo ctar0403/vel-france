@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <h3 className="font-vibes text-3xl text-navy mb-4">Vel France</h3>
             <p className="text-gray-600 mb-6">
-              L'excellence de la parfumerie française depuis 1932
+              Excellence in French perfumery since 1932
             </p>
             <div className="flex space-x-4">
               <a 
@@ -52,7 +52,7 @@ export default function Footer() {
                   onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
                   className="text-gray-600 hover:text-gold transition-colors text-left"
                 >
-                  Accueil
+                  Home
                 </button>
               </li>
               <li>
@@ -60,7 +60,7 @@ export default function Footer() {
                   onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
                   className="text-gray-600 hover:text-gold transition-colors text-left"
                 >
-                  Parfums
+                  Perfumes
                 </button>
               </li>
               <li>
@@ -68,7 +68,7 @@ export default function Footer() {
                   onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
                   className="text-gray-600 hover:text-gold transition-colors text-left"
                 >
-                  À Propos
+                  About
                 </button>
               </li>
               <li>
@@ -88,22 +88,22 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Conseil Personnalisé
+                  Personal Consultation
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Livraison
+                  Delivery
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Retours
+                  Returns
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Boutiques
+                  Stores
                 </a>
               </li>
             </ul>
@@ -111,21 +111,21 @@ export default function Footer() {
           
           {/* Legal */}
           <div>
-            <h4 className="font-playfair text-lg text-navy mb-4">Informations</h4>
+            <h4 className="font-playfair text-lg text-navy mb-4">Information</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Mentions Légales
+                  Legal Notice
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Confidentialité
+                  Privacy
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  CGV
+                  Terms & Conditions
                 </a>
               </li>
               <li>
@@ -139,7 +139,7 @@ export default function Footer() {
         
         <div className="border-t border-gold/20 mt-12 pt-8 text-center">
           <p className="text-gray-600">
-            © {currentYear} Vel France. Tous droits réservés. | Créé avec passion à Paris
+            © {currentYear} Vel France. All rights reserved. | Created with passion in Paris
           </p>
         </div>
       </div>

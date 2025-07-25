@@ -37,16 +37,16 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
-          variant: "destructive",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
+          variant: "destructive",  
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de mettre à jour la quantité.",
+        title: "Error",
+        description: "Unable to update quantity.",
         variant: "destructive",
       });
     },
@@ -60,8 +60,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Article retiré",
-        description: "L'article a été retiré de votre panier.",
+        title: "Item Removed",
+        description: "The item has been removed from your cart.",
       });
     },
     onError: (error) => {
@@ -75,8 +75,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de retirer l'article.",
+        title: "Error",
+        description: "Unable to remove item.",
         variant: "destructive",
       });
     },
@@ -99,8 +99,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       queryClient.invalidateQueries({ queryKey: ["/api/orders"] });
       toast({
-        title: "Commande confirmée !",
-        description: "Votre commande a été passée avec succès. Vous recevrez un email de confirmation.",
+        title: "Order Confirmed!",
+        description: "Your order has been placed successfully. You will receive a confirmation email.",
       });
       setIsCheckoutOpen(false);
       setCheckoutForm({ shippingAddress: "", billingAddress: "" });
@@ -117,8 +117,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de finaliser la commande.",
+        title: "Error",
+        description: "Unable to complete the order.",
         variant: "destructive",
       });
     },
@@ -162,7 +162,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
             >
               {/* Header */}
               <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-                <h3 className="font-playfair text-2xl text-navy">Votre Panier</h3>
+                <h3 className="font-playfair text-2xl text-navy">Your Cart</h3>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -192,10 +192,10 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   <div className="text-center py-16">
                     <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                     <p className="text-gray-600 font-playfair text-lg mb-2">
-                      Votre panier est vide
+                      Your cart is empty
                     </p>
                     <p className="text-gray-500 text-sm">
-                      Découvrez nos parfums d'exception
+                      Discover our exceptional perfumes
                     </p>
                   </div>
                 ) : (
@@ -275,7 +275,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     onClick={() => setIsCheckoutOpen(true)}
                     disabled={checkoutMutation.isPending}
                   >
-                    Procéder au Paiement
+                    Proceed to Payment
                   </Button>
                 </div>
               )}
@@ -289,13 +289,13 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="font-playfair text-2xl text-navy">
-              Finaliser la Commande
+              Complete Order
             </DialogTitle>
           </DialogHeader>
           
           <form onSubmit={handleCheckout} className="space-y-6">
             <div>
-              <h3 className="font-playfair text-lg text-navy mb-4">Résumé de la commande</h3>
+              <h3 className="font-playfair text-lg text-navy mb-4">Order Summary</h3>
               <div className="bg-cream rounded-lg p-4 space-y-2">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex justify-between">
@@ -311,25 +311,25 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
             </div>
             
             <div>
-              <label className="block text-navy font-playfair mb-2">Adresse de livraison</label>
+              <label className="block text-navy font-playfair mb-2">Shipping Address</label>
               <Textarea
                 value={checkoutForm.shippingAddress}
                 onChange={(e) => setCheckoutForm({...checkoutForm, shippingAddress: e.target.value})}
                 className="border-gold/30 focus:border-gold resize-none"
                 rows={4}
-                placeholder="Nom complet&#10;Adresse&#10;Code postal, Ville&#10;Pays"
+                placeholder="Full name&#10;Address&#10;Postal code, City&#10;Country"
                 required
               />
             </div>
             
             <div>
-              <label className="block text-navy font-playfair mb-2">Adresse de facturation</label>
+              <label className="block text-navy font-playfair mb-2">Billing Address</label>
               <Textarea
                 value={checkoutForm.billingAddress}
                 onChange={(e) => setCheckoutForm({...checkoutForm, billingAddress: e.target.value})}
                 className="border-gold/30 focus:border-gold resize-none"
                 rows={4}
-                placeholder="Même adresse ou adresse différente"
+                placeholder="Same address or different address"
                 required
               />
             </div>
@@ -341,14 +341,14 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                 onClick={() => setIsCheckoutOpen(false)}
                 className="border-gray-300"
               >
-                Annuler
+                Cancel
               </Button>
               <Button
                 type="submit"
                 className="bg-navy hover:bg-navy/90 text-white"
                 disabled={checkoutMutation.isPending}
               >
-                {checkoutMutation.isPending ? 'Traitement...' : 'Confirmer la Commande'}
+                {checkoutMutation.isPending ? 'Processing...' : 'Confirm Order'}
               </Button>
             </div>
           </form>

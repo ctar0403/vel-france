@@ -44,19 +44,19 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
               onClick={() => scrollToSection('home')}
               className="text-navy hover:text-gold transition-colors duration-300"
             >
-              Accueil
+              Home
             </button>
             <button 
               onClick={() => scrollToSection('products')}
               className="text-navy hover:text-gold transition-colors duration-300"
             >
-              Parfums
+              Perfumes
             </button>
             <button 
               onClick={() => scrollToSection('about')}
               className="text-navy hover:text-gold transition-colors duration-300"
             >
-              À Propos
+              About
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
@@ -81,13 +81,13 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                     <div className="flex space-x-4">
                       <Input
                         type="text"
-                        placeholder="Rechercher un parfum..."
+                        placeholder="Search for a perfume..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="flex-1 text-lg py-3 border-gold/30 focus:border-gold"
                       />
                       <Button type="submit" className="bg-gold hover:bg-deep-gold text-navy px-8">
-                        Rechercher
+                        Search
                       </Button>
                     </div>
                   </form>
@@ -130,7 +130,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                   onClick={() => window.location.href = '/api/logout'}
                   className="text-navy hover:text-gold font-playfair"
                 >
-                  Déconnexion
+                  Logout
                 </Button>
               </div>
             ) : (
@@ -178,19 +178,19 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                       onClick={() => scrollToSection('home')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
                     >
-                      Accueil
+                      Home
                     </button>
                     <button 
                       onClick={() => scrollToSection('products')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
                     >
-                      Parfums
+                      Perfumes
                     </button>
                     <button 
                       onClick={() => scrollToSection('about')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
                     >
-                      À Propos
+                      About
                     </button>
                     <button 
                       onClick={() => scrollToSection('contact')}
@@ -216,7 +216,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                         )}
                         <div>
                           <p className="font-playfair text-navy">
-                            {user.firstName || 'Utilisateur'}
+                            {user.firstName || 'User'}
                           </p>
                           <p className="text-sm text-gray-600">{user.email}</p>
                         </div>
@@ -238,7 +238,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                         className="w-full border-navy text-navy hover:bg-navy hover:text-white"
                         onClick={() => window.location.href = '/api/logout'}
                       >
-                        Déconnexion
+                        Logout
                       </Button>
                     </div>
                   )}

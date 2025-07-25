@@ -21,7 +21,7 @@ export default function Landing() {
     firstName: "",
     lastName: "",
     email: "",
-    subject: "Conseil personnalisé",
+    subject: "Personal consultation",
     message: ""
   });
 
@@ -37,15 +37,15 @@ export default function Landing() {
     },
     onSuccess: () => {
       toast({
-        title: "Succès",
-        description: "Vous êtes maintenant inscrit à notre newsletter !",
+        title: "Success",
+        description: "You are now subscribed to our newsletter!",
       });
       setNewsletterEmail("");
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'inscription.",
+        title: "Error",
+        description: "An error occurred during subscription.",
         variant: "destructive",
       });
     },
@@ -58,21 +58,21 @@ export default function Landing() {
     },
     onSuccess: () => {
       toast({
-        title: "Message envoyé",
-        description: "Nous vous répondrons dans les plus brefs délais.",
+        title: "Message Sent",
+        description: "We will respond to you as soon as possible.",
       });
       setContactForm({
         firstName: "",
         lastName: "",
         email: "",
-        subject: "Conseil personnalisé",
+        subject: "Personal consultation",
         message: ""
       });
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du message.",
+        title: "Error",
+        description: "An error occurred while sending the message.",
         variant: "destructive",
       });
     },
@@ -114,23 +114,23 @@ export default function Landing() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-vibes text-6xl md:text-8xl mb-4 gold-shimmer">Bienvenue chez</h2>
+          <h2 className="font-vibes text-6xl md:text-8xl mb-4 gold-shimmer">Welcome to</h2>
           <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6">Vel France</h1>
           <p className="text-xl md:text-2xl mb-8 font-light max-w-2xl mx-auto">
-            L'art de la parfumerie française dans toute sa splendeur
+            The art of French perfumery in all its splendor
           </p>
           <Button
             className="bg-gold hover:bg-deep-gold text-navy px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300 transform hover:scale-105"
             onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Découvrir nos Parfums
+            Discover our Perfumes
           </Button>
           <div className="mt-8">
             <Button
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-6 py-3 rounded-full font-playfair transition-all duration-300"
               onClick={() => window.location.href = '/api/login'}
             >
-              Se connecter
+              Sign In
             </Button>
           </div>
         </motion.div>
@@ -146,9 +146,9 @@ export default function Landing() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Nos Créations</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Our Creations</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Une sélection exclusive de parfums artisanaux créés avec les plus précieux ingrédients
+              An exclusive selection of artisanal perfumes created with the most precious ingredients
             </p>
           </motion.div>
           
@@ -194,9 +194,9 @@ export default function Landing() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Collection Complète</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Complete Collection</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Explorez notre gamme complète de parfums d'exception
+              Explore our complete range of exceptional perfumes
             </p>
           </motion.div>
           
@@ -218,7 +218,7 @@ export default function Landing() {
             ) : products.length === 0 ? (
               <div className="col-span-full text-center py-16">
                 <p className="text-gray-600 font-playfair text-lg">
-                  Aucun produit disponible pour le moment
+                  No products available at the moment
                 </p>
               </div>
             ) : (
@@ -248,26 +248,26 @@ export default function Landing() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-vibes text-5xl text-navy mb-6">Notre Histoire</h2>
-              <h3 className="font-playfair text-2xl text-navy mb-6">L'Art de la Parfumerie Française</h3>
+              <h2 className="font-vibes text-5xl text-navy mb-6">Our Story</h2>
+              <h3 className="font-playfair text-2xl text-navy mb-6">The Art of French Perfumery</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Depuis 1932, Vel France perpétue la tradition de la parfumerie française d'exception. 
-                Nos maîtres parfumeurs créent des compositions uniques en utilisant les ingrédients 
-                les plus raffinés, récoltés aux quatre coins du monde.
+                Since 1932, Vel France has perpetuated the tradition of exceptional French perfumery. 
+                Our master perfumers create unique compositions using the finest ingredients, 
+                sourced from around the world.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Chaque parfum raconte une histoire, évoque une émotion, capture un moment d'éternité. 
-                Notre savoir-faire artisanal se transmet de génération en génération, préservant 
-                l'authenticité et l'excellence de la parfumerie française.
+                Each perfume tells a story, evokes an emotion, captures a moment of eternity. 
+                Our artisanal craftsmanship is passed down from generation to generation, preserving 
+                the authenticity and excellence of French perfumery.
               </p>
               <div className="flex items-center space-x-8 mt-8">
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">90+</div>
-                  <div className="text-sm text-gray-600">Années d'Excellence</div>
+                  <div className="text-sm text-gray-600">Years of Excellence</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">50+</div>
-                  <div className="text-sm text-gray-600">Créations Uniques</div>
+                  <div className="text-sm text-gray-600">Unique Creations</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-playfair font-bold text-gold">100%</div>
@@ -288,7 +288,7 @@ export default function Landing() {
                 className="rounded-2xl shadow-2xl w-full h-96 object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-gold text-navy p-6 rounded-2xl shadow-xl">
-                <div className="font-vibes text-2xl">Fait à la main</div>
+                <div className="font-vibes text-2xl">Handcrafted</div>
                 <div className="font-playfair text-sm">Paris, France</div>
               </div>
             </motion.div>
@@ -306,9 +306,9 @@ export default function Landing() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Contactez-Nous</h2>
+            <h2 className="font-vibes text-5xl text-navy mb-4">Contact Us</h2>
             <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
-              Nous serions ravis de vous accompagner dans votre quête du parfum parfait
+              We would be delighted to accompany you in your quest for the perfect perfume
             </p>
           </motion.div>
           
@@ -322,7 +322,7 @@ export default function Landing() {
               <form onSubmit={handleContactSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-navy font-playfair mb-2">Prénom</label>
+                    <label className="block text-navy font-playfair mb-2">First Name</label>
                     <Input 
                       value={contactForm.firstName}
                       onChange={(e) => setContactForm({...contactForm, firstName: e.target.value})}
@@ -331,7 +331,7 @@ export default function Landing() {
                     />
                   </div>
                   <div>
-                    <label className="block text-navy font-playfair mb-2">Nom</label>
+                    <label className="block text-navy font-playfair mb-2">Last Name</label>
                     <Input 
                       value={contactForm.lastName}
                       onChange={(e) => setContactForm({...contactForm, lastName: e.target.value})}
@@ -351,7 +351,7 @@ export default function Landing() {
                   />
                 </div>
                 <div>
-                  <label className="block text-navy font-playfair mb-2">Sujet</label>
+                  <label className="block text-navy font-playfair mb-2">Subject</label>
                   <Select 
                     value={contactForm.subject} 
                     onValueChange={(value) => setContactForm({...contactForm, subject: value})}
@@ -360,10 +360,10 @@ export default function Landing() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Conseil personnalisé">Conseil personnalisé</SelectItem>
-                      <SelectItem value="Information produit">Information produit</SelectItem>
-                      <SelectItem value="Service client">Service client</SelectItem>
-                      <SelectItem value="Autre">Autre</SelectItem>
+                      <SelectItem value="Personal consultation">Personal consultation</SelectItem>
+                      <SelectItem value="Product information">Product information</SelectItem>
+                      <SelectItem value="Customer service">Customer service</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -382,7 +382,7 @@ export default function Landing() {
                   className="w-full bg-navy hover:bg-navy/90 text-white py-3 font-playfair font-semibold"
                   disabled={contactMutation.isPending}
                 >
-                  {contactMutation.isPending ? "Envoi..." : "Envoyer le Message"}
+                  {contactMutation.isPending ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </motion.div>
@@ -394,19 +394,19 @@ export default function Landing() {
               transition={{ duration: 0.6 }}
             >
               <Card className="bg-white shadow-xl p-8 mb-8">
-                <h3 className="font-playfair text-2xl text-navy mb-6">Nos Coordonnées</h3>
+                <h3 className="font-playfair text-2xl text-navy mb-6">Our Contact Details</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-map-marker-alt text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Adresse</div>
+                      <div className="font-playfair text-navy">Address</div>
                       <div className="text-gray-600">25 Place Vendôme, 75001 Paris</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-phone text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Téléphone</div>
+                      <div className="font-playfair text-navy">Phone</div>
                       <div className="text-gray-600">+33 1 42 60 30 70</div>
                     </div>
                   </div>
@@ -420,8 +420,8 @@ export default function Landing() {
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-clock text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Horaires</div>
-                      <div className="text-gray-600">Lun-Sam: 10h-19h</div>
+                      <div className="font-playfair text-navy">Hours</div>
+                      <div className="text-gray-600">Mon-Sat: 10am-7pm</div>
                     </div>
                   </div>
                 </div>
@@ -452,14 +452,14 @@ export default function Landing() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-vibes text-4xl mb-4">Rejoignez Notre Newsletter</h2>
+            <h2 className="font-vibes text-4xl mb-4">Join Our Newsletter</h2>
             <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Découvrez en exclusivité nos nouvelles créations et bénéficiez d'offres privilégiées
+              Discover our new creations exclusively and benefit from special offers
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex flex-col md:flex-row max-w-md mx-auto gap-4">
               <Input 
                 type="email" 
-                placeholder="Votre adresse email" 
+                placeholder="Your email address" 
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
                 className="flex-1 text-navy bg-white border-none"
@@ -470,7 +470,7 @@ export default function Landing() {
                 className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-playfair font-semibold"
                 disabled={newsletterMutation.isPending}
               >
-                {newsletterMutation.isPending ? "..." : "S'inscrire"}
+                {newsletterMutation.isPending ? "..." : "Subscribe"}
               </Button>
             </form>
           </motion.div>

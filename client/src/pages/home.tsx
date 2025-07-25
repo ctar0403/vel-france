@@ -28,7 +28,7 @@ export default function Home() {
     firstName: "",
     lastName: "",
     email: "",
-    subject: "Conseil personnalisé",
+    subject: "Personal consultation",
     message: ""
   });
 
@@ -57,15 +57,15 @@ export default function Home() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Produit ajouté",
-        description: "Le produit a été ajouté à votre panier avec succès.",
+        title: "Product Added",
+        description: "The product has been added to your cart successfully.",
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Vous devez être connecté. Redirection...",
+          title: "Unauthorized",
+          description: "You must be logged in. Redirecting...",
           variant: "destructive",
         });
         setTimeout(() => {
@@ -74,8 +74,8 @@ export default function Home() {
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible d'ajouter le produit au panier.",
+        title: "Error",
+        description: "Unable to add the product to cart.",
         variant: "destructive",
       });
     },
@@ -88,15 +88,15 @@ export default function Home() {
     },
     onSuccess: () => {
       toast({
-        title: "Succès",
-        description: "Vous êtes maintenant inscrit à notre newsletter !",
+        title: "Success",
+        description: "You are now subscribed to our newsletter!",
       });
       setNewsletterEmail("");
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'inscription.",
+        title: "Error",
+        description: "An error occurred during subscription.",
         variant: "destructive",
       });
     },
@@ -109,14 +109,14 @@ export default function Home() {
     },
     onSuccess: () => {
       toast({
-        title: "Message envoyé",
-        description: "Nous vous répondrons dans les plus brefs délais.",
+        title: "Message Sent",
+        description: "We will respond to you as soon as possible.",
       });
       setContactForm({
         firstName: "",
         lastName: "",
         email: "",
-        subject: "Conseil personnalisé",
+        subject: "Personal consultation",
         message: ""
       });
     },
@@ -154,7 +154,7 @@ export default function Home() {
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
-        user={user}
+        user={user as any}
       />
       
       <CartSidebar 

@@ -76,8 +76,8 @@ export default function Admin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
       toast({
-        title: "Succès",
-        description: editingProduct ? "Produit modifié avec succès" : "Produit créé avec succès",
+        title: "Success",
+        description: editingProduct ? "Product updated successfully" : "Product created successfully",
       });
       setIsProductDialogOpen(false);
       setEditingProduct(null);
@@ -86,16 +86,16 @@ export default function Admin() {
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder le produit.",
+        title: "Error",
+        description: "Unable to save the product.",
         variant: "destructive",
       });
     },
@@ -109,23 +109,23 @@ export default function Admin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
       toast({
-        title: "Produit supprimé",
-        description: "Le produit a été supprimé avec succès.",
+        title: "Product Deleted",
+        description: "The product has been deleted successfully.",
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer le produit.",
+        title: "Error",
+        description: "Unable to delete the product.",
         variant: "destructive",
       });
     },
@@ -139,23 +139,23 @@ export default function Admin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
       toast({
-        title: "Statut mis à jour",
-        description: "Le statut de la commande a été modifié.",
+        title: "Status Updated",
+        description: "The order status has been updated.",
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Erreur",
-        description: "Impossible de mettre à jour le statut.",
+        title: "Error",
+        description: "Unable to update the status.",
         variant: "destructive",
       });
     },
@@ -172,8 +172,8 @@ export default function Admin() {
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
