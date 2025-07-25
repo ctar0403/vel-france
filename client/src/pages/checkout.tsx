@@ -87,7 +87,8 @@ export default function CheckoutPage() {
           shippingAddress: JSON.stringify(shippingForm),
           billingAddress: JSON.stringify(billingAddress),
           items,
-          calculatorResult: paymentData.calculatorResult
+          calculatorResult: paymentData.calculatorResult,
+          paymentMethod: paymentData.paymentMethod
         });
         return response;
       }

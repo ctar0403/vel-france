@@ -210,7 +210,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payments/initiate-with-calculator", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      const { shippingAddress, billingAddress, items, calculatorResult } = req.body;
+      const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod } = req.body;
       
       // Calculate total
       let total = 0;
@@ -245,6 +245,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Create BOG payment order using calculator results
       const baseUrl = `${req.protocol}://${req.get('host')}`;
+      
+      // Determine payment method configuration based on selection
+      let paymentConfig: any = {};
+      if (paymentMethod === 'bnpl') {
+        // For Buy Now Pay Later, we don't use the loan config
+        paymentConfig = {
+          payment_method: ['bnpl'],
+          bnpl: true,
+          config: {
+            installment: {
+              discount_code: calculatorResult.discount_code,
+              month: calculatorResult.month
+            }
+          }
+        };
+      } else {
+        // For standard installments
+        paymentConfig = {
+          payment_method: ['bnpl'],  // BOG uses 'bnpl' for both installments and part-by-part
+          bnpl: false,
+          config: {
+            loan: {
+              type: calculatorResult.discount_code,
+              month: calculatorResult.month
+            }
+          }
+        };
+      }
+
       const bogOrderRequest: BOGCreateOrderRequest = {
         callback_url: `${baseUrl}/api/payments/callback`,
         external_order_id: order.id,
@@ -264,13 +293,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60,
-        payment_method: ['bnpl'],
-        config: {
-          loan: {
-            type: calculatorResult.discount_code,
-            month: calculatorResult.month
-          }
-        },
+        ...paymentConfig,
         capture: 'automatic',
         application_type: 'web'
       };
