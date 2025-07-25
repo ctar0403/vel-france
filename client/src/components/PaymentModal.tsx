@@ -62,10 +62,15 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       return response;
     },
     onSuccess: (data: any) => {
+      // Debug: Log the complete response
+      console.log("Payment response received:", data);
+      
       // Redirect to BOG payment page
       if (data.paymentUrl) {
+        console.log("Redirecting to:", data.paymentUrl);
         window.location.href = data.paymentUrl;
       } else {
+        console.error("No paymentUrl in response:", data);
         toast({
           title: "Payment Error",
           description: "Unable to redirect to payment page. Please try again.",

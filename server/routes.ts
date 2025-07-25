@@ -229,18 +229,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Create BOG order (using real BOG Payment API)
       const bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
+      console.log("BOG Order Response:", JSON.stringify(bogOrder, null, 2));
       
       // Update order with payment ID
       await storage.updateOrderPayment(order.id, bogOrder.id, 'pending');
       
       const paymentUrl = bogPaymentService.getPaymentUrl(bogOrder);
+      console.log("Generated Payment URL:", paymentUrl);
       
-      res.json({
+      const response = {
         orderId: order.id,
         paymentId: bogOrder.id,
         paymentUrl,
         status: 'created'
-      });
+      };
+      
+      console.log("Sending response to frontend:", JSON.stringify(response, null, 2));
+      res.json(response);
     } catch (error) {
       console.error("Error initiating payment:", error);
       res.status(500).json({ message: "Failed to initiate payment" });
