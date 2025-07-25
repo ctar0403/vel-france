@@ -46,11 +46,11 @@ class BOGPaymentService {
   private tokenExpiry?: number;
 
   constructor() {
-    // Use updated BOG credentials
-    this.clientId = '15391';
-    this.clientSecret = 'mUjYHjNZKd6N';
+    // Use correct BOG iPay credentials
+    this.clientId = '10001216';
+    this.clientSecret = 'vNx6Sx1bge5g';
     
-    console.log('Using updated BOG credentials with client ID:', this.clientId);
+    console.log('Using BOG iPay credentials - Client ID:', this.clientId, 'Merchant ID: 00000000981292N');
   }
 
   private async getAccessToken(): Promise<string> {
