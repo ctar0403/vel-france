@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { bogPaymentService } from "./bogPayment";
 import { 
   insertProductSchema,
   insertCartItemSchema,
@@ -161,6 +162,134 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error clearing cart:", error);
       res.status(500).json({ message: "Failed to clear cart" });
+    }
+  });
+
+  // Payment initiation route
+  app.post("/api/payments/initiate", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { shippingAddress, billingAddress, items } = req.body;
+      
+      // Calculate total
+      let total = 0;
+      const orderItems = [];
+      
+      for (const item of items) {
+        const product = await storage.getProduct(item.productId);
+        if (!product) {
+          return res.status(400).json({ message: `Product ${item.productId} not found` });
+        }
+        
+        const itemTotal = parseFloat(product.price) * item.quantity;
+        total += itemTotal;
+        
+        orderItems.push({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: product.price
+        });
+      }
+
+      // Create order with pending payment status
+      const orderData = insertOrderSchema.parse({
+        userId,
+        total: total.toString(),
+        shippingAddress,
+        billingAddress,
+        paymentStatus: "pending"
+      });
+
+      const order = await storage.createOrder(orderData, orderItems as any);
+
+      // Create BOG payment
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const bogPaymentRequest = {
+        intent: 'CAPTURE' as const,
+        purchase_units: [{
+          amount: {
+            currency_code: 'GEL',
+            value: total.toFixed(2)
+          },
+          reference_id: order.id,
+          description: `Vel France Order #${order.id}`
+        }],
+        redirect_urls: {
+          success_url: `${baseUrl}/payment/success?orderId=${order.id}`,
+          cancel_url: `${baseUrl}/payment/cancel?orderId=${order.id}`
+        },
+        locale: 'en'
+      };
+
+      const bogPayment = await bogPaymentService.createPayment(bogPaymentRequest);
+      
+      // Update order with payment ID
+      await storage.updateOrderPayment(order.id, bogPayment.id, 'pending');
+      
+      const approvalUrl = bogPaymentService.getApprovalUrl(bogPayment);
+      
+      res.json({
+        orderId: order.id,
+        paymentId: bogPayment.id,
+        approvalUrl,
+        status: bogPayment.status
+      });
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+      res.status(500).json({ message: "Failed to initiate payment" });
+    }
+  });
+
+  // Payment success callback
+  app.get("/api/payments/success", async (req, res) => {
+    try {
+      const { orderId, paymentId } = req.query;
+      
+      if (!orderId || !paymentId) {
+        return res.status(400).json({ message: "Missing orderId or paymentId" });
+      }
+
+      // Get payment status from BOG
+      const bogPayment = await bogPaymentService.getPayment(paymentId as string);
+      
+      // Update order based on payment status
+      let orderStatus = 'pending';
+      let paymentStatus = bogPayment.status.toLowerCase();
+      
+      if (bogPayment.status === 'APPROVED' || bogPayment.status === 'COMPLETED') {
+        orderStatus = 'confirmed';
+        paymentStatus = 'completed';
+        
+        // Clear user's cart after successful payment
+        const order = await storage.getOrder(orderId as string);
+        if (order) {
+          await storage.clearCart(order.userId);
+        }
+      }
+      
+      await storage.updateOrderStatus(orderId as string, orderStatus, paymentStatus);
+      
+      // Redirect to success page
+      res.redirect(`/?payment=success&orderId=${orderId}`);
+    } catch (error) {
+      console.error("Error handling payment success:", error);
+      res.redirect(`/?payment=error`);
+    }
+  });
+
+  // Payment cancel callback
+  app.get("/api/payments/cancel", async (req, res) => {
+    try {
+      const { orderId } = req.query;
+      
+      if (orderId) {
+        await storage.updateOrderStatus(orderId as string, 'cancelled', 'cancelled');
+      }
+      
+      res.redirect(`/?payment=cancelled&orderId=${orderId}`);
+    } catch (error) {
+      console.error("Error handling payment cancellation:", error);
+      res.redirect(`/?payment=error`);
     }
   });
 

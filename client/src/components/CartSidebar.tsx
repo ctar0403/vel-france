@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import PaymentModal from "./PaymentModal";
 import type { Product, CartItem } from "@shared/schema";
-import { X, Plus, Minus, Trash2, ShoppingCart } from "lucide-react";
+import { X, Plus, Minus, Trash2, ShoppingCart, CreditCard } from "lucide-react";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -20,11 +18,7 @@ interface CartSidebarProps {
 
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
   const { toast } = useToast();
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [checkoutForm, setCheckoutForm] = useState({
-    shippingAddress: "",
-    billingAddress: "",
-  });
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -67,8 +61,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
+          title: "Unauthorized",
+          description: "Session expired. Reconnecting...",
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
@@ -82,47 +76,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     },
   });
 
-  // Create order
-  const checkoutMutation = useMutation({
-    mutationFn: async (data: typeof checkoutForm) => {
-      const items = cartItems.map(item => ({
-        productId: item.productId,
-        quantity: item.quantity
-      }));
-      
-      await apiRequest("POST", "/api/orders", {
-        ...data,
-        items
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/orders"] });
-      toast({
-        title: "Order Confirmed!",
-        description: "Your order has been placed successfully. You will receive a confirmation email.",
-      });
-      setIsCheckoutOpen(false);
-      setCheckoutForm({ shippingAddress: "", billingAddress: "" });
-      onClose();
-    },
-    onError: (error) => {
-      if (isUnauthorizedError(error)) {
-        toast({
-          title: "Non autorisé",
-          description: "Session expirée. Reconnexion...",
-          variant: "destructive",
-        });
-        setTimeout(() => window.location.href = "/api/login", 500);
-        return;
-      }
-      toast({
-        title: "Error",
-        description: "Unable to complete the order.",
-        variant: "destructive",
-      });
-    },
-  });
+
 
   const total = cartItems.reduce((sum, item) => {
     return sum + (parseFloat(item.product.price) * item.quantity);
@@ -133,10 +87,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     updateQuantityMutation.mutate({ itemId, quantity: newQuantity });
   };
 
-  const handleCheckout = (e: React.FormEvent) => {
-    e.preventDefault();
-    checkoutMutation.mutate(checkoutForm);
-  };
+
 
   return (
     <>
@@ -216,7 +167,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                         />
                         <div className="flex-1">
                           <h4 className="font-playfair text-navy">{item.product.name}</h4>
-                          <p className="text-sm text-gray-600">€{item.product.price}</p>
+                          <p className="text-sm text-gray-600">₾{item.product.price}</p>
                           <div className="flex items-center space-x-2 mt-2">
                             <Button
                               size="sm"
@@ -252,7 +203,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                             <Trash2 className="h-4 w-4" />
                           </Button>
                           <span className="font-playfair font-bold text-gold">
-                            €{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                            ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                           </span>
                         </div>
                       </motion.div>
@@ -267,14 +218,14 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   <div className="flex items-center justify-between mb-4">
                     <span className="font-playfair text-lg text-navy">Total:</span>
                     <span className="font-playfair text-2xl font-bold text-gold">
-                      €{total.toFixed(2)}
+                      ₾{total.toFixed(2)}
                     </span>
                   </div>
                   <Button
                     className="w-full bg-gold hover:bg-deep-gold text-navy py-3 font-playfair font-semibold transition-colors"
-                    onClick={() => setIsCheckoutOpen(true)}
-                    disabled={checkoutMutation.isPending}
+                    onClick={() => setIsPaymentModalOpen(true)}
                   >
+                    <CreditCard className="mr-2 h-4 w-4" />
                     Proceed to Payment
                   </Button>
                 </div>
@@ -284,76 +235,13 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
         )}
       </AnimatePresence>
 
-      {/* Checkout Dialog */}
-      <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="font-playfair text-2xl text-navy">
-              Complete Order
-            </DialogTitle>
-          </DialogHeader>
-          
-          <form onSubmit={handleCheckout} className="space-y-6">
-            <div>
-              <h3 className="font-playfair text-lg text-navy mb-4">Order Summary</h3>
-              <div className="bg-cream rounded-lg p-4 space-y-2">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="flex justify-between">
-                    <span>{item.product.name} (x{item.quantity})</span>
-                    <span>€{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
-                <div className="border-t border-gold/20 pt-2 flex justify-between font-bold">
-                  <span>Total:</span>
-                  <span className="text-gold">€{total.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-navy font-playfair mb-2">Shipping Address</label>
-              <Textarea
-                value={checkoutForm.shippingAddress}
-                onChange={(e) => setCheckoutForm({...checkoutForm, shippingAddress: e.target.value})}
-                className="border-gold/30 focus:border-gold resize-none"
-                rows={4}
-                placeholder="Full name&#10;Address&#10;Postal code, City&#10;Country"
-                required
-              />
-            </div>
-            
-            <div>
-              <label className="block text-navy font-playfair mb-2">Billing Address</label>
-              <Textarea
-                value={checkoutForm.billingAddress}
-                onChange={(e) => setCheckoutForm({...checkoutForm, billingAddress: e.target.value})}
-                className="border-gold/30 focus:border-gold resize-none"
-                rows={4}
-                placeholder="Same address or different address"
-                required
-              />
-            </div>
-            
-            <div className="flex justify-end space-x-4 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsCheckoutOpen(false)}
-                className="border-gray-300"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="bg-navy hover:bg-navy/90 text-white"
-                disabled={checkoutMutation.isPending}
-              >
-                {checkoutMutation.isPending ? 'Processing...' : 'Confirm Order'}
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        cartItems={cartItems}
+        totalAmount={total}
+      />
     </>
   );
 }

@@ -7,6 +7,8 @@ import { useAuth } from "@/hooks/useAuth";
 import Landing from "@/pages/landing";
 import Home from "@/pages/home";
 import Admin from "@/pages/admin";
+import PaymentSuccess from "@/pages/payment-success";
+import PaymentCancel from "@/pages/payment-cancel";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -15,11 +17,17 @@ function Router() {
   return (
     <Switch>
       {isLoading || !isAuthenticated ? (
-        <Route path="/" component={Landing} />
+        <>
+          <Route path="/" component={Landing} />
+          <Route path="/payment/success" component={PaymentSuccess} />
+          <Route path="/payment/cancel" component={PaymentCancel} />
+        </>
       ) : (
         <>
           <Route path="/" component={Home} />
           <Route path="/admin" component={Admin} />
+          <Route path="/payment/success" component={PaymentSuccess} />
+          <Route path="/payment/cancel" component={PaymentCancel} />
         </>
       )}
       <Route component={NotFound} />

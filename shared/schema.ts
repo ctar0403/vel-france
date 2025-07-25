@@ -69,6 +69,9 @@ export const orders = pgTable("orders", {
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
   shippingAddress: text("shipping_address").notNull(),
   billingAddress: text("billing_address").notNull(),
+  paymentId: varchar("payment_id", { length: 100 }), // BOG Payment ID
+  paymentStatus: varchar("payment_status", { length: 50 }).default("pending"), // pending, approved, completed, failed, cancelled
+  paymentMethod: varchar("payment_method", { length: 50 }).default("bog"), // bog, card, etc.
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

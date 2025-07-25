@@ -45,9 +45,11 @@ export interface IStorage {
   
   // Order operations
   createOrder(order: InsertOrder, orderItems: InsertOrderItem[]): Promise<Order>;
+  getOrder(orderId: string): Promise<Order | undefined>;
   getOrders(userId: string): Promise<(Order & { orderItems: (OrderItem & { product: Product })[] })[]>;
   getAllOrders(): Promise<(Order & { user: User, orderItems: (OrderItem & { product: Product })[] })[]>;
-  updateOrderStatus(orderId: string, status: string): Promise<Order>;
+  updateOrderStatus(orderId: string, status: string, paymentStatus?: string): Promise<Order>;
+  updateOrderPayment(orderId: string, paymentId: string, paymentStatus: string): Promise<Order>;
   
   // Newsletter operations
   subscribeNewsletter(newsletter: InsertNewsletter): Promise<Newsletter>;
@@ -235,10 +237,33 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
-  async updateOrderStatus(orderId: string, status: string): Promise<Order> {
+  async getOrder(orderId: string): Promise<Order | undefined> {
+    const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
+    return order;
+  }
+
+  async updateOrderStatus(orderId: string, status: string, paymentStatus?: string): Promise<Order> {
+    const updateData: any = { status, updatedAt: new Date() };
+    if (paymentStatus) {
+      updateData.paymentStatus = paymentStatus;
+    }
+    
     const [updatedOrder] = await db
       .update(orders)
-      .set({ status, updatedAt: new Date() })
+      .set(updateData)
+      .where(eq(orders.id, orderId))
+      .returning();
+    return updatedOrder;
+  }
+
+  async updateOrderPayment(orderId: string, paymentId: string, paymentStatus: string): Promise<Order> {
+    const [updatedOrder] = await db
+      .update(orders)
+      .set({ 
+        paymentId, 
+        paymentStatus, 
+        updatedAt: new Date() 
+      })
       .where(eq(orders.id, orderId))
       .returning();
     return updatedOrder;
