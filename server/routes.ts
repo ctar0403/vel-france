@@ -246,11 +246,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create BOG payment order using calculator results
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       
-      // BOG API type values: "standard" for installments, "zero" for part-by-part
+      // BOG API configuration based on payment method type
       let paymentConfig: any = {};
       
       if (paymentMethod === 'bnpl') {
-        // For Buy Now Pay Later (part-by-part) - use type "zero"
+        // For Buy Now Pay Later (part-by-part) - use bnpl method with type "zero"
         paymentConfig = {
           payment_method: ['bnpl'],
           bnpl: true,
@@ -262,10 +262,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         };
       } else {
-        // For standard installments - use type "standard"
+        // For standard installments - use bog_loan method with type "standard"
         paymentConfig = {
-          payment_method: ['bnpl'],  // BOG uses 'bnpl' for both installments and part-by-part
-          bnpl: false,
+          payment_method: ['bog_loan'],  // Use bog_loan for standard installments
           config: {
             loan: {
               type: 'standard',
@@ -275,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       }
       
-      console.log(`Using BOG Calculator: ${calculatorResult.month} months (${paymentMethod}), type: ${paymentMethod === 'bnpl' ? 'zero' : 'standard'}`);
+      console.log(`Using BOG Calculator: ${calculatorResult.month} months (${paymentMethod}), payment_method: ${paymentMethod === 'bnpl' ? 'bnpl' : 'bog_loan'}`);
 
       const bogOrderRequest: BOGCreateOrderRequest = {
         callback_url: `${baseUrl}/api/payments/callback`,
