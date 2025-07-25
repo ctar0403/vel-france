@@ -46,15 +46,11 @@ class BOGPaymentService {
   private tokenExpiry?: number;
 
   constructor() {
-    // Use your actual BOG production credentials
-    this.clientId = process.env.BOG_CLIENT_ID!;
-    this.clientSecret = process.env.BOG_CLIENT_SECRET!;
+    // Use updated BOG credentials
+    this.clientId = '15391';
+    this.clientSecret = 'mUjYHjNZKd6N';
     
-    if (!this.clientId || !this.clientSecret) {
-      throw new Error('BOG_CLIENT_ID and BOG_CLIENT_SECRET must be provided');
-    }
-    
-    console.log('Using BOG production credentials with client ID:', this.clientId);
+    console.log('Using updated BOG credentials with client ID:', this.clientId);
   }
 
   private async getAccessToken(): Promise<string> {
