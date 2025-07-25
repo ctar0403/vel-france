@@ -12,17 +12,23 @@ import {
   insertContactMessageSchema
 } from "@shared/schema";
 
-// Helper function to map payment method to BOG payment_method array
-function getPaymentMethods(paymentMethod: string): string[] {
+// Helper function to configure BOG payment options
+function getBOGPaymentConfig(paymentMethod: string): { payment_method: string[], bnpl?: boolean } {
   switch (paymentMethod) {
     case 'card':
-      return ['card'];
+      return { payment_method: ['card'] };
     case 'installment':
-      return ['bog_loan']; // BOG installment loans
+      return { 
+        payment_method: ['card'], // Use card payment method
+        bnpl: false // Show only standard installment plan
+      };
     case 'bnpl':
-      return ['bnpl']; // Buy now pay later / part-by-part
+      return { 
+        payment_method: ['card'], // Use card payment method  
+        bnpl: true // Show only payment in installments (part-by-part)
+      };
     default:
-      return ['card'];
+      return { payment_method: ['card'] };
   }
 }
 
@@ -237,30 +243,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60, // 60 minutes to complete payment
-        payment_method: getPaymentMethods(paymentMethod), // Set payment method based on user selection
+        ...getBOGPaymentConfig(paymentMethod), // Set payment method and bnpl config
         capture: 'automatic', // Immediate capture
         application_type: 'web'
       };
 
       // Create BOG order (using real BOG Payment API)
-      try {
-        var bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
-      } catch (bogError: any) {
-        // Handle specific BOG errors for unsupported payment methods
-        if (bogError.message.includes("Invalid loan config")) {
-          // If installment/BNPL is not enabled, fall back to card payment
-          console.log(`${paymentMethod} not available, falling back to card payment`);
-          
-          // Update payment method to card and retry
-          bogOrderRequest.payment_method = ['card'];
-          var bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
-          
-          // Log the fallback for transparency
-          console.log("Fallback to card payment successful");
-        } else {
-          throw bogError; // Re-throw other errors
-        }
-      }
+      const bogOrder = await bogPaymentService.createOrder(bogOrderRequest);
       console.log("BOG Order Response:", JSON.stringify(bogOrder, null, 2));
       
       // Update order with payment ID

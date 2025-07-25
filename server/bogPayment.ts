@@ -33,6 +33,7 @@ export interface BOGCreateOrderRequest {
   };
   ttl?: number; // minutes (2-1440, default 15)
   payment_method?: string[]; // card, google_pay, apple_pay, bog_p2p, bog_loyalty, bnpl, bog_loan, gift_card
+  bnpl?: boolean; // true = installments only, false = standard only, undefined = both
   capture?: 'automatic' | 'manual'; // defaults to automatic
   buyer?: {
     full_name?: string;

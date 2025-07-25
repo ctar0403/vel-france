@@ -469,8 +469,8 @@ export default function CheckoutPage() {
               {/* Payment Method Disclaimer */}
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                 <p className="text-sm text-blue-800">
-                  <span className="font-semibold">*Note:</span> Installment and Part-by-Part payments require BOG merchant account approval. 
-                  If these options are not available for your account, the system will automatically redirect you to standard card payment.
+                  <span className="font-semibold">*Payment Options:</span> All payments are processed securely through Bank of Georgia. 
+                  Installment and Part-by-Part options may require additional approval during the payment process.
                 </p>
               </div>
             </form>
