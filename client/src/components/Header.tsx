@@ -35,7 +35,6 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
             <h1 className="font-vibes text-3xl text-navy cursor-pointer" onClick={() => scrollToSection('home')}>
               Vel France
             </h1>
-            <span className="text-gold text-lg">✦</span>
           </div>
           
           {/* Desktop Navigation */}
