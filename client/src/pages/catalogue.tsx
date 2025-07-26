@@ -75,7 +75,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
   return (
     <div
       className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer mx-auto"
-      style={{ width: '240px', height: '320px' }}
+      style={{ width: '240px', height: '350px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -134,8 +134,8 @@ function LuxuryProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="h-[80px] p-3 flex flex-col justify-center">
-        <h3 className="font-semibold text-navy text-sm mb-1 leading-tight line-clamp-2">
+      <div className="h-[110px] p-3 flex flex-col justify-center">
+        <h3 className="font-semibold text-navy text-sm mb-2 leading-tight line-clamp-3">
           {formatProductName(product.name, product.brand)}
         </h3>
         
