@@ -38,28 +38,52 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 font-playfair">
+          <div className="hidden lg:flex items-center space-x-6 font-playfair">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-navy hover:text-gold transition-colors duration-300"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('products')}
-              className="text-navy hover:text-gold transition-colors duration-300"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
-              Perfumes
+              Catalogue
             </button>
             <button 
-              onClick={() => scrollToSection('about')}
-              className="text-navy hover:text-gold transition-colors duration-300"
+              onClick={() => scrollToSection('brands')}
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
-              About
+              Brands
+            </button>
+            <button 
+              onClick={() => scrollToSection('mens')}
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Men's
+            </button>
+            <button 
+              onClick={() => scrollToSection('womens')}
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Women's
+            </button>
+            <button 
+              onClick={() => scrollToSection('unisex')}
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Unisex
+            </button>
+            <button 
+              onClick={() => scrollToSection('niche')}
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Niche
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-navy hover:text-gold transition-colors duration-300"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Contact
             </button>
@@ -161,7 +185,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="md:hidden text-navy hover:text-gold">
+                <Button variant="ghost" size="sm" className="lg:hidden text-navy hover:text-gold">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -175,25 +199,49 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                   <nav className="flex flex-col space-y-4 font-playfair">
                     <button 
                       onClick={() => scrollToSection('home')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Home
                     </button>
                     <button 
                       onClick={() => scrollToSection('products')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
-                      Perfumes
+                      Catalogue
                     </button>
                     <button 
-                      onClick={() => scrollToSection('about')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
+                      onClick={() => scrollToSection('brands')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
-                      About
+                      Brands
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection('mens')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    >
+                      Men's
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection('womens')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    >
+                      Women's
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection('unisex')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    >
+                      Unisex
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection('niche')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    >
+                      Niche
                     </button>
                     <button 
                       onClick={() => scrollToSection('contact')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2"
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Contact
                     </button>
