@@ -8,7 +8,7 @@ import { loginSchema, registerSchema, type User } from "@shared/schema";
 
 declare global {
   namespace Express {
-    interface User extends Omit<User, 'password'> {}
+    interface User extends Omit<import("@shared/schema").User, 'password'> {}
   }
 }
 
