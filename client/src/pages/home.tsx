@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,8 +16,13 @@ import ProductCard from "@/components/ProductCard";
 import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
-import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
-import heroVideo from "@assets/Adobe Express - A_surreal_futuristic_202507261606 (1)_1753532857893.mp4";
+import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
+import banner1 from "@assets/1_1753538704078.png";
+import banner2 from "@assets/2_1753538710752.png";
+import banner3 from "@assets/3_1753538715604.png";
+import banner4 from "@assets/4_1753538720559.png";
+import banner5 from "@assets/5_1753538726165.png";
+
 
 export default function Home() {
   const { user } = useAuth();
@@ -25,6 +30,7 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [contactForm, setContactForm] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +38,37 @@ export default function Home() {
     subject: "Personal consultation",
     message: ""
   });
+
+  // Banner images for slideshow
+  const banners = [
+    { image: banner1, alt: "Luxury perfume collection with 60% discount in Paris setting" },
+    { image: banner2, alt: "Chanel No. 5 perfume with citrus and botanical elements" },
+    { image: banner3, alt: "Creed Aventus luxury fragrance bottle in elegant black and white" },
+    { image: banner4, alt: "Bleu de Chanel perfume bottle on oceanic waves background" },
+    { image: banner5, alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" }
+  ];
+
+  // Auto-advance slideshow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % banners.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [banners.length]);
+
+  // Navigation functions
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % banners.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   // Fetch products
   const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
@@ -167,19 +204,47 @@ export default function Home() {
 
       {/* Welcome Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <video 
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080"
-        >
-          <source src={heroVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Slideshow Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <img 
+            src={banners[currentSlide].image}
+            alt={banners[currentSlide].alt}
+            className="w-full h-full object-cover transition-opacity duration-1000"
+            key={currentSlide}
+          />
+        </div>
         <div className="absolute inset-0 bg-navy/40" />
         <div className="absolute inset-0 lace-border" />
+        
+        {/* Navigation Controls */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-3 transition-all duration-300"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-6 w-6 text-white" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-3 transition-all duration-300"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-6 w-6 text-white" />
+        </button>
+        
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+          {banners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-gold' : 'bg-white/50 hover:bg-white/70'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
         
         <motion.div 
           className="relative z-10 text-center text-white px-4"
