@@ -203,15 +203,30 @@ export default function Home() {
       />
 
       {/* Welcome Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '1024/400' }}>
         {/* Slideshow Background */}
-        <div className="absolute inset-0 w-full h-full">
-          <img 
-            src={banners[currentSlide].image}
-            alt={banners[currentSlide].alt}
-            className="w-full h-full object-cover transition-opacity duration-1000"
-            key={currentSlide}
-          />
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div 
+            className="flex h-full transition-transform duration-1000 ease-in-out"
+            style={{ 
+              transform: `translateX(-${currentSlide * 100}%)`,
+              width: `${banners.length * 100}%`
+            }}
+          >
+            {banners.map((banner, index) => (
+              <div 
+                key={index}
+                className="w-full h-full flex-shrink-0"
+                style={{ width: `${100 / banners.length}%` }}
+              >
+                <img 
+                  src={banner.image}
+                  alt={banner.alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="absolute inset-0 bg-navy/40" />
         <div className="absolute inset-0 lace-border" />
@@ -246,33 +261,35 @@ export default function Home() {
           ))}
         </div>
         
-        <motion.div 
-          className="relative z-10 text-center text-white px-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="font-vibes text-6xl md:text-8xl mb-6">Vel France</h1>
-          <p className="font-playfair text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-            Discover the art of luxury perfumery where every fragrance tells a story of elegance and sophistication
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              className="bg-gold hover:bg-deep-gold text-navy px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300 transform hover:scale-105"
-              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <ShoppingBag className="mr-2 h-5 w-5" />
-              Explore Collection
-            </Button>
-            <Button
-              className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300"
-              onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <UserIcon className="mr-2 h-5 w-5" />
-              My Account
-            </Button>
-          </div>
-        </motion.div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div 
+            className="relative z-10 text-center text-white px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="font-vibes text-4xl md:text-6xl mb-4">Vel France</h1>
+            <p className="font-playfair text-lg md:text-xl mb-6 max-w-2xl mx-auto opacity-90">
+              Discover the art of luxury perfumery where every fragrance tells a story of elegance and sophistication
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                className="bg-gold hover:bg-deep-gold text-navy px-6 py-3 rounded-full font-playfair font-semibold text-base transition-all duration-300 transform hover:scale-105"
+                onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Explore Collection
+              </Button>
+              <Button
+                className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-6 py-3 rounded-full font-playfair font-semibold text-base transition-all duration-300"
+                onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <UserIcon className="mr-2 h-4 w-4" />
+                My Account
+              </Button>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Account Dashboard */}
