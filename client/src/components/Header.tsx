@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -68,12 +69,13 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img 
-              src={logoImage}
-              alt="Vel France Logo"
-              className="h-12 cursor-pointer"
-              onClick={() => scrollToSection('home')}
-            />
+            <Link href="/">
+              <img 
+                src={logoImage}
+                alt="Vel France Logo"
+                className="h-12 cursor-pointer"
+              />
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
@@ -138,12 +140,12 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 </div>
               </PopoverContent>
             </Popover>
-            <a 
+            <Link 
               href="/catalogue"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Catalogue
-            </a>
+            </Link>
             <button 
               onClick={() => scrollToSection('mens')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
