@@ -194,14 +194,12 @@ export default function Home() {
         onCartClick={() => setIsCartOpen(true)}
         user={user as any}
       />
-      
       <CartSidebar 
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         isLoading={cartLoading}
       />
-
       {/* Welcome Section */}
       <section className="relative w-full overflow-hidden" style={{ aspectRatio: '1024/400' }}>
         {/* Slideshow Background */}
@@ -272,9 +270,7 @@ export default function Home() {
             <h1 className="text-5xl md:text-6xl mb-3 text-white font-light tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
               Vel France
             </h1>
-            <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white/90 font-light leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Discover the art of luxury perfumery where every fragrance tells a story
-            </p>
+            <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white/90 font-light leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>Up To 60% Off Limited Time</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 className="bg-white text-black hover:bg-gray-100 px-7 py-3 text-sm font-medium tracking-wide transition-all duration-200 border-0"
@@ -295,7 +291,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       {/* Account Dashboard */}
       <section id="account" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -397,7 +392,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
       {/* Featured Products */}
       <section className="py-20 bg-cream">
         <div className="container mx-auto px-4">
@@ -433,7 +427,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Full Product Catalog */}
       <section id="products" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -514,7 +507,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* About Section */}
       <section className="py-20 bg-cream">
         <div className="container mx-auto px-4">
@@ -572,7 +564,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -719,7 +710,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Newsletter Section */}
       <section className="py-16 bg-navy text-white">
         <div className="container mx-auto px-4 text-center">
@@ -753,7 +743,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
