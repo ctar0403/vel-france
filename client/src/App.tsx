@@ -9,6 +9,8 @@ import Catalogue from "@/pages/catalogue";
 import AuthPage from "@/pages/auth";
 import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
+import Profile from "@/pages/profile";
+import OrderDetails from "@/pages/order-details";
 import Admin from "@/pages/admin";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
@@ -41,6 +43,8 @@ function Router() {
         <>
           <Route path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/order/:orderId" component={OrderDetails} />
           {user.isAdmin && <Route path="/admin" component={Admin} />}
         </>
       )}

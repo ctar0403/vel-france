@@ -213,22 +213,24 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     <Settings className="h-5 w-5" />
                   </Button>
                 )}
-                <div className="flex items-center space-x-2">
-                  {user.profileImageUrl ? (
-                    <img 
-                      src={user.profileImageUrl} 
-                      alt="Profile" 
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
-                      <User className="h-4 w-4 text-navy" />
-                    </div>
-                  )}
-                  <span className="hidden sm:block text-navy font-roboto">
-                    {user.firstName || user.email?.split('@')[0]}
-                  </span>
-                </div>
+                <Link href="/profile">
+                  <div className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
+                    {user.profileImageUrl ? (
+                      <img 
+                        src={user.profileImageUrl} 
+                        alt="Profile" 
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+                        <User className="h-4 w-4 text-navy" />
+                      </div>
+                    )}
+                    <span className="hidden sm:block text-navy font-roboto">
+                      {user.firstName || user.email?.split('@')[0]}
+                    </span>
+                  </div>
+                </Link>
                 <Button
                   variant="ghost"
                   size="sm"
