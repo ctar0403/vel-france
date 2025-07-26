@@ -5,17 +5,17 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Search, User, ShoppingBag, Menu, Settings, ChevronDown } from "lucide-react";
-import type { User as UserType } from "@shared/schema";
+import { Search, User, ShoppingBag, Menu, Settings, ChevronDown, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 
 interface HeaderProps {
   cartItemCount?: number;
   onCartClick?: () => void;
-  user?: UserType | null;
 }
 
-export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderProps) {
+export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
+  const { user, logoutMutation } = useAuth();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
@@ -232,21 +232,25 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.location.href = '/api/logout'}
+                  onClick={() => logoutMutation.mutate()}
                   className="text-navy hover:text-gold font-roboto"
+                  disabled={logoutMutation.isPending}
                 >
-                  Logout
+                  <LogOut className="h-4 w-4 mr-2" />
+                  {logoutMutation.isPending ? "Logging out..." : "Logout"}
                 </Button>
               </div>
             ) : (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => window.location.href = '/api/login'}
-                className="text-navy hover:text-gold"
-              >
-                <User className="h-5 w-5" />
-              </Button>
+              <Link to="/auth">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-navy hover:text-gold"
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  Sign In
+                </Button>
+              </Link>
             )}
 
             {/* Cart */}

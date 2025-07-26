@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, requireAuth, requireAdmin } from "./auth";
 import { bogPaymentService, BOGCreateOrderRequest } from "./bogPayment";
 import { 
   insertProductSchema,
@@ -57,20 +57,8 @@ function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth middleware
-  await setupAuth(app);
-
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
+  // Setup custom authentication
+  setupAuth(app);
 
   // Product routes
   app.get("/api/products", async (req, res) => {
@@ -97,15 +85,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin product routes
-  app.post("/api/admin/products", isAuthenticated, async (req: any, res) => {
+  app.post("/api/admin/products", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       const productData = insertProductSchema.parse(req.body);
       const product = await storage.createProduct(productData);
       res.json(product);
@@ -115,15 +96,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/admin/products/:id", isAuthenticated, async (req: any, res) => {
+  app.put("/api/admin/products/:id", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       const productData = insertProductSchema.partial().parse(req.body);
       const product = await storage.updateProduct(req.params.id, productData);
       res.json(product);
@@ -133,15 +107,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/admin/products/:id", isAuthenticated, async (req: any, res) => {
+  app.delete("/api/admin/products/:id", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       await storage.deleteProduct(req.params.id);
       res.json({ message: "Product deleted successfully" });
     } catch (error) {
@@ -151,9 +118,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Cart routes
-  app.get("/api/cart", isAuthenticated, async (req: any, res) => {
+  app.get("/api/cart", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const cartItems = await storage.getCartItems(userId);
       res.json(cartItems);
     } catch (error) {
@@ -162,9 +129,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/cart", isAuthenticated, async (req: any, res) => {
+  app.post("/api/cart", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const cartItemData = insertCartItemSchema.parse({
         ...req.body,
         userId
@@ -177,7 +144,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/cart/:id", isAuthenticated, async (req, res) => {
+  app.put("/api/cart/:id", requireAuth, async (req, res) => {
     try {
       const { quantity } = req.body;
       const cartItem = await storage.updateCartItem(req.params.id, quantity);
@@ -188,7 +155,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/cart/:id", isAuthenticated, async (req, res) => {
+  app.delete("/api/cart/:id", requireAuth, async (req, res) => {
     try {
       await storage.removeFromCart(req.params.id);
       res.json({ message: "Item removed from cart" });
@@ -198,9 +165,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/cart", isAuthenticated, async (req: any, res) => {
+  app.delete("/api/cart", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       await storage.clearCart(userId);
       res.json({ message: "Cart cleared" });
     } catch (error) {
@@ -210,9 +177,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // BOG Payment with Calculator Results
-  app.post("/api/payments/initiate-with-calculator", isAuthenticated, async (req: any, res) => {
+  app.post("/api/payments/initiate-with-calculator", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod } = req.body;
       
       // Calculate total
@@ -328,9 +295,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Payment initiation route (for card payments only)
-  app.post("/api/payments/initiate", isAuthenticated, async (req: any, res) => {
+  app.post("/api/payments/initiate", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const { shippingAddress, billingAddress, items, paymentMethod = 'card' } = req.body;
       
       // Calculate total
@@ -495,9 +462,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Order routes
-  app.post("/api/orders", isAuthenticated, async (req: any, res) => {
+  app.post("/api/orders", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const { shippingAddress, billingAddress, items } = req.body;
       
       // Calculate total
@@ -539,9 +506,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/orders", isAuthenticated, async (req: any, res) => {
+  app.get("/api/orders", requireAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const orders = await storage.getOrders(userId);
       res.json(orders);
     } catch (error) {
@@ -551,9 +518,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin order routes
-  app.get("/api/admin/orders", isAuthenticated, async (req: any, res) => {
+  app.get("/api/admin/orders", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -568,9 +535,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/admin/orders/:id/status", isAuthenticated, async (req: any, res) => {
+  app.put("/api/admin/orders/:id/status", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -611,9 +578,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin contact routes
-  app.get("/api/admin/contacts", isAuthenticated, async (req: any, res) => {
+  app.get("/api/admin/contacts", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -628,9 +595,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/admin/contacts/:id/read", isAuthenticated, async (req: any, res) => {
+  app.put("/api/admin/contacts/:id/read", requireAdmin, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.session as any).userId;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
