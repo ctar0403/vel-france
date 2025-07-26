@@ -17,6 +17,7 @@ import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
+import heroVideo from "@assets/Adobe Express - A_surreal_futuristic_202507261606 (1)_1753532857893.mp4";
 
 export default function Home() {
   const { user } = useAuth();
@@ -172,8 +173,10 @@ export default function Home() {
           muted
           loop
           playsInline
+          poster="https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080"
         >
-          <source src="/attached_assets/Adobe Express - A_surreal_futuristic_202507261606 (1)_1753532857893.mp4" type="video/mp4" />
+          <source src={heroVideo} type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-navy/40" />
         <div className="absolute inset-0 lace-border" />
