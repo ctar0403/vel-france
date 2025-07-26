@@ -209,15 +209,14 @@ export default function Home() {
           <div 
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ 
-              transform: `translateX(-${currentSlide * 100}%)`,
-              width: `${banners.length * 100}%`
+              transform: `translateX(-${currentSlide * 20}%)`,
+              width: '500%'
             }}
           >
             {banners.map((banner, index) => (
               <div 
                 key={index}
-                className="w-full h-full flex-shrink-0"
-                style={{ width: `${100 / banners.length}%` }}
+                className="h-full flex-shrink-0 w-1/5"
               >
                 <img 
                   src={banner.image}
