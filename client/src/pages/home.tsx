@@ -267,9 +267,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl mb-3 text-white font-light tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Vel France
-            </h1>
+            
             <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white/90 font-light leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>Up To 60% Off Limited Time</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
