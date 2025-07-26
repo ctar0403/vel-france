@@ -111,7 +111,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
             >
               {/* Header */}
               <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-                <h3 className="font-playfair text-2xl text-navy">Your Cart</h3>
+                <h3 className="font-roboto text-2xl text-navy">Your Cart</h3>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -140,7 +140,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                 ) : cartItems.length === 0 ? (
                   <div className="text-center py-16">
                     <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 font-playfair text-lg mb-2">
+                    <p className="text-gray-600 font-roboto text-lg mb-2">
                       Your cart is empty
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -164,7 +164,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                           className="w-16 h-16 object-cover rounded-lg"
                         />
                         <div className="flex-1">
-                          <h4 className="font-playfair text-navy">{item.product.name}</h4>
+                          <h4 className="font-roboto text-navy">{item.product.name}</h4>
                           <p className="text-sm text-gray-600">₾{item.product.price}</p>
                           <div className="flex items-center space-x-2 mt-2">
                             <Button
@@ -200,7 +200,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          <span className="font-playfair font-bold text-gold">
+                          <span className="font-roboto font-bold text-gold">
                             ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                           </span>
                         </div>
@@ -214,8 +214,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               {cartItems.length > 0 && (
                 <div className="border-t border-gray-200 p-6 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-playfair text-lg text-navy">Total:</span>
-                    <span className="font-playfair text-2xl font-bold text-gold">
+                    <span className="font-roboto text-lg text-navy">Total:</span>
+                    <span className="font-roboto text-2xl font-bold text-gold">
                       ₾{total.toFixed(2)}
                     </span>
                   </div>
@@ -224,7 +224,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     <Link href="/cart" onClick={onClose}>
                       <Button
                         variant="outline"
-                        className="w-full border-navy text-navy hover:bg-navy hover:text-white py-2 font-playfair font-semibold transition-colors"
+                        className="w-full border-navy text-navy hover:bg-navy hover:text-white py-2 font-roboto font-semibold transition-colors"
                       >
                         <Eye className="mr-2 h-4 w-4" />
                         View Cart
@@ -233,7 +233,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     
                     <Link href="/checkout" onClick={onClose}>
                       <Button
-                        className="w-full bg-gradient-to-r from-gold to-deep-gold text-navy py-2 font-playfair font-semibold hover:shadow-lg transition-all duration-300"
+                        className="w-full bg-gradient-to-r from-gold to-deep-gold text-navy py-2 font-roboto font-semibold hover:shadow-lg transition-all duration-300"
                       >
                         <CreditCard className="mr-2 h-4 w-4" />
                         Checkout

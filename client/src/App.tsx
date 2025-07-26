@@ -19,7 +19,7 @@ function Router() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-navy font-playfair">Loading...</div>
+        <div className="text-navy font-roboto">Loading...</div>
       </div>
     );
   }

@@ -45,7 +45,7 @@ export default function Footer() {
           
           {/* Navigation */}
           <div>
-            <h4 className="font-playfair text-lg text-navy mb-4">Navigation</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">Navigation</h4>
             <ul className="space-y-2">
               <li>
                 <button 
@@ -84,7 +84,7 @@ export default function Footer() {
           
           {/* Services */}
           <div>
-            <h4 className="font-playfair text-lg text-navy mb-4">Services</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">Services</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">
@@ -111,7 +111,7 @@ export default function Footer() {
           
           {/* Legal */}
           <div>
-            <h4 className="font-playfair text-lg text-navy mb-4">Information</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">Information</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-600 hover:text-gold transition-colors">

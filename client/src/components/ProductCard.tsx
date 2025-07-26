@@ -59,7 +59,7 @@ export default function ProductCard({
         
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-playfair text-xl text-navy">{product.name}</h3>
+            <h3 className="font-roboto text-xl text-navy">{product.name}</h3>
             <Badge 
               variant="outline" 
               className={`text-sm font-semibold ${getCategoryStyle(product.category)}`}
@@ -79,7 +79,7 @@ export default function ProductCard({
           )}
           
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-playfair font-bold text-gold">
+            <span className="text-2xl font-roboto font-bold text-gold">
               €{product.price}
             </span>
             

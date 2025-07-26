@@ -123,7 +123,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-cream border-gold/20">
         <DialogHeader>
-          <DialogTitle className="font-playfair text-2xl text-navy flex items-center">
+          <DialogTitle className="font-roboto text-2xl text-navy flex items-center">
             <CreditCard className="mr-2 h-6 w-6 text-gold" />
             Secure Checkout
           </DialogTitle>
@@ -132,7 +132,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Order Summary */}
           <div className="bg-white p-4 rounded-lg border border-gold/20">
-            <h3 className="font-playfair text-lg text-navy mb-3">Order Summary</h3>
+            <h3 className="font-roboto text-lg text-navy mb-3">Order Summary</h3>
             <div className="space-y-2">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex justify-between items-center text-sm">
@@ -140,7 +140,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
                   <span className="font-semibold">₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
-              <div className="border-t border-gold/20 pt-2 flex justify-between items-center font-playfair text-lg font-semibold text-navy">
+              <div className="border-t border-gold/20 pt-2 flex justify-between items-center font-roboto text-lg font-semibold text-navy">
                 <span>Total</span>
                 <span>₾{totalAmount.toFixed(2)}</span>
               </div>
@@ -149,7 +149,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
 
           {/* Shipping Information */}
           <div className="bg-white p-4 rounded-lg border border-gold/20">
-            <h3 className="font-playfair text-lg text-navy mb-3">Shipping Information</h3>
+            <h3 className="font-roboto text-lg text-navy mb-3">Shipping Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="shipping-firstName">First Name *</Label>
@@ -228,7 +228,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
           {/* Billing Information */}
           <div className="bg-white p-4 rounded-lg border border-gold/20">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-playfair text-lg text-navy">Billing Information</h3>
+              <h3 className="font-roboto text-lg text-navy">Billing Information</h3>
               <label className="flex items-center space-x-2 text-sm">
                 <input
                   type="checkbox"
@@ -322,7 +322,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
             <div className="flex items-center text-navy">
               <ShieldCheck className="mr-2 h-5 w-5 text-gold" />
               <div>
-                <p className="font-playfair font-semibold">Secure Payment</p>
+                <p className="font-roboto font-semibold">Secure Payment</p>
                 <p className="text-sm text-gray-600">
                   Your payment is processed securely through Bank of Georgia's encrypted payment system.
                 </p>
@@ -343,7 +343,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-gold to-deep-gold text-navy font-playfair font-semibold hover:shadow-lg transition-all duration-300"
+              className="flex-1 bg-gradient-to-r from-gold to-deep-gold text-navy font-roboto font-semibold hover:shadow-lg transition-all duration-300"
               disabled={paymentMutation.isPending}
             >
               {paymentMutation.isPending ? (

@@ -309,7 +309,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-vibes text-5xl text-navy mb-4">My Account</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
+            <p className="text-gray-600 max-w-2xl mx-auto font-roboto text-lg">
               Manage your orders and discover your purchase history
             </p>
           </motion.div>
@@ -323,7 +323,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <ShoppingBag className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Current Cart</h3>
+              <h3 className="font-roboto-slab text-2xl text-navy mb-2">Current Cart</h3>
               <p className="text-3xl font-bold text-gold">{cartItemCount}</p>
               <p className="text-gray-600">items</p>
             </motion.div>
@@ -336,7 +336,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <Package className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Orders</h3>
+              <h3 className="font-roboto-slab text-2xl text-navy mb-2">Orders</h3>
               <p className="text-3xl font-bold text-gold">{orders.length}</p>
               <p className="text-gray-600">total</p>
             </motion.div>
@@ -349,7 +349,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <UserIcon className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-playfair text-2xl text-navy mb-2">Member Since</h3>
+              <h3 className="font-roboto text-2xl text-navy mb-2">Member Since</h3>
               <p className="text-lg font-bold text-gold">
                 {(user as User)?.createdAt ? new Date((user as User).createdAt!).getFullYear() : '2024'}
               </p>
@@ -365,19 +365,19 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-playfair text-3xl text-navy mb-8 text-center">My Recent Orders</h3>
+              <h3 className="font-roboto text-3xl text-navy mb-8 text-center">My Recent Orders</h3>
               <div className="grid gap-6">
                 {orders.slice(0, 3).map((order) => (
                   <div key={order.id} className="bg-white rounded-xl shadow-lg p-6 border border-gold/20">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <p className="font-playfair text-lg text-navy">Order #{order.id.slice(0, 8)}</p>
+                        <p className="font-roboto text-lg text-navy">Order #{order.id.slice(0, 8)}</p>
                         <p className="text-gray-600">
                           {new Date(order.createdAt!).toLocaleDateString('en-US')}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-playfair text-2xl font-bold text-gold">€{order.total}</p>
+                        <p className="font-roboto text-2xl font-bold text-gold">€{order.total}</p>
                         <Badge 
                           variant={order.status === 'delivered' ? 'default' : 'secondary'}
                           className={order.status === 'delivered' ? 'bg-green-100 text-green-800' : ''}
@@ -410,7 +410,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-vibes text-5xl text-navy mb-4">Our Creations</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
+            <p className="text-gray-600 max-w-2xl mx-auto font-roboto text-lg">
               An exclusive selection of artisanal perfumes crafted with the most precious ingredients
             </p>
           </motion.div>
@@ -445,7 +445,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-vibes text-5xl text-navy mb-4">Complete Collection</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
+            <p className="text-gray-600 max-w-2xl mx-auto font-roboto text-lg">
               Explore our complete range of exceptional perfumes
             </p>
           </motion.div>
@@ -461,7 +461,7 @@ export default function Home() {
               <Button
                 key={key}
                 variant={selectedCategory === key ? 'default' : 'outline'}
-                className={`px-6 py-2 rounded-full font-playfair transition-all duration-300 ${
+                className={`px-6 py-2 rounded-full font-roboto transition-all duration-300 ${
                   selectedCategory === key 
                     ? 'bg-gold text-navy hover:bg-deep-gold' 
                     : 'bg-white border-gold text-navy hover:bg-gold hover:text-navy'
@@ -490,7 +490,7 @@ export default function Home() {
               ))
             ) : filteredProducts.length === 0 ? (
               <div className="col-span-full text-center py-16">
-                <p className="text-gray-600 font-playfair text-lg">
+                <p className="text-gray-600 font-roboto text-lg">
                   No products found in this category
                 </p>
               </div>
@@ -525,7 +525,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-vibes text-5xl text-navy mb-6">Our Story</h2>
-              <h3 className="font-playfair text-2xl text-navy mb-6">The Art of French Perfumery</h3>
+              <h3 className="font-roboto text-2xl text-navy mb-6">The Art of French Perfumery</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Since 1932, Vel France has perpetuated the tradition of exceptional French perfumery. 
                 Our master perfumers create unique compositions using the finest ingredients, 
@@ -538,15 +538,15 @@ export default function Home() {
               </p>
               <div className="flex items-center space-x-8 mt-8">
                 <div className="text-center">
-                  <div className="text-3xl font-playfair font-bold text-gold">90+</div>
+                  <div className="text-3xl font-roboto font-bold text-gold">90+</div>
                   <div className="text-sm text-gray-600">Years of Excellence</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-playfair font-bold text-gold">50+</div>
+                  <div className="text-3xl font-roboto font-bold text-gold">50+</div>
                   <div className="text-sm text-gray-600">Unique Creations</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-playfair font-bold text-gold">100%</div>
+                  <div className="text-3xl font-roboto font-bold text-gold">100%</div>
                   <div className="text-sm text-gray-600">Artisanal</div>
                 </div>
               </div>
@@ -565,7 +565,7 @@ export default function Home() {
               />
               <div className="absolute -bottom-6 -left-6 bg-gold text-navy p-6 rounded-2xl shadow-xl">
                 <div className="font-vibes text-2xl">Handcrafted</div>
-                <div className="font-playfair text-sm">Paris, France</div>
+                <div className="font-roboto text-sm">Paris, France</div>
               </div>
             </motion.div>
           </div>
@@ -582,7 +582,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-vibes text-5xl text-navy mb-4">Contact Us</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-playfair text-lg">
+            <p className="text-gray-600 max-w-2xl mx-auto font-roboto text-lg">
               We would be delighted to accompany you in your quest for the perfect perfume
             </p>
           </motion.div>
@@ -597,7 +597,7 @@ export default function Home() {
               <form onSubmit={handleContactSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-navy font-playfair mb-2">First Name</label>
+                    <label className="block text-navy font-roboto mb-2">First Name</label>
                     <Input 
                       value={contactForm.firstName}
                       onChange={(e) => setContactForm({...contactForm, firstName: e.target.value})}
@@ -606,7 +606,7 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label className="block text-navy font-playfair mb-2">Last Name</label>
+                    <label className="block text-navy font-roboto mb-2">Last Name</label>
                     <Input 
                       value={contactForm.lastName}
                       onChange={(e) => setContactForm({...contactForm, lastName: e.target.value})}
@@ -616,7 +616,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-navy font-playfair mb-2">Email</label>
+                  <label className="block text-navy font-roboto mb-2">Email</label>
                   <Input 
                     type="email"
                     value={contactForm.email}
@@ -626,7 +626,7 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label className="block text-navy font-playfair mb-2">Subject</label>
+                  <label className="block text-navy font-roboto mb-2">Subject</label>
                   <Select 
                     value={contactForm.subject} 
                     onValueChange={(value) => setContactForm({...contactForm, subject: value})}
@@ -643,7 +643,7 @@ export default function Home() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-navy font-playfair mb-2">Message</label>
+                  <label className="block text-navy font-roboto mb-2">Message</label>
                   <Textarea 
                     rows={5}
                     value={contactForm.message}
@@ -654,7 +654,7 @@ export default function Home() {
                 </div>
                 <Button 
                   type="submit" 
-                  className="w-full bg-navy hover:bg-navy/90 text-white py-3 font-playfair font-semibold"
+                  className="w-full bg-navy hover:bg-navy/90 text-white py-3 font-roboto font-semibold"
                   disabled={contactMutation.isPending}
                 >
                   {contactMutation.isPending ? "Sending..." : "Send Message"}
@@ -669,33 +669,33 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="bg-cream rounded-2xl shadow-xl p-8 mb-8">
-                <h3 className="font-playfair text-2xl text-navy mb-6">Our Contact Info</h3>
+                <h3 className="font-roboto text-2xl text-navy mb-6">Our Contact Info</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-map-marker-alt text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Address</div>
+                      <div className="font-roboto text-navy">Address</div>
                       <div className="text-gray-600">25 Place Vendôme, 75001 Paris</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-phone text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Phone</div>
+                      <div className="font-roboto text-navy">Phone</div>
                       <div className="text-gray-600">+33 1 42 60 30 70</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-envelope text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Email</div>
+                      <div className="font-roboto text-navy">Email</div>
                       <div className="text-gray-600">contact@velfrance.com</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <i className="fas fa-clock text-gold w-5"></i>
                     <div>
-                      <div className="font-playfair text-navy">Hours</div>
+                      <div className="font-roboto text-navy">Hours</div>
                       <div className="text-gray-600">Mon-Sat: 10am-7pm</div>
                     </div>
                   </div>
@@ -741,7 +741,7 @@ export default function Home() {
               />
               <Button 
                 type="submit" 
-                className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-playfair font-semibold"
+                className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-roboto font-semibold"
                 disabled={newsletterMutation.isPending}
               >
                 {newsletterMutation.isPending ? "..." : "Subscribe"}

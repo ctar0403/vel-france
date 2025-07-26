@@ -73,7 +73,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6 font-playfair">
+          <div className="hidden lg:flex items-center space-x-6 font-roboto">
             <button 
               onClick={() => scrollToSection('home')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -108,13 +108,13 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 onMouseLeave={() => setIsBrandsHovered(false)}
               >
                 <div className="p-8 overflow-y-auto scrollbar-hide" style={{ scrollBehavior: 'smooth' }}>
-                  <h3 className="font-playfair text-xl font-semibold text-navy mb-8 border-b border-gold/20 pb-3 text-center">
+                  <h3 className="font-roboto-slab text-xl font-semibold text-navy mb-8 border-b border-gold/20 pb-3 text-center">
                     Luxury Brands Collection
                   </h3>
                   <div className="grid grid-cols-9 gap-6">
                     {sortedLetters.map((letter) => (
                       <div key={letter} className="space-y-2">
-                        <h4 className="font-playfair text-lg font-bold text-gold border-b border-gold/30 pb-1 mb-3 text-center">
+                        <h4 className="font-roboto text-lg font-bold text-gold border-b border-gold/30 pb-1 mb-3 text-center">
                           {letter}
                         </h4>
                         <div className="space-y-1">
@@ -122,7 +122,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                             <button
                               key={brand}
                               onClick={() => handleBrandClick(brand)}
-                              className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
+                              className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-roboto px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
                             >
                               {brand}
                             </button>
@@ -220,7 +220,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                       <User className="h-4 w-4 text-navy" />
                     </div>
                   )}
-                  <span className="hidden sm:block text-navy font-playfair">
+                  <span className="hidden sm:block text-navy font-roboto">
                     {user.firstName || user.email?.split('@')[0]}
                   </span>
                 </div>
@@ -228,7 +228,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                   variant="ghost"
                   size="sm"
                   onClick={() => window.location.href = '/api/logout'}
-                  className="text-navy hover:text-gold font-playfair"
+                  className="text-navy hover:text-gold font-roboto"
                 >
                   Logout
                 </Button>
@@ -273,7 +273,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                     <span className="text-gold text-lg">✦</span>
                   </div>
                   
-                  <nav className="flex flex-col space-y-4 font-playfair">
+                  <nav className="flex flex-col space-y-4 font-roboto">
                     <button 
                       onClick={() => scrollToSection('home')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
@@ -303,7 +303,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                                 handleBrandClick(brand);
                                 setIsBrandsOpen(false);
                               }}
-                              className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-playfair"
+                              className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-roboto"
                             >
                               {brand}
                             </button>
@@ -358,7 +358,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                           </div>
                         )}
                         <div>
-                          <p className="font-playfair text-navy">
+                          <p className="font-roboto text-navy">
                             {user.firstName || 'User'}
                           </p>
                           <p className="text-sm text-gray-600">{user.email}</p>
