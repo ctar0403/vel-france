@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,10 +18,20 @@ import { Product, InsertProduct } from "@shared/schema";
 import { Plus, Edit, Trash2, Eye, Package } from "lucide-react";
 
 export default function Admin() {
+  const [, setLocation] = useLocation();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<'create' | 'edit'>('create');
   const { toast } = useToast();
+
+  // Check if user is authenticated as admin
+  useEffect(() => {
+    const isAdminAuthenticated = sessionStorage.getItem("adminAuthenticated");
+    if (!isAdminAuthenticated) {
+      setLocation("/admin");
+      return;
+    }
+  }, [setLocation]);
 
   // Fetch products
   const { data: products = [], isLoading } = useQuery<Product[]>({
@@ -308,11 +319,11 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
     if (isOpen) {
       if (mode === 'edit' && product) {
         setFormData({
-          name: product.name,
-          description: product.description,
+          name: product.name || '',
+          description: product.description || '',
           shortDescription: product.shortDescription || '',
-          price: product.price,
-          category: product.category,
+          price: product.price || '0.00',
+          category: product.category || 'unisex',
           brand: product.brand || '',
           notes: product.notes || '',
           imageUrl: product.imageUrl || '',

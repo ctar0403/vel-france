@@ -12,6 +12,7 @@ import Checkout from "@/pages/checkout";
 import Profile from "@/pages/profile";
 import OrderDetails from "@/pages/order-details";
 import Admin from "@/pages/admin";
+import AdminLogin from "@/pages/admin-login";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
 import NotFound from "@/pages/not-found";
@@ -37,6 +38,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/catalogue" component={Catalogue} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/admin" component={AdminLogin} />
+      <Route path="/admin-panel" component={Admin} />
       
       {/* Protected routes - only accessible when logged in */}
       {user && (
@@ -45,7 +48,6 @@ function Router() {
           <Route path="/checkout" component={Checkout} />
           <Route path="/profile" component={Profile} />
           <Route path="/order/:orderId" component={OrderDetails} />
-          {user.isAdmin && <Route path="/admin" component={Admin} />}
         </>
       )}
       
