@@ -429,10 +429,48 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Check file size (limit to 2MB)
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert('Image file is too large. Please choose an image under 2MB.');
+        return;
+      }
+
+      // Compress and resize the image
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')!;
+        
+        // Calculate new dimensions (max 800x800)
+        const maxDimension = 800;
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxDimension) {
+            height = (height * maxDimension) / width;
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = (width * maxDimension) / height;
+            height = maxDimension;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+        
+        setFormData({ ...formData, imageUrl: compressedBase64 });
+      };
+      
       const reader = new FileReader();
       reader.onload = (e) => {
-        const base64String = e.target?.result as string;
-        setFormData({ ...formData, imageUrl: base64String });
+        img.src = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -557,7 +595,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
                   {formData.imageUrl ? 'Change Image' : 'Upload Image'}
                 </Button>
                 <p className="text-xs text-gray-500 mt-1">
-                  Upload a high-quality product image (JPG, PNG)
+                  Upload a high-quality product image (JPG, PNG). Max 2MB, will be automatically resized to 800x800.
                 </p>
               </div>
             </div>
