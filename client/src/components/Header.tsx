@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, User, ShoppingBag, Menu, Settings, ChevronDown } from "lucide-react";
 import type { User as UserType } from "@shared/schema";
+import logoImage from "@assets/Your paragraph text (2)_1753541928630.png";
 
 interface HeaderProps {
   cartItemCount?: number;
@@ -67,9 +68,12 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <h1 className="font-vibes text-3xl text-navy cursor-pointer" onClick={() => scrollToSection('home')}>
-              Vel France
-            </h1>
+            <img 
+              src={logoImage}
+              alt="Vel France Logo"
+              className="h-12 cursor-pointer"
+              onClick={() => scrollToSection('home')}
+            />
           </div>
           
           {/* Desktop Navigation */}
