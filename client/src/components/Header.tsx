@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, User, ShoppingBag, Menu, Settings, ChevronDown } from "lucide-react";
 import type { User as UserType } from "@shared/schema";
-import logoImage from "@assets/Your paragraph text (2)_1753541928630.png";
+import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 
 interface HeaderProps {
   cartItemCount?: number;
