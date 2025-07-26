@@ -71,6 +71,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin product routes
+  app.get("/api/admin/products", requireAdmin, async (req, res) => {
+    try {
+      const products = await storage.getProducts();
+      res.json(products);
+    } catch (error) {
+      console.error("Error fetching products for admin:", error);
+      res.status(500).json({ message: "Failed to fetch products" });
+    }
+  });
+
+  app.post("/api/admin/products", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertProductSchema.parse(req.body);
+      const product = await storage.createProduct(validatedData);
+      res.status(201).json(product);
+    } catch (error) {
+      console.error("Error creating product:", error);
+      res.status(400).json({ message: "Failed to create product", error: error.message });
+    }
+  });
+
+  app.put("/api/admin/products/:id", requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const validatedData = insertProductSchema.partial().parse(req.body);
+      const product = await storage.updateProduct(id, validatedData);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json(product);
+    } catch (error) {
+      console.error("Error updating product:", error);
+      res.status(400).json({ message: "Failed to update product", error: error.message });
+    }
+  });
+
+  app.delete("/api/admin/products/:id", requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteProduct(id);
+      if (!success) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      res.status(500).json({ message: "Failed to delete product" });
+    }
+  });
+
   app.get("/api/products/:id", async (req, res) => {
     try {
       const product = await storage.getProduct(req.params.id);

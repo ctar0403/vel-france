@@ -150,44 +150,9 @@ export function setupAuth(app: Express) {
       res.status(500).json({ message: "Failed to get user" });
     }
   });
-
-  // Update user profile route
-  app.put("/api/user/profile", async (req, res) => {
-    try {
-      const userId = (req.session as any)?.userId;
-      if (!userId) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-      
-      const { firstName, lastName, email } = req.body;
-      
-      // Basic validation
-      if (!firstName || !lastName || !email) {
-        return res.status(400).json({ message: "All fields are required" });
-      }
-      
-      // Check if email is already taken by another user
-      const existingUser = await storage.getUserByEmail(email);
-      if (existingUser && existingUser.id !== userId) {
-        return res.status(400).json({ message: "Email already taken by another user" });
-      }
-      
-      const updatedUser = await storage.updateUser(userId, { firstName, lastName, email });
-      
-      if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      
-      const { password, ...userWithoutPassword } = updatedUser;
-      res.json(userWithoutPassword);
-    } catch (error) {
-      console.error("Error updating user profile:", error);
-      res.status(500).json({ message: "Failed to update profile" });
-    }
-  });
 }
 
-// Authentication middleware
+// Middleware functions
 export function requireAuth(req: any, res: any, next: any) {
   const userId = (req.session as any)?.userId;
   if (!userId) {
@@ -196,23 +161,23 @@ export function requireAuth(req: any, res: any, next: any) {
   next();
 }
 
-// Admin middleware
 export async function requireAdmin(req: any, res: any, next: any) {
+  const userId = (req.session as any)?.userId;
+  
+  if (!userId) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+  
   try {
-    const userId = (req.session as any)?.userId;
-    if (!userId) {
-      return res.status(401).json({ message: "Authentication required" });
-    }
-
     const user = await storage.getUser(userId);
     if (!user || !user.isAdmin) {
       return res.status(403).json({ message: "Admin access required" });
     }
-
+    
     req.user = user;
     next();
   } catch (error) {
-    console.error("Admin auth error:", error);
-    res.status(500).json({ message: "Authentication failed" });
+    console.error("Admin check error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
