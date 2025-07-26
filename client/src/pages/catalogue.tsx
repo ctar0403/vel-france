@@ -75,15 +75,15 @@ function LuxuryProductCard({ product }: { product: Product }) {
   return (
     <div
       className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer mx-auto"
-      style={{ width: '240px', height: '350px' }}
+      style={{ width: '280px', height: '390px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsButtonHovered(false);
       }}
     >
-      {/* Product Image - Perfect Square 240x240 */}
-      <div className="relative w-full h-[240px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
+      {/* Product Image - Perfect Square 280x280 */}
+      <div className="relative w-full h-[280px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -560,7 +560,7 @@ export default function Catalogue() {
               </div>
             ) : (
               <div className={filters.viewMode === 'grid' 
-                ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
+                ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" 
                 : "space-y-4"
               }>
                 {filteredProducts.map((product) => (
