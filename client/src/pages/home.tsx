@@ -181,10 +181,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="font-vibes text-6xl md:text-8xl mb-4 gold-shimmer">Welcome</h2>
-          <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6">
-            {(user as User)?.firstName || (user as User)?.email || 'Dear Client'}
-          </h1>
+          
           <p className="text-xl md:text-2xl mb-8 font-light max-w-2xl mx-auto">
             Discover our exclusive collection of exceptional perfumes
           </p>
