@@ -74,24 +74,25 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer w-full max-w-[260px] mx-auto"
-      style={{ height: '320px' }}
+      className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer mx-auto"
+      style={{ width: '200px', height: '280px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsButtonHovered(false);
       }}
     >
-      {/* Product Image - Perfect Square filling full width */}
-      <div className="relative w-full h-[220px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
+      {/* Product Image - Perfect Square 200x200 */}
+      <div className="relative w-full h-[200px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out"
+            className="w-full h-full object-contain transition-transform duration-500 ease-out"
             style={{
               transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              aspectRatio: '1/1'
+              aspectRatio: '1/1',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)'
             }}
           />
         ) : (
@@ -102,7 +103,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
         {/* Add to Cart Button - Slides from bottom */}
         <div 
-          className="absolute bottom-0 left-0 right-0 p-3 transition-transform duration-300 ease-out"
+          className="absolute bottom-0 left-0 right-0 p-2 transition-transform duration-300 ease-out"
           style={{
             transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
             opacity: isHovered ? 1 : 0,
@@ -111,7 +112,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={addToCartMutation.isPending}
-            className="w-full py-2.5 px-4 rounded-full font-medium text-sm transition-all duration-200 ease-out shadow-lg"
+            className="w-full py-2 px-3 rounded-full font-medium text-xs transition-all duration-200 ease-out shadow-lg"
             style={{
               backgroundColor: isButtonHovered ? '#3b82f6' : 'rgba(255, 255, 255, 0.95)',
               color: isButtonHovered ? 'white' : '#1e3a8a',
@@ -123,7 +124,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
           >
             {isButtonHovered ? (
               <div className="flex items-center justify-center">
-                <ShoppingCart className="h-4 w-4" />
+                <ShoppingCart className="h-3 w-3" />
               </div>
             ) : (
               'Add to Cart'
@@ -133,13 +134,13 @@ function LuxuryProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="h-[100px] p-3 flex flex-col justify-center">
-        <h3 className="font-semibold text-navy text-sm mb-2 leading-tight line-clamp-2">
+      <div className="h-[80px] p-2 flex flex-col justify-center">
+        <h3 className="font-semibold text-navy text-xs mb-1 leading-tight line-clamp-2">
           {formatProductName(product.name, product.brand)}
         </h3>
         
         <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-gold">
+          <span className="text-sm font-bold text-gold">
             ${parseFloat(product.price.toString()).toFixed(2)}
           </span>
         </div>
@@ -559,7 +560,7 @@ export default function Catalogue() {
               </div>
             ) : (
               <div className={filters.viewMode === 'grid' 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
+                ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4" 
                 : "space-y-4"
               }>
                 {filteredProducts.map((product) => (
