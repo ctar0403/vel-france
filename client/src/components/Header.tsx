@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Search, User, ShoppingBag, Menu, Settings } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Search, User, ShoppingBag, Menu, Settings, ChevronDown } from "lucide-react";
 import type { User as UserType } from "@shared/schema";
 
 interface HeaderProps {
@@ -14,6 +15,19 @@ interface HeaderProps {
 export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+
+  const brands = [
+    "Armani", "Azzaro", "Boss", "Bottega Veneta", "Burberry", "Bvlgari", "Byredo", 
+    "Calvin Klein", "Carolina Herrera", "Chanel", "Creed", "Davidoff", "Dior", 
+    "Dolce & Gabbana", "Givenchy", "Gucci", "Hermes", "Initio", "Jean Paul Gaultier", 
+    "Kilian", "Lancome", "Louis Vuitton", "Le Labo", "Maison Francis Kurkdjian", 
+    "Maison Margiela", "Mancera", "Marc Antoine Barrois", "Marc Jacobs", "Memo", 
+    "Molecule", "Montblanc", "Moschino", "Mugler", "Narciso", "Nasomatto", 
+    "Orto Parisi", "Paco Rabanne", "Parfums de Marly", "Prada", "Roja", "Sospiro", 
+    "Tiziana Terenzi", "Tom Ford", "Trussardi", "Valentino", "Versace", "Viktor&Rolf", 
+    "Xerjoff", "Yves Saint Laurent", "Zadig & Voltaire"
+  ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +38,12 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleBrandClick = (brand: string) => {
+    // TODO: Implement brand filtering
+    console.log("Selected brand:", brand);
+    scrollToSection('products');
   };
 
   return (
@@ -51,12 +71,25 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
             >
               Catalogue
             </button>
-            <button 
-              onClick={() => scrollToSection('brands')}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Brands
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium">
+                  Brands
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-64 max-h-96 overflow-y-auto bg-white border border-gold/20 shadow-xl">
+                {brands.map((brand) => (
+                  <DropdownMenuItem
+                    key={brand}
+                    onClick={() => handleBrandClick(brand)}
+                    className="text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-4 py-2"
+                  >
+                    {brand}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <button 
               onClick={() => scrollToSection('mens')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -209,12 +242,31 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                     >
                       Catalogue
                     </button>
-                    <button 
-                      onClick={() => scrollToSection('brands')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
-                    >
-                      Brands
-                    </button>
+                    <div>
+                      <button 
+                        onClick={() => setIsBrandsOpen(!isBrandsOpen)}
+                        className="flex items-center justify-between w-full text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                      >
+                        Brands
+                        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isBrandsOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      {isBrandsOpen && (
+                        <div className="ml-4 mt-2 max-h-48 overflow-y-auto border-l border-gold/20 pl-4">
+                          {brands.map((brand) => (
+                            <button
+                              key={brand}
+                              onClick={() => {
+                                handleBrandClick(brand);
+                                setIsBrandsOpen(false);
+                              }}
+                              className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-playfair"
+                            >
+                              {brand}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <button 
                       onClick={() => scrollToSection('mens')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
