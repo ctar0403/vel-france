@@ -267,24 +267,39 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            
-            <p className="md:text-xl mb-6 max-w-2xl mx-auto text-white/90 font-light text-[28px]" style={{ fontFamily: 'Inter, sans-serif' }}>Up To 60% Off Limited Time</p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                className="bg-white text-black hover:bg-gray-100 px-7 py-3 text-sm font-medium tracking-wide transition-all duration-200 border-0"
-                onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <ShoppingBag className="mr-2 h-4 w-4" />
-                EXPLORE
-              </Button>
-              <Button
-                variant="outline"
-                className="bg-transparent hover:bg-white/10 text-white border border-white/60 hover:border-white px-7 py-3 text-sm font-medium tracking-wide transition-all duration-200"
-                onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <UserIcon className="mr-2 h-4 w-4" />
-                MY ACCOUNT
-              </Button>
+            {/* Premium visibility container */}
+            <div className="bg-gradient-to-br from-black/80 via-black/70 to-black/80 backdrop-blur-xl rounded-2xl px-10 py-8 border border-white/30 shadow-2xl max-w-2xl mx-auto">
+              {/* High-impact headline */}
+              <div className="text-center mb-8">
+                <div className="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest mb-4 shadow-lg">
+                  Limited Time Offer
+                </div>
+                <h1 className="text-4xl md:text-6xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'Inter, sans-serif', textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
+                  UP TO 60% OFF
+                </h1>
+                <p className="text-xl md:text-2xl text-white/90 font-medium tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Luxury Perfumes Collection
+                </p>
+              </div>
+              
+              {/* Premium buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button
+                  className="bg-gradient-to-r from-white via-gray-50 to-white hover:from-gray-50 hover:to-gray-100 text-black px-12 py-4 text-lg font-bold uppercase tracking-widest shadow-2xl border-2 border-white/40 hover:border-white/60 transition-all duration-300 transform hover:scale-105 hover:shadow-3xl rounded-xl min-w-[200px]"
+                  onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <ShoppingBag className="mr-3 h-6 w-6" />
+                  Shop Now
+                </Button>
+                
+                <Button
+                  className="bg-transparent hover:bg-white/20 text-white border-2 border-white hover:border-white/80 px-12 py-4 text-lg font-bold uppercase tracking-widest shadow-2xl backdrop-blur-md transition-all duration-300 transform hover:scale-105 hover:shadow-3xl rounded-xl min-w-[200px]"
+                  onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <UserIcon className="mr-3 h-6 w-6" />
+                  My Account
+                </Button>
+              </div>
             </div>
           </motion.div>
         </div>
