@@ -29,6 +29,14 @@ Preferred communication style: Simple, everyday language.
 
 ### Key Components
 
+#### Catalogue System
+- **Advanced Filtering**: Price range slider, brand selection, category filters
+- **Search Functionality**: Real-time product search across names, brands, and descriptions
+- **Sorting Options**: Multiple sort criteria (name, price, brand)
+- **View Modes**: Grid and list view options for products
+- **Responsive Design**: Mobile-friendly filters with side drawer on small screens
+- **Filter Management**: Active filter display with individual removal options
+
 #### Authentication System
 - **Provider**: Replit OpenID Connect integration
 - **Session Storage**: PostgreSQL-backed sessions with connect-pg-simple
@@ -37,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 
 #### Database Schema
 - **Users**: Profile information with admin flags
-- **Products**: Luxury perfume catalog with categories (women/men/unisex)
+- **Products**: Luxury perfume catalog with categories (women/men/unisex) and brand information
 - **Cart Items**: User shopping cart persistence
 - **Orders**: Complete order history with line items
 - **Newsletter**: Email subscription management
@@ -45,7 +53,8 @@ Preferred communication style: Simple, everyday language.
 - **Sessions**: Authentication session storage
 
 #### Product Management
-- **Categories**: Gender-based product categorization
+- **Categories**: Gender-based product categorization (women/men/unisex)
+- **Brands**: Luxury brand categorization and filtering
 - **Inventory**: Stock tracking and availability
 - **Pricing**: Decimal precision for accurate pricing
 - **Media**: Image URL storage for product photos

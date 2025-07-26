@@ -45,6 +45,7 @@ export const products = pgTable("products", {
   shortDescription: varchar("short_description", { length: 500 }),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
+  brand: varchar("brand", { length: 100 }), // brand name
   notes: text("notes"), // fragrance notes
   imageUrl: varchar("image_url", { length: 500 }),
   inStock: boolean("in_stock").default(true),

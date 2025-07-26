@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import Landing from "@/pages/landing";
 import Home from "@/pages/home";
+import Catalogue from "@/pages/catalogue";
 import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import Admin from "@/pages/admin";
@@ -39,6 +40,7 @@ function Router() {
       ) : (
         <>
           <Route path="/" component={Home} />
+          <Route path="/catalogue" component={Catalogue} />
           <Route path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/admin" component={Admin} />

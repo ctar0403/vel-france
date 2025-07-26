@@ -138,6 +138,12 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 </div>
               </PopoverContent>
             </Popover>
+            <a 
+              href="/catalogue"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Catalogue
+            </a>
             <button 
               onClick={() => scrollToSection('mens')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
