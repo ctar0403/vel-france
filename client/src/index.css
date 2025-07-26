@@ -4,8 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Line clamp utility for product names */
+/* Line clamp utilities for product names */
 @layer utilities {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;

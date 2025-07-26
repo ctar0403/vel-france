@@ -29,10 +29,10 @@ interface CatalogueFilters {
   viewMode: 'grid' | 'list';
 }
 
-// Luxury Product Card Component with Advanced Animations
+// Premium Product Card Component 
 function LuxuryProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isCartHovered, setIsCartHovered] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
 
   const addToCartMutation = useMutation({
@@ -66,83 +66,74 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
   return (
     <motion.div
-      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
-      style={{ aspectRatio: '3/4', height: '400px' }}
+      className="group relative bg-white rounded-lg shadow-md overflow-hidden cursor-pointer w-full max-w-[280px] mx-auto"
+      style={{ height: '320px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setIsCartHovered(false);
+        setIsButtonHovered(false);
       }}
-      whileHover={{ y: -8 }}
-      transition={{ 
-        duration: 0.4,
-        ease: [0.4, 0.0, 0.2, 1]
-      }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.3 }}
     >
       {/* Product Image */}
-      <div className="relative h-2/3 bg-gradient-to-br from-cream/30 to-pink/10 overflow-hidden">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0"
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        />
-        
+      <div className="relative h-[240px] bg-gradient-to-br from-cream/30 to-pink/10 overflow-hidden">
         {product.imageUrl ? (
           <motion.img
             src={product.imageUrl}
             alt={product.name}
             className="w-full h-full object-cover"
-            animate={{ 
-              scale: isHovered ? 1.1 : 1,
-              filter: isHovered ? 'brightness(0.9)' : 'brightness(1)'
-            }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            animate={{ scale: isHovered ? 1.05 : 1 }}
+            transition={{ duration: 0.4 }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cream to-pink/20">
-            <div className="text-6xl opacity-20">🌸</div>
+            <div className="text-4xl opacity-30">🌸</div>
           </div>
         )}
 
-        {/* Animated Add to Cart Button */}
+        {/* Add to Cart Button - Slides from bottom */}
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              className="absolute bottom-0 left-0 right-0 p-4"
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.button
                 onClick={handleAddToCart}
                 disabled={addToCartMutation.isPending}
-                className="relative px-8 py-3 bg-white/95 backdrop-blur-sm rounded-full shadow-xl border border-gray-200/50 hover:bg-blue-500 transition-colors duration-300 group/btn"
-                onMouseEnter={() => setIsCartHovered(true)}
-                onMouseLeave={() => setIsCartHovered(false)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  isButtonHovered 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-white/95 backdrop-blur-sm text-navy border border-white/50'
+                }`}
+                onMouseEnter={() => setIsButtonHovered(true)}
+                onMouseLeave={() => setIsButtonHovered(false)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <AnimatePresence mode="wait">
-                  {isCartHovered ? (
+                  {isButtonHovered ? (
                     <motion.div
                       key="cart-icon"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ duration: 0.2 }}
-                      className="flex items-center gap-2"
+                      className="flex items-center justify-center"
                     >
-                      <ShoppingCart className="h-5 w-5 text-white" />
+                      <ShoppingCart className="h-5 w-5" />
                     </motion.div>
                   ) : (
                     <motion.span
                       key="add-text"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 10 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-navy group-hover/btn:text-white font-medium"
                     >
                       Add to Cart
                     </motion.span>
@@ -155,42 +146,17 @@ function LuxuryProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="h-1/3 p-6 flex flex-col justify-center">
-        <motion.h3 
-          className="font-semibold text-navy text-lg mb-2 line-clamp-2 leading-tight"
-          animate={{ 
-            color: isHovered ? '#1e40af' : '#1e3a8a'
-          }}
-          transition={{ duration: 0.2 }}
-        >
+      <div className="h-[80px] p-4 flex flex-col justify-center">
+        <h3 className="font-semibold text-navy text-base mb-1 line-clamp-1 leading-tight">
           {product.name}
-        </motion.h3>
+        </h3>
         
-        <motion.div
-          className="flex items-center justify-between"
-          animate={{ y: isHovered ? -2 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <span className="text-2xl font-bold text-gold">
+        <div className="flex items-center justify-between">
+          <span className="text-xl font-bold text-gold">
             ${parseFloat(product.price.toString()).toFixed(2)}
           </span>
-          
-          {product.brand && (
-            <span className="text-sm text-gray-500 font-medium">
-              {product.brand}
-            </span>
-          )}
-        </motion.div>
+        </div>
       </div>
-
-      {/* Elegant Border Animation */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl border-2 border-gold/0"
-        animate={{ 
-          borderColor: isHovered ? 'rgba(218, 165, 32, 0.3)' : 'rgba(218, 165, 32, 0)'
-        }}
-        transition={{ duration: 0.3 }}
-      />
     </motion.div>
   );
 }
@@ -606,7 +572,7 @@ export default function Catalogue() {
               </div>
             ) : (
               <div className={filters.viewMode === 'grid' 
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" 
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6" 
                 : "space-y-4"
               }>
                 {filteredProducts.map((product) => (
