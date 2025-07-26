@@ -94,7 +94,12 @@ export default function Admin() {
   const createProductMutation = useMutation({
     mutationFn: async (product: InsertProduct) => {
       const response = await apiRequest("POST", "/api/admin/products", product);
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create product');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/products"] });
@@ -114,7 +119,12 @@ export default function Admin() {
   const updateProductMutation = useMutation({
     mutationFn: async ({ id, product }: { id: string; product: Partial<InsertProduct> }) => {
       const response = await apiRequest("PUT", `/api/admin/products/${id}`, product);
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update product');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/products"] });

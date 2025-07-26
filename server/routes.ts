@@ -135,39 +135,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin product routes
-  app.post("/api/admin/products", requireAdmin, async (req: any, res) => {
-    try {
-      const productData = insertProductSchema.parse(req.body);
-      const product = await storage.createProduct(productData);
-      res.json(product);
-    } catch (error) {
-      console.error("Error creating product:", error);
-      res.status(500).json({ message: "Failed to create product" });
-    }
-  });
-
-  app.put("/api/admin/products/:id", requireAdmin, async (req: any, res) => {
-    try {
-      const productData = insertProductSchema.partial().parse(req.body);
-      const product = await storage.updateProduct(req.params.id, productData);
-      res.json(product);
-    } catch (error) {
-      console.error("Error updating product:", error);
-      res.status(500).json({ message: "Failed to update product" });
-    }
-  });
-
-  app.delete("/api/admin/products/:id", requireAdmin, async (req: any, res) => {
-    try {
-      await storage.deleteProduct(req.params.id);
-      res.json({ message: "Product deleted successfully" });
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      res.status(500).json({ message: "Failed to delete product" });
-    }
-  });
-
   // Cart routes
   app.get("/api/cart", requireAuth, async (req: any, res) => {
     try {
