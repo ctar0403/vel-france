@@ -88,10 +88,11 @@ function LuxuryProductCard({ product }: { product: Product }) {
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out"
+            className="w-full h-full object-contain transition-transform duration-500 ease-out"
             style={{
               transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              aspectRatio: '1/1'
+              aspectRatio: '1/1',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)'
             }}
           />
         ) : (
