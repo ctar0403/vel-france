@@ -181,9 +181,26 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          
-          
-          
+          <h1 className="font-vibes text-6xl md:text-8xl mb-6">Vel France</h1>
+          <p className="font-playfair text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+            Discover the art of luxury perfumery where every fragrance tells a story of elegance and sophistication
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              className="bg-gold hover:bg-deep-gold text-navy px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300 transform hover:scale-105"
+              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <ShoppingBag className="mr-2 h-5 w-5" />
+              Explore Collection
+            </Button>
+            <Button
+              className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300"
+              onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <UserIcon className="mr-2 h-5 w-5" />
+              My Account
+            </Button>
+          </div>
         </motion.div>
       </section>
 
