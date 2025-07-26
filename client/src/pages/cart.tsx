@@ -147,19 +147,28 @@ export default function CartPage() {
                       className="flex items-center space-x-4 pb-6 border-b border-gold/20 last:border-b-0"
                     >
                       {/* Product Image */}
-                      <div className="w-20 h-20 bg-pastel-pink/20 rounded-lg flex items-center justify-center">
-                        <img 
-                          src={item.product.imageUrl || "/placeholder-perfume.jpg"} 
-                          alt={item.product.name}
-                          className="w-16 h-16 object-cover rounded"
-                        />
+                      <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
+                        {item.product.imageUrl ? (
+                          <img 
+                            src={item.product.imageUrl} 
+                            alt={`${item.product.brand} ${item.product.name}`}
+                            className="w-16 h-16 object-cover rounded"
+                          />
+                        ) : (
+                          <div className="text-center">
+                            <div className="text-2xl mb-1">🍃</div>
+                            <div className="text-xs text-navy">No Image</div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Product Details */}
                       <div className="flex-1">
-                        <h3 className="font-playfair text-lg text-navy font-semibold">{item.product.name}</h3>
+                        <h3 className="font-playfair text-lg text-navy font-semibold">
+                          {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
+                        </h3>
                         <p className="text-gray-600 text-sm">{item.product.category}</p>
-                        <p className="text-gold font-semibold">₾{parseFloat(item.product.price).toFixed(2)}</p>
+                        <p className="text-gold font-semibold">€{parseFloat(item.product.price).toFixed(2)}</p>
                       </div>
 
                       {/* Quantity Controls */}
@@ -188,7 +197,7 @@ export default function CartPage() {
                       {/* Subtotal */}
                       <div className="text-right min-w-[80px]">
                         <p className="font-playfair font-semibold text-navy">
-                          ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                          €{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                         </p>
                       </div>
 
@@ -216,7 +225,7 @@ export default function CartPage() {
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal ({cartItems.length} items)</span>
-                    <span className="text-navy">₾{total.toFixed(2)}</span>
+                    <span className="text-navy">€{total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Shipping</span>
@@ -224,12 +233,12 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Tax</span>
-                    <span className="text-navy">₾0.00</span>
+                    <span className="text-navy">€0.00</span>
                   </div>
                   <div className="border-t border-gold/20 pt-4">
                     <div className="flex justify-between">
                       <span className="font-playfair text-lg font-semibold text-navy">Total</span>
-                      <span className="font-playfair text-lg font-semibold text-navy">₾{total.toFixed(2)}</span>
+                      <span className="font-playfair text-lg font-semibold text-navy">€{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>

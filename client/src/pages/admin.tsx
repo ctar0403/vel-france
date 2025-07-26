@@ -312,7 +312,7 @@ export default function Admin() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="font-playfair text-3xl text-navy">Gestion des Produits</h2>
+              <h2 className="font-playfair text-3xl text-navy">Product Management</h2>
               <Dialog open={isProductDialogOpen} onOpenChange={setIsProductDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
@@ -323,7 +323,7 @@ export default function Admin() {
                     }}
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Ajouter un Produit
+                    Add Product
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -475,29 +475,41 @@ export default function Admin() {
                 <div className="col-span-full text-center py-16">
                   <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-600 font-playfair text-lg">
-                    Aucun produit créé pour le moment
+                    No products created yet
                   </p>
                   <p className="text-gray-500 text-sm mt-2">
-                    Commencez par ajouter votre premier parfum
+                    Start by adding your first perfume
                   </p>
                 </div>
               ) : (
                 products.map((product) => (
                   <Card key={product.id} className="overflow-hidden">
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={product.imageUrl || 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300'} 
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="h-48 overflow-hidden bg-gray-100">
+                      {product.imageUrl ? (
+                        <img 
+                          src={product.imageUrl} 
+                          alt={`${product.brand} ${product.name}`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
+                          <div className="text-center p-4">
+                            <div className="text-4xl mb-2">🍃</div>
+                            <div className="text-navy font-roboto text-xs">No Image</div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <CardContent className="p-4">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-playfair text-lg text-navy">{product.name}</h3>
-                        <Badge variant={product.category === 'women' ? 'default' : product.category === 'men' ? 'secondary' : 'outline'}>
-                          {product.category === 'women' && 'Femme'}
-                          {product.category === 'men' && 'Homme'}
-                          {product.category === 'unisex' && 'Mixte'}
+                        <h3 className="font-playfair text-lg text-navy">
+                          {product.brand ? `${product.brand} - ${product.name}` : product.name}
+                        </h3>
+                        <Badge variant={product.category === 'women' || product.category === "Women's" ? 'default' : product.category === 'men' || product.category === "Men's" ? 'secondary' : 'outline'}>
+                          {(product.category === 'women' || product.category === "Women's") && 'WOMEN'}
+                          {(product.category === 'men' || product.category === "Men's") && 'MEN'}
+                          {product.category === 'unisex' && 'UNISEX'}
+                          {product.category === 'niche' && 'NICHE'}
                         </Badge>
                       </div>
                       <p className="text-gray-600 text-sm mb-2 line-clamp-2">
@@ -545,7 +557,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-playfair text-3xl text-navy mb-6">Gestion des Commandes</h2>
+            <h2 className="font-playfair text-3xl text-navy mb-6">Order Management</h2>
             
             {ordersLoading ? (
               <div className="space-y-4">
@@ -627,7 +639,7 @@ export default function Admin() {
                       </div>
                       
                       <div className="border-t pt-4 mt-4">
-                        <h4 className="font-playfair text-navy mb-2">Adresse de livraison:</h4>
+                        <h4 className="font-playfair text-navy mb-2">Shipping Address:</h4>
                         <p className="text-gray-600 whitespace-pre-line">{order.shippingAddress}</p>
                       </div>
                     </CardContent>
@@ -645,7 +657,7 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-playfair text-3xl text-navy mb-6">Messages de Contact</h2>
+            <h2 className="font-playfair text-3xl text-navy mb-6">Contact Messages</h2>
             
             {messagesLoading ? (
               <div className="space-y-4">

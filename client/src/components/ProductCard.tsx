@@ -19,19 +19,25 @@ export default function ProductCard({
   showAddToCart = true 
 }: ProductCardProps) {
   const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'women': return 'FEMME';
-      case 'men': return 'HOMME';
-      case 'unisex': return 'MIXTE';
+    switch (category.toLowerCase()) {
+      case 'women': 
+      case "women's": return 'WOMEN';
+      case 'men': 
+      case "men's": return 'MEN';
+      case 'unisex': return 'UNISEX';
+      case 'niche': return 'NICHE';
       default: return category.toUpperCase();
     }
   };
 
   const getCategoryStyle = (category: string) => {
-    switch (category) {
-      case 'women': return 'text-pastel';
-      case 'men': return 'text-navy';
+    switch (category.toLowerCase()) {
+      case 'women': 
+      case "women's": return 'text-pastel';
+      case 'men': 
+      case "men's": return 'text-navy';
       case 'unisex': return 'text-gray-600';
+      case 'niche': return 'text-gold';
       default: return 'text-gray-600';
     }
   };
@@ -42,16 +48,25 @@ export default function ProductCard({
       transition={{ duration: 0.3 }}
     >
       <Card className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
-        <div className="relative overflow-hidden">
-          <img 
-            src={product.imageUrl || 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300'} 
-            alt={`${product.name} luxury perfume`}
-            className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
-          />
+        <div className="relative overflow-hidden bg-gray-100">
+          {product.imageUrl ? (
+            <img 
+              src={product.imageUrl} 
+              alt={`${product.brand} ${product.name} luxury perfume`}
+              className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+            />
+          ) : (
+            <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
+              <div className="text-center p-4">
+                <div className="text-6xl mb-2">🍃</div>
+                <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
+              </div>
+            </div>
+          )}
           {!product.inStock && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="destructive" className="text-lg px-4 py-2">
-                Rupture de stock
+                Out of Stock
               </Badge>
             </div>
           )}
@@ -59,7 +74,9 @@ export default function ProductCard({
         
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-roboto text-xl text-navy">{product.name}</h3>
+            <h3 className="font-roboto text-xl text-navy">
+              {product.brand ? `${product.brand} - ${product.name}` : product.name}
+            </h3>
             <Badge 
               variant="outline" 
               className={`text-sm font-semibold ${getCategoryStyle(product.category)}`}
@@ -97,7 +114,7 @@ export default function ProductCard({
                 ) : (
                   <div className="flex items-center space-x-1">
                     <Plus className="h-4 w-4" />
-                    <span>Panier</span>
+                    <span>Add to Cart</span>
                   </div>
                 )}
               </Button>
@@ -109,7 +126,7 @@ export default function ProductCard({
                 className="border-gold text-navy hover:bg-gold hover:text-navy px-4 py-2 rounded-full text-sm"
                 onClick={() => window.location.href = '/api/login'}
               >
-                Se connecter
+                Sign In
               </Button>
             )}
           </div>

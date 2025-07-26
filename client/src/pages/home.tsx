@@ -193,7 +193,6 @@ export default function Home() {
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
-        user={user as any}
       />
       <CartSidebar 
         isOpen={isCartOpen}
