@@ -182,9 +182,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
         >
           
-          <p className="text-xl md:text-2xl mb-8 font-light max-w-2xl mx-auto">
-            Discover our exclusive collection of exceptional perfumes
-          </p>
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               className="bg-gold hover:bg-deep-gold text-navy px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300 transform hover:scale-105"
