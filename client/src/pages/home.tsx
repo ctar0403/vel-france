@@ -183,22 +183,7 @@ export default function Home() {
         >
           
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              className="hover:bg-deep-gold text-navy px-8 py-4 rounded-full font-playfair font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-[#001cba]"
-              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <ShoppingBag className="mr-2 h-5 w-5" />
-              Explore Shop
-            </Button>
-            <Button
-              className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-6 py-4 rounded-full font-playfair transition-all duration-300"
-              onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <UserIcon className="mr-2 h-5 w-5" />
-              My Account
-            </Button>
-          </div>
+          
         </motion.div>
       </section>
 
