@@ -29,7 +29,7 @@ interface CatalogueFilters {
   viewMode: 'grid' | 'list';
 }
 
-// Premium Product Card Component 
+// Premium Product Card Component - Matches Reference Design
 function LuxuryProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
@@ -64,100 +64,86 @@ function LuxuryProductCard({ product }: { product: Product }) {
     addToCartMutation.mutate();
   };
 
+  // Format product name to show brand - product name
+  const formatProductName = (name: string, brand?: string | null) => {
+    if (brand && !name.toLowerCase().includes(brand.toLowerCase())) {
+      return `${brand} – ${name}`;
+    }
+    return name;
+  };
+
   return (
-    <motion.div
-      className="group relative bg-white rounded-lg shadow-md overflow-hidden cursor-pointer w-full max-w-[280px] mx-auto"
-      style={{ height: '320px' }}
+    <div
+      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer w-full max-w-[400px] mx-auto"
+      style={{ height: '600px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsButtonHovered(false);
       }}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
     >
-      {/* Product Image */}
-      <div className="relative h-[240px] bg-gradient-to-br from-cream/30 to-pink/10 overflow-hidden">
+      {/* Product Image - 500x500 */}
+      <div className="relative h-[500px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
         {product.imageUrl ? (
-          <motion.img
+          <img
             src={product.imageUrl}
             alt={product.name}
-            className="w-full h-full object-cover"
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.4 }}
+            className="w-full h-full object-cover transition-transform duration-500 ease-out"
+            style={{
+              transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+            }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cream to-pink/20">
-            <div className="text-4xl opacity-30">🌸</div>
+            <div className="text-8xl opacity-20">🌸</div>
           </div>
         )}
 
         {/* Add to Cart Button - Slides from bottom */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 p-4"
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <motion.button
-                onClick={handleAddToCart}
-                disabled={addToCartMutation.isPending}
-                className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-300 ${
-                  isButtonHovered 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-white/95 backdrop-blur-sm text-navy border border-white/50'
-                }`}
-                onMouseEnter={() => setIsButtonHovered(true)}
-                onMouseLeave={() => setIsButtonHovered(false)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <AnimatePresence mode="wait">
-                  {isButtonHovered ? (
-                    <motion.div
-                      key="cart-icon"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.2 }}
-                      className="flex items-center justify-center"
-                    >
-                      <ShoppingCart className="h-5 w-5" />
-                    </motion.div>
-                  ) : (
-                    <motion.span
-                      key="add-text"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      Add to Cart
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div 
+          className="absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 ease-out"
+          style={{
+            transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
+            opacity: isHovered ? 1 : 0,
+          }}
+        >
+          <button
+            onClick={handleAddToCart}
+            disabled={addToCartMutation.isPending}
+            className="w-full py-4 px-6 rounded-full font-medium text-lg transition-all duration-200 ease-out shadow-lg"
+            style={{
+              backgroundColor: isButtonHovered ? '#3b82f6' : 'rgba(255, 255, 255, 0.95)',
+              color: isButtonHovered ? 'white' : '#1e3a8a',
+              backdropFilter: 'blur(10px)',
+              transform: isButtonHovered ? 'scale(1.02)' : 'scale(1)',
+            }}
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
+          >
+            {isButtonHovered ? (
+              <div className="flex items-center justify-center">
+                <ShoppingCart className="h-6 w-6" />
+              </div>
+            ) : (
+              'Add to Cart'
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Product Info */}
-      <div className="h-[80px] p-4 flex flex-col justify-center">
-        <h3 className="font-semibold text-navy text-base mb-1 line-clamp-1 leading-tight">
-          {product.name}
+      <div className="h-[100px] p-6 flex flex-col justify-center">
+        <h3 className="font-semibold text-navy text-lg mb-2 leading-tight">
+          {formatProductName(product.name, product.brand)}
         </h3>
         
         <div className="flex items-center justify-between">
-          <span className="text-xl font-bold text-gold">
+          <span className="text-2xl font-bold text-gold">
             ${parseFloat(product.price.toString()).toFixed(2)}
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -572,7 +558,7 @@ export default function Catalogue() {
               </div>
             ) : (
               <div className={filters.viewMode === 'grid' 
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6" 
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
                 : "space-y-4"
               }>
                 {filteredProducts.map((product) => (
