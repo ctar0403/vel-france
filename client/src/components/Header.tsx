@@ -99,28 +99,28 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 </div>
               </PopoverTrigger>
               <PopoverContent 
-                className="w-[600px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl" 
+                className="w-[900px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl" 
                 align="start"
                 onOpenAutoFocus={(e) => e.preventDefault()}
                 onMouseEnter={() => setIsBrandsHovered(true)}
                 onMouseLeave={() => setIsBrandsHovered(false)}
               >
-                <div className="p-6">
-                  <h3 className="font-playfair text-xl font-semibold text-navy mb-6 border-b border-gold/20 pb-3 text-center">
+                <div className="p-8">
+                  <h3 className="font-playfair text-2xl font-semibold text-navy mb-8 border-b border-gold/20 pb-4 text-center">
                     Luxury Brands
                   </h3>
-                  <div className="grid grid-cols-3 gap-6">
+                  <div className="grid grid-cols-5 gap-8">
                     {sortedLetters.map((letter) => (
-                      <div key={letter} className="space-y-2">
-                        <h4 className="font-playfair text-lg font-bold text-gold border-b border-gold/30 pb-1 mb-3">
+                      <div key={letter} className="space-y-3">
+                        <h4 className="font-playfair text-xl font-bold text-gold border-b border-gold/30 pb-2 mb-4">
                           {letter}
                         </h4>
-                        <div className="space-y-1">
+                        <div className="space-y-2">
                           {brandsByLetter[letter].map((brand) => (
                             <button
                               key={brand}
                               onClick={() => handleBrandClick(brand)}
-                              className="block w-full text-left text-sm text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-3 py-2 rounded-lg transition-colors duration-200 border border-transparent hover:border-gold/20"
+                              className="block w-full text-left text-sm text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-4 py-2.5 rounded-lg transition-colors duration-200 border border-transparent hover:border-gold/20"
                             >
                               {brand}
                             </button>
