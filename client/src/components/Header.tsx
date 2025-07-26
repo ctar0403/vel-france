@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, User, ShoppingBag, Menu, Settings, ChevronDown } from "lucide-react";
 import type { User as UserType } from "@shared/schema";
 
@@ -16,6 +17,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isBrandsHovered, setIsBrandsHovered] = useState(false);
 
   const brands = [
     "Armani", "Azzaro", "Boss", "Bottega Veneta", "Burberry", "Bvlgari", "Byredo", 
@@ -71,25 +73,43 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
             >
               Catalogue
             </button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium">
-                  Brands
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64 max-h-96 overflow-y-auto bg-white border border-gold/20 shadow-xl">
-                {brands.map((brand) => (
-                  <DropdownMenuItem
-                    key={brand}
-                    onClick={() => handleBrandClick(brand)}
-                    className="text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-4 py-2"
-                  >
-                    {brand}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Popover open={isBrandsHovered} onOpenChange={setIsBrandsHovered}>
+              <PopoverTrigger asChild>
+                <div
+                  onMouseEnter={() => setIsBrandsHovered(true)}
+                  onMouseLeave={() => setIsBrandsHovered(false)}
+                >
+                  <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
+                    Brands
+                    <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isBrandsHovered ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent 
+                className="w-96 p-0 bg-white border border-gold/20 shadow-2xl" 
+                align="start"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+                onMouseEnter={() => setIsBrandsHovered(true)}
+                onMouseLeave={() => setIsBrandsHovered(false)}
+              >
+                <div className="p-6">
+                  <h3 className="font-playfair text-xl font-semibold text-navy mb-4 border-b border-gold/20 pb-3">
+                    Luxury Brands
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {brands.map((brand) => (
+                      <button
+                        key={brand}
+                        onClick={() => handleBrandClick(brand)}
+                        className="text-left text-sm text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-3 py-2.5 rounded-lg transition-colors duration-200 border border-transparent hover:border-gold/20"
+                      >
+                        {brand}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
             <button 
               onClick={() => scrollToSection('mens')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
