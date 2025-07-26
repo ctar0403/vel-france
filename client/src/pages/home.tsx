@@ -166,12 +166,15 @@ export default function Home() {
 
       {/* Welcome Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 parallax-bg"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
-          }}
-        />
+        <video 
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/attached_assets/Adobe Express - A_surreal_futuristic_202507261606 (1)_1753532857893.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-navy/40" />
         <div className="absolute inset-0 lace-border" />
         
