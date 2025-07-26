@@ -1,42 +1,73 @@
 import { db } from '../server/db.ts';
 import { products } from '../shared/schema.ts';
-import { isNull } from 'drizzle-orm';
+import { eq, like, and } from 'drizzle-orm';
 
-async function findRemainingProducts() {
-  console.log('Finding products without images...');
+async function findRemainingUpdates() {
+  console.log('Analyzing remaining image opportunities...');
   
-  const productsWithoutImages = await db
+  // Check the second 1 Million file that might not have been processed
+  const millionProducts = await db
     .select()
     .from(products)
-    .where(isNull(products.imageUrl))
-    .orderBy(products.brand, products.name);
+    .where(
+      and(
+        like(products.brand, '%Paco Rabanne%'),
+        like(products.name, '%1 Million%')
+      )
+    );
   
-  console.log(`\n📊 Found ${productsWithoutImages.length} products without images:`);
-  
-  productsWithoutImages.forEach(product => {
-    console.log(`- ${product.brand} - ${product.name}`);
+  console.log(`\nPaco Rabanne 1 Million products found: ${millionProducts.length}`);
+  millionProducts.forEach(p => {
+    console.log(`  - ID: ${p.id}, Name: "${p.name}", Has Image: ${p.imageUrl ? 'YES' : 'NO'}`);
   });
   
-  // Group by brand
-  const byBrand = {};
-  productsWithoutImages.forEach(product => {
-    if (!byBrand[product.brand]) {
-      byBrand[product.brand] = [];
-    }
-    byBrand[product.brand].push(product.name);
+  // Check if there are any products without images that could match our available images
+  const withoutImages = await db
+    .select()
+    .from(products)
+    .where(products.imageUrl === null);
+    
+  console.log(`\nProducts without images: ${withoutImages.length}`);
+  
+  // Look for potential matches from recent batches
+  const possibleMatches = withoutImages.filter(p => 
+    p.brand.includes('Paco Rabanne') || 
+    p.brand.includes('Narciso Rodriguez') ||
+    p.brand.includes('Orto Parisi') ||
+    p.brand.includes('Nasomatto') ||
+    p.brand.includes('Montblanc') ||
+    p.brand.includes('Moschino') ||
+    p.brand.includes('Mugler')
+  );
+  
+  console.log(`\nPossible matches from recent brands: ${possibleMatches.length}`);
+  possibleMatches.forEach(p => {
+    console.log(`  - "${p.brand} - ${p.name}"`);
   });
   
-  console.log('\n📈 Grouped by brand:');
-  Object.keys(byBrand).sort().forEach(brand => {
-    console.log(`${brand}: ${byBrand[brand].length} products`);
-    byBrand[brand].forEach(name => console.log(`  → ${name}`));
-  });
+  // Try to update the second 1 Million if it exists
+  const millionWithoutImage = millionProducts.find(p => !p.imageUrl);
+  if (millionWithoutImage) {
+    console.log(`\nFound 1 Million without image, updating...`);
+    await db
+      .update(products)
+      .set({ imageUrl: '/assets/Paco Rabanne – 1 Million_1753552335226.png' })
+      .where(eq(products.id, millionWithoutImage.id));
+    console.log(`✅ Updated second 1 Million with different dash variant`);
+  }
+  
+  // Final count
+  const finalCount = await db
+    .select()
+    .from(products)
+    .where(products.imageUrl !== null);
+    
+  console.log(`\n🎯 Current total with images: ${finalCount.length}`);
 }
 
-// Run the analysis
-findRemainingProducts()
+findRemainingUpdates()
   .then(() => {
-    console.log('\n✅ Analysis completed!');
+    console.log('\n🔍 Analysis complete!');
     process.exit(0);
   })
   .catch((error) => {
