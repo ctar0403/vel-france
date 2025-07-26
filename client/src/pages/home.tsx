@@ -233,29 +233,29 @@ export default function Home() {
         {/* Navigation Controls */}
         <button
           onClick={prevSlide}
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-md hover:bg-black/60 rounded-full p-4 transition-all duration-300 shadow-2xl border border-white/20 hover:border-white/40"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-all duration-200 opacity-60 hover:opacity-100"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="h-6 w-6 text-white drop-shadow-lg" />
+          <ChevronLeft className="h-5 w-5 text-white" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-black/40 backdrop-blur-md hover:bg-black/60 rounded-full p-4 transition-all duration-300 shadow-2xl border border-white/20 hover:border-white/40"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-all duration-200 opacity-60 hover:opacity-100"
           aria-label="Next slide"
         >
-          <ChevronRight className="h-6 w-6 text-white drop-shadow-lg" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
         
         {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
           {banners.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-300 shadow-lg border-2 ${
+              className={`w-2 h-2 rounded-full transition-all duration-200 ${
                 index === currentSlide 
-                  ? 'bg-gold border-gold shadow-gold/50' 
-                  : 'bg-white/40 border-white/60 hover:bg-white/60 hover:border-white/80'
+                  ? 'bg-white' 
+                  : 'bg-white/40 hover:bg-white/60'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -264,37 +264,33 @@ export default function Home() {
         
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div 
-            className="relative z-10 text-center px-6"
+            className="relative z-10 text-center px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Background blur for better text visibility */}
-            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-3xl -m-8"></div>
-            
-            <div className="relative z-10">
-              <h1 className="font-vibes text-5xl md:text-7xl mb-4 text-white drop-shadow-2xl filter">
-                Vel France
-              </h1>
-              <p className="font-playfair text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white font-medium drop-shadow-lg filter">
-                Discover the art of luxury perfumery where every fragrance tells a story of elegance and sophistication
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  className="bg-gradient-to-r from-gold to-yellow-500 hover:from-deep-gold hover:to-gold text-navy px-8 py-4 rounded-full font-playfair font-bold text-lg shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-3xl border-2 border-white/20"
-                  onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  <ShoppingBag className="mr-2 h-5 w-5" />
-                  Explore Collection
-                </Button>
-                <Button
-                  className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white border-2 border-white/50 hover:border-white/80 px-8 py-4 rounded-full font-playfair font-bold text-lg shadow-2xl transition-all duration-300 hover:shadow-3xl"
-                  onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  <UserIcon className="mr-2 h-5 w-5" />
-                  My Account
-                </Button>
-              </div>
+            <h1 className="text-5xl md:text-6xl mb-3 text-white font-light tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Vel France
+            </h1>
+            <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white/90 font-light leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Discover the art of luxury perfumery where every fragrance tells a story
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                className="bg-white text-black hover:bg-gray-100 px-7 py-3 text-sm font-medium tracking-wide transition-all duration-200 border-0"
+                onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                EXPLORE COLLECTION
+              </Button>
+              <Button
+                variant="outline"
+                className="bg-transparent hover:bg-white/10 text-white border border-white/60 hover:border-white px-7 py-3 text-sm font-medium tracking-wide transition-all duration-200"
+                onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <UserIcon className="mr-2 h-4 w-4" />
+                MY ACCOUNT
+              </Button>
             </div>
           </motion.div>
         </div>
