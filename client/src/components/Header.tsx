@@ -99,7 +99,7 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 </div>
               </PopoverTrigger>
               <PopoverContent 
-                className="w-[1200px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl" 
+                className="w-[1400px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl max-h-[80vh] overflow-hidden" 
                 align="center"
                 side="bottom"
                 sideOffset={10}
@@ -107,22 +107,22 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
                 onMouseEnter={() => setIsBrandsHovered(true)}
                 onMouseLeave={() => setIsBrandsHovered(false)}
               >
-                <div className="p-10">
-                  <h3 className="font-playfair text-2xl font-semibold text-navy mb-10 border-b border-gold/20 pb-4 text-center">
+                <div className="p-8 overflow-y-auto scrollbar-hide" style={{ scrollBehavior: 'smooth' }}>
+                  <h3 className="font-playfair text-xl font-semibold text-navy mb-8 border-b border-gold/20 pb-3 text-center">
                     Luxury Brands Collection
                   </h3>
-                  <div className="grid grid-cols-7 gap-10">
+                  <div className="grid grid-cols-9 gap-6">
                     {sortedLetters.map((letter) => (
-                      <div key={letter} className="space-y-3">
-                        <h4 className="font-playfair text-xl font-bold text-gold border-b border-gold/30 pb-2 mb-4 text-center">
+                      <div key={letter} className="space-y-2">
+                        <h4 className="font-playfair text-lg font-bold text-gold border-b border-gold/30 pb-1 mb-3 text-center">
                           {letter}
                         </h4>
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           {brandsByLetter[letter].map((brand) => (
                             <button
                               key={brand}
                               onClick={() => handleBrandClick(brand)}
-                              className="block w-full text-left text-sm text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-4 py-3 rounded-lg transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
+                              className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-playfair px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
                             >
                               {brand}
                             </button>
