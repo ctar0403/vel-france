@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Line clamp utility for product names */
+@layer utilities {
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
 :root {
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(217, 30%, 18%);

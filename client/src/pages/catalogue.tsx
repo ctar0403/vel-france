@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,10 +11,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, Filter, X, Grid, List, SlidersHorizontal } from "lucide-react";
+import { Search, Filter, X, Grid, List, SlidersHorizontal, ShoppingCart, Plus } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { motion, AnimatePresence } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product } from "@shared/schema";
-import ProductCard from "@/components/ProductCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -25,6 +27,172 @@ interface CatalogueFilters {
   selectedCategories: string[];
   sortBy: string;
   viewMode: 'grid' | 'list';
+}
+
+// Luxury Product Card Component with Advanced Animations
+function LuxuryProductCard({ product }: { product: Product }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isCartHovered, setIsCartHovered] = useState(false);
+  const { toast } = useToast();
+
+  const addToCartMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("POST", "/api/cart", {
+        productId: product.id,
+        quantity: 1
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      toast({ 
+        title: "Added to cart", 
+        description: `${product.name} has been added to your cart` 
+      });
+    },
+    onError: (error: Error) => {
+      toast({ 
+        title: "Error", 
+        description: error.message, 
+        variant: "destructive" 
+      });
+    },
+  });
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCartMutation.mutate();
+  };
+
+  return (
+    <motion.div
+      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+      style={{ aspectRatio: '3/4', height: '400px' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsCartHovered(false);
+      }}
+      whileHover={{ y: -8 }}
+      transition={{ 
+        duration: 0.4,
+        ease: [0.4, 0.0, 0.2, 1]
+      }}
+    >
+      {/* Product Image */}
+      <div className="relative h-2/3 bg-gradient-to-br from-cream/30 to-pink/10 overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0"
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+        
+        {product.imageUrl ? (
+          <motion.img
+            src={product.imageUrl}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            animate={{ 
+              scale: isHovered ? 1.1 : 1,
+              filter: isHovered ? 'brightness(0.9)' : 'brightness(1)'
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cream to-pink/20">
+            <div className="text-6xl opacity-20">🌸</div>
+          </div>
+        )}
+
+        {/* Animated Add to Cart Button */}
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              <motion.button
+                onClick={handleAddToCart}
+                disabled={addToCartMutation.isPending}
+                className="relative px-8 py-3 bg-white/95 backdrop-blur-sm rounded-full shadow-xl border border-gray-200/50 hover:bg-blue-500 transition-colors duration-300 group/btn"
+                onMouseEnter={() => setIsCartHovered(true)}
+                onMouseLeave={() => setIsCartHovered(false)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <AnimatePresence mode="wait">
+                  {isCartHovered ? (
+                    <motion.div
+                      key="cart-icon"
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center gap-2"
+                    >
+                      <ShoppingCart className="h-5 w-5 text-white" />
+                    </motion.div>
+                  ) : (
+                    <motion.span
+                      key="add-text"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-navy group-hover/btn:text-white font-medium"
+                    >
+                      Add to Cart
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Product Info */}
+      <div className="h-1/3 p-6 flex flex-col justify-center">
+        <motion.h3 
+          className="font-semibold text-navy text-lg mb-2 line-clamp-2 leading-tight"
+          animate={{ 
+            color: isHovered ? '#1e40af' : '#1e3a8a'
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          {product.name}
+        </motion.h3>
+        
+        <motion.div
+          className="flex items-center justify-between"
+          animate={{ y: isHovered ? -2 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <span className="text-2xl font-bold text-gold">
+            ${parseFloat(product.price.toString()).toFixed(2)}
+          </span>
+          
+          {product.brand && (
+            <span className="text-sm text-gray-500 font-medium">
+              {product.brand}
+            </span>
+          )}
+        </motion.div>
+      </div>
+
+      {/* Elegant Border Animation */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl border-2 border-gold/0"
+        animate={{ 
+          borderColor: isHovered ? 'rgba(218, 165, 32, 0.3)' : 'rgba(218, 165, 32, 0)'
+        }}
+        transition={{ duration: 0.3 }}
+      />
+    </motion.div>
+  );
 }
 
 export default function Catalogue() {
@@ -438,13 +606,11 @@ export default function Catalogue() {
               </div>
             ) : (
               <div className={filters.viewMode === 'grid' 
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" 
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" 
                 : "space-y-4"
               }>
                 {filteredProducts.map((product) => (
-                  <div key={product.id}>
-                    <ProductCard product={product} />
-                  </div>
+                  <LuxuryProductCard key={product.id} product={product} />
                 ))}
               </div>
             )}
