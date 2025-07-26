@@ -74,16 +74,16 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer w-full max-w-[400px] mx-auto"
-      style={{ height: '600px' }}
+      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer w-full max-w-[350px] mx-auto"
+      style={{ height: '450px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsButtonHovered(false);
       }}
     >
-      {/* Product Image - 500x500 */}
-      <div className="relative h-[500px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
+      {/* Product Image - Square 300x300 */}
+      <div className="relative h-[300px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -95,13 +95,13 @@ function LuxuryProductCard({ product }: { product: Product }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cream to-pink/20">
-            <div className="text-8xl opacity-20">🌸</div>
+            <div className="text-6xl opacity-20">🌸</div>
           </div>
         )}
 
         {/* Add to Cart Button - Slides from bottom */}
         <div 
-          className="absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 ease-out"
+          className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-300 ease-out"
           style={{
             transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
             opacity: isHovered ? 1 : 0,
@@ -110,7 +110,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={addToCartMutation.isPending}
-            className="w-full py-4 px-6 rounded-full font-medium text-lg transition-all duration-200 ease-out shadow-lg"
+            className="w-full py-3 px-4 rounded-full font-medium transition-all duration-200 ease-out shadow-lg"
             style={{
               backgroundColor: isButtonHovered ? '#3b82f6' : 'rgba(255, 255, 255, 0.95)',
               color: isButtonHovered ? 'white' : '#1e3a8a',
@@ -122,7 +122,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
           >
             {isButtonHovered ? (
               <div className="flex items-center justify-center">
-                <ShoppingCart className="h-6 w-6" />
+                <ShoppingCart className="h-5 w-5" />
               </div>
             ) : (
               'Add to Cart'
@@ -132,13 +132,13 @@ function LuxuryProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="h-[100px] p-6 flex flex-col justify-center">
-        <h3 className="font-semibold text-navy text-lg mb-2 leading-tight">
+      <div className="h-[150px] p-4 flex flex-col justify-center">
+        <h3 className="font-semibold text-navy text-base mb-3 leading-tight">
           {formatProductName(product.name, product.brand)}
         </h3>
         
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gold">
+          <span className="text-xl font-bold text-gold">
             ${parseFloat(product.price.toString()).toFixed(2)}
           </span>
         </div>
