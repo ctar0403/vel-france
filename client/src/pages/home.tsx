@@ -267,37 +267,37 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Premium visibility container */}
-            <div className="bg-gradient-to-br from-black/80 via-black/70 to-black/80 backdrop-blur-xl rounded-2xl px-10 py-8 border border-white/30 shadow-2xl max-w-2xl mx-auto">
-              {/* High-impact headline */}
-              <div className="text-center mb-8">
-                <div className="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest mb-4 shadow-lg">
-                  Limited Time Offer
+            {/* Compact visibility container */}
+            <div className="bg-black/40 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/20 shadow-xl max-w-lg mx-auto">
+              {/* Compact headline */}
+              <div className="text-center mb-4">
+                <div className="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-3 shadow-md">
+                  Limited Offer
                 </div>
-                <h1 className="text-4xl md:text-6xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'Inter, sans-serif', textShadow: '0 4px 8px rgba(0,0,0,0.8)' }}>
+                <h1 className="text-2xl md:text-3xl font-bold text-white mb-1 tracking-tight" style={{ fontFamily: 'Inter, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   UP TO 60% OFF
                 </h1>
-                <p className="text-xl md:text-2xl text-white/90 font-medium tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Luxury Perfumes Collection
+                <p className="text-sm md:text-base text-white/90 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Luxury Perfumes
                 </p>
               </div>
               
-              {/* Premium buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              {/* Compact buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button
-                  className="bg-gradient-to-r from-white via-gray-50 to-white hover:from-gray-50 hover:to-gray-100 text-black px-12 py-4 text-lg font-bold uppercase tracking-widest shadow-2xl border-2 border-white/40 hover:border-white/60 transition-all duration-300 transform hover:scale-105 hover:shadow-3xl rounded-xl min-w-[200px]"
+                  className="bg-white hover:bg-gray-100 text-black px-6 py-2.5 text-sm font-semibold uppercase tracking-wide shadow-lg border border-white/30 transition-all duration-200 hover:scale-105 rounded-lg"
                   onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  <ShoppingBag className="mr-3 h-6 w-6" />
+                  <ShoppingBag className="mr-2 h-4 w-4" />
                   Shop Now
                 </Button>
                 
                 <Button
-                  className="bg-transparent hover:bg-white/20 text-white border-2 border-white hover:border-white/80 px-12 py-4 text-lg font-bold uppercase tracking-widest shadow-2xl backdrop-blur-md transition-all duration-300 transform hover:scale-105 hover:shadow-3xl rounded-xl min-w-[200px]"
+                  className="bg-transparent hover:bg-white/15 text-white border border-white/60 hover:border-white px-6 py-2.5 text-sm font-semibold uppercase tracking-wide shadow-lg transition-all duration-200 hover:scale-105 rounded-lg"
                   onClick={() => document.getElementById('account')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  <UserIcon className="mr-3 h-6 w-6" />
-                  My Account
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  Account
                 </Button>
               </div>
             </div>
