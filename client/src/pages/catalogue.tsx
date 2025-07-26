@@ -74,16 +74,16 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer w-full max-w-[280px] mx-auto"
-      style={{ height: '360px' }}
+      className="group relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer w-full max-w-[260px] mx-auto"
+      style={{ height: '320px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsButtonHovered(false);
       }}
     >
-      {/* Product Image - Perfect Square 240x240 */}
-      <div className="relative w-full h-[240px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
+      {/* Product Image - Perfect Square 220x220 */}
+      <div className="relative w-full h-[220px] bg-gradient-to-br from-cream to-pink/10 overflow-hidden">
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -134,7 +134,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="h-[120px] p-4 flex flex-col justify-center">
+      <div className="h-[100px] p-3 flex flex-col justify-center">
         <h3 className="font-semibold text-navy text-sm mb-2 leading-tight line-clamp-2">
           {formatProductName(product.name, product.brand)}
         </h3>
