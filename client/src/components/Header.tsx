@@ -58,9 +58,8 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
   };
 
   const handleBrandClick = (brand: string) => {
-    // TODO: Implement brand filtering
-    console.log("Selected brand:", brand);
-    scrollToSection('products');
+    // Navigate to catalogue page with brand filter
+    window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
   };
 
   return (
@@ -80,18 +79,12 @@ export default function Header({ cartItemCount = 0, onCartClick, user }: HeaderP
           
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 font-roboto">
-            <button 
-              onClick={() => scrollToSection('home')}
+            <Link 
+              href="/"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Home
-            </button>
-            <button 
-              onClick={() => scrollToSection('products')}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Catalogue
-            </button>
+            </Link>
             <Popover open={isBrandsHovered} onOpenChange={setIsBrandsHovered}>
               <PopoverTrigger asChild>
                 <div

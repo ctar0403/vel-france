@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,8 @@ import { Search, Filter, X, Grid, List, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import type { Product } from "@shared/schema";
 import ProductCard from "@/components/ProductCard";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -25,6 +28,7 @@ interface CatalogueFilters {
 }
 
 export default function Catalogue() {
+  const [location] = useLocation();
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
     priceRange: [0, 1000],
@@ -35,6 +39,27 @@ export default function Catalogue() {
   });
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  // Parse URL parameters for initial filters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const brandParam = urlParams.get('brand');
+    const categoryParam = urlParams.get('category');
+    
+    if (brandParam) {
+      setFilters(prev => ({
+        ...prev,
+        selectedBrands: [brandParam]
+      }));
+    }
+    
+    if (categoryParam) {
+      setFilters(prev => ({
+        ...prev,
+        selectedCategories: [categoryParam]
+      }));
+    }
+  }, [location]);
 
   const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
@@ -264,8 +289,9 @@ export default function Catalogue() {
   }
 
   return (
-    <div className="min-h-screen bg-cream py-8">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-cream">
+      <Header />
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-navy mb-2">Perfume Catalogue</h1>
@@ -425,6 +451,7 @@ export default function Catalogue() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -278,13 +279,14 @@ export default function Home() {
               
               {/* Buttons with backgrounds */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
-                  className="bg-white hover:bg-gray-100 text-black px-8 py-3 text-sm font-semibold uppercase tracking-wide shadow-xl border border-white/50 transition-all duration-200 hover:scale-105 rounded-lg"
-                  onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  <ShoppingBag className="mr-2 h-4 w-4" />
-                  Shop Now
-                </Button>
+                <Link href="/catalogue">
+                  <Button
+                    className="bg-white hover:bg-gray-100 text-black px-8 py-3 text-sm font-semibold uppercase tracking-wide shadow-xl border border-white/50 transition-all duration-200 hover:scale-105 rounded-lg"
+                  >
+                    <ShoppingBag className="mr-2 h-4 w-4" />
+                    Shop Now
+                  </Button>
+                </Link>
                 
                 <Button
                   className="bg-black/50 hover:bg-black/60 backdrop-blur-sm text-white border border-white/60 hover:border-white px-8 py-3 text-sm font-semibold uppercase tracking-wide shadow-xl transition-all duration-200 hover:scale-105 rounded-lg"
@@ -415,7 +417,7 @@ export default function Home() {
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {featuredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -431,6 +433,17 @@ export default function Home() {
                 />
               </motion.div>
             ))}
+          </div>
+          
+          {/* View All Button */}
+          <div className="text-center">
+            <Link href="/catalogue">
+              <Button
+                className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-semibold uppercase tracking-wide shadow-xl transition-all duration-200 hover:scale-105 rounded-lg"
+              >
+                View All Products
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
