@@ -402,12 +402,12 @@ export default function Catalogue() {
     }, 800);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
-  // Infinite scroll hook with scroll prevention during loading
+  // Infinite scroll hook with immediate loading
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
       const documentHeight = document.documentElement.offsetHeight;
-      const threshold = 100; // Load when 100px from bottom
+      const threshold = 50; // Load when just 50px from bottom
       
       if (scrollPosition >= documentHeight - threshold && !isLoadingMore && displayedCount < allFilteredProducts.length) {
         loadMoreProducts();
@@ -1069,14 +1069,14 @@ export default function Catalogue() {
                     </AnimatePresence>
                   </motion.div>
 
-                  {/* Simple Loading Indicator */}
+                  {/* Simple Loading Indicator - Only when loading */}
                   {isLoadingMore && (
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="flex items-center justify-center py-12"
+                      className="flex items-center justify-center py-16"
                     >
                       <div className="flex items-center gap-3">
                         <motion.div
@@ -1093,21 +1093,9 @@ export default function Catalogue() {
                     </motion.div>
                   )}
 
-                  {/* Manual Load More Button (when not loading) */}
+                  {/* Spacer to ensure scroll area when more products available */}
                   {!isLoadingMore && displayedCount < allFilteredProducts.length && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex justify-center py-8"
-                    >
-                      <Button 
-                        onClick={loadMoreProducts}
-                        variant="outline"
-                        className="bg-white border-2 border-gray-200 text-navy hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium px-6 py-2"
-                      >
-                        Load More ({allFilteredProducts.length - displayedCount} remaining)
-                      </Button>
-                    </motion.div>
+                    <div className="py-16"></div>
                   )}
                 </>
               )}
