@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import Home from "@/pages/home";
 import Catalogue from "@/pages/catalogue";
+import ProductDetail from "@/pages/product-detail";
 import AuthPage from "@/pages/auth";
 import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
@@ -37,6 +38,7 @@ function Router() {
       {/* Public routes */}
       <Route path="/" component={Home} />
       <Route path="/catalogue" component={Catalogue} />
+      <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/auth" component={AuthPage} />

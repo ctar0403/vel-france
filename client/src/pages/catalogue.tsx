@@ -15,6 +15,7 @@ import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
+import { Link } from "wouter";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -68,11 +69,12 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
   };
 
   return (
-    <motion.div
-      onHoverStart={() => setIsCardHovered(true)}
-      onHoverEnd={() => setIsCardHovered(false)}
-      className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
-    >
+    <Link href={`/product/${product.id}`}>
+      <motion.div
+        onHoverStart={() => setIsCardHovered(true)}
+        onHoverEnd={() => setIsCardHovered(false)}
+        className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+      >
       {/* Fixed Height Image Container */}
       <div className="aspect-square relative overflow-hidden flex-shrink-0">
         <motion.img
@@ -161,7 +163,8 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
           ${parseFloat(product.price.toString()).toFixed(2)}
         </span>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 
