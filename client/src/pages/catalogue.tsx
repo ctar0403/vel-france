@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -182,7 +182,7 @@ export default function Catalogue() {
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([15, 150]); // Will be updated when products load
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -205,13 +205,15 @@ export default function Catalogue() {
     const prices = products.map(p => parseFloat(p.price.toString()));
     const range: [number, number] = [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
     
-    // Set temp price range for slider display (min to max), but keep filters as [0,0] (no filter)
-    if (tempPriceRange[0] === 0 && tempPriceRange[1] === 1000 && range[0] !== 0) {
-      setTempPriceRange(range);
-    }
-    
     return range;
-  }, [products, tempPriceRange]);
+  }, [products]);
+
+  // Initialize temp price range when products load
+  useEffect(() => {
+    if (products.length > 0 && (tempPriceRange[0] === 15 && tempPriceRange[1] === 150)) {
+      setTempPriceRange(priceRange as [number, number]);
+    }
+  }, [products, priceRange, tempPriceRange]);
 
   // Get unique brands and categories
   const availableBrands = useMemo(() => {
