@@ -393,16 +393,19 @@ export default function Catalogue() {
   const loadMoreProducts = useCallback(() => {
     if (displayedCount >= allFilteredProducts.length || isLoadingMore) return;
     
+    console.log('Starting to load more products, setting isLoadingMore to true');
     setIsLoadingMore(true);
     
     // Update count immediately, loading indicator controlled separately
     setDisplayedCount(prev => {
       const newCount = Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length);
+      console.log('Updated displayed count to:', newCount);
       
       // Hide loading indicator after items have had time to render
       setTimeout(() => {
+        console.log('Hiding loading indicator');
         setIsLoadingMore(false);
-      }, 800); // Wait for animation to complete
+      }, 1000); // Increased timeout to ensure visibility
       
       return newCount;
     });
@@ -1078,7 +1081,7 @@ export default function Catalogue() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="flex items-center justify-center py-8 mt-4"
+                      className="flex items-center justify-center py-8 mt-4 bg-red-100 border border-red-300"
                     >
                       <div className="flex items-center gap-3">
                         <motion.div
@@ -1094,6 +1097,11 @@ export default function Catalogue() {
                       </div>
                     </motion.div>
                   )}
+                  
+                  {/* Debug indicator */}
+                  <div className="text-center py-2 text-sm text-gray-500">
+                    Debug: isLoadingMore = {isLoadingMore ? 'TRUE' : 'FALSE'}, displayedCount = {displayedCount}, totalProducts = {allFilteredProducts.length}
+                  </div>
                 </>
               )}
             </motion.div>
