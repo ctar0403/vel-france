@@ -97,6 +97,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="fixed inset-0 bg-black/50 z-40"
               onClick={onClose}
             />
@@ -106,7 +107,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 20, stiffness: 100 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               className="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl z-50 flex flex-col"
             >
               {/* Header */}
@@ -149,13 +150,13 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {cartItems.map((item) => (
+                    {cartItems.map((item, index) => (
                       <motion.div
                         key={item.id}
-                        layout
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2, delay: index * 0.02 }}
                         className="flex space-x-4 p-4 border-b border-gray-100"
                       >
                         <img 
