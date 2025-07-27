@@ -395,24 +395,28 @@ export default function Catalogue() {
     
     setIsLoadingMore(true);
     
-    // Simulate loading delay for smooth UX
+    // Realistic loading delay for smooth UX
     setTimeout(() => {
       setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
       setIsLoadingMore(false);
-    }, 300);
+    }, 800);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
-  // Infinite scroll hook
+  // Infinite scroll hook with better threshold
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 1000) {
+      const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
+      const documentHeight = document.documentElement.offsetHeight;
+      const threshold = 200; // Load when 200px from bottom
+      
+      if (scrollPosition >= documentHeight - threshold && !isLoadingMore && displayedCount < allFilteredProducts.length) {
         loadMoreProducts();
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [loadMoreProducts]);
+  }, [loadMoreProducts, isLoadingMore, displayedCount, allFilteredProducts.length]);
 
   const activeFiltersCount = 
     (filters.searchQuery.trim() ? 1 : 0) +
@@ -834,22 +838,35 @@ export default function Catalogue() {
                   </SheetContent>
                 </Sheet>
                 
-                <div className="text-sm text-gray-600 flex items-center gap-2">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sm text-gray-600 flex items-center gap-2"
+                >
                   {isFiltering ? (
-                    <>
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center gap-2"
+                    >
                       <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                         className="w-4 h-4 border-2 border-gray-400/30 border-t-gray-600 rounded-full"
                       />
                       <span>Filtering...</span>
-                    </>
+                    </motion.div>
                   ) : (
-                    <span>
+                    <motion.span
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
                       Showing {displayedProducts.length} of {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
-                    </span>
+                    </motion.span>
                   )}
-                </div>
+                </motion.div>
               </div>
 
               <div className="flex items-center gap-4">
@@ -969,16 +986,24 @@ export default function Catalogue() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center"
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex items-center justify-center"
                 >
-                  <div className="flex items-center gap-3 bg-white/90 px-6 py-3 rounded-xl shadow-lg">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-5 h-5 border-2 border-gold/30 border-t-gold rounded-full"
-                    />
-                    <span className="text-navy font-medium">Filtering products...</span>
-                  </div>
+                  <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="flex items-center gap-4 bg-white/95 px-8 py-4 rounded-2xl shadow-xl border border-gold/20"
+                  >
+                    <div className="relative">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                        className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full"
+                      />
+                    </div>
+                    <span className="text-navy font-semibold">Filtering products...</span>
+                  </motion.div>
                 </motion.div>
               )}
               {allFilteredProducts.length === 0 ? (
@@ -999,6 +1024,9 @@ export default function Catalogue() {
               ) : (
                 <>
                   <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className={filters.viewMode === 'grid' 
                       ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
                       : "space-y-4"
@@ -1007,53 +1035,101 @@ export default function Catalogue() {
                   >
                     <AnimatePresence mode="popLayout">
                       {displayedProducts.map((product, index) => (
-                        <LuxuryProductCard 
-                          key={product.id} 
-                          product={product} 
-                          index={index} 
-                        />
+                        <motion.div
+                          key={product.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ 
+                            duration: 0.4, 
+                            delay: index % PRODUCTS_PER_PAGE * 0.02,
+                            ease: "easeOut"
+                          }}
+                          layout
+                        >
+                          <LuxuryProductCard 
+                            product={product} 
+                            index={index} 
+                          />
+                        </motion.div>
                       ))}
                     </AnimatePresence>
                   </motion.div>
 
                   {/* Load More Indicator */}
-                  {displayedCount < allFilteredProducts.length && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex justify-center py-12"
-                    >
-                      {isLoadingMore ? (
-                        <div className="flex items-center gap-3">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                            className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full"
-                          />
-                          <span className="text-navy font-medium">Loading more luxury fragrances...</span>
-                        </div>
-                      ) : (
-                        <Button 
-                          onClick={loadMoreProducts}
-                          variant="outline"
-                          className="bg-gradient-to-r from-white to-cream/50 border-2 border-gold/30 text-navy hover:bg-gradient-to-r hover:from-gold hover:to-gold/90 hover:text-white hover:border-gold transition-all duration-300 font-semibold shadow-md hover:shadow-lg px-8 py-3"
-                        >
-                          Load More Products ({allFilteredProducts.length - displayedCount} remaining)
-                        </Button>
-                      )}
-                    </motion.div>
-                  )}
-
-                  {/* Scroll to Load Indicator */}
-                  {displayedCount < allFilteredProducts.length && !isLoadingMore && (
+                  {(displayedCount < allFilteredProducts.length || isLoadingMore) && (
                     <motion.div 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-center py-4"
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="flex flex-col items-center py-8 mt-6"
                     >
-                      <p className="text-sm text-gray-500">
-                        Scroll down to load more products automatically
-                      </p>
+                      {isLoadingMore ? (
+                        <div className="flex flex-col items-center gap-4 bg-white/80 backdrop-blur-sm px-8 py-6 rounded-2xl border border-gold/20 shadow-lg">
+                          <div className="relative">
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ 
+                                duration: 2, 
+                                repeat: Infinity, 
+                                ease: "linear" 
+                              }}
+                              className="w-8 h-8 border-3 border-gold/20 border-t-gold rounded-full"
+                            />
+                            <motion.div
+                              animate={{ rotate: -360 }}
+                              transition={{ 
+                                duration: 1.5, 
+                                repeat: Infinity, 
+                                ease: "linear" 
+                              }}
+                              className="absolute inset-1 w-6 h-6 border-2 border-transparent border-b-navy/30 rounded-full"
+                            />
+                          </div>
+                          <div className="text-center">
+                            <motion.span 
+                              initial={{ opacity: 0.7 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ 
+                                duration: 1, 
+                                repeat: Infinity, 
+                                repeatType: "reverse",
+                                ease: "easeInOut"
+                              }}
+                              className="text-navy font-semibold text-lg"
+                            >
+                              Loading luxury fragrances...
+                            </motion.span>
+                            <p className="text-gray-600 text-sm mt-1">
+                              Discovering {PRODUCTS_PER_PAGE} more exquisite scents
+                            </p>
+                          </div>
+                        </div>
+                      ) : displayedCount < allFilteredProducts.length && (
+                        <div className="text-center space-y-4">
+                          <Button 
+                            onClick={loadMoreProducts}
+                            variant="outline"
+                            className="bg-gradient-to-r from-white to-cream/50 border-2 border-gold/30 text-navy hover:bg-gradient-to-r hover:from-gold hover:to-gold/90 hover:text-white hover:border-gold transition-all duration-500 font-semibold shadow-lg hover:shadow-xl px-8 py-3 rounded-xl hover:scale-105 transform"
+                          >
+                            <motion.span
+                              initial={{ scale: 1 }}
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              Load More Products ({allFilteredProducts.length - displayedCount} remaining)
+                            </motion.span>
+                          </Button>
+                          <motion.p 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2, duration: 0.4 }}
+                            className="text-sm text-gray-500"
+                          >
+                            Scroll down to load automatically
+                          </motion.p>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </>
