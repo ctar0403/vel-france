@@ -121,7 +121,6 @@ export default function CartPage() {
             </Link>
             <div className="text-center">
               <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Shopping Cart</h1>
-              <p className="text-navy/60 text-sm mt-1">Curated luxury fragrances</p>
             </div>
             <div className="w-[180px]"></div> {/* Spacer for centering */}
           </div>
