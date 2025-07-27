@@ -485,24 +485,20 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
-                    className="w-full h-20 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
+                    className="w-full h-20 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 hover:from-purple-600 hover:via-purple-700 hover:to-purple-800 text-white font-roboto font-medium hover:shadow-2xl transition-all duration-300 flex items-center justify-center rounded-2xl p-6 relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-purple-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="flex items-center relative z-10">
+                    <div className="flex items-center justify-center w-full relative z-10">
                       <img 
                         src={partByPartLogo} 
                         alt="Part by Part"
-                        className="w-24 h-16 object-contain -ml-2 mr-2"
+                        className="w-24 h-16 object-contain mr-4"
                       />
-                      <div className="text-left">
+                      <div className="text-center flex-1">
                         <div className="font-semibold text-lg tracking-wide">Part-by-Part</div>
                         <div className="text-sm opacity-90 text-purple-100">Buy now, pay in 4 interest-free parts</div>
+                        <div className="text-lg font-bold text-white mt-1">₾{(total / 4).toFixed(2)} × 4</div>
                       </div>
-                    </div>
-                    <div className="text-right relative z-10">
-                      <div className="text-xl font-bold text-white">₾{(total / 4).toFixed(2)} × 4</div>
-                      <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
                   </Button>
                 </div>
