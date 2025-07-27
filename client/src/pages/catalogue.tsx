@@ -157,7 +157,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
           {formatProductName(product.name, product.brand)}
         </h3>
 
-        <span className="text-base font-bold text-gold">
+        <span className="text-base text-gold font-normal">
           ${parseFloat(product.price.toString()).toFixed(2)}
         </span>
       </div>
