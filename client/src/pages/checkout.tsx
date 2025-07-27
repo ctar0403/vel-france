@@ -423,7 +423,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-slate-800">₾{total.toFixed(2)}</div>
+                        <div className="text-2xl font-bold text-[#ffffff]">₾{total.toFixed(2)}</div>
                       </div>
                     </div>
 
