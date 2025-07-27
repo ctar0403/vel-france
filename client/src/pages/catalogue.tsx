@@ -395,8 +395,17 @@ export default function Catalogue() {
     
     setIsLoadingMore(true);
     
-    // Update count immediately, loading indicator stays until render complete
-    setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
+    // Update count immediately, loading indicator controlled separately
+    setDisplayedCount(prev => {
+      const newCount = Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length);
+      
+      // Hide loading indicator after items have had time to render
+      setTimeout(() => {
+        setIsLoadingMore(false);
+      }, 800); // Wait for animation to complete
+      
+      return newCount;
+    });
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
   // Infinite scroll hook with balanced loading trigger
@@ -1051,12 +1060,7 @@ export default function Catalogue() {
                             ease: "easeOut"
                           }}
                           layout
-                          onAnimationComplete={() => {
-                            // Hide loading when the last new item finishes animating in
-                            if (isLoadingMore && index === displayedProducts.length - 1) {
-                              setTimeout(() => setIsLoadingMore(false), 100);
-                            }
-                          }}
+
                         >
                           <LuxuryProductCard 
                             product={product} 
