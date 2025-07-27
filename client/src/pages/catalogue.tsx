@@ -402,12 +402,12 @@ export default function Catalogue() {
     }, 800);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
-  // Infinite scroll hook with immediate loading
+  // Infinite scroll hook with early loading trigger
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
       const documentHeight = document.documentElement.offsetHeight;
-      const threshold = 50; // Load when just 50px from bottom
+      const threshold = 800; // Load when 800px from bottom (much earlier)
       
       if (scrollPosition >= documentHeight - threshold && !isLoadingMore && displayedCount < allFilteredProducts.length) {
         loadMoreProducts();
