@@ -254,20 +254,29 @@ export default function CheckoutPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-navy">Loading checkout...</div>
+      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center animate-pulse">
+            <CreditCard className="h-8 w-8 text-navy/40" />
+          </div>
+          <p className="font-roboto text-lg text-navy/70 tracking-wide">Preparing secure checkout...</p>
+        </div>
       </div>
     );
   }
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
         <div className="text-center">
-          <h2 className="font-playfair text-2xl text-navy mb-4">Your cart is empty</h2>
-          <Link href="/">
-            <Button className="bg-gradient-to-r from-gold to-deep-gold text-navy font-playfair font-semibold">
-              Continue Shopping
+          <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center">
+            <CreditCard className="h-16 w-16 text-navy/40" />
+          </div>
+          <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">Your cart is empty</h2>
+          <p className="text-navy/60 text-lg mb-8">Add some luxury fragrances to proceed with checkout</p>
+          <Link href="/catalogue">
+            <Button className="bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
+              Explore Fragrances
             </Button>
           </Link>
         </div>
@@ -276,191 +285,226 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <div className="bg-white border-b border-gold/20">
-        <div className="container mx-auto px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink">
+      {/* Luxury Header */}
+      <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
+        <div className="container mx-auto px-6 py-8 relative">
           <div className="flex items-center justify-between">
             <Link href="/cart">
-              <Button variant="ghost" className="text-navy hover:text-gold">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+              <Button 
+                variant="ghost" 
+                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-6 py-3 group"
+              >
+                <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
                 Back to Cart
               </Button>
             </Link>
-            <h1 className="font-playfair text-3xl text-navy">Secure Checkout</h1>
-            <div className="w-[120px]"></div> {/* Spacer for centering */}
+            <div className="text-center">
+              <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Secure Checkout</h1>
+              <p className="text-navy/60 text-sm mt-1">Complete your luxury fragrance purchase</p>
+            </div>
+            <div className="w-[160px]"></div> {/* Spacer for centering */}
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Checkout Form */}
-          <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Shipping Information */}
-              <div className="bg-white p-6 rounded-lg border border-gold/20">
-                <h3 className="font-playfair text-xl text-navy mb-4">Shipping Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="shipping-firstName">First Name *</Label>
+      <div className="container mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-12">
+          {/* Enhanced Checkout Form */}
+          <div className="xl:col-span-3 space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Luxury Shipping Information */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">1</span>
+                    </div>
+                  </div>
+                  <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Shipping Information</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">First Name *</Label>
                     <Input
                       id="shipping-firstName"
                       value={shippingForm.firstName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, firstName: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="Enter your first name"
                       required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="shipping-lastName">Last Name *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide">Last Name *</Label>
                     <Input
                       id="shipping-lastName"
                       value={shippingForm.lastName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, lastName: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="Enter your last name"
                       required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="shipping-email">Email *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email Address *</Label>
                     <Input
                       id="shipping-email"
                       type="email"
                       value={shippingForm.email}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="your.email@example.com"
                       required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="shipping-phone">Phone *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone Number *</Label>
                     <Input
                       id="shipping-phone"
                       value={shippingForm.phone}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, phone: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="+995 XXX XXX XXX"
                       required
                     />
                   </div>
-                  <div className="md:col-span-2">
-                    <Label htmlFor="shipping-address">Address *</Label>
+                  <div className="md:col-span-2 space-y-2">
+                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide">Street Address *</Label>
                     <Textarea
                       id="shipping-address"
                       value={shippingForm.address}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, address: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
+                      placeholder="Enter your complete street address"
                       required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="shipping-city">City *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide">City *</Label>
                     <Input
                       id="shipping-city"
                       value={shippingForm.city}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="Tbilisi"
                       required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="shipping-postalCode">Postal Code *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-postalCode" className="text-navy/80 font-roboto font-medium tracking-wide">Postal Code *</Label>
                     <Input
                       id="shipping-postalCode"
                       value={shippingForm.postalCode}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, postalCode: e.target.value }))}
-                      className="border-gold/20 focus:border-gold"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      placeholder="0100"
                       required
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Billing Information */}
-              <div className="bg-white p-6 rounded-lg border border-gold/20">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-playfair text-xl text-navy">Billing Information</h3>
-                  <label className="flex items-center space-x-2 text-sm">
+              {/* Luxury Billing Information */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
+                      <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">2</span>
+                      </div>
+                    </div>
+                    <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Billing Information</h3>
+                  </div>
+                  <label className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm rounded-xl px-4 py-3 border border-gold/20 hover:bg-white/80 transition-all duration-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={sameBilling}
                       onChange={(e) => setSameBilling(e.target.checked)}
-                      className="rounded border-gold/20"
+                      className="w-5 h-5 text-gold rounded border-2 border-navy/20 focus:ring-gold/30"
                     />
-                    <span>Same as shipping</span>
+                    <span className="font-roboto text-navy/80 tracking-wide">Same as shipping</span>
                   </label>
                 </div>
                 
                 {!sameBilling && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="billing-firstName">First Name *</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">First Name *</Label>
                       <Input
                         id="billing-firstName"
                         value={billingForm.firstName}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, firstName: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="Enter first name"
                         required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="billing-lastName">Last Name *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-lastName" className="text-navy/80 font-roboto font-medium tracking-wide">Last Name *</Label>
                       <Input
                         id="billing-lastName"
                         value={billingForm.lastName}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, lastName: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="Enter last name"
                         required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="billing-email">Email *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email Address *</Label>
                       <Input
                         id="billing-email"
                         type="email"
                         value={billingForm.email}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, email: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="billing.email@example.com"
                         required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="billing-phone">Phone *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone Number *</Label>
                       <Input
                         id="billing-phone"
                         value={billingForm.phone}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, phone: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="+995 XXX XXX XXX"
                         required
                       />
                     </div>
-                    <div className="md:col-span-2">
-                      <Label htmlFor="billing-address">Address *</Label>
+                    <div className="md:col-span-2 space-y-2">
+                      <Label htmlFor="billing-address" className="text-navy/80 font-roboto font-medium tracking-wide">Street Address *</Label>
                       <Textarea
                         id="billing-address"
                         value={billingForm.address}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, address: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
+                        placeholder="Enter billing address"
                         required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="billing-city">City *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-city" className="text-navy/80 font-roboto font-medium tracking-wide">City *</Label>
                       <Input
                         id="billing-city"
                         value={billingForm.city}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, city: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="Tbilisi"
                         required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="billing-postalCode">Postal Code *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="billing-postalCode" className="text-navy/80 font-roboto font-medium tracking-wide">Postal Code *</Label>
                       <Input
                         id="billing-postalCode"
                         value={billingForm.postalCode}
                         onChange={(e) => setBillingForm(prev => ({ ...prev, postalCode: e.target.value }))}
-                        className="border-gold/20 focus:border-gold"
+                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                        placeholder="0100"
                         required
                       />
                     </div>
@@ -468,170 +512,202 @@ export default function CheckoutPage() {
                 )}
               </div>
 
-              {/* Security Notice */}
-              <div className="bg-pastel-pink/20 p-4 rounded-lg border border-gold/20">
-                <div className="flex items-center text-navy">
-                  <ShieldCheck className="mr-2 h-5 w-5 text-gold" />
+              {/* Luxury Security Notice */}
+              <div className="bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl border border-emerald-200 shadow-lg p-6">
+                <div className="flex items-start">
+                  <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full flex items-center justify-center mr-5 flex-shrink-0">
+                    <ShieldCheck className="h-7 w-7 text-emerald-600" />
+                  </div>
                   <div>
-                    <p className="font-playfair font-semibold">Secure Payment</p>
-                    <p className="text-sm text-gray-600">
-                      Your payment is processed securely through Bank of Georgia's encrypted payment system.
+                    <h4 className="font-roboto text-lg font-semibold text-navy mb-2 tracking-wide">Bank-Grade Security</h4>
+                    <p className="text-navy/70 font-roboto leading-relaxed">
+                      Your payment information is protected by Bank of Georgia's advanced encryption and security protocols. 
+                      All transactions are processed through secure, PCI-compliant channels.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex space-x-4">
-                <Link href="/cart" className="flex-1">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full border-navy text-navy hover:bg-navy hover:text-white"
-                    disabled={paymentMutation.isPending}
-                  >
-                    Back to Cart
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Payment Method Selection */}
-              <div className="bg-white p-6 rounded-lg border border-gold/20">
-                <h3 className="font-playfair text-xl text-navy mb-6">Select Payment Method</h3>
-                <div className="space-y-4">
-                  {/* Card Payment Button */}
+              {/* Luxury Payment Method Selection */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
+                <div className="flex items-center mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">3</span>
+                    </div>
+                  </div>
+                  <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Choose Payment Method</h3>
+                </div>
+                
+                <div className="space-y-6">
+                  {/* Premium Card Payment Button */}
                   <Button
                     type="button"
                     onClick={handleCardPayment}
-                    className="w-full h-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    className="w-full h-20 bg-gradient-to-br from-[#002c8c] via-[#003bb5] to-[#0052cc] text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
-                    <div className="flex items-center">
-                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
-                        <span className="text-blue-600 font-bold text-sm">BOG</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="flex items-center relative z-10">
+                      <div className="w-14 h-10 bg-white rounded-xl flex items-center justify-center mr-5 shadow-md">
+                        <span className="text-[#002c8c] font-bold text-sm tracking-wider">BOG</span>
                       </div>
                       <div className="text-left">
-                        <div className="font-semibold">Card Payment</div>
-                        <div className="text-sm opacity-90">Card, Google Pay, Apple Pay, Bank Transfer & More</div>
+                        <div className="font-semibold text-lg tracking-wide">Instant Card Payment</div>
+                        <div className="text-sm opacity-90 text-blue-100">Card • Google Pay • Apple Pay • Bank Transfer</div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold">₾{total.toFixed(2)}</div>
-                      <div className="text-sm opacity-90">One-time payment</div>
+                    <div className="text-right relative z-10">
+                      <div className="text-xl font-bold text-white">₾{total.toFixed(2)}</div>
+                      <div className="text-sm opacity-90 text-blue-100">One-time secure payment</div>
                     </div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
 
-                  {/* Installment Payment Button */}
+                  {/* Premium Installment Payment Button */}
                   <Button
                     type="button"
                     onClick={handleInstallmentPayment}
-                    className="w-full h-16 bg-gradient-to-r from-green-600 to-green-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    className="w-full h-20 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
-                    <div className="flex items-center">
-                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
-                        <span className="text-green-600 font-bold text-xs">LOAN</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="flex items-center relative z-10">
+                      <div className="w-14 h-10 bg-white rounded-xl flex items-center justify-center mr-5 shadow-md">
+                        <span className="text-emerald-600 font-bold text-xs tracking-wider">LOAN</span>
                       </div>
                       <div className="text-left">
-                        <div className="font-semibold">BOG Installments</div>
-                        <div className="text-sm opacity-90">Pay in monthly installments*</div>
+                        <div className="font-semibold text-lg tracking-wide">BOG Installments</div>
+                        <div className="text-sm opacity-90 text-emerald-100">Flexible monthly payment plan</div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold">₾{(total / 12).toFixed(2)}/mo</div>
-                      <div className="text-sm opacity-90">for 12 months</div>
+                    <div className="text-right relative z-10">
+                      <div className="text-xl font-bold text-white">₾{(total / 12).toFixed(2)}/mo</div>
+                      <div className="text-sm opacity-90 text-emerald-100">12 months available</div>
                     </div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
 
-                  {/* Part-by-Part Payment Button */}
+                  {/* Premium Part-by-Part Payment Button */}
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
-                    className="w-full h-16 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-playfair font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-between p-6"
+                    className="w-full h-20 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
-                    <div className="flex items-center">
-                      <div className="w-12 h-8 bg-white rounded flex items-center justify-center mr-4">
-                        <span className="text-purple-600 font-bold text-xs">BNPL</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="flex items-center relative z-10">
+                      <div className="w-14 h-10 bg-white rounded-xl flex items-center justify-center mr-5 shadow-md">
+                        <span className="text-purple-600 font-bold text-xs tracking-wider">BNPL</span>
                       </div>
                       <div className="text-left">
-                        <div className="font-semibold">BOG Part-by-Part</div>
-                        <div className="text-sm opacity-90">Buy now, pay later in parts*</div>
+                        <div className="font-semibold text-lg tracking-wide">BOG Part-by-Part</div>
+                        <div className="text-sm opacity-90 text-purple-100">Buy now, pay in 4 interest-free parts</div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold">₾{(total / 4).toFixed(2)} × 4</div>
-                      <div className="text-sm opacity-90">Interest-free parts</div>
+                    <div className="text-right relative z-10">
+                      <div className="text-xl font-bold text-white">₾{(total / 4).toFixed(2)} × 4</div>
+                      <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
-
-
                 </div>
               </div>
 
-              {/* Processing State */}
+              {/* Premium Processing State */}
               {paymentMutation.isPending && (
-                <div className="bg-pastel-pink/20 p-4 rounded-lg border border-gold/20 flex items-center justify-center">
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin text-gold" />
-                  <span className="text-navy font-playfair">Processing your payment request...</span>
+                <div className="bg-gradient-to-r from-gold/10 via-white to-gold/10 rounded-3xl border border-gold/30 shadow-lg p-6">
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center mr-4 animate-pulse">
+                      <Loader2 className="h-6 w-6 animate-spin text-gold" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-navy font-roboto font-semibold text-lg tracking-wide">Processing Payment Request</p>
+                      <p className="text-navy/60 text-sm mt-1">Connecting to Bank of Georgia secure gateway...</p>
+                    </div>
+                  </div>
                 </div>
               )}
 
-              {/* Payment Method Disclaimer */}
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <p className="text-sm text-blue-800">
-                  <span className="font-semibold">*Payment Options:</span> All payments are processed securely through Bank of Georgia. 
-                  Installment and Part-by-Part options may require additional approval during the payment process.
-                </p>
+              {/* Luxury Payment Disclaimer */}
+              <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 rounded-3xl border border-blue-200 shadow-lg p-6">
+                <div className="flex items-start">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                    <span className="text-blue-600 font-bold text-sm">i</span>
+                  </div>
+                  <div>
+                    <h4 className="font-roboto font-semibold text-navy mb-2 tracking-wide">Payment Information</h4>
+                    <p className="text-navy/70 font-roboto text-sm leading-relaxed">
+                      All payments are processed securely through Bank of Georgia's certified payment infrastructure. 
+                      Installment and Part-by-Part options may require additional verification steps during checkout.
+                    </p>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
 
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border border-gold/20 p-6 sticky top-8">
-              <h2 className="font-playfair text-xl text-navy mb-6">Order Summary</h2>
+          {/* Luxury Order Summary */}
+          <div className="xl:col-span-2">
+            <div className="bg-gradient-to-br from-white via-cream/30 to-white rounded-3xl border border-gold/30 shadow-2xl p-8 sticky top-8">
+              <div className="flex items-center mb-8">
+                <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/20 rounded-full flex items-center justify-center mr-4">
+                  <CreditCard className="h-6 w-6 text-navy" />
+                </div>
+                <h2 className="font-roboto text-3xl font-light text-navy tracking-wide">Order Summary</h2>
+              </div>
               
-              <div className="space-y-4 mb-6">
+              <div className="space-y-6 mb-8">
                 {cartItems.map((item: CartItem & { product: Product }) => (
-                  <div key={item.id} className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-pastel-pink/20 rounded-lg flex items-center justify-center">
-                      <img 
-                        src={item.product.imageUrl || "/placeholder-perfume.jpg"} 
-                        alt={item.product.name}
-                        className="w-10 h-10 object-cover rounded"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium text-navy text-sm">{item.product.name}</h4>
-                      <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-navy text-sm">
-                        ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
-                      </p>
+                  <div key={item.id} className="bg-gradient-to-r from-white/60 to-cream/40 rounded-2xl p-5 border border-gold/20 shadow-md">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-gold/10 to-navy/5 rounded-xl flex items-center justify-center shadow-inner">
+                        <img 
+                          src={item.product.imageUrl || "/placeholder-perfume.jpg"} 
+                          alt={item.product.name}
+                          className="w-12 h-12 object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-roboto font-medium text-navy text-lg tracking-wide">{item.product.name}</h4>
+                        <p className="text-navy/60 font-roboto">Quantity: {item.quantity}</p>
+                        <p className="text-navy/50 text-sm font-roboto mt-1">{item.product.brand}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-roboto font-bold text-navy text-xl">
+                          ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                        </p>
+                        <p className="text-navy/60 text-sm font-roboto">
+                          ₾{parseFloat(item.product.price).toFixed(2)} each
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-2 pt-4 border-t border-gold/20">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="text-navy">₾{total.toFixed(2)}</span>
+              <div className="bg-gradient-to-r from-cream/30 to-white rounded-2xl p-6 border border-gold/30">
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                    <span className="text-navy font-roboto font-semibold text-lg">₾{total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide">Shipping</span>
+                    <span className="text-emerald-600 font-roboto font-semibold">Free</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide">VAT included</span>
+                    <span className="text-navy/70 font-roboto">₾0.00</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="text-green-600">Free</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Tax</span>
-                  <span className="text-navy">₾0.00</span>
-                </div>
-                <div className="border-t border-gold/20 pt-2">
-                  <div className="flex justify-between">
-                    <span className="font-playfair text-lg font-semibold text-navy">Total</span>
-                    <span className="font-playfair text-lg font-semibold text-navy">₾{total.toFixed(2)}</span>
+                
+                <div className="border-t border-gold/30 pt-4">
+                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-4">
+                    <div className="flex justify-between items-center">
+                      <span className="font-roboto text-xl font-medium text-navy tracking-wide">Total Amount</span>
+                      <span className="font-roboto text-3xl font-bold text-gold">₾{total.toFixed(2)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
