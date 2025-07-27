@@ -432,6 +432,232 @@ export default function Catalogue() {
     );
   };
 
+  const FilterPanel = () => (
+    <div className="space-y-10">
+      {/* Search */}
+      <div className="relative">
+        <SearchInput />
+      </div>
+
+      {/* Price Range */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Price Range</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-r from-cream/30 to-white/50 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <div 
+            className="relative w-full h-8 flex items-center cursor-pointer select-none"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              
+              const rect = e.currentTarget.getBoundingClientRect();
+              const totalWidth = rect.width;
+              const clickX = e.clientX - rect.left;
+              const clickPercent = clickX / totalWidth;
+              const clickValue = priceRange[0] + (clickPercent * (priceRange[1] - priceRange[0]));
+              
+              const distToMin = Math.abs(clickValue - tempPriceRange[0]);
+              const distToMax = Math.abs(clickValue - tempPriceRange[1]);
+              const isMinHandle = distToMin < distToMax;
+              
+              let isDragging = true;
+              
+              const handleMouseMove = (e: MouseEvent) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                const newX = e.clientX - rect.left;
+                const newPercent = Math.max(0, Math.min(1, newX / totalWidth));
+                const newValue = Math.round(priceRange[0] + (newPercent * (priceRange[1] - priceRange[0])));
+                
+                if (isMinHandle) {
+                  setTempPriceRange([Math.min(newValue, tempPriceRange[1]), tempPriceRange[1]]);
+                } else {
+                  setTempPriceRange([tempPriceRange[0], Math.max(newValue, tempPriceRange[0])]);
+                }
+              };
+              
+              const handleMouseUp = (e: MouseEvent) => {
+                e.preventDefault();
+                isDragging = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+                document.removeEventListener('selectstart', preventSelect);
+                document.body.style.userSelect = '';
+              };
+              
+              const preventSelect = (e: Event) => e.preventDefault();
+              
+              document.body.style.userSelect = 'none';
+              document.addEventListener('selectstart', preventSelect);
+              document.addEventListener('mousemove', handleMouseMove);
+              document.addEventListener('mouseup', handleMouseUp);
+            }}
+          >
+            {/* Track */}
+            <div className="absolute w-full h-3 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-full shadow-inner">
+              {/* Active Range */}
+              <div 
+                className="absolute h-3 bg-gradient-to-r from-gold/90 via-gold to-gold/90 rounded-full shadow-lg"
+                style={{
+                  left: `${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`,
+                  width: `${((tempPriceRange[1] - tempPriceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`
+                }}
+              />
+            </div>
+            
+            {/* Min Handle */}
+            <div 
+              className="absolute w-7 h-7 border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50 bg-[#737373]"
+              style={{
+                left: `calc(${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 14px)`,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2
+              }}
+            >
+              <div className="absolute inset-1 bg-gold/20 rounded-full"></div>
+            </div>
+            
+            {/* Max Handle */}
+            <div 
+              className="absolute w-7 h-7 border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50 bg-[#737373]"
+              style={{
+                left: `calc(${((tempPriceRange[1] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 14px)`,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1
+              }}
+            >
+              <div className="absolute inset-1 bg-gold/20 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between items-center bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl px-4 py-3 border border-gold/10">
+          <div className="text-center">
+            <div className="text-xs text-gray-500 font-medium">FROM</div>
+            <div className="text-lg font-bold text-navy">${tempPriceRange[0]}</div>
+          </div>
+          <div className="w-px h-8 bg-gradient-to-b from-transparent via-gold/40 to-transparent"></div>
+          <div className="text-center">
+            <div className="text-xs text-gray-500 font-medium">TO</div>
+            <div className="text-lg font-bold text-navy">${tempPriceRange[1]}</div>
+          </div>
+        </div>
+        
+        {/* Filter Button */}
+        {(tempPriceRange[0] !== filters.priceRange[0] || tempPriceRange[1] !== filters.priceRange[1]) && (
+          <div className="mt-3">
+            <Button 
+              onClick={() => updateFilter('priceRange', tempPriceRange)}
+              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
+            >
+              Filter
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Brands */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Luxury Brands</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <ScrollArea className="h-72 pr-3">
+            <div className="space-y-3">
+              {availableBrands.map(brand => (
+                <div key={brand} className="group">
+                  <div className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gold/5 transition-all duration-200 cursor-pointer border border-transparent hover:border-gold/20"
+                       onClick={() => toggleBrand(brand)}>
+                    <div className="relative">
+                      <Checkbox
+                        id={`brand-${brand}`}
+                        checked={filters.selectedBrands.includes(brand)}
+                        onCheckedChange={() => toggleBrand(brand)}
+                        className="data-[state=checked]:bg-gold data-[state=checked]:border-gold border-2 border-gold/30 rounded-md w-5 h-5"
+                      />
+                      {filters.selectedBrands.includes(brand) && (
+                        <div className="absolute inset-0 bg-gold/20 rounded-md animate-pulse"></div>
+                      )}
+                    </div>
+                    <Label
+                      htmlFor={`brand-${brand}`}
+                      className="flex-1 font-medium text-navy group-hover:text-gold transition-colors cursor-pointer"
+                    >
+                      {brand}
+                    </Label>
+                    <div className="w-2 h-2 rounded-full bg-gold/20 group-hover:bg-gold/40 transition-colors"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Collections</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <div className="space-y-4">
+            {availableCategories.map(category => (
+              <div key={category} className="group">
+                <div className="flex items-center space-x-4 p-4 rounded-xl bg-gradient-to-r from-transparent to-gold/5 hover:from-gold/5 hover:to-gold/10 transition-all duration-200 cursor-pointer border border-transparent hover:border-gold/20"
+                     onClick={() => toggleCategory(category)}>
+                  <div className="relative">
+                    <Checkbox
+                      id={`category-${category}`}
+                      checked={filters.selectedCategories.includes(category)}
+                      onCheckedChange={() => toggleCategory(category)}
+                      className="data-[state=checked]:bg-gold data-[state=checked]:border-gold border-2 border-gold/30 rounded-md w-5 h-5"
+                    />
+                    {filters.selectedCategories.includes(category) && (
+                      <div className="absolute inset-0 bg-gold/20 rounded-md animate-pulse"></div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <Label
+                      htmlFor={`category-${category}`}
+                      className="font-semibold text-navy group-hover:text-gold transition-colors capitalize text-lg cursor-pointer block"
+                    >
+                      {category}
+                    </Label>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {category === 'women' ? 'Elegant & Sophisticated' : 
+                       category === 'men' ? 'Bold & Distinguished' : 
+                       ''}
+                    </div>
+                  </div>
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-gold/40 to-gold/60 group-hover:scale-125 transition-transform"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Clear Filters */}
+      {activeFiltersCount > 0 && (
+        <div className="pt-4 border-t border-gold/20">
+          <Button 
+            variant="outline" 
+            onClick={clearAllFilters}
+            className="w-full bg-gradient-to-r from-white to-cream/50 border-2 border-gold/30 text-navy hover:bg-gradient-to-r hover:from-gold hover:to-gold/90 hover:text-white hover:border-gold transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear All Filters ({activeFiltersCount})
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+
   if (isLoading) {
     return (
       <motion.div 
@@ -491,7 +717,24 @@ export default function Catalogue() {
         className="container mx-auto px-4 py-8"
       >
         <div className="flex gap-8">
-          {/* Products Grid/List with smooth animations */}
+          {/* Desktop Filters Sidebar */}
+          <div className="hidden lg:block w-80 flex-shrink-0">
+            <Card className="sticky top-24 shadow-lg border-gold/20 bg-gradient-to-b from-white to-cream/30">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-navy">Filters</h3>
+                  {activeFiltersCount > 0 && (
+                    <Badge className="bg-gold text-navy font-semibold">{activeFiltersCount}</Badge>
+                  )}
+                </div>
+                <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent">
+                  <FilterPanel />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Main Content */}
           <div className="flex-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
