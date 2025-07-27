@@ -194,7 +194,6 @@ export default function CartPage() {
                           <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
                             {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
                           </h3>
-                          <p className="text-navy/60 text-sm font-roboto mb-2 capitalize">{item.product.category}</p>
                           <div className="flex items-center gap-3">
                             <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
                             <span className="text-navy/40 text-sm">per bottle</span>
