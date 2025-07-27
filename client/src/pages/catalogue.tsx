@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,38 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+// Independent Search Input Component with internal state
+const SearchInput = React.memo(({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
+  const [internalValue, setInternalValue] = React.useState(value);
+  
+  // Sync internal value when external value changes (like clear filters)
+  React.useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
+  
+  // Debounced update to parent
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      onChange(internalValue);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [internalValue, onChange]);
+  
+  return (
+    <div className="relative">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+      <Input
+        placeholder="Search perfumes, brands..."
+        value={internalValue}
+        onChange={(e) => setInternalValue(e.target.value)}
+        className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
+        autoComplete="off"
+      />
+    </div>
+  );
+});
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -151,7 +183,6 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
 export default function Catalogue() {
   const [location] = useLocation();
-  const [searchInput, setSearchInput] = useState("");
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
     priceRange: [0, 1000],
@@ -163,14 +194,10 @@ export default function Catalogue() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  // Debounced search effect
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setFilters(prev => ({ ...prev, searchQuery: searchInput }));
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchInput]);
+  // Handle search input changes from the SearchInput component
+  const handleSearchInputChange = useCallback((value: string) => {
+    setFilters(prev => ({ ...prev, searchQuery: value }));
+  }, []);
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -294,7 +321,6 @@ export default function Catalogue() {
   };
 
   const clearAllFilters = () => {
-    setSearchInput("");
     setFilters({
       searchQuery: "",
       priceRange: [priceRange[0], priceRange[1]] as [number, number],
@@ -306,7 +332,7 @@ export default function Catalogue() {
   };
 
   const activeFiltersCount = 
-    (searchInput ? 1 : 0) +
+    (filters.searchQuery ? 1 : 0) +
     (filters.selectedBrands.length > 0 ? 1 : 0) +
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
@@ -316,16 +342,7 @@ export default function Catalogue() {
       {/* Search */}
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-          <Input
-            placeholder="Search perfumes, brands..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
-            autoComplete="off"
-          />
-        </div>
+        <SearchInput value={filters.searchQuery} onChange={handleSearchInputChange} />
       </div>
 
       {/* Price Range */}
@@ -524,12 +541,12 @@ export default function Catalogue() {
             {activeFiltersCount > 0 && (
               <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
-                  {searchInput && (
+                  {filters.searchQuery && (
                     <Badge variant="secondary" className="gap-1">
-                      Search: "{searchInput}"
+                      Search: "{filters.searchQuery}"
                       <X 
                         className="h-3 w-3 cursor-pointer" 
-                        onClick={() => setSearchInput('')}
+                        onClick={() => setFilters(prev => ({ ...prev, searchQuery: '' }))}
                       />
                     </Badge>
                   )}
