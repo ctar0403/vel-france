@@ -504,7 +504,7 @@ export default function CheckoutPage() {
                       <div className="text-xl font-bold text-white">₾{(total / 4).toFixed(2)} × 4</div>
                       <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-60"></div>
+
                   </Button>
                 </div>
               </div>
