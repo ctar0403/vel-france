@@ -393,7 +393,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }))
         },
         redirect_urls: {
-          success: `${baseUrl}/payment-success`,
+          success: `${baseUrl}/payment-success?orderCode=${order.orderCode}`,
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60,
@@ -481,7 +481,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }))
         },
         redirect_urls: {
-          success: `${baseUrl}/payment-success`,
+          success: `${baseUrl}/payment-success?orderCode=${order.orderCode}`,
           fail: `${baseUrl}/payment-cancel`
         },
         ttl: 60, // 60 minutes to complete payment

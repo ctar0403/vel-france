@@ -12,14 +12,14 @@ export default function PaymentSuccess() {
   const [copied, setCopied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   
-  // If no order code in URL, try to get the latest completed order for current user
+  // If no order code in URL, try to get the latest completed order for current user as fallback
   const { data: orders } = useQuery<Array<{orderCode: string}>>({
     queryKey: ['/api/orders'],
     enabled: !orderCode,
   });
   
-  // Get the most recent order code if available
-  const latestOrderCode = !orderCode && orders && Array.isArray(orders) && orders.length > 0 ? orders[0].orderCode : orderCode;
+  // Use the order code from URL parameter, or fallback to latest order
+  const latestOrderCode = orderCode || (orders && Array.isArray(orders) && orders.length > 0 ? orders[0].orderCode : null);
 
   // Trigger confetti animation on mount
   useEffect(() => {
