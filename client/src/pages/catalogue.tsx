@@ -11,7 +11,7 @@ import { Filter, X, Grid, List, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Product } from "@shared/schema";
+import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -189,6 +189,12 @@ export default function Catalogue() {
     staleTime: 5 * 60 * 1000,
   });
 
+  // Fetch cart items for cart count
+  const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
+    queryKey: ["/api/cart"],
+    retry: false,
+  });
+
   // Calculate price range
   const priceRange = useMemo(() => {
     if (products.length === 0) return [0, 1000];
@@ -341,6 +347,33 @@ export default function Catalogue() {
     );
   }, [filters, priceRange]);
 
+  // Calculate cart count for header
+  const cartItemCount = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cartItems]);
+
+  // Add to cart mutation
+  const addToCartMutation = useMutation({
+    mutationFn: async (productId: string) => {
+      await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      toast({
+        title: "Added to Cart",
+        description: "Product successfully added to your cart!",
+      });
+    },
+    onError: (error) => {
+      console.error("Add to cart error:", error);
+      toast({
+        title: "Error",
+        description: "Unable to add product to cart. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Loading state
   if (isLoading) {
     return (
@@ -349,7 +382,7 @@ export default function Catalogue() {
         animate={{ opacity: 1 }}
         className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink"
       >
-        <Header />
+        <Header cartItemCount={cartItemCount} />
         <div className="flex items-center justify-center min-h-[60vh]">
           <motion.div
             animate={{ rotate: 360 }}
@@ -368,7 +401,7 @@ export default function Catalogue() {
       animate={{ opacity: 1 }}
       className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink"
     >
-      <Header />
+      <Header cartItemCount={cartItemCount} />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}

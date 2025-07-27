@@ -135,9 +135,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Cart routes
-  app.get("/api/cart", requireAuth, async (req: any, res) => {
+  // Cart routes - Support both authenticated and unauthenticated users
+  app.get("/api/cart", async (req: any, res) => {
     try {
+      // For unauthenticated users, return session cart
+      if (!(req.session as any).userId) {
+        const sessionCart = (req.session as any).cart || [];
+        // Convert session cart to proper format with product details
+        const cartWithProducts = [];
+        for (const item of sessionCart) {
+          const product = await storage.getProduct(item.productId);
+          if (product) {
+            cartWithProducts.push({
+              id: item.id,
+              userId: null,
+              productId: item.productId,
+              quantity: item.quantity,
+              createdAt: new Date(),
+              product
+            });
+          }
+        }
+        return res.json(cartWithProducts);
+      }
+      
+      // For authenticated users, get cart from database
       const userId = (req.session as any).userId;
       const cartItems = await storage.getCartItems(userId);
       res.json(cartItems);
@@ -147,11 +169,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/cart", requireAuth, async (req: any, res) => {
+  app.post("/api/cart", async (req: any, res) => {
     try {
+      const { productId, quantity = 1 } = req.body;
+      
+      // For unauthenticated users, store in session
+      if (!(req.session as any).userId) {
+        if (!(req.session as any).cart) {
+          (req.session as any).cart = [];
+        }
+        
+        const sessionCart = (req.session as any).cart;
+        const existingItem = sessionCart.find((item: any) => item.productId === productId);
+        
+        if (existingItem) {
+          existingItem.quantity += quantity;
+        } else {
+          sessionCart.push({
+            id: `session_${Date.now()}_${Math.random()}`,
+            productId,
+            quantity
+          });
+        }
+        
+        const product = await storage.getProduct(productId);
+        const cartItem = {
+          id: existingItem?.id || sessionCart[sessionCart.length - 1].id,
+          userId: null,
+          productId,
+          quantity: existingItem ? existingItem.quantity : quantity,
+          createdAt: new Date(),
+          product
+        };
+        
+        return res.json(cartItem);
+      }
+      
+      // For authenticated users, store in database
       const userId = (req.session as any).userId;
       const cartItemData = insertCartItemSchema.parse({
-        ...req.body,
+        productId,
+        quantity,
         userId
       });
       const cartItem = await storage.addToCart(cartItemData);
@@ -162,10 +220,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/cart/:id", requireAuth, async (req, res) => {
+  app.put("/api/cart/:id", async (req: any, res) => {
     try {
       const { quantity } = req.body;
-      const cartItem = await storage.updateCartItem(req.params.id, quantity);
+      const itemId = req.params.id;
+      
+      // For unauthenticated users, update session cart
+      if (!(req.session as any).userId) {
+        const sessionCart = (req.session as any).cart || [];
+        const item = sessionCart.find((item: any) => item.id === itemId);
+        if (item) {
+          item.quantity = quantity;
+          const product = await storage.getProduct(item.productId);
+          return res.json({
+            id: item.id,
+            userId: null,
+            productId: item.productId,
+            quantity: item.quantity,
+            createdAt: new Date(),
+            product
+          });
+        }
+        return res.status(404).json({ message: "Item not found" });
+      }
+      
+      // For authenticated users, update database
+      const cartItem = await storage.updateCartItem(itemId, quantity);
       res.json(cartItem);
     } catch (error) {
       console.error("Error updating cart item:", error);
@@ -173,9 +253,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/cart/:id", requireAuth, async (req, res) => {
+  app.delete("/api/cart/:id", async (req: any, res) => {
     try {
-      await storage.removeFromCart(req.params.id);
+      const itemId = req.params.id;
+      
+      // For unauthenticated users, remove from session cart
+      if (!(req.session as any).userId) {
+        const sessionCart = (req.session as any).cart || [];
+        const index = sessionCart.findIndex((item: any) => item.id === itemId);
+        if (index > -1) {
+          sessionCart.splice(index, 1);
+        }
+        return res.json({ message: "Item removed from cart" });
+      }
+      
+      // For authenticated users, remove from database
+      await storage.removeFromCart(itemId);
       res.json({ message: "Item removed from cart" });
     } catch (error) {
       console.error("Error removing from cart:", error);
@@ -183,8 +276,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/cart", requireAuth, async (req: any, res) => {
+  app.delete("/api/cart", async (req: any, res) => {
     try {
+      // For unauthenticated users, clear session cart
+      if (!(req.session as any).userId) {
+        (req.session as any).cart = [];
+        return res.json({ message: "Cart cleared" });
+      }
+      
+      // For authenticated users, clear database cart
       const userId = (req.session as any).userId;
       await storage.clearCart(userId);
       res.json({ message: "Cart cleared" });
