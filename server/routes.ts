@@ -586,8 +586,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get the updated order to retrieve the order code
       const updatedOrder = await storage.getOrder(orderId as string);
       
-      // Redirect to success page with order code
-      res.redirect(`/payment-success?orderCode=${updatedOrder?.orderCode || orderId}`);
+      // Redirect to unique order page with order code
+      res.redirect(`/order/${updatedOrder?.orderCode || orderId}`);
     } catch (error) {
       console.error("Error handling payment success:", error);
       res.redirect(`/?payment=error`);

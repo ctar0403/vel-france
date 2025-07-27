@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Package, Home } from "lucide-react";
 import { Link, useLocation } from "wouter";
@@ -8,6 +9,15 @@ export default function PaymentSuccess() {
   const [location] = useLocation();
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
   const orderCode = urlParams.get('orderCode');
+  
+  // If no order code in URL, try to get the latest completed order for current user
+  const { data: orders } = useQuery<Array<{orderCode: string}>>({
+    queryKey: ['/api/orders'],
+    enabled: !orderCode,
+  });
+  
+  // Get the most recent order code if available
+  const latestOrderCode = !orderCode && orders && Array.isArray(orders) && orders.length > 0 ? orders[0].orderCode : orderCode;
 
   useEffect(() => {
     // Clear any cart data from localStorage if needed
@@ -45,17 +55,17 @@ export default function PaymentSuccess() {
             Thank you for your purchase. Your order has been confirmed and will be processed shortly.
           </p>
           
-          {orderCode && (
+          {latestOrderCode && (
             <div className="bg-cream rounded-lg p-4 mb-6">
               <p className="text-sm text-gray-600 mb-1">Order Number</p>
-              <p className="font-playfair font-semibold text-navy">{orderCode}</p>
+              <p className="font-playfair font-semibold text-navy">{latestOrderCode}</p>
               <p className="text-xs text-gray-500 mt-2">
                 View your order details: <br />
                 <a 
-                  href={`/order/${orderCode}`}
+                  href={`/order/${latestOrderCode}`}
                   className="text-gold hover:text-gold/80 underline"
                 >
-                  /order/{orderCode}
+                  /order/{latestOrderCode}
                 </a>
               </p>
             </div>
