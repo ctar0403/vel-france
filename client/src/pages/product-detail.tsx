@@ -253,10 +253,7 @@ function ProductDetailPage() {
                   <Truck className="w-5 h-5 text-gold" />
                   <span className="text-sm">Free Shipping</span>
                 </div>
-                <div className="flex items-center gap-3 text-navy/70">
-                  <RotateCcw className="w-5 h-5 text-gold" />
-                  <span className="text-sm">30-Day Returns</span>
-                </div>
+                
               </div>
             </div>
 
