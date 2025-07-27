@@ -399,10 +399,10 @@ export default function Catalogue() {
     setTimeout(() => {
       setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
       
-      // Keep loading indicator for animation duration
+      // Keep loading indicator for 3 seconds to ensure items are fully loaded
       setTimeout(() => {
         setIsLoadingMore(false);
-      }, 600);
+      }, 3000);
     }, 300);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
