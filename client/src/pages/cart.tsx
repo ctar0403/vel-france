@@ -316,19 +316,7 @@ export default function CartPage() {
                   </Link>
                 </div>
 
-                {/* Enhanced Security Badge */}
-                <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl p-5 border border-emerald-200/50">
-                  <div className="text-center">
-                    <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                      <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                      </div>
-                    </div>
-                    <p className="font-roboto text-xs text-navy/60 mb-1">Secure checkout powered by</p>
-                    <p className="font-roboto font-semibold text-navy">Bank of Georgia</p>
-                    <p className="font-roboto text-xs text-navy/50 mt-1">256-bit SSL encryption</p>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
