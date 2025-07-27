@@ -151,9 +151,9 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
       </div>
 
       {/* Fixed Height Content Container */}
-      <div className="p-6 flex-grow flex flex-col justify-between min-h-[120px]">
+      <div className="p-6 flex-grow flex flex-col min-h-[120px]">
         <motion.h3 
-          className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-auto"
+          className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-3"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 + 0.2 }}
@@ -161,16 +161,14 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
           {formatProductName(product.name, product.brand)}
         </motion.h3>
 
-        <div className="flex items-center justify-center mt-4">
-          <motion.span 
-            className="text-base font-bold text-gold"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 + 0.3 }}
-          >
-            ${parseFloat(product.price.toString()).toFixed(2)}
-          </motion.span>
-        </div>
+        <motion.span 
+          className="text-base font-bold text-gold"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.05 + 0.3 }}
+        >
+          ${parseFloat(product.price.toString()).toFixed(2)}
+        </motion.span>
       </div>
     </motion.div>
   );
