@@ -192,12 +192,8 @@ export default function Catalogue() {
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
   
-  // Pagination state
-  const [displayedCount, setDisplayedCount] = useState(12);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  // Simple loading state for filters
   const [isFiltering, setIsFiltering] = useState(false);
-  
-  const PRODUCTS_PER_PAGE = 12;
   
   // Debounce refs
   const filterTimeoutRef = useRef<NodeJS.Timeout>();
@@ -365,14 +361,10 @@ export default function Catalogue() {
   }, [processedProducts, filters, priceRange]);
 
   // Get currently displayed products (paginated)
-  const displayedProducts = useMemo(() => {
-    return allFilteredProducts.slice(0, displayedCount);
-  }, [allFilteredProducts, displayedCount]);
+  // Display all filtered products
+  const displayedProducts = allFilteredProducts;
 
-  // Reset pagination when filters change
-  useEffect(() => {
-    setDisplayedCount(PRODUCTS_PER_PAGE);
-  }, [filters]);
+
 
   const clearAllFilters = () => {
     const resetRange = [priceRange[0], priceRange[1]] as [number, number];
@@ -386,47 +378,10 @@ export default function Catalogue() {
     });
     setTempPriceRange(resetRange);
     setTempSearchQuery("");
-    setDisplayedCount(PRODUCTS_PER_PAGE);
+
   };
 
-  // Load more products function  
-  const loadMoreProducts = useCallback(() => {
-    if (displayedCount >= allFilteredProducts.length || isLoadingMore) return;
-    
-    setIsLoadingMore(true);
-    
-    // Start loading items immediately while showing loader
-    setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
-    
-    // Hide loader after 3 seconds (items have time to render)
-    setTimeout(() => {
-      setIsLoadingMore(false);
-    }, 3000);
-  }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
-  // Infinite scroll hook with balanced loading trigger
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
-      const documentHeight = document.documentElement.offsetHeight;
-      const threshold = 300; // Load when 300px from bottom (balanced)
-      
-      if (scrollPosition >= documentHeight - threshold && !isLoadingMore && displayedCount < allFilteredProducts.length) {
-        loadMoreProducts();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loadMoreProducts, isLoadingMore, displayedCount, allFilteredProducts.length]);
-
-  // Cleanup effect
-  useEffect(() => {
-    return () => {
-      // Cleanup any scroll modifications
-      document.body.style.overflow = '';
-    };
-  }, []);
 
   const activeFiltersCount = 
     (filters.searchQuery.trim() ? 1 : 0) +
@@ -873,7 +828,7 @@ export default function Catalogue() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      Showing {displayedProducts.length} of {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
+                      Showing {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
                     </motion.span>
                   )}
                 </motion.div>
@@ -1052,7 +1007,7 @@ export default function Catalogue() {
                           exit={{ opacity: 0, y: -20 }}
                           transition={{ 
                             duration: 0.4, 
-                            delay: index % PRODUCTS_PER_PAGE * 0.02,
+                            delay: index * 0.02,
                             ease: "easeOut"
                           }}
                           layout
@@ -1067,24 +1022,7 @@ export default function Catalogue() {
                     </AnimatePresence>
                   </motion.div>
 
-                  {/* Professional Loading Indicator */}
-                  {isLoadingMore && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="flex items-center justify-center py-12 mt-8"
-                    >
-                      <div className="flex items-center gap-4 bg-white rounded-full shadow-lg px-8 py-4 border border-gray-100">
-                        <div className="relative">
-                          <div className="w-6 h-6 border-2 border-gray-200 rounded-full"></div>
-                          <div className="absolute top-0 left-0 w-6 h-6 border-2 border-navy border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                        <span className="text-navy font-medium text-base">Loading more products...</span>
-                      </div>
-                    </motion.div>
-                  )}
+
                 </>
               )}
             </motion.div>
