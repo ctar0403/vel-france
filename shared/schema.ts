@@ -66,7 +66,7 @@ export const cartItems = pgTable("cart_items", {
 // Orders table
 export const orders = pgTable("orders", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
+  userId: varchar("user_id").references(() => users.id),
   status: varchar("status", { length: 50 }).notNull().default("pending"), // 'pending', 'confirmed', 'shipped', 'delivered'
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
   shippingAddress: text("shipping_address").notNull(),
