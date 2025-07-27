@@ -260,7 +260,7 @@ export default function PaymentSuccess() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <Button 
-                      className="w-full bg-gradient-to-r from-gold via-deep-gold to-gold text-navy font-semibold hover:shadow-xl transition-all duration-300 group py-4 text-lg rounded-xl border-2 border-transparent hover:border-navy/20"
+                      className="w-full bg-gradient-to-r from-gold via-deep-gold to-gold text-[#ffffff] font-semibold hover:shadow-xl transition-all duration-300 group py-4 text-lg rounded-xl border-2 border-transparent hover:border-navy/20"
                       size="lg"
                     >
                       <ShoppingBag className="mr-3 h-6 w-6" />
