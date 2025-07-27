@@ -20,6 +20,9 @@ export default function PaymentSuccess() {
   
   // Use the order code from URL parameter, or fallback to latest order
   const latestOrderCode = orderCode || (orders && Array.isArray(orders) && orders.length > 0 ? orders[0].orderCode : null);
+  
+  // Debug logging
+  console.log('Payment Success Debug:', { location, orderCode, latestOrderCode, orders });
 
   // Trigger confetti animation on mount
   useEffect(() => {
@@ -197,7 +200,7 @@ export default function PaymentSuccess() {
             </motion.div>
 
             {/* Order Code Section */}
-            {latestOrderCode && (
+            {latestOrderCode ? (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -211,8 +214,10 @@ export default function PaymentSuccess() {
                   className="flex items-center justify-center mb-4"
                 >
                   <Gift className="w-6 h-6 text-gold mr-3" />
-                  <p className="text-lg font-medium text-gray-700">Your Unique Order ID</p>
-                  <p className="text-sm text-gray-500 mt-1">Track your order with this 6-digit code</p>
+                  <div className="text-center">
+                    <p className="text-lg font-medium text-gray-700">Your Unique Order ID</p>
+                    <p className="text-sm text-gray-500 mt-1">Track your order with this 6-digit code</p>
+                  </div>
                 </motion.div>
                 
                 <div className="flex items-center justify-center space-x-4 mb-4">
@@ -267,6 +272,17 @@ export default function PaymentSuccess() {
                     </Button>
                   </motion.div>
                 </Link>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4, duration: 0.5 }}
+                className="bg-gradient-to-r from-cream/70 to-pastel-pink/40 rounded-2xl p-6 mb-6 relative z-10 border border-gold/30"
+              >
+                <p className="text-center text-gray-600">
+                  Your order is being processed. If you don't see your order code, please check your email or contact support.
+                </p>
               </motion.div>
             )}
 
