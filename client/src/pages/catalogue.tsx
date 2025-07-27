@@ -151,10 +151,9 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
           </motion.button>
         </motion.div>
       </div>
-
       {/* Fixed Height Content Container */}
       <div className="p-6 flex-grow flex flex-col min-h-[120px]">
-        <h3 className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-3">
+        <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
           {formatProductName(product.name, product.brand)}
         </h3>
 
