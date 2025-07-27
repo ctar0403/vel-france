@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -7,10 +7,17 @@ import { Link, useLocation } from "wouter";
 
 export default function PaymentSuccess() {
   const [location] = useLocation();
-  const urlParams = new URLSearchParams(location.split('?')[1] || '');
-  const orderCode = urlParams.get('orderCode');
   const [copied, setCopied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  
+  // Extract order code from URL - more reliable method
+  const orderCode = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('orderCode');
+    }
+    return null;
+  }, []);
   
   // If no order code in URL, try to get the latest completed order for current user as fallback
   const { data: orders } = useQuery<Array<{orderCode: string}>>({
@@ -20,9 +27,6 @@ export default function PaymentSuccess() {
   
   // Use the order code from URL parameter, or fallback to latest order
   const latestOrderCode = orderCode || (orders && Array.isArray(orders) && orders.length > 0 ? orders[0].orderCode : null);
-  
-  // Debug logging
-  console.log('Payment Success Debug:', { location, orderCode, latestOrderCode, orders });
 
   // Trigger confetti animation on mount
   useEffect(() => {
