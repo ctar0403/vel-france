@@ -101,57 +101,42 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
           className="absolute inset-0 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: isCardHovered ? 1 : 0 }}
-          transition={{ duration: 0.3, delay: isCardHovered ? 0.1 : 0 }}
+          transition={{ duration: 0.15 }}
         >
           <motion.button
             onClick={handleAddToCart}
             disabled={addToCartMutation.isPending}
             onHoverStart={() => setIsButtonHovered(true)}
             onHoverEnd={() => setIsButtonHovered(false)}
-            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-gold hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            initial={{ scale: 0, y: 20 }}
-            animate={{ 
-              scale: isCardHovered ? 1 : 0,
-              y: isCardHovered ? 0 : 20
-            }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
-              damping: 25,
-              delay: isCardHovered ? 0.15 : 0
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 8px 32px rgba(212, 175, 55, 0.3)"
-            }}
-            whileTap={{ scale: 0.95 }}
+            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-gold hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isCardHovered ? 1 : 0 }}
+            transition={{ duration: 0.15 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.div className="flex items-center gap-2">
               <motion.span
-                initial={{ opacity: 1 }}
                 animate={{ 
                   opacity: isButtonHovered ? 0 : 1,
-                  x: isButtonHovered ? -10 : 0
                 }}
-                transition={{ duration: 0.2 }}
-                className="absolute"
+                transition={{ duration: 0.1 }}
+                className="absolute inset-0 flex items-center justify-center"
               >
                 Add to Cart
               </motion.span>
               
               <motion.div
-                initial={{ opacity: 0, x: 10 }}
                 animate={{ 
                   opacity: isButtonHovered ? 1 : 0,
-                  x: isButtonHovered ? 0 : 10
                 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1 }}
                 className="flex items-center gap-2"
               >
                 <motion.div
                   animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
                   transition={{ 
-                    duration: 1, 
+                    duration: 0.8, 
                     repeat: addToCartMutation.isPending ? Infinity : 0, 
                     ease: "linear" 
                   }}
@@ -162,23 +147,6 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
               </motion.div>
             </motion.div>
           </motion.button>
-        </motion.div>
-
-        {/* Price overlay when hovered */}
-        <motion.div
-          className="absolute top-4 right-4"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: isCardHovered ? 1 : 0,
-            scale: isCardHovered ? 1 : 0.8
-          }}
-          transition={{ duration: 0.3, delay: isCardHovered ? 0.2 : 0 }}
-        >
-          <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full border border-gold/30">
-            <span className="text-navy font-bold text-sm">
-              ${parseFloat(product.price.toString()).toFixed(2)}
-            </span>
-          </div>
         </motion.div>
       </div>
 
@@ -193,27 +161,15 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
           {formatProductName(product.name, product.brand)}
         </motion.h3>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-center mt-4">
           <motion.span 
             className="text-base font-bold text-gold"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 + 0.3 }}
           >
             ${parseFloat(product.price.toString()).toFixed(2)}
           </motion.span>
-          
-          {/* Brand indicator */}
-          {product.brand && (
-            <motion.span 
-              className="text-xs text-gray-500 font-medium uppercase tracking-wider"
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 + 0.35 }}
-            >
-              {product.brand}
-            </motion.span>
-          )}
         </div>
       </div>
     </motion.div>
