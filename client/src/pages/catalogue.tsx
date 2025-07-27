@@ -205,6 +205,16 @@ export default function Catalogue() {
     return [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
   }, [products]);
 
+  // Update filter price range when products load to match actual range
+  useEffect(() => {
+    if (products.length > 0) {
+      setFilters(prev => ({
+        ...prev,
+        priceRange: priceRange as [number, number]
+      }));
+    }
+  }, [products, priceRange]);
+
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
