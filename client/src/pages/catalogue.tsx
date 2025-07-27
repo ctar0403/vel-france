@@ -20,8 +20,8 @@ import type { Product } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Simple Search Input Component - Direct state management
-const SearchInput = React.memo(({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
+// Fixed Search Input Component that doesn't lose focus
+function SearchInput({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   return (
     <div className="relative">
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -34,7 +34,7 @@ const SearchInput = React.memo(({ value, onChange }: { value: string; onChange: 
       />
     </div>
   );
-});
+}
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -179,11 +179,11 @@ export default function Catalogue() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  // Simple debounced search effect
+  // Debounced search effect
   useEffect(() => {
     const timer = setTimeout(() => {
       setFilters(prev => ({ ...prev, searchQuery: searchTerm }));
-    }, 500);
+    }, 300);
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
