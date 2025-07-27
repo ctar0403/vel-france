@@ -161,6 +161,8 @@ export default function Catalogue() {
   });
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
+  const [isDraggingSlider, setIsDraggingSlider] = useState(false);
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -208,10 +210,12 @@ export default function Catalogue() {
   // Update filter price range when products load to match actual range
   useEffect(() => {
     if (products.length > 0) {
+      const range = priceRange as [number, number];
       setFilters(prev => ({
         ...prev,
-        priceRange: priceRange as [number, number]
+        priceRange: range
       }));
+      setTempPriceRange(range);
     }
   }, [products, priceRange]);
 
@@ -307,17 +311,26 @@ export default function Catalogue() {
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
         <div className="px-3 py-2">
           <Slider
-            value={filters.priceRange}
-            onValueChange={(value) => updateFilter('priceRange', value as [number, number])}
+            value={isDraggingSlider ? tempPriceRange : filters.priceRange}
+            onValueChange={(value) => {
+              setTempPriceRange(value as [number, number]);
+              if (!isDraggingSlider) {
+                setIsDraggingSlider(true);
+              }
+            }}
+            onValueCommit={(value) => {
+              setIsDraggingSlider(false);
+              updateFilter('priceRange', value as [number, number]);
+            }}
             max={priceRange[1]}
             min={priceRange[0]}
-            step={10}
+            step={1}
             className="w-full"
           />
         </div>
         <div className="flex justify-between text-sm font-medium text-gold bg-cream/50 rounded-lg px-3 py-2">
-          <span>${filters.priceRange[0]}</span>
-          <span>${filters.priceRange[1]}</span>
+          <span>${isDraggingSlider ? tempPriceRange[0] : filters.priceRange[0]}</span>
+          <span>${isDraggingSlider ? tempPriceRange[1] : filters.priceRange[1]}</span>
         </div>
       </div>
 
