@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest } from "@/lib/queryClient";
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
@@ -42,6 +43,7 @@ declare global {
 
 export default function CheckoutPage() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [, setLocation] = useLocation();
   
   // Fetch cart items
@@ -160,52 +162,73 @@ export default function CheckoutPage() {
 
   const total = calculateTotal();
 
+  // Authentication check helper
+  const checkAuthAndProceed = (callback: () => void) => {
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please log in to complete your purchase.",
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        setLocation("/auth");
+      }, 1500);
+      return;
+    }
+    callback();
+  };
+
   // Payment method handlers
   const handleCardPayment = () => {
-    if (!validateForm()) return;
-    paymentMutation.mutate({ paymentMethod: 'card' });
+    checkAuthAndProceed(() => {
+      if (!validateForm()) return;
+      paymentMutation.mutate({ paymentMethod: 'card' });
+    });
   };
 
 
 
   const handleInstallmentPayment = () => {
-    if (!validateForm()) return;
-    
-    if (!window.BOG) {
-      toast({
-        title: "Payment Error",
-        description: "BOG payment system is not available. Please try again later.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    window.BOG.Calculator.open({
-      amount: total,
-      bnpl: false, // Standard installment plan
-      onClose: () => {
-        console.log("BOG Calculator closed");
-      },
-      onRequest: (selected, successCb, closeCb) => {
-        console.log("BOG Calculator selection:", selected);
-        
-        // Use the calculator results to create payment
-        paymentMutation.mutate({ 
-          paymentMethod: 'installment', 
-          calculatorResult: selected 
+    checkAuthAndProceed(() => {
+      if (!validateForm()) return;
+      
+      if (!window.BOG) {
+        toast({
+          title: "Payment Error",
+          description: "BOG payment system is not available. Please try again later.",
+          variant: "destructive",
         });
-        
-        // Close the modal since we're handling the flow ourselves
-        closeCb();
-      },
-      onComplete: ({ redirectUrl }) => {
-        return false; // Prevent automatic redirect
+        return;
       }
+
+      window.BOG.Calculator.open({
+        amount: total,
+        bnpl: false, // Standard installment plan
+        onClose: () => {
+          console.log("BOG Calculator closed");
+        },
+        onRequest: (selected, successCb, closeCb) => {
+          console.log("BOG Calculator selection:", selected);
+          
+          // Use the calculator results to create payment
+          paymentMutation.mutate({ 
+            paymentMethod: 'installment', 
+            calculatorResult: selected 
+          });
+          
+          // Close the modal since we're handling the flow ourselves
+          closeCb();
+        },
+        onComplete: ({ redirectUrl }) => {
+          return false; // Prevent automatic redirect
+        }
+      });
     });
   };
 
   const handleBnplPayment = () => {
-    if (!validateForm()) return;
+    checkAuthAndProceed(() => {
+      if (!validateForm()) return;
     
     if (!window.BOG) {
       toast({
@@ -237,6 +260,7 @@ export default function CheckoutPage() {
       onComplete: ({ redirectUrl }) => {
         return false; // Prevent automatic redirect
       }
+    });
     });
   };
 
