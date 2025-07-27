@@ -191,6 +191,12 @@ export default function Catalogue() {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
+  
+  // Pagination state
+  const [displayedCount, setDisplayedCount] = useState(12);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  
+  const PRODUCTS_PER_PAGE = 12;
 
   // Initialize temp search from current filter
   useEffect(() => {
@@ -274,7 +280,7 @@ export default function Catalogue() {
   }, []);
 
   // Filter and sort products
-  const filteredProducts = useMemo(() => {
+  const allFilteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
       // Search filter
       if (filters.searchQuery.trim()) {
@@ -337,6 +343,16 @@ export default function Catalogue() {
     return filtered;
   }, [products, filters]);
 
+  // Get currently displayed products (paginated)
+  const displayedProducts = useMemo(() => {
+    return allFilteredProducts.slice(0, displayedCount);
+  }, [allFilteredProducts, displayedCount]);
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setDisplayedCount(PRODUCTS_PER_PAGE);
+  }, [filters]);
+
   const clearAllFilters = () => {
     const resetRange = [priceRange[0], priceRange[1]] as [number, number];
     setFilters({
@@ -349,7 +365,33 @@ export default function Catalogue() {
     });
     setTempPriceRange(resetRange);
     setTempSearchQuery("");
+    setDisplayedCount(PRODUCTS_PER_PAGE);
   };
+
+  // Load more products function
+  const loadMoreProducts = useCallback(() => {
+    if (displayedCount >= allFilteredProducts.length || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    
+    // Simulate loading delay for smooth UX
+    setTimeout(() => {
+      setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
+      setIsLoadingMore(false);
+    }, 300);
+  }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
+
+  // Infinite scroll hook
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 1000) {
+        loadMoreProducts();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMoreProducts]);
 
   const activeFiltersCount = 
     (filters.searchQuery.trim() ? 1 : 0) +
@@ -766,7 +808,7 @@ export default function Catalogue() {
                 </Sheet>
                 
                 <div className="text-sm text-gray-600">
-                  {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
+                  Showing {displayedProducts.length} of {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
                 </div>
               </div>
 
@@ -882,7 +924,7 @@ export default function Catalogue() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              {filteredProducts.length === 0 ? (
+              {allFilteredProducts.length === 0 ? (
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -898,23 +940,66 @@ export default function Catalogue() {
                   </Button>
                 </motion.div>
               ) : (
-                <motion.div 
-                  className={filters.viewMode === 'grid' 
-                    ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
-                    : "space-y-4"
-                  }
-                  layout
-                >
-                  <AnimatePresence mode="popLayout">
-                    {filteredProducts.map((product, index) => (
-                      <LuxuryProductCard 
-                        key={product.id} 
-                        product={product} 
-                        index={index} 
-                      />
-                    ))}
-                  </AnimatePresence>
-                </motion.div>
+                <>
+                  <motion.div 
+                    className={filters.viewMode === 'grid' 
+                      ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
+                      : "space-y-4"
+                    }
+                    layout
+                  >
+                    <AnimatePresence mode="popLayout">
+                      {displayedProducts.map((product, index) => (
+                        <LuxuryProductCard 
+                          key={product.id} 
+                          product={product} 
+                          index={index} 
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </motion.div>
+
+                  {/* Load More Indicator */}
+                  {displayedCount < allFilteredProducts.length && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex justify-center py-12"
+                    >
+                      {isLoadingMore ? (
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="w-6 h-6 border-2 border-gold/30 border-t-gold rounded-full"
+                          />
+                          <span className="text-navy font-medium">Loading more luxury fragrances...</span>
+                        </div>
+                      ) : (
+                        <Button 
+                          onClick={loadMoreProducts}
+                          variant="outline"
+                          className="bg-gradient-to-r from-white to-cream/50 border-2 border-gold/30 text-navy hover:bg-gradient-to-r hover:from-gold hover:to-gold/90 hover:text-white hover:border-gold transition-all duration-300 font-semibold shadow-md hover:shadow-lg px-8 py-3"
+                        >
+                          Load More Products ({allFilteredProducts.length - displayedCount} remaining)
+                        </Button>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {/* Scroll to Load Indicator */}
+                  {displayedCount < allFilteredProducts.length && !isLoadingMore && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-4"
+                    >
+                      <p className="text-sm text-gray-500">
+                        Scroll down to load more products automatically
+                      </p>
+                    </motion.div>
+                  )}
+                </>
               )}
             </motion.div>
           </div>
