@@ -418,7 +418,6 @@ export default function CheckoutPage() {
                       <div className="flex items-center">
                         <div>
                           <h3 className="text-lg font-bold text-slate-800">Instant Card Payment</h3>
-                          <p className="text-sm text-slate-500">Bank of Georgia iPay</p>
                         </div>
                       </div>
                       <div className="text-right">
