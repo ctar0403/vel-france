@@ -402,12 +402,12 @@ export default function Catalogue() {
     }, 800);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
-  // Infinite scroll hook with early loading trigger
+  // Infinite scroll hook with balanced loading trigger
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + document.documentElement.scrollTop;
       const documentHeight = document.documentElement.offsetHeight;
-      const threshold = 800; // Load when 800px from bottom (much earlier)
+      const threshold = 300; // Load when 300px from bottom (balanced)
       
       if (scrollPosition >= documentHeight - threshold && !isLoadingMore && displayedCount < allFilteredProducts.length) {
         loadMoreProducts();
@@ -421,13 +421,24 @@ export default function Catalogue() {
   // Prevent scrolling when loading more items
   useEffect(() => {
     if (isLoadingMore) {
-      document.body.style.overflow = 'hidden';
+      // Store current scroll position
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
     } else {
-      document.body.style.overflow = 'unset';
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
     
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isLoadingMore]);
 
