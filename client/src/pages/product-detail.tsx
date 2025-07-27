@@ -168,9 +168,7 @@ function ProductDetailPage() {
             <div className="space-y-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <Badge className="bg-gold/10 text-gold border-gold/20 mb-3">
-                    {product.category.charAt(0).toUpperCase() + product.category.slice(1)} Fragrance
-                  </Badge>
+                  
                   <h1 className="text-4xl font-bold text-navy leading-tight">
                     {product.brand && !product.name.toLowerCase().includes(product.brand.toLowerCase()) 
                       ? `${product.brand} – ${product.name}` 
@@ -178,25 +176,10 @@ function ProductDetailPage() {
                   </h1>
 
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleWishlist}
-                  className="text-navy hover:text-red-500 transition-colors"
-                >
-                  <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
-                </Button>
+                
               </div>
 
-              {/* Rating & Reviews */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="w-5 h-5 fill-gold text-gold" />
-                  ))}
-                </div>
-                <span className="text-navy/60">4.8 (127 reviews)</span>
-              </div>
+              
 
               {/* Price */}
               <div className="text-4xl font-bold text-navy">
