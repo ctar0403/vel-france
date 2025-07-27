@@ -352,18 +352,7 @@ export default function PaymentSuccess() {
               </Link>
             </motion.div>
 
-            {/* Customer Support */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3.6 }}
-              className="text-sm text-gray-500 mt-8 relative z-10"
-            >
-              Questions about your order?{" "}
-              <a href="mailto:support@velFrance.com" className="text-gold hover:text-deep-gold transition-colors font-medium">
-                Contact our French support team
-              </a>
-            </motion.p>
+            
           </motion.div>
         </motion.div>
       </div>
