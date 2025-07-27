@@ -311,7 +311,46 @@ export default function Catalogue() {
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
         <div className="px-3 py-2">
-          <div className="relative w-full h-6 flex items-center">
+          <div 
+            className="relative w-full h-6 flex items-center cursor-pointer"
+            onMouseDown={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const totalWidth = rect.width;
+              const clickX = e.clientX - rect.left;
+              const clickPercent = clickX / totalWidth;
+              const clickValue = priceRange[0] + (clickPercent * (priceRange[1] - priceRange[0]));
+              
+              // Determine which handle is closer
+              const distToMin = Math.abs(clickValue - tempPriceRange[0]);
+              const distToMax = Math.abs(clickValue - tempPriceRange[1]);
+              const isMinHandle = distToMin < distToMax;
+              
+              let isDragging = true;
+              
+              const handleMouseMove = (e: MouseEvent) => {
+                if (!isDragging) return;
+                
+                const newX = e.clientX - rect.left;
+                const newPercent = Math.max(0, Math.min(1, newX / totalWidth));
+                const newValue = Math.round(priceRange[0] + (newPercent * (priceRange[1] - priceRange[0])));
+                
+                if (isMinHandle) {
+                  setTempPriceRange([Math.min(newValue, tempPriceRange[1]), tempPriceRange[1]]);
+                } else {
+                  setTempPriceRange([tempPriceRange[0], Math.max(newValue, tempPriceRange[0])]);
+                }
+              };
+              
+              const handleMouseUp = () => {
+                isDragging = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+              };
+              
+              document.addEventListener('mousemove', handleMouseMove);
+              document.addEventListener('mouseup', handleMouseUp);
+            }}
+          >
             {/* Track */}
             <div className="absolute w-full h-2 bg-gray-200 rounded-full">
               {/* Active Range */}
@@ -325,37 +364,25 @@ export default function Catalogue() {
             </div>
             
             {/* Min Handle */}
-            <input
-              type="range"
-              min={priceRange[0]}
-              max={priceRange[1]}
-              step={1}
-              value={tempPriceRange[0]}
-              onChange={(e) => {
-                const newMin = parseInt(e.target.value);
-                if (newMin <= tempPriceRange[1]) {
-                  setTempPriceRange([newMin, tempPriceRange[1]]);
-                }
+            <div 
+              className="absolute w-5 h-5 bg-gold border-2 border-white rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"
+              style={{
+                left: `calc(${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 10px)`,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2
               }}
-              className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer slider-thumb"
-              style={{ zIndex: 2 }}
             />
             
             {/* Max Handle */}
-            <input
-              type="range"
-              min={priceRange[0]}
-              max={priceRange[1]}
-              step={1}
-              value={tempPriceRange[1]}
-              onChange={(e) => {
-                const newMax = parseInt(e.target.value);
-                if (newMax >= tempPriceRange[0]) {
-                  setTempPriceRange([tempPriceRange[0], newMax]);
-                }
+            <div 
+              className="absolute w-5 h-5 bg-gold border-2 border-white rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"
+              style={{
+                left: `calc(${((tempPriceRange[1] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 10px)`,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 1
               }}
-              className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer slider-thumb"
-              style={{ zIndex: 1 }}
             />
           </div>
         </div>
