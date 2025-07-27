@@ -391,9 +391,7 @@ export default function Catalogue() {
               <Button 
                 onClick={handleSearch}
                 className="w-full bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 h-11 rounded-xl"
-              >
-                Search Fragrances
-              </Button>
+              >Search</Button>
             )}
           </div>
         </div>
