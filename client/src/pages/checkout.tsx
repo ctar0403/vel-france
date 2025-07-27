@@ -23,6 +23,7 @@ import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
 import amexLogo from "@assets/American-Express-Color_1753638617821.png";
 import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.png";
 import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.png";
+import partByPartLogo from "@assets/Untitled design (33)-removebg-preview (1)_1753641682056.png";
 
 // Declare BOG global for TypeScript
 declare global {
@@ -484,26 +485,26 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
-                    className="w-full h-20 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
+                    className="w-full h-20 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-purple-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-center relative z-10">
                       <img 
-                        src={bogInstallmentLogo} 
-                        alt="Bank of Georgia"
-                        className="w-12 h-12 object-contain mr-5"
+                        src={partByPartLogo} 
+                        alt="Part by Part"
+                        className="w-16 h-10 object-contain mr-4"
                       />
                       <div className="text-left">
-                        <div className="font-semibold text-lg tracking-wide">BOG Part-by-Part</div>
-                        <div className="text-sm opacity-90 text-orange-100">Buy now, pay in 4 interest-free parts</div>
+                        <div className="font-semibold text-lg tracking-wide">Part-by-Part</div>
+                        <div className="text-sm opacity-90 text-purple-100">Buy now, pay in 4 interest-free parts</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10">
                       <div className="text-xl font-bold text-white">₾{(total / 4).toFixed(2)} × 4</div>
-                      <div className="text-sm opacity-90 text-orange-100">Zero interest payments</div>
+                      <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-60"></div>
                   </Button>
                 </div>
               </div>
