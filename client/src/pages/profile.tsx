@@ -333,14 +333,7 @@ export default function Profile() {
                                   day: 'numeric'
                                 })}
                               </p>
-                              <p className="text-xs text-gray-500 mt-1">
-                                <a 
-                                  href={`/order/${order.orderCode}`}
-                                  className="text-gold hover:text-gold/80 underline"
-                                >
-                                  /order/{order.orderCode}
-                                </a>
-                              </p>
+                              
                             </div>
                             <div className="text-right">
                               <p className="text-2xl font-bold text-gold">€{order.total}</p>
