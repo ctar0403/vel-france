@@ -108,7 +108,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
             disabled={addToCartMutation.isPending}
             onHoverStart={() => setIsButtonHovered(true)}
             onHoverEnd={() => setIsButtonHovered(false)}
-            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-gold hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="relative bg-[#001f66] backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-[#001f66] hover:bg-[#002c8c] hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             initial={{ opacity: 0 }}
             animate={{ opacity: isCardHovered ? 1 : 0 }}
             transition={{ duration: 0.15 }}
