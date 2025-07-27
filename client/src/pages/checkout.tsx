@@ -406,92 +406,114 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div className="space-y-6">
-                  {/* Advanced Card Payment Button */}
-                  <Button
-                    type="button"
+                  {/* Modern Card Payment Option */}
+                  <div
                     onClick={handleCardPayment}
-                    className="w-full bg-gradient-to-br from-white via-cream/40 to-white border-2 border-gold/30 hover:border-gold/50 font-roboto font-medium hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 rounded-2xl p-6 group relative overflow-hidden"
-                    disabled={paymentMutation.isPending}
+                    className="w-full bg-gradient-to-br from-slate-50 via-white to-slate-50 shadow-lg hover:shadow-xl cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-300 rounded-3xl p-8 group relative overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-gold/5 to-navy/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     
-                    {/* Main Content */}
-                    <div className="relative z-10 space-y-4">
-                      {/* Header Section */}
-                      <div className="flex items-center justify-between">
+                    {/* Main Header */}
+                    <div className="relative z-10 mb-6">
+                      <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
-                          <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                          <div className="w-16 h-16 bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-5 shadow-xl">
                             <img 
                               src={bogLogo} 
                               alt="Bank of Georgia"
-                              className="w-8 h-8 object-contain"
+                              className="w-10 h-10 object-contain filter brightness-110"
                             />
                           </div>
-                          <div className="text-left">
-                            <div className="font-semibold text-xl text-navy tracking-wide">Instant Card Payment</div>
-                            <div className="text-sm text-navy/60 font-roboto">Secure payment powered by Bank of Georgia</div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-slate-800 tracking-tight">Instant Card Payment</h3>
+                            <p className="text-slate-600 font-medium">Powered by Bank of Georgia iPay</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-2xl font-bold text-navy">₾{total.toFixed(2)}</div>
-                          <div className="text-sm text-navy/60">One-time payment</div>
+                          <div className="text-3xl font-bold text-slate-800 mb-1">₾{total.toFixed(2)}</div>
+                          <div className="text-slate-500 text-sm font-medium">One-time secure payment</div>
                         </div>
-                      </div>
-
-                      {/* Payment Methods Section */}
-                      <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 border border-gray-100">
-                        <div className="text-xs text-navy/70 font-medium mb-2 tracking-wide">ACCEPTED PAYMENT METHODS</div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
-                            {/* Payment Provider Logos */}
-                            <div className="flex items-center space-x-3">
-                              <img 
-                                src={visaLogo} 
-                                alt="Visa"
-                                className="h-6 object-contain opacity-80 hover:opacity-100 transition-opacity"
-                              />
-                              <img 
-                                src={mastercardLogo} 
-                                alt="Mastercard"
-                                className="h-6 object-contain opacity-80 hover:opacity-100 transition-opacity"
-                              />
-                              <img 
-                                src={amexLogo} 
-                                alt="American Express"
-                                className="h-6 object-contain opacity-80 hover:opacity-100 transition-opacity"
-                              />
-                            </div>
-                            <div className="w-px h-6 bg-gray-300"></div>
-                            <div className="flex items-center space-x-3">
-                              <img 
-                                src={googlePayLogo} 
-                                alt="Google Pay"
-                                className="h-5 object-contain opacity-80 hover:opacity-100 transition-opacity"
-                              />
-                              <img 
-                                src={applePayLogo} 
-                                alt="Apple Pay"
-                                className="h-5 object-contain opacity-80 hover:opacity-100 transition-opacity"
-                              />
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-xs text-green-600 font-medium">SECURE</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Additional Info */}
-                      <div className="flex items-center justify-between text-xs text-navy/50">
-                        <span>Bank transfer • Digital wallets • International cards</span>
-                        <span>Processing time: Instant</span>
                       </div>
                     </div>
 
-                    {/* Luxury accent line */}
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-50 group-hover:opacity-80 transition-opacity duration-300"></div>
-                  </Button>
+                    {/* Payment Methods Grid */}
+                    <div className="relative z-10 mb-6">
+                      <div className="bg-white rounded-2xl p-6 shadow-inner border border-slate-100">
+                        <div className="text-xs font-bold text-slate-600 mb-4 tracking-wider">ACCEPTED PAYMENT METHODS</div>
+                        
+                        {/* Card Networks */}
+                        <div className="mb-4">
+                          <div className="text-xs text-slate-500 mb-2 font-medium">Credit & Debit Cards</div>
+                          <div className="flex items-center space-x-4">
+                            <img 
+                              src={visaLogo} 
+                              alt="Visa"
+                              className="h-8 object-contain hover:scale-110 transition-transform duration-200"
+                            />
+                            <img 
+                              src={mastercardLogo} 
+                              alt="Mastercard"
+                              className="h-8 object-contain hover:scale-110 transition-transform duration-200"
+                            />
+                            <img 
+                              src={amexLogo} 
+                              alt="American Express"
+                              className="h-8 object-contain hover:scale-110 transition-transform duration-200"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Digital Wallets */}
+                        <div className="mb-4">
+                          <div className="text-xs text-slate-500 mb-2 font-medium">Digital Wallets</div>
+                          <div className="flex items-center space-x-4">
+                            <img 
+                              src={googlePayLogo} 
+                              alt="Google Pay"
+                              className="h-6 object-contain hover:scale-110 transition-transform duration-200"
+                            />
+                            <img 
+                              src={applePayLogo} 
+                              alt="Apple Pay"
+                              className="h-6 object-contain hover:scale-110 transition-transform duration-200"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Security Badge */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-lg"></div>
+                            <span className="text-sm font-bold text-green-600">256-BIT SSL ENCRYPTED</span>
+                          </div>
+                          <div className="text-xs text-slate-500">Processing: Instant</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <div className="relative z-10 flex items-center justify-between text-sm text-slate-600">
+                      <div className="flex items-center space-x-1">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                        <span>Bank Transfer Available</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                        <span>International Cards</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                        <span>Mobile Wallets</span>
+                      </div>
+                    </div>
+
+                    {/* Click Indicator */}
+                    <div className="absolute top-4 right-4 text-slate-400 group-hover:text-slate-600 transition-colors">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
 
                   {/* Premium Installment Payment Button */}
                   <Button
