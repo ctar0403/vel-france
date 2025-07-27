@@ -736,10 +736,151 @@ export default function Catalogue() {
 
           {/* Main Content */}
           <div className="flex-1">
+            {/* Top Bar with Sorting and View Controls */}
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6"
+            >
+              <div className="flex items-center gap-4">
+                {/* Mobile Filter Button */}
+                <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" className="lg:hidden">
+                      <SlidersHorizontal className="h-4 w-4 mr-2" />
+                      Filters
+                      {activeFiltersCount > 0 && (
+                        <Badge variant="secondary" className="ml-2">{activeFiltersCount}</Badge>
+                      )}
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-80 bg-gradient-to-b from-white to-cream/30">
+                    <div className="py-4">
+                      <h3 className="text-xl font-bold text-navy mb-6">Filters</h3>
+                      <div className="max-h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent">
+                        <FilterPanel />
+                      </div>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+                
+                <div className="text-sm text-gray-600">
+                  {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                {/* Sort Dropdown */}
+                <Select value={filters.sortBy} onValueChange={(value) => updateFilter('sortBy', value)}>
+                  <SelectTrigger className="w-48 bg-white border-gold/20 hover:border-gold/40 transition-colors">
+                    <SelectValue placeholder="Sort by..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gold/20">
+                    <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+                    <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                    <SelectItem value="price-asc">Price (Low to High)</SelectItem>
+                    <SelectItem value="price-desc">Price (High to Low)</SelectItem>
+                    <SelectItem value="brand">Brand</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* View Mode Toggle */}
+                <div className="flex border border-gold/20 rounded-lg overflow-hidden">
+                  <Button
+                    variant={filters.viewMode === 'grid' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => updateFilter('viewMode', 'grid')}
+                    className={`rounded-none ${filters.viewMode === 'grid' ? 'bg-gold text-navy hover:bg-gold/90' : 'hover:bg-gold/10'}`}
+                  >
+                    <Grid className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant={filters.viewMode === 'list' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => updateFilter('viewMode', 'list')}
+                    className={`rounded-none ${filters.viewMode === 'list' ? 'bg-gold text-navy hover:bg-gold/90' : 'hover:bg-gold/10'}`}
+                  >
+                    <List className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Active Filters Display */}
+            {activeFiltersCount > 0 && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-6"
+              >
+                <div className="flex flex-wrap gap-2">
+                  {/* Search Query Filter */}
+                  {filters.searchQuery.trim() && (
+                    <Badge variant="secondary" className="gap-1 bg-gold/10 text-navy border-gold/20">
+                      Search: "{filters.searchQuery}"
+                      <X 
+                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        onClick={() => {
+                          updateFilter('searchQuery', "");
+                          setTempSearchQuery("");
+                        }}
+                      />
+                    </Badge>
+                  )}
+
+                  {/* Brand Filters */}
+                  {filters.selectedBrands.map(brand => (
+                    <Badge key={brand} variant="secondary" className="gap-1 bg-gold/10 text-navy border-gold/20">
+                      {brand}
+                      <X 
+                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        onClick={() => toggleBrand(brand)}
+                      />
+                    </Badge>
+                  ))}
+
+                  {/* Category Filters */}
+                  {filters.selectedCategories.map(category => (
+                    <Badge key={category} variant="secondary" className="gap-1 capitalize bg-gold/10 text-navy border-gold/20">
+                      {category}
+                      <X 
+                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        onClick={() => toggleCategory(category)}
+                      />
+                    </Badge>
+                  ))}
+
+                  {/* Price Range Filter */}
+                  {(filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && (
+                    <Badge variant="secondary" className="gap-1 bg-gold/10 text-navy border-gold/20">
+                      ${filters.priceRange[0]} - ${filters.priceRange[1]}
+                      <X 
+                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        onClick={() => updateFilter('priceRange', priceRange)}
+                      />
+                    </Badge>
+                  )}
+
+                  {/* Clear All Button */}
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="h-6 px-2 text-xs border-gold/30 text-navy hover:bg-gold/10"
+                  >
+                    Clear All
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Products Grid/List */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
               {filteredProducts.length === 0 ? (
                 <motion.div 
