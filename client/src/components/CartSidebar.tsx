@@ -97,8 +97,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="fixed inset-0 bg-black/50 z-40"
+              transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
+              className="fixed inset-0 bg-black/50 z-40 will-change-opacity"
               onClick={onClose}
             />
             
@@ -107,8 +107,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl z-50 flex flex-col"
+              transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+              className="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl z-50 flex flex-col will-change-transform"
             >
               {/* Header */}
               <div className="p-6 border-b border-gray-200 flex items-center justify-between">
@@ -153,10 +153,10 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     {cartItems.map((item, index) => (
                       <motion.div
                         key={item.id}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2, delay: index * 0.02 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.15, delay: index * 0.01, ease: [0.4, 0, 0.2, 1] }}
                         className="flex space-x-4 p-4 border-b border-gray-100"
                       >
                         <img 
