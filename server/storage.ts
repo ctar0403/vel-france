@@ -24,10 +24,10 @@ import {
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
 
-// Generate unique order code (numbers only)
+// Generate unique order code (numbers only - 6 digits)
 function generateOrderCode(): string {
-  const timestamp = Date.now().toString().slice(-8); // Last 8 digits of timestamp
-  const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0'); // 4 random digits
+  const timestamp = Date.now().toString().slice(-3); // Last 3 digits of timestamp
+  const random = Math.floor(Math.random() * 999).toString().padStart(3, '0'); // 3 random digits
   return `${timestamp}${random}`;
 }
 

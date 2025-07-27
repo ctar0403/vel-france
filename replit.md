@@ -7,6 +7,7 @@ This is a full-stack luxury perfume e-commerce platform built with React/TypeScr
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Order code format: 6-digit numbers only (no letters).
 
 ## System Architecture
 
