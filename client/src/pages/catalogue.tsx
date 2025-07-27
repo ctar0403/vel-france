@@ -389,21 +389,17 @@ export default function Catalogue() {
     setDisplayedCount(PRODUCTS_PER_PAGE);
   };
 
-  // Load more products function
+  // Load more products function  
   const loadMoreProducts = useCallback(() => {
     if (displayedCount >= allFilteredProducts.length || isLoadingMore) return;
     
     setIsLoadingMore(true);
     
-    // Simulate loading time to show indicator properly
+    // Wait 3 seconds before updating count AND hiding loader
     setTimeout(() => {
       setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
-      
-      // Keep loading indicator for 3 seconds to ensure items are fully loaded
-      setTimeout(() => {
-        setIsLoadingMore(false);
-      }, 3000);
-    }, 300);
+      setIsLoadingMore(false);
+    }, 3000);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
   // Infinite scroll hook with balanced loading trigger
