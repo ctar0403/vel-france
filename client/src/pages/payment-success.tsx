@@ -211,7 +211,8 @@ export default function PaymentSuccess() {
                   className="flex items-center justify-center mb-4"
                 >
                   <Gift className="w-6 h-6 text-gold mr-3" />
-                  <p className="text-lg font-medium text-gray-700">Your Order Number</p>
+                  <p className="text-lg font-medium text-gray-700">Your Unique Order ID</p>
+                  <p className="text-sm text-gray-500 mt-1">Track your order with this 6-digit code</p>
                 </motion.div>
                 
                 <div className="flex items-center justify-center space-x-4 mb-4">
@@ -221,8 +222,8 @@ export default function PaymentSuccess() {
                     transition={{ delay: 1.8, type: "spring", stiffness: 200 }}
                     className="bg-white/80 rounded-xl px-6 py-3 border border-gold/20"
                   >
-                    <p className="font-playfair font-bold text-3xl text-navy tracking-wider">
-                      {latestOrderCode}
+                    <p className="font-playfair font-bold text-4xl text-navy tracking-wider">
+                      #{latestOrderCode}
                     </p>
                   </motion.div>
                   
@@ -257,11 +258,11 @@ export default function PaymentSuccess() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <Button 
-                      className="w-full bg-gradient-to-r from-gold via-deep-gold to-gold text-navy font-semibold hover:shadow-xl transition-all duration-300 group py-4 text-lg rounded-xl"
+                      className="w-full bg-gradient-to-r from-gold via-deep-gold to-gold text-navy font-semibold hover:shadow-xl transition-all duration-300 group py-4 text-lg rounded-xl border-2 border-transparent hover:border-navy/20"
                       size="lg"
                     >
                       <ShoppingBag className="mr-3 h-6 w-6" />
-                      View Order Details
+                      View Complete Order Details
                       <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
                     </Button>
                   </motion.div>
