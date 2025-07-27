@@ -174,14 +174,7 @@ export default function PaymentSuccess() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="relative z-10 mb-4"
             >
-              <motion.h1
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-                className="text-4xl font-playfair font-bold bg-gradient-to-r from-navy via-navy to-deep-gold bg-clip-text text-transparent mb-4"
-              >
-                Merci Beaucoup! 💐
-              </motion.h1>
+              
               
               <motion.p
                 initial={{ opacity: 0 }}
