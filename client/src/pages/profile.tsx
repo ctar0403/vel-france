@@ -360,10 +360,7 @@ export default function Profile() {
                             </div>
                           )}
                           
-                          <div className="flex justify-between items-center">
-                            <p className="text-sm text-gray-600">
-                              Order items
-                            </p>
+                          <div className="flex justify-end">
                             <Link href={`/order/${order.orderCode}`}>
                               <Button variant="outline" size="sm">
                                 <Eye className="h-4 w-4 mr-2" />
