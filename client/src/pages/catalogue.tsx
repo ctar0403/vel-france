@@ -14,6 +14,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartSidebar from "@/components/CartSidebar";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -181,6 +182,7 @@ export default function Catalogue() {
   const [tempSearchQuery, setTempSearchQuery] = useState("");
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Load products
   const { data: products = [], isLoading, error } = useQuery<Product[]>({
@@ -382,7 +384,7 @@ export default function Catalogue() {
         animate={{ opacity: 1 }}
         className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink"
       >
-        <Header cartItemCount={cartItemCount} />
+        <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartOpen(true)} />
         <div className="flex items-center justify-center min-h-[60vh]">
           <motion.div
             animate={{ rotate: 360 }}
@@ -401,7 +403,13 @@ export default function Catalogue() {
       animate={{ opacity: 1 }}
       className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink"
     >
-      <Header cartItemCount={cartItemCount} />
+      <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartOpen(true)} />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
+      />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
