@@ -493,7 +493,7 @@ export default function CheckoutPage() {
                       <img 
                         src={partByPartLogo} 
                         alt="Part by Part"
-                        className="w-16 h-10 object-contain mr-4"
+                        className="w-24 h-16 object-contain mr-4"
                       />
                       <div className="text-left">
                         <div className="font-semibold text-lg tracking-wide">Part-by-Part</div>
