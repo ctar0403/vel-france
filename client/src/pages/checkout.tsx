@@ -14,6 +14,7 @@ import type { CartItem, Product } from "@shared/schema";
 
 // Payment method logos
 import bogLogo from "@assets/BGEO.L-9c80f039_1753638321901.png";
+import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.png";
 import bankLogo from "@assets/Untitled design (29)_1753639145761.png";
 import visaLogo from "@assets/Visa_2021.svg_1753638560432.png";
 import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
@@ -453,6 +454,7 @@ export default function CheckoutPage() {
                           <img src={applePayLogo} alt="Apple Pay" className="h-4 object-contain opacity-80 hover:opacity-100" />
                           <div className="w-px h-4 bg-gray-300"></div>
                           <img src={bankLogo} alt="Bank Transfer" className="h-5 object-contain opacity-80 hover:opacity-100" />
+                          <img src={bogLogo2} alt="Bank of Georgia" className="h-5 object-contain opacity-80 hover:opacity-100" />
                         </div>
                         <span className="text-xs text-slate-500">Instant</span>
                       </div>
