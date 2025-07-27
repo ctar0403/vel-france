@@ -248,7 +248,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     <div className="h-px bg-gradient-to-r from-gold/20 via-gold/40 to-gold/20 my-3"></div>
                     <div className="flex items-center justify-between">
                       <span className="font-roboto text-lg font-medium text-navy">Total</span>
-                      <span className="font-roboto text-2xl font-bold bg-gradient-to-r from-gold to-gold/80 bg-clip-text text-transparent">
+                      <span className="font-roboto text-xl font-bold bg-gradient-to-r from-gold to-gold/80 bg-clip-text text-transparent">
                         ₾{total.toFixed(2)}
                       </span>
                     </div>
