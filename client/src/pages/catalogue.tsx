@@ -393,22 +393,17 @@ export default function Catalogue() {
   const loadMoreProducts = useCallback(() => {
     if (displayedCount >= allFilteredProducts.length || isLoadingMore) return;
     
-    console.log('Starting to load more products, setting isLoadingMore to true');
     setIsLoadingMore(true);
     
-    // Update count immediately, loading indicator controlled separately
-    setDisplayedCount(prev => {
-      const newCount = Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length);
-      console.log('Updated displayed count to:', newCount);
+    // Simulate loading time to show indicator properly
+    setTimeout(() => {
+      setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
       
-      // Hide loading indicator after items have had time to render
+      // Keep loading indicator for animation duration
       setTimeout(() => {
-        console.log('Hiding loading indicator');
         setIsLoadingMore(false);
-      }, 1000); // Increased timeout to ensure visibility
-      
-      return newCount;
-    });
+      }, 600);
+    }, 300);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
   // Infinite scroll hook with balanced loading trigger
@@ -1074,34 +1069,15 @@ export default function Catalogue() {
                     </AnimatePresence>
                   </motion.div>
 
-                  {/* Loading Indicator appears at bottom when triggered */}
+                  {/* Loading Indicator - Always shows when loading more */}
                   {isLoadingMore && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="flex items-center justify-center py-8 mt-4 bg-red-100 border border-red-300"
-                    >
-                      <div className="flex items-center gap-3">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ 
-                            duration: 1, 
-                            repeat: Infinity, 
-                            ease: "linear" 
-                          }}
-                          className="w-6 h-6 border-2 border-gray-300 border-t-navy rounded-full"
-                        />
-                        <span className="text-navy font-medium">Loading more products...</span>
+                    <div className="flex items-center justify-center py-8 mt-6 bg-cream/50 rounded-lg border border-gold/20">
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 border-3 border-navy/20 border-t-navy rounded-full animate-spin"></div>
+                        <span className="text-navy font-medium text-lg">Loading more products...</span>
                       </div>
-                    </motion.div>
+                    </div>
                   )}
-                  
-                  {/* Debug indicator */}
-                  <div className="text-center py-2 text-sm text-gray-500">
-                    Debug: isLoadingMore = {isLoadingMore ? 'TRUE' : 'FALSE'}, displayedCount = {displayedCount}, totalProducts = {allFilteredProducts.length}
-                  </div>
                 </>
               )}
             </motion.div>
