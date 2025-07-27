@@ -162,7 +162,6 @@ export default function Catalogue() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
-  const [isDraggingSlider, setIsDraggingSlider] = useState(false);
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -289,13 +288,15 @@ export default function Catalogue() {
   };
 
   const clearAllFilters = () => {
+    const resetRange = [priceRange[0], priceRange[1]] as [number, number];
     setFilters({
-      priceRange: [priceRange[0], priceRange[1]] as [number, number],
+      priceRange: resetRange,
       selectedBrands: [],
       selectedCategories: [],
       sortBy: "name-asc",
       viewMode: filters.viewMode
     });
+    setTempPriceRange(resetRange);
   };
 
   const activeFiltersCount = 
@@ -311,16 +312,9 @@ export default function Catalogue() {
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
         <div className="px-3 py-2">
           <Slider
-            value={isDraggingSlider ? tempPriceRange : filters.priceRange}
+            value={tempPriceRange}
             onValueChange={(value) => {
               setTempPriceRange(value as [number, number]);
-              if (!isDraggingSlider) {
-                setIsDraggingSlider(true);
-              }
-            }}
-            onValueCommit={(value) => {
-              setIsDraggingSlider(false);
-              updateFilter('priceRange', value as [number, number]);
             }}
             max={priceRange[1]}
             min={priceRange[0]}
@@ -329,9 +323,21 @@ export default function Catalogue() {
           />
         </div>
         <div className="flex justify-between text-sm font-medium text-gold bg-cream/50 rounded-lg px-3 py-2">
-          <span>${isDraggingSlider ? tempPriceRange[0] : filters.priceRange[0]}</span>
-          <span>${isDraggingSlider ? tempPriceRange[1] : filters.priceRange[1]}</span>
+          <span>${tempPriceRange[0]}</span>
+          <span>${tempPriceRange[1]}</span>
         </div>
+        
+        {/* Filter Button - shows when temp range differs from applied range */}
+        {(tempPriceRange[0] !== filters.priceRange[0] || tempPriceRange[1] !== filters.priceRange[1]) && (
+          <div className="mt-3">
+            <Button 
+              onClick={() => updateFilter('priceRange', tempPriceRange)}
+              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
+            >
+              Filter
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Brands */}
