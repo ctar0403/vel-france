@@ -115,7 +115,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div className="flex items-center justify-center">
+            <motion.div className="flex items-center gap-2">
               <motion.span
                 animate={{ 
                   opacity: isButtonHovered ? 0 : 1,
@@ -131,7 +131,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
                   opacity: isButtonHovered ? 1 : 0,
                 }}
                 transition={{ duration: 0.1 }}
-                className="flex items-center justify-center"
+                className="absolute inset-0 flex items-center justify-center"
               >
                 <motion.div
                   animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
