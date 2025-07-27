@@ -174,7 +174,7 @@ export default function Catalogue() {
   // Filter state
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
-    priceRange: [0, 1000], // Wide range to show all products by default
+    priceRange: [0, 0], // No price filter by default
     selectedBrands: [],
     selectedCategories: [],
     sortBy: "name-asc",
@@ -182,7 +182,7 @@ export default function Catalogue() {
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -205,9 +205,8 @@ export default function Catalogue() {
     const prices = products.map(p => parseFloat(p.price.toString()));
     const range: [number, number] = [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
     
-    // Initialize both filter and temp range with actual product price range on first load
-    if (filters.priceRange[0] === 0 && filters.priceRange[1] === 1000 && range[0] !== 0) {
-      setFilters(prev => ({ ...prev, priceRange: range }));
+    // Only set temp price range for slider display, don't auto-apply filters
+    if (tempPriceRange[0] === 0 && tempPriceRange[1] === 0 && range[0] !== 0) {
       setTempPriceRange(range);
     }
     
@@ -280,8 +279,8 @@ export default function Catalogue() {
       );
     }
 
-    // Apply price filter
-    if (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) {
+    // Apply price filter only if explicitly set (not [0,0])
+    if (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 0) {
       filtered = filtered.filter(product => 
         product.numericPrice >= filters.priceRange[0] && 
         product.numericPrice <= filters.priceRange[1]
@@ -326,16 +325,15 @@ export default function Catalogue() {
 
   // Clear all filters
   const clearAllFilters = useCallback(() => {
-    const resetRange = priceRange as [number, number];
     setFilters({
       searchQuery: "",
-      priceRange: resetRange,
+      priceRange: [0, 0], // Reset to no price filter
       selectedBrands: [],
       selectedCategories: [],
       sortBy: "name-asc",
       viewMode: filters.viewMode
     });
-    setTempPriceRange(resetRange);
+    setTempPriceRange(priceRange); // Reset temp to full range for slider
     setTempSearchQuery("");
     setIsFiltering(false);
   }, [priceRange, filters.viewMode]);
@@ -346,9 +344,9 @@ export default function Catalogue() {
       (filters.searchQuery.trim() ? 1 : 0) +
       (filters.selectedBrands.length > 0 ? 1 : 0) +
       (filters.selectedCategories.length > 0 ? 1 : 0) +
-      (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0)
+      (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 0 ? 1 : 0)
     );
-  }, [filters, priceRange]);
+  }, [filters]);
 
   // Calculate cart count for header
   const cartItemCount = useMemo(() => {
