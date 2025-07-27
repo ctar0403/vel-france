@@ -480,7 +480,7 @@ export default function Catalogue() {
             
             {/* Min Handle */}
             <div 
-              className="absolute w-7 h-7 bg-white border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50"
+              className="absolute w-7 h-7 border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50 bg-[#737373]"
               style={{
                 left: `calc(${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 14px)`,
                 top: '50%',
