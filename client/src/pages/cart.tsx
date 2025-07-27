@@ -283,10 +283,10 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <div className="space-y-6 mb-8">
+                <div className="mb-8">
                   <Link href="/checkout">
                     <Button 
-                      className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
+                      className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden mb-6"
                       disabled={cartItems.length === 0}
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
