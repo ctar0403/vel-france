@@ -344,32 +344,7 @@ export default function Profile() {
                             </div>
                           </div>
                           
-                          {order.shippingAddress && (
-                            <div className="flex items-start space-x-2 text-sm text-gray-600 mb-4">
-                              <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                              <div>
-                                {(() => {
-                                  try {
-                                    const address = typeof order.shippingAddress === 'string' 
-                                      ? JSON.parse(order.shippingAddress) 
-                                      : order.shippingAddress;
-                                    return (
-                                      <div className="space-y-1">
-                                        <p className="font-medium">{address.firstName} {address.lastName}</p>
-                                        <p>{address.street}</p>
-                                        {address.apartment && <p>Apt {address.apartment}</p>}
-                                        <p>{address.city}, {address.state} {address.zipCode}</p>
-                                        <p>{address.country}</p>
-                                        {address.phone && <p className="text-xs">📞 {address.phone}</p>}
-                                      </div>
-                                    );
-                                  } catch (e) {
-                                    return <p>{order.shippingAddress}</p>;
-                                  }
-                                })()}
-                              </div>
-                            </div>
-                          )}
+                          
                           
                           <div className="flex justify-end">
                             <Link href={`/order/${order.orderCode}`}>
