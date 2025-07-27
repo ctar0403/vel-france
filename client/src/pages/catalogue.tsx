@@ -395,9 +395,11 @@ export default function Catalogue() {
     
     setIsLoadingMore(true);
     
-    // Wait 3 seconds before updating count AND hiding loader
+    // Start loading items immediately while showing loader
+    setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
+    
+    // Hide loader after 3 seconds (items have time to render)
     setTimeout(() => {
-      setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
       setIsLoadingMore(false);
     }, 3000);
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
