@@ -326,29 +326,47 @@ export default function Catalogue() {
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
-  const FilterPanel = () => (
-    <div className="space-y-8">
-      {/* Search */}
+  const SearchInput = React.memo(() => {
+    const [localSearchValue, setLocalSearchValue] = useState(tempSearchQuery);
+    
+    useEffect(() => {
+      setLocalSearchValue(tempSearchQuery);
+    }, [tempSearchQuery]);
+
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setLocalSearchValue(value);
+      setTempSearchQuery(value);
+    }, []);
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        updateFilter('searchQuery', localSearchValue);
+      }
+    }, [localSearchValue]);
+
+    const handleClear = useCallback(() => {
+      setLocalSearchValue("");
+      setTempSearchQuery("");
+    }, []);
+
+    return (
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
         <div className="space-y-3">
           <div className="relative">
             <Input
               placeholder="Search products, brands, descriptions..."
-              value={tempSearchQuery}
-              onChange={(e) => setTempSearchQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  updateFilter('searchQuery', tempSearchQuery);
-                }
-              }}
+              value={localSearchValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className="border-gold/20 focus:border-gold pr-8"
             />
-            {tempSearchQuery && (
+            {localSearchValue && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setTempSearchQuery("")}
+                onClick={handleClear}
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
               >
                 <X className="h-3 w-3" />
@@ -357,9 +375,9 @@ export default function Catalogue() {
           </div>
           
           {/* Search Button - always shows if there's text or difference */}
-          {tempSearchQuery.trim() && tempSearchQuery !== filters.searchQuery && (
+          {localSearchValue.trim() && localSearchValue !== filters.searchQuery && (
             <Button 
-              onClick={() => updateFilter('searchQuery', tempSearchQuery)}
+              onClick={() => updateFilter('searchQuery', localSearchValue)}
               className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
             >
               Search
@@ -367,6 +385,13 @@ export default function Catalogue() {
           )}
         </div>
       </div>
+    );
+  });
+
+  const FilterPanel = () => (
+    <div className="space-y-8">
+      {/* Search */}
+      <SearchInput />
 
       {/* Price Range */}
       <div className="space-y-4">
