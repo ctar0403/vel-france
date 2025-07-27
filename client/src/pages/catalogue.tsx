@@ -301,25 +301,26 @@ export default function Catalogue() {
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
   const FilterPanel = () => (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Search */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-navy">Search Products</Label>
+      <div className="space-y-4">
+        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
+            type="text"
             placeholder="Search perfumes, brands..."
             value={filters.searchQuery}
             onChange={(e) => updateFilter('searchQuery', e.target.value)}
-            className="pl-10"
+            className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
           />
         </div>
       </div>
 
       {/* Price Range */}
-      <div className="space-y-3">
-        <Label className="text-sm font-medium text-navy">Price Range</Label>
-        <div className="px-2">
+      <div className="space-y-4">
+        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
+        <div className="px-3 py-2">
           <Slider
             value={filters.priceRange}
             onValueChange={(value) => updateFilter('priceRange', value as [number, number])}
@@ -329,27 +330,28 @@ export default function Catalogue() {
             className="w-full"
           />
         </div>
-        <div className="flex justify-between text-sm text-gray-600">
+        <div className="flex justify-between text-sm font-medium text-gold bg-cream/50 rounded-lg px-3 py-2">
           <span>${filters.priceRange[0]}</span>
           <span>${filters.priceRange[1]}</span>
         </div>
       </div>
 
       {/* Brands */}
-      <div className="space-y-3">
-        <Label className="text-sm font-medium text-navy">Brands</Label>
-        <ScrollArea className="h-48">
-          <div className="space-y-2">
+      <div className="space-y-4">
+        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Brands</h4>
+        <ScrollArea className="h-60 rounded-lg border border-gold/20 bg-white/50 p-3">
+          <div className="space-y-3">
             {availableBrands.map(brand => (
-              <div key={brand} className="flex items-center space-x-2">
+              <div key={brand} className="flex items-center space-x-3 p-2 hover:bg-cream/30 rounded-md transition-colors">
                 <Checkbox
                   id={`brand-${brand}`}
                   checked={filters.selectedBrands.includes(brand)}
                   onCheckedChange={() => toggleBrand(brand)}
+                  className="border-gold data-[state=checked]:bg-gold data-[state=checked]:border-gold"
                 />
                 <Label 
                   htmlFor={`brand-${brand}`}
-                  className="text-sm font-normal cursor-pointer"
+                  className="text-sm font-medium cursor-pointer text-navy flex-1"
                 >
                   {brand}
                 </Label>
@@ -360,19 +362,20 @@ export default function Catalogue() {
       </div>
 
       {/* Categories */}
-      <div className="space-y-3">
-        <Label className="text-sm font-medium text-navy">Categories</Label>
-        <div className="space-y-2">
+      <div className="space-y-4">
+        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Categories</h4>
+        <div className="space-y-3">
           {availableCategories.map(category => (
-            <div key={category} className="flex items-center space-x-2">
+            <div key={category} className="flex items-center space-x-3 p-2 hover:bg-cream/30 rounded-md transition-colors">
               <Checkbox
                 id={`category-${category}`}
                 checked={filters.selectedCategories.includes(category)}
                 onCheckedChange={() => toggleCategory(category)}
+                className="border-gold data-[state=checked]:bg-gold data-[state=checked]:border-gold"
               />
               <Label 
                 htmlFor={`category-${category}`}
-                className="text-sm font-normal cursor-pointer capitalize"
+                className="text-sm font-medium cursor-pointer capitalize text-navy flex-1"
               >
                 {category}
               </Label>
@@ -386,10 +389,10 @@ export default function Catalogue() {
         <Button 
           variant="outline" 
           onClick={clearAllFilters}
-          className="w-full"
+          className="w-full bg-white border-gold text-navy hover:bg-gold hover:text-white transition-all duration-200"
         >
           <X className="h-4 w-4 mr-2" />
-          Clear All Filters
+          Clear All Filters ({activeFiltersCount})
         </Button>
       )}
     </div>
@@ -423,15 +426,17 @@ export default function Catalogue() {
         <div className="flex gap-8">
           {/* Desktop Filters Sidebar */}
           <div className="hidden lg:block w-80 flex-shrink-0">
-            <Card className="sticky top-24">
+            <Card className="sticky top-24 shadow-lg border-gold/20 bg-gradient-to-b from-white to-cream/30">
               <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-navy">Filters</h3>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-navy">Filters</h3>
                   {activeFiltersCount > 0 && (
-                    <Badge variant="secondary">{activeFiltersCount}</Badge>
+                    <Badge className="bg-gold text-navy font-semibold">{activeFiltersCount}</Badge>
                   )}
                 </div>
-                <FilterPanel />
+                <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent">
+                  <FilterPanel />
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -452,10 +457,12 @@ export default function Catalogue() {
                       )}
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-80">
+                  <SheetContent side="left" className="w-80 bg-gradient-to-b from-white to-cream/30">
                     <div className="py-4">
-                      <h3 className="text-lg font-semibold text-navy mb-4">Filters</h3>
-                      <FilterPanel />
+                      <h3 className="text-xl font-bold text-navy mb-6">Filters</h3>
+                      <div className="max-h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent">
+                        <FilterPanel />
+                      </div>
                     </div>
                   </SheetContent>
                 </Sheet>
