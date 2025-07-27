@@ -174,8 +174,6 @@ export default function PaymentSuccess() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="relative z-10 mb-4"
             >
-              
-              
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -185,8 +183,6 @@ export default function PaymentSuccess() {
                 Your exquisite fragrance selection has been 
                 <span className="font-semibold text-navy"> confirmed</span>
               </motion.p>
-              
-              
             </motion.div>
 
             {/* Order Code Section */}
@@ -338,7 +334,7 @@ export default function PaymentSuccess() {
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button 
                     variant="outline" 
-                    className="w-full border-2 border-navy text-navy hover:bg-navy hover:text-white transition-all duration-300 py-3 rounded-xl"
+                    className="w-full border-2 border-navy text-navy hover:bg-navy/10 hover:text-navy transition-all duration-300 py-3 rounded-xl"
                   >
                     <Home className="mr-2 h-5 w-5" />
                     Continue Shopping
