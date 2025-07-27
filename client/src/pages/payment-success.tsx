@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Package, Home, Sparkles, Gift, ShoppingBag, ArrowRight, Copy, Check, Heart, Star } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function PaymentSuccess() {
   const [location] = useLocation();
   const [copied, setCopied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const { user } = useAuth();
   
   // Extract order code from URL - more reliable method
   const orderCode = useMemo(() => {
@@ -328,7 +330,7 @@ export default function PaymentSuccess() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 3.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10"
+              className={`grid gap-4 relative z-10 ${user ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}
             >
               <Link href="/">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -342,17 +344,19 @@ export default function PaymentSuccess() {
                 </motion.div>
               </Link>
               
-              <Link href="/profile">
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 py-3 rounded-xl"
-                  >
-                    <Package className="mr-2 h-5 w-5" />
-                    Order History
-                  </Button>
-                </motion.div>
-              </Link>
+              {user && (
+                <Link href="/profile">
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 py-3 rounded-xl"
+                    >
+                      <Package className="mr-2 h-5 w-5" />
+                      Order History
+                    </Button>
+                  </motion.div>
+                </Link>
+              )}
             </motion.div>
 
             
