@@ -1069,14 +1069,23 @@ export default function Catalogue() {
                     </AnimatePresence>
                   </motion.div>
 
-                  {/* Loading Indicator - Always shows when loading more */}
+                  {/* Professional Loading Indicator */}
                   {isLoadingMore && (
-                    <div className="flex items-center justify-center py-8 mt-6 bg-cream/50 rounded-lg border border-gold/20">
-                      <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 border-3 border-navy/20 border-t-navy rounded-full animate-spin"></div>
-                        <span className="text-navy font-medium text-lg">Loading more products...</span>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="flex items-center justify-center py-12 mt-8"
+                    >
+                      <div className="flex items-center gap-4 bg-white rounded-full shadow-lg px-8 py-4 border border-gray-100">
+                        <div className="relative">
+                          <div className="w-6 h-6 border-2 border-gray-200 rounded-full"></div>
+                          <div className="absolute top-0 left-0 w-6 h-6 border-2 border-navy border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                        <span className="text-navy font-medium text-base">Loading more products...</span>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
                 </>
               )}
