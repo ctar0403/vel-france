@@ -416,11 +416,6 @@ export default function CheckoutPage() {
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
-                        <img 
-                          src={bogLogo} 
-                          alt="Bank of Georgia"
-                          className="w-8 h-8 object-contain mr-4"
-                        />
                         <div>
                           <h3 className="text-lg font-bold text-slate-800">Instant Card Payment</h3>
                           <p className="text-sm text-slate-500">Bank of Georgia iPay</p>
