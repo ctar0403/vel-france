@@ -116,7 +116,6 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                 <div className="relative flex items-center justify-between">
                   <div>
                     <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Shopping Cart</h3>
-                    <p className="text-sm text-navy/60 mt-1">Curated luxury fragrances</p>
                   </div>
                   <Button
                     variant="ghost"
