@@ -32,15 +32,15 @@
   --card-foreground: hsl(217, 30%, 18%);
   --border: hsl(39, 15%, 90%);
   --input: hsl(39, 15%, 90%);
-  --primary: hsl(45, 87%, 55%);
-  --primary-foreground: hsl(217, 30%, 18%);
+  --primary: #002c8c;
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(39, 100%, 97%);
   --secondary-foreground: hsl(217, 30%, 18%);
   --accent: hsl(39, 100%, 97%);
   --accent-foreground: hsl(217, 30%, 18%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(217, 30%, 18%);
+  --ring: #002c8c88;
   --radius: 0.5rem;
   
   /* Custom Vel France colors */
@@ -62,15 +62,15 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(217, 30%, 15%);
   --input: hsl(217, 30%, 15%);
-  --primary: hsl(45, 87%, 55%);
-  --primary-foreground: hsl(217, 30%, 18%);
+  --primary: #002c8c;
+  --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(217, 30%, 15%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --accent: hsl(217, 30%, 15%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
+  --ring: #002c8c88;
 }
 
 @layer base {
@@ -123,6 +123,21 @@
 
 /* Borders */
 .border-gold { border-color: hsl(var(--gold)); }
+
+/* Custom slider and checkbox styling */
+[data-radix-collection-item] {
+  border-color: #002c8c88 !important;
+}
+
+/* Checkbox styling */
+[role="checkbox"] {
+  border-color: #002c8c88 !important;
+}
+
+[role="checkbox"][data-state="checked"] {
+  background-color: #002c8c !important;
+  border-color: #002c8c !important;
+}
 .border-navy { border-color: hsl(var(--navy)); }
 .border-cream { border-color: hsl(var(--cream)); }
 
