@@ -136,9 +136,9 @@ export default function PaymentSuccess() {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.4, type: "spring", stiffness: 150, damping: 10 }}
-              className="relative z-10 mb-4"
+              className="relative z-10 mb-2"
             >
-              <div className="mx-auto w-24 h-24 relative">
+              <div className="mx-auto w-20 h-20 relative">
                 {/* Outer pulse ring */}
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
@@ -155,7 +155,7 @@ export default function PaymentSuccess() {
                 
                 {/* Main icon container */}
                 <div className="absolute inset-4 bg-gradient-to-r from-gold to-deep-gold rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-10 w-10 text-navy" />
+                  <CheckCircle className="h-8 w-8 text-navy" />
                 </div>
               </div>
             </motion.div>
@@ -165,7 +165,7 @@ export default function PaymentSuccess() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="relative z-10 mb-6"
+              className="relative z-10 mb-4"
             >
               <motion.h1
                 initial={{ opacity: 0, scale: 0.9 }}
