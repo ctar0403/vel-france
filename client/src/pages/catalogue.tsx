@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -195,8 +195,12 @@ export default function Catalogue() {
   // Pagination state
   const [displayedCount, setDisplayedCount] = useState(12);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isFiltering, setIsFiltering] = useState(false);
   
   const PRODUCTS_PER_PAGE = 12;
+  
+  // Debounce refs
+  const filterTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Initialize temp search from current filter
   useEffect(() => {
@@ -258,7 +262,20 @@ export default function Catalogue() {
   }, [priceRange]);
 
   const updateFilter = useCallback((key: keyof CatalogueFilters, value: any) => {
+    setIsFiltering(true);
+    
+    // Clear previous timeout
+    if (filterTimeoutRef.current) {
+      clearTimeout(filterTimeoutRef.current);
+    }
+    
+    // Apply filter immediately for instant UI feedback
     setFilters(prev => ({ ...prev, [key]: value }));
+    
+    // Set filtering state to false after a short delay
+    filterTimeoutRef.current = setTimeout(() => {
+      setIsFiltering(false);
+    }, 150);
   }, []);
 
   const toggleBrand = useCallback((brand: string) => {
@@ -279,49 +296,53 @@ export default function Catalogue() {
     }));
   }, []);
 
-  // Filter and sort products
+  // Pre-process products for faster filtering
+  const processedProducts = useMemo(() => {
+    return products.map(product => ({
+      ...product,
+      searchableText: [
+        product.name,
+        product.brand,
+        product.description,
+        product.notes,
+        product.category
+      ].filter(Boolean).join(' ').toLowerCase(),
+      numericPrice: parseFloat(product.price.toString())
+    }));
+  }, [products]);
+
+  // Filter and sort products with optimized performance
   const allFilteredProducts = useMemo(() => {
-    let filtered = products.filter(product => {
-      // Search filter
-      if (filters.searchQuery.trim()) {
-        const searchTerm = filters.searchQuery.toLowerCase();
-        const searchableText = [
-          product.name,
-          product.brand,
-          product.description,
-          product.notes,
-          product.category
-        ].filter(Boolean).join(' ').toLowerCase();
-        
-        if (!searchableText.includes(searchTerm)) {
-          return false;
-        }
-      }
+    let filtered = processedProducts;
 
-      // Price range filter
-      const price = parseFloat(product.price.toString());
-      if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
-        return false;
-      }
+    // Apply filters efficiently
+    if (filters.searchQuery.trim()) {
+      const searchTerm = filters.searchQuery.toLowerCase();
+      filtered = filtered.filter(product => 
+        product.searchableText.includes(searchTerm)
+      );
+    }
 
-      // Brand filter
-      if (filters.selectedBrands.length > 0 && product.brand) {
-        if (!filters.selectedBrands.includes(product.brand)) {
-          return false;
-        }
-      }
+    if (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) {
+      filtered = filtered.filter(product => 
+        product.numericPrice >= filters.priceRange[0] && 
+        product.numericPrice <= filters.priceRange[1]
+      );
+    }
 
-      // Category filter
-      if (filters.selectedCategories.length > 0) {
-        if (!filters.selectedCategories.includes(product.category)) {
-          return false;
-        }
-      }
+    if (filters.selectedBrands.length > 0) {
+      filtered = filtered.filter(product => 
+        product.brand && filters.selectedBrands.includes(product.brand)
+      );
+    }
 
-      return true;
-    });
+    if (filters.selectedCategories.length > 0) {
+      filtered = filtered.filter(product => 
+        filters.selectedCategories.includes(product.category)
+      );
+    }
 
-    // Sort products
+    // Sort products efficiently
     switch (filters.sortBy) {
       case "name-asc":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -330,10 +351,10 @@ export default function Catalogue() {
         filtered.sort((a, b) => b.name.localeCompare(a.name));
         break;
       case "price-asc":
-        filtered.sort((a, b) => parseFloat(a.price.toString()) - parseFloat(b.price.toString()));
+        filtered.sort((a, b) => a.numericPrice - b.numericPrice);
         break;
       case "price-desc":
-        filtered.sort((a, b) => parseFloat(b.price.toString()) - parseFloat(a.price.toString()));
+        filtered.sort((a, b) => b.numericPrice - a.numericPrice);
         break;
       case "brand":
         filtered.sort((a, b) => (a.brand || "").localeCompare(b.brand || ""));
@@ -341,7 +362,7 @@ export default function Catalogue() {
     }
 
     return filtered;
-  }, [products, filters]);
+  }, [processedProducts, filters, priceRange]);
 
   // Get currently displayed products (paginated)
   const displayedProducts = useMemo(() => {
@@ -399,26 +420,44 @@ export default function Catalogue() {
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
-  // Isolated search component outside main render
+  // Isolated search component with debounced search
   const SearchInput = () => {
     const [searchText, setSearchText] = useState("");
+    const searchTimeoutRef = useRef<NodeJS.Timeout>();
     
-    const handleSearch = () => {
+    const handleSearch = useCallback(() => {
       updateFilter('searchQuery', searchText);
       setTempSearchQuery(searchText);
-    };
+    }, [searchText, updateFilter]);
 
-    const handleClear = () => {
+    const handleClear = useCallback(() => {
       setSearchText("");
       updateFilter('searchQuery', "");
       setTempSearchQuery("");
-    };
+    }, [updateFilter]);
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
+        e.preventDefault();
         handleSearch();
       }
     };
+
+    // Debounced search on text change
+    const handleTextChange = useCallback((value: string) => {
+      setSearchText(value);
+      
+      // Clear previous timeout
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+      
+      // Auto-search after 300ms of no typing
+      searchTimeoutRef.current = setTimeout(() => {
+        updateFilter('searchQuery', value);
+        setTempSearchQuery(value);
+      }, 300);
+    }, [updateFilter]);
 
     // Sync only when filter changes externally (like clear all)
     useEffect(() => {
@@ -440,7 +479,7 @@ export default function Catalogue() {
                 type="text"
                 placeholder="Search luxury fragrances, brands, or scent notes..."
                 value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
+                onChange={(e) => handleTextChange(e.target.value)}
                 onKeyDown={handleKeyPress}
                 className="flex h-12 w-full rounded-xl border-2 border-gold/20 bg-gradient-to-r from-white to-cream/20 px-4 py-3 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-12 focus:border-gold focus:bg-white transition-all duration-200 shadow-sm font-medium"
               />
@@ -467,6 +506,12 @@ export default function Catalogue() {
               >
                 Search Fragrances
               </Button>
+            )}
+            
+            {searchText.length > 0 && (
+              <div className="text-xs text-gray-500 mt-2">
+                Auto-searching as you type...
+              </div>
             )}
           </div>
         </div>
@@ -807,8 +852,21 @@ export default function Catalogue() {
                   </SheetContent>
                 </Sheet>
                 
-                <div className="text-sm text-gray-600">
-                  Showing {displayedProducts.length} of {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
+                <div className="text-sm text-gray-600 flex items-center gap-2">
+                  {isFiltering ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-4 h-4 border-2 border-gray-400/30 border-t-gray-600 rounded-full"
+                      />
+                      <span>Filtering...</span>
+                    </>
+                  ) : (
+                    <span>
+                      Showing {displayedProducts.length} of {allFilteredProducts.length} {allFilteredProducts.length === 1 ? 'product' : 'products'}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -924,6 +982,23 @@ export default function Catalogue() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
+              {isFiltering && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center"
+                >
+                  <div className="flex items-center gap-3 bg-white/90 px-6 py-3 rounded-xl shadow-lg">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-5 h-5 border-2 border-gold/30 border-t-gold rounded-full"
+                    />
+                    <span className="text-navy font-medium">Filtering products...</span>
+                  </div>
+                </motion.div>
+              )}
               {allFilteredProducts.length === 0 ? (
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
