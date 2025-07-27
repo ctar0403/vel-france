@@ -388,8 +388,9 @@ export default function Catalogue() {
         <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartOpen(true)} />
         <div className="flex items-center justify-center min-h-[60vh]">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            initial={{ opacity: 0.5, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
             className="w-12 h-12 border-3 border-gold/30 border-t-gold rounded-full"
           />
         </div>

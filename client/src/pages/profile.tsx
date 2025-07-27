@@ -344,8 +344,6 @@ export default function Profile() {
                             </div>
                           </div>
                           
-                          
-                          
                           <div className="flex justify-end">
                             <Link href={`/order/${order.orderCode}`}>
                               <Button variant="outline" size="sm">

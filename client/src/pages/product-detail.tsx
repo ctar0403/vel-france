@@ -134,7 +134,12 @@ function ProductDetailPage() {
       <div className="min-h-screen bg-cream">
         <Header />
         <div className="flex items-center justify-center h-96">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-navy"></div>
+          <motion.div
+            initial={{ opacity: 0.6, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+            className="rounded-full h-32 w-32 border-b-2 border-navy"
+          />
         </div>
         <Footer />
       </div>

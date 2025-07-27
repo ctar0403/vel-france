@@ -108,8 +108,9 @@ export default function OrderPage() {
       <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
         <div className="text-center">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            initial={{ opacity: 0.6 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
             className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full mx-auto mb-4"
           />
           <p className="text-gray-600">Loading order details...</p>
