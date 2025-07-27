@@ -26,7 +26,8 @@ interface CatalogueFilters {
 
 // Premium Product Card Component
 function LuxuryProductCard({ product, index }: { product: Product; index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isCardHovered, setIsCardHovered] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
 
   const addToCartMutation = useMutation({
@@ -70,61 +71,121 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer"
+      onHoverStart={() => setIsCardHovered(true)}
+      onHoverEnd={() => setIsCardHovered(false)}
+      className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-full flex flex-col"
     >
-      <div className="aspect-square relative overflow-hidden">
+      {/* Fixed Height Image Container */}
+      <div className="aspect-square relative overflow-hidden flex-shrink-0">
         <motion.img
           src={product.imageUrl || "/placeholder-perfume.jpg"}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          animate={{ scale: isHovered ? 1.05 : 1 }}
-          transition={{ duration: 0.6 }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          initial={false}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-        />
-        <motion.button
-          onClick={handleAddToCart}
-          disabled={addToCartMutation.isPending}
-          className="absolute bottom-4 right-4 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-50 bg-gradient-to-r from-gold to-gold/80 text-navy hover:from-navy hover:to-navy/90 hover:text-gold border-2 border-transparent hover:border-gold"
-          initial={{ scale: 0, opacity: 0, rotate: -180 }}
+          className="w-full h-full object-cover"
           animate={{ 
-            scale: isHovered ? 1 : 0, 
-            opacity: isHovered ? 1 : 0,
-            rotate: isHovered ? 0 : -180
+            scale: isCardHovered ? 1.1 : 1,
+            filter: isCardHovered ? "brightness(0.8)" : "brightness(1)"
           }}
-          transition={{ 
-            duration: 0.4, 
-            type: "spring", 
-            stiffness: 300, 
-            damping: 20 
-          }}
-          whileHover={{ 
-            scale: 1.15, 
-            rotate: [0, -10, 10, 0],
-            boxShadow: "0 10px 25px rgba(212, 175, 55, 0.4)"
-          }}
-          whileTap={{ 
-            scale: 0.9,
-            boxShadow: "0 5px 15px rgba(212, 175, 55, 0.6)"
-          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+        
+        {/* Elegant overlay gradient */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isCardHovered ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
+        />
+
+        {/* Professional Add to Cart Button */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isCardHovered ? 1 : 0 }}
+          transition={{ duration: 0.3, delay: isCardHovered ? 0.1 : 0 }}
         >
-          <motion.div
-            animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
-            transition={{ duration: 0.8, repeat: addToCartMutation.isPending ? Infinity : 0, ease: "linear" }}
+          <motion.button
+            onClick={handleAddToCart}
+            disabled={addToCartMutation.isPending}
+            onHoverStart={() => setIsButtonHovered(true)}
+            onHoverEnd={() => setIsButtonHovered(false)}
+            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-gold hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            initial={{ scale: 0, y: 20 }}
+            animate={{ 
+              scale: isCardHovered ? 1 : 0,
+              y: isCardHovered ? 0 : 20
+            }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 400, 
+              damping: 25,
+              delay: isCardHovered ? 0.15 : 0
+            }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 8px 32px rgba(212, 175, 55, 0.3)"
+            }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ShoppingCart className="h-5 w-5" />
-          </motion.div>
-        </motion.button>
+            <motion.div className="flex items-center gap-2">
+              <motion.span
+                initial={{ opacity: 1 }}
+                animate={{ 
+                  opacity: isButtonHovered ? 0 : 1,
+                  x: isButtonHovered ? -10 : 0
+                }}
+                transition={{ duration: 0.2 }}
+                className="absolute"
+              >
+                Add to Cart
+              </motion.span>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ 
+                  opacity: isButtonHovered ? 1 : 0,
+                  x: isButtonHovered ? 0 : 10
+                }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2"
+              >
+                <motion.div
+                  animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
+                  transition={{ 
+                    duration: 1, 
+                    repeat: addToCartMutation.isPending ? Infinity : 0, 
+                    ease: "linear" 
+                  }}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                </motion.div>
+                <span>Add to Cart</span>
+              </motion.div>
+            </motion.div>
+          </motion.button>
+        </motion.div>
+
+        {/* Price overlay when hovered */}
+        <motion.div
+          className="absolute top-4 right-4"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ 
+            opacity: isCardHovered ? 1 : 0,
+            scale: isCardHovered ? 1 : 0.8
+          }}
+          transition={{ duration: 0.3, delay: isCardHovered ? 0.2 : 0 }}
+        >
+          <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full border border-gold/30">
+            <span className="text-navy font-bold text-sm">
+              ${parseFloat(product.price.toString()).toFixed(2)}
+            </span>
+          </div>
+        </motion.div>
       </div>
 
-      <div className="p-6 space-y-3">
+      {/* Fixed Height Content Container */}
+      <div className="p-6 flex-grow flex flex-col justify-between min-h-[120px]">
         <motion.h3 
-          className="text-lg font-bold text-navy leading-tight line-clamp-2"
+          className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-auto"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 + 0.2 }}
@@ -132,8 +193,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
           {formatProductName(product.name, product.brand)}
         </motion.h3>
 
-
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-4">
           <motion.span 
             className="text-base font-bold text-gold"
             initial={{ opacity: 0, x: -10 }}
@@ -142,6 +202,18 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
           >
             ${parseFloat(product.price.toString()).toFixed(2)}
           </motion.span>
+          
+          {/* Brand indicator */}
+          {product.brand && (
+            <motion.span 
+              className="text-xs text-gray-500 font-medium uppercase tracking-wider"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 + 0.35 }}
+            >
+              {product.brand}
+            </motion.span>
+          )}
         </div>
       </div>
     </motion.div>
@@ -423,7 +495,7 @@ export default function Catalogue() {
                   <div className="space-y-4">
                     <Slider
                       value={tempPriceRange}
-                      onValueChange={setTempPriceRange}
+                      onValueChange={(value) => setTempPriceRange(value as [number, number])}
                       onValueCommit={(value) => updateFilter('priceRange', value)}
                       max={priceRange[1]}
                       min={priceRange[0]}
