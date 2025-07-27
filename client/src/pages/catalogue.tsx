@@ -166,16 +166,10 @@ export default function Catalogue() {
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
 
-  // Debounced search - automatically apply after user stops typing
+  // Initialize temp search from current filter
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (tempSearchQuery !== filters.searchQuery) {
-        updateFilter('searchQuery', tempSearchQuery);
-      }
-    }, 500); // 500ms delay
-
-    return () => clearTimeout(timer);
-  }, [tempSearchQuery]);
+    setTempSearchQuery(filters.searchQuery);
+  }, [filters.searchQuery]);
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -343,16 +337,18 @@ export default function Catalogue() {
               placeholder="Search products, brands, descriptions..."
               value={tempSearchQuery}
               onChange={(e) => setTempSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  updateFilter('searchQuery', tempSearchQuery);
+                }
+              }}
               className="border-gold/20 focus:border-gold pr-8"
             />
             {tempSearchQuery && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => {
-                  setTempSearchQuery("");
-                  updateFilter('searchQuery', "");
-                }}
+                onClick={() => setTempSearchQuery("")}
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
               >
                 <X className="h-3 w-3" />
@@ -360,9 +356,15 @@ export default function Catalogue() {
             )}
           </div>
           
-          <p className="text-xs text-gray-500">
-            Search automatically applies as you type
-          </p>
+          {/* Search Button - always shows if there's text or difference */}
+          {tempSearchQuery.trim() && tempSearchQuery !== filters.searchQuery && (
+            <Button 
+              onClick={() => updateFilter('searchQuery', tempSearchQuery)}
+              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
+            >
+              Search
+            </Button>
+          )}
         </div>
       </div>
 
