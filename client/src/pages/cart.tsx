@@ -283,7 +283,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8">
+                <div className="space-y-6 mb-8">
                   <Link href="/checkout">
                     <Button 
                       className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
