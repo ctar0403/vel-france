@@ -20,31 +20,15 @@ import type { Product } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Independent Search Input Component with internal state
+// Simple Search Input Component - Direct state management
 const SearchInput = React.memo(({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
-  const [internalValue, setInternalValue] = React.useState(value);
-  
-  // Sync internal value when external value changes (like clear filters)
-  React.useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
-  
-  // Debounced update to parent
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      onChange(internalValue);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, [internalValue, onChange]);
-  
   return (
     <div className="relative">
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
       <Input
         placeholder="Search perfumes, brands..."
-        value={internalValue}
-        onChange={(e) => setInternalValue(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
         autoComplete="off"
       />
@@ -183,6 +167,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
 export default function Catalogue() {
   const [location] = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
     priceRange: [0, 1000],
@@ -194,9 +179,17 @@ export default function Catalogue() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  // Handle search input changes from the SearchInput component
+  // Simple debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFilters(prev => ({ ...prev, searchQuery: searchTerm }));
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Handle search input changes
   const handleSearchInputChange = useCallback((value: string) => {
-    setFilters(prev => ({ ...prev, searchQuery: value }));
+    setSearchTerm(value);
   }, []);
 
   // Parse URL parameters for initial filters
@@ -321,6 +314,7 @@ export default function Catalogue() {
   };
 
   const clearAllFilters = () => {
+    setSearchTerm("");
     setFilters({
       searchQuery: "",
       priceRange: [priceRange[0], priceRange[1]] as [number, number],
@@ -332,7 +326,7 @@ export default function Catalogue() {
   };
 
   const activeFiltersCount = 
-    (filters.searchQuery ? 1 : 0) +
+    (searchTerm ? 1 : 0) +
     (filters.selectedBrands.length > 0 ? 1 : 0) +
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
@@ -342,7 +336,7 @@ export default function Catalogue() {
       {/* Search */}
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
-        <SearchInput value={filters.searchQuery} onChange={handleSearchInputChange} />
+        <SearchInput value={searchTerm} onChange={handleSearchInputChange} />
       </div>
 
       {/* Price Range */}
@@ -541,12 +535,12 @@ export default function Catalogue() {
             {activeFiltersCount > 0 && (
               <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
-                  {filters.searchQuery && (
+                  {searchTerm && (
                     <Badge variant="secondary" className="gap-1">
-                      Search: "{filters.searchQuery}"
+                      Search: "{searchTerm}"
                       <X 
                         className="h-3 w-3 cursor-pointer" 
-                        onClick={() => setFilters(prev => ({ ...prev, searchQuery: '' }))}
+                        onClick={() => setSearchTerm('')}
                       />
                     </Badge>
                   )}
