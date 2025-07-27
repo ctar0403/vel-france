@@ -496,11 +496,7 @@ export default function Catalogue() {
     <div className="min-h-screen bg-cream">
       <Header />
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-navy mb-2">Perfume Catalogue</h1>
-          <p className="text-gray-600">Discover our complete collection of luxury fragrances</p>
-        </div>
+        
 
         <div className="flex gap-8">
           {/* Desktop Filters Sidebar */}
@@ -546,9 +542,7 @@ export default function Catalogue() {
                   </SheetContent>
                 </Sheet>
 
-                <p className="text-sm text-gray-600">
-                  {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
-                </p>
+                
               </div>
 
               <div className="flex items-center gap-4">
