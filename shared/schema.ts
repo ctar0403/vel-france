@@ -43,11 +43,9 @@ export const products = pgTable("products", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description").notNull(),
-  shortDescription: varchar("short_description", { length: 500 }),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
   brand: varchar("brand", { length: 100 }), // brand name
-  notes: text("notes"), // fragrance notes
   imageUrl: text("image_url"),
   inStock: boolean("in_stock").default(true),
   createdAt: timestamp("created_at").defaultNow(),

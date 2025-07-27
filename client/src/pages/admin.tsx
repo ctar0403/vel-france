@@ -413,11 +413,9 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
   const [formData, setFormData] = useState<InsertProduct>({
     name: '',
     description: '',
-    shortDescription: '',
     price: '0.00',
     category: 'unisex',
     brand: '',
-    notes: '',
     imageUrl: '',
     inStock: true,
   });
@@ -506,11 +504,9 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
         setFormData({
           name: product.name || '',
           description: product.description || '',
-          shortDescription: product.shortDescription || '',
           price: product.price || '0.00',
           category: product.category || 'unisex',
           brand: product.brand || '',
-          notes: product.notes || '',
           imageUrl: product.imageUrl || '',
           inStock: product.inStock ?? true,
         });
@@ -519,11 +515,10 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
         setFormData({
           name: '',
           description: '',
-          shortDescription: '',
           price: '0.00',
           category: 'unisex',
           brand: '',
-          notes: '',
+
           imageUrl: '',
           inStock: true,
         });
@@ -615,7 +610,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
               <Label htmlFor="brand">Brand *</Label>
               <Input
                 id="brand"
-                value={formData.brand}
+                value={formData.brand || ''}
                 onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                 placeholder="e.g., Tom Ford"
                 required
@@ -645,7 +640,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
               <div className="flex items-center space-x-2 h-10">
                 <Switch
                   id="inStock"
-                  checked={formData.inStock}
+                  checked={formData.inStock || false}
                   onCheckedChange={(checked) => setFormData({ ...formData, inStock: checked })}
                 />
                 <Label htmlFor="inStock" className="text-sm">
@@ -697,21 +692,10 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
             </p>
           </div>
 
-          {/* Product Descriptions */}
+          {/* Product Description */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="shortDescription">Short Description *</Label>
-              <Input
-                id="shortDescription"
-                value={formData.shortDescription}
-                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-                placeholder="Brief, catchy description for product cards"
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="description">Full Description *</Label>
+              <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
                 value={formData.description}
@@ -719,17 +703,6 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
                 placeholder="Detailed product description, story, and features..."
                 className="min-h-[100px]"
                 required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="notes">Fragrance Notes</Label>
-              <Textarea
-                id="notes"
-                value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                placeholder="Top notes, heart notes, base notes..."
-                className="min-h-[80px]"
               />
             </div>
           </div>

@@ -261,7 +261,6 @@ export default function Catalogue() {
         product.name,
         product.brand,
         product.description,
-        product.notes,
         product.category
       ].filter(Boolean).join(' ').toLowerCase(),
       numericPrice: parseFloat(product.price.toString())

@@ -15,7 +15,7 @@ function ProductDetailPage() {
   const [, params] = useRoute("/product/:id");
   const productId = params?.id;
   const [quantity, setQuantity] = useState(1);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
@@ -109,12 +109,8 @@ function ProductDetailPage() {
     );
   }
 
-  // Mock multiple product images for gallery effect
-  const productImages = [
-    product.imageUrl || "/placeholder-perfume.jpg",
-    product.imageUrl || "/placeholder-perfume.jpg",
-    product.imageUrl || "/placeholder-perfume.jpg"
-  ];
+  // Single product image
+  const productImage = product.imageUrl || "/placeholder-perfume.jpg";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-cream/50">
@@ -122,7 +118,7 @@ function ProductDetailPage() {
 
 
       {/* Main Product Content */}
-      <div className="container mx-auto px-4 py-8 pt-32">
+      <div className="container mx-auto px-4 py-8 pt-20">
         {/* Back Navigation */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -152,35 +148,13 @@ function ProductDetailPage() {
             {/* Main Image */}
             <div className="aspect-square bg-white rounded-3xl border border-gold/20 shadow-2xl overflow-hidden">
               <motion.img
-                key={selectedImageIndex}
-                src={productImages[selectedImageIndex]}
+                src={productImage}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
               />
-            </div>
-
-            {/* Thumbnail Gallery */}
-            <div className="flex gap-4 justify-center">
-              {productImages.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImageIndex(index)}
-                  className={`w-20 h-20 rounded-xl border-2 overflow-hidden transition-all duration-300 ${
-                    selectedImageIndex === index 
-                      ? 'border-gold shadow-lg scale-105' 
-                      : 'border-gray-200 hover:border-gold/50'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`${product.name} view ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
             </div>
           </motion.div>
 
@@ -203,9 +177,7 @@ function ProductDetailPage() {
                       ? `${product.brand} – ${product.name}` 
                       : product.name}
                   </h1>
-                  {product.shortDescription && (
-                    <p className="text-lg text-navy/70 mt-2">{product.shortDescription}</p>
-                  )}
+
                 </div>
                 <Button
                   variant="ghost"
@@ -237,13 +209,6 @@ function ProductDetailPage() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-navy">Description</h3>
               <p className="text-navy/80 leading-relaxed">{product.description}</p>
-              
-              {product.notes && (
-                <div>
-                  <h4 className="text-lg font-semibold text-navy mb-2">Fragrance Notes</h4>
-                  <p className="text-navy/70">{product.notes}</p>
-                </div>
-              )}
             </div>
 
             {/* Quantity & Purchase */}
