@@ -311,16 +311,53 @@ export default function Catalogue() {
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
         <div className="px-3 py-2">
-          <Slider
-            value={tempPriceRange}
-            onValueChange={(value) => {
-              setTempPriceRange(value as [number, number]);
-            }}
-            max={priceRange[1]}
-            min={priceRange[0]}
-            step={1}
-            className="w-full"
-          />
+          <div className="relative w-full h-6 flex items-center">
+            {/* Track */}
+            <div className="absolute w-full h-2 bg-gray-200 rounded-full">
+              {/* Active Range */}
+              <div 
+                className="absolute h-2 bg-gold rounded-full"
+                style={{
+                  left: `${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`,
+                  width: `${((tempPriceRange[1] - tempPriceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`
+                }}
+              />
+            </div>
+            
+            {/* Min Handle */}
+            <input
+              type="range"
+              min={priceRange[0]}
+              max={priceRange[1]}
+              step={1}
+              value={tempPriceRange[0]}
+              onChange={(e) => {
+                const newMin = parseInt(e.target.value);
+                if (newMin <= tempPriceRange[1]) {
+                  setTempPriceRange([newMin, tempPriceRange[1]]);
+                }
+              }}
+              className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer slider-thumb"
+              style={{ zIndex: 2 }}
+            />
+            
+            {/* Max Handle */}
+            <input
+              type="range"
+              min={priceRange[0]}
+              max={priceRange[1]}
+              step={1}
+              value={tempPriceRange[1]}
+              onChange={(e) => {
+                const newMax = parseInt(e.target.value);
+                if (newMax >= tempPriceRange[0]) {
+                  setTempPriceRange([tempPriceRange[0], newMax]);
+                }
+              }}
+              className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer slider-thumb"
+              style={{ zIndex: 1 }}
+            />
+          </div>
         </div>
         <div className="flex justify-between text-sm font-medium text-gold bg-cream/50 rounded-lg px-3 py-2">
           <span>${tempPriceRange[0]}</span>
