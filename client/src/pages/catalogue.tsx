@@ -182,7 +182,7 @@ export default function Catalogue() {
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -205,8 +205,8 @@ export default function Catalogue() {
     const prices = products.map(p => parseFloat(p.price.toString()));
     const range: [number, number] = [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
     
-    // Only set temp price range for slider display, don't auto-apply filters
-    if (tempPriceRange[0] === 0 && tempPriceRange[1] === 0 && range[0] !== 0) {
+    // Set temp price range for slider display (min to max), but keep filters as [0,0] (no filter)
+    if (tempPriceRange[0] === 0 && tempPriceRange[1] === 1000 && range[0] !== 0) {
       setTempPriceRange(range);
     }
     
@@ -333,7 +333,7 @@ export default function Catalogue() {
       sortBy: "name-asc",
       viewMode: filters.viewMode
     });
-    setTempPriceRange(priceRange); // Reset temp to full range for slider
+    setTempPriceRange(priceRange as [number, number]); // Reset temp to full range for slider
     setTempSearchQuery("");
     setIsFiltering(false);
   }, [priceRange, filters.viewMode]);
