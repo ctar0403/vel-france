@@ -295,9 +295,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // BOG Payment with Calculator Results
-  app.post("/api/payments/initiate-with-calculator", requireAuth, async (req: any, res) => {
+  app.post("/api/payments/initiate-with-calculator", async (req: any, res) => {
     try {
-      const userId = (req.session as any).userId;
+      const userId = (req.session as any).userId || null;
       const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod } = req.body;
       
       // Calculate total
@@ -413,9 +413,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Payment initiation route (for card payments only)
-  app.post("/api/payments/initiate", requireAuth, async (req: any, res) => {
+  app.post("/api/payments/initiate", async (req: any, res) => {
     try {
-      const userId = (req.session as any).userId;
+      const userId = (req.session as any).userId || null;
       const { shippingAddress, billingAddress, items, paymentMethod = 'card' } = req.body;
       
       // Calculate total
