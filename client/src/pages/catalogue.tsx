@@ -390,8 +390,10 @@ export default function Catalogue() {
             {searchText.trim() && searchText !== filters.searchQuery && (
               <Button 
                 onClick={handleSearch}
-                className="w-full bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 h-11 rounded-xl"
-              >Search</Button>
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 h-11 rounded-xl"
+              >
+                Search Fragrances
+              </Button>
             )}
           </div>
         </div>
@@ -600,7 +602,7 @@ export default function Catalogue() {
                     <div className="text-xs text-gray-500 mt-1">
                       {category === 'women' ? 'Elegant & Sophisticated' : 
                        category === 'men' ? 'Bold & Distinguished' : 
-                       'Versatile & Timeless'}
+                       ''}
                     </div>
                   </div>
                   <div className="w-3 h-3 rounded-full bg-gradient-to-br from-gold/40 to-gold/60 group-hover:scale-125 transition-transform"></div>
