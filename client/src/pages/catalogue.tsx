@@ -418,29 +418,13 @@ export default function Catalogue() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loadMoreProducts, isLoadingMore, displayedCount, allFilteredProducts.length]);
 
-  // Prevent scrolling when loading more items
+  // Cleanup effect
   useEffect(() => {
-    if (isLoadingMore) {
-      // Store current scroll position
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-    } else {
-      // Restore scroll position
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    }
-    
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      // Cleanup any scroll modifications
+      document.body.style.overflow = '';
     };
-  }, [isLoadingMore]);
+  }, []);
 
   const activeFiltersCount = 
     (filters.searchQuery.trim() ? 1 : 0) +
@@ -1080,14 +1064,14 @@ export default function Catalogue() {
                     </AnimatePresence>
                   </motion.div>
 
-                  {/* Simple Loading Indicator - Only when loading */}
+                  {/* Loading Indicator appears at bottom when triggered */}
                   {isLoadingMore && (
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="flex items-center justify-center py-16"
+                      className="flex items-center justify-center py-8 mt-4"
                     >
                       <div className="flex items-center gap-3">
                         <motion.div
@@ -1102,11 +1086,6 @@ export default function Catalogue() {
                         <span className="text-navy font-medium">Loading more products...</span>
                       </div>
                     </motion.div>
-                  )}
-
-                  {/* Spacer to ensure scroll area when more products available */}
-                  {!isLoadingMore && displayedCount < allFilteredProducts.length && (
-                    <div className="py-16"></div>
                   )}
                 </>
               )}
