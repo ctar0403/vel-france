@@ -15,6 +15,7 @@ import type { CartItem, Product } from "@shared/schema";
 // Payment method logos
 import bogLogo from "@assets/BGEO.L-9c80f039_1753638321901.png";
 import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.png";
+import bogInstallmentLogo from "@assets/unnamed_1753639850039.png";
 import bankLogo from "@assets/Untitled design (29)_1753639145761.png";
 import visaLogo from "@assets/Visa_2021.svg_1753638560432.png";
 import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
@@ -455,22 +456,26 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     onClick={handleInstallmentPayment}
-                    className="w-full h-20 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
+                    className="w-full h-20 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-center relative z-10">
                       <div className="w-14 h-10 bg-white rounded-xl flex items-center justify-center mr-5 shadow-md">
-                        <span className="text-emerald-600 font-bold text-xs tracking-wider">LOAN</span>
+                        <img 
+                          src={bogInstallmentLogo} 
+                          alt="Bank of Georgia"
+                          className="w-8 h-8 object-contain"
+                        />
                       </div>
                       <div className="text-left">
                         <div className="font-semibold text-lg tracking-wide">BOG Installments</div>
-                        <div className="text-sm opacity-90 text-emerald-100">Flexible monthly payment plan</div>
+                        <div className="text-sm opacity-90 text-orange-100">Flexible monthly payment plan</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10">
                       <div className="text-xl font-bold text-white">₾{(total / 12).toFixed(2)}/mo</div>
-                      <div className="text-sm opacity-90 text-emerald-100">12 months available</div>
+                      <div className="text-sm opacity-90 text-orange-100">12 months available</div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
