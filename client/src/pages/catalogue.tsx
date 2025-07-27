@@ -396,6 +396,7 @@ export default function Catalogue() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold text-navy tracking-wide">Discover Perfumes</h4>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#002c8c88] to-transparent ml-4"></div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#002c8c88] shadow-sm">
                   <div className="space-y-4">
