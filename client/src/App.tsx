@@ -37,6 +37,7 @@ function Router() {
       {/* Public routes */}
       <Route path="/" component={Home} />
       <Route path="/catalogue" component={Catalogue} />
+      <Route path="/cart" component={Cart} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminLogin} />
       <Route path="/admin-panel" component={Admin} />
@@ -44,7 +45,6 @@ function Router() {
       {/* Protected routes - only accessible when logged in */}
       {user && (
         <>
-          <Route path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/profile" component={Profile} />
           <Route path="/order/:orderId" component={OrderDetails} />
