@@ -108,14 +108,14 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
             disabled={addToCartMutation.isPending}
             onHoverStart={() => setIsButtonHovered(true)}
             onHoverEnd={() => setIsButtonHovered(false)}
-            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-gold hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="relative bg-white/95 backdrop-blur-sm text-navy px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-gold/30 hover:bg-navy hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
             initial={{ opacity: 0 }}
             animate={{ opacity: isCardHovered ? 1 : 0 }}
             transition={{ duration: 0.15 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div className="flex items-center gap-2">
+            <motion.div className="flex items-center justify-center">
               <motion.span
                 animate={{ 
                   opacity: isButtonHovered ? 0 : 1,
@@ -131,7 +131,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
                   opacity: isButtonHovered ? 1 : 0,
                 }}
                 transition={{ duration: 0.1 }}
-                className="flex items-center gap-2"
+                className="flex items-center justify-center"
               >
                 <motion.div
                   animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
@@ -143,7 +143,6 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
                 >
                   <ShoppingCart className="h-4 w-4" />
                 </motion.div>
-                <span>Add to Cart</span>
               </motion.div>
             </motion.div>
           </motion.button>
