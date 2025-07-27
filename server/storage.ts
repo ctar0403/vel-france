@@ -24,12 +24,11 @@ import {
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
 
-// Generate unique order code
+// Generate unique order code (numbers only)
 function generateOrderCode(): string {
-  const prefix = "VF";
-  const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
-  const random = Math.random().toString(36).substr(2, 4).toUpperCase(); // 4 random chars
-  return `${prefix}${timestamp}${random}`;
+  const timestamp = Date.now().toString().slice(-8); // Last 8 digits of timestamp
+  const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0'); // 4 random digits
+  return `${timestamp}${random}`;
 }
 
 export interface IStorage {
@@ -57,6 +56,7 @@ export interface IStorage {
   // Order operations
   createOrder(order: InsertOrder, orderItems: InsertOrderItem[]): Promise<Order>;
   getOrder(orderId: string): Promise<Order | undefined>;
+  getOrderByCode(orderCode: string): Promise<(Order & { orderItems: (OrderItem & { product: Product })[] }) | null>;
   getOrders(userId: string): Promise<(Order & { orderItems: (OrderItem & { product: Product })[] })[]>;
   getAllOrders(): Promise<(Order & { user: User, orderItems: (OrderItem & { product: Product })[] })[]>;
   updateOrderStatus(orderId: string, status: string, paymentStatus?: string): Promise<Order>;
@@ -282,6 +282,30 @@ export class DatabaseStorage implements IStorage {
   async getOrder(orderId: string): Promise<Order | undefined> {
     const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
     return order;
+  }
+
+  async getOrderByCode(orderCode: string): Promise<(Order & { orderItems: (OrderItem & { product: Product })[] }) | null> {
+    // Only return completed/paid orders
+    const [order] = await db.select().from(orders).where(and(
+      eq(orders.orderCode, orderCode),
+      eq(orders.paymentStatus, 'completed')
+    ));
+    
+    if (!order) return null;
+
+    const items = await db
+      .select()
+      .from(orderItems)
+      .leftJoin(products, eq(orderItems.productId, products.id))
+      .where(eq(orderItems.orderId, order.id));
+
+    return {
+      ...order,
+      orderItems: items.map(item => ({
+        ...item.order_items,
+        product: item.products!
+      }))
+    };
   }
 
   async updateOrderStatus(orderId: string, status: string, paymentStatus?: string): Promise<Order> {

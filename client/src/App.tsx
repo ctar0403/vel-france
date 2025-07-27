@@ -12,6 +12,7 @@ import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import Profile from "@/pages/profile";
 import OrderDetails from "@/pages/order-details";
+import OrderPage from "@/pages/order";
 import Admin from "@/pages/admin";
 import AdminLogin from "@/pages/admin-login";
 import PaymentSuccess from "@/pages/payment-success";
@@ -34,6 +35,9 @@ function Router() {
       {/* Payment routes available to all users */}
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/payment-cancel" component={PaymentCancel} />
+      
+      {/* Public order route for unique URLs */}
+      <Route path="/order/:orderCode" component={OrderPage} />
       
       {/* Public routes */}
       <Route path="/" component={Home} />

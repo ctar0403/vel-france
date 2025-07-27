@@ -666,6 +666,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public order route by order code (for unique URLs)
+  app.get("/api/orders/code/:orderCode", async (req, res) => {
+    try {
+      const orderCode = req.params.orderCode;
+      
+      const order = await storage.getOrderByCode(orderCode);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      console.error("Error fetching order by code:", error);
+      res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
   // Admin order routes
   app.get("/api/admin/orders", requireAdmin, async (req: any, res) => {
     try {

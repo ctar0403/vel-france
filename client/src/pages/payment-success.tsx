@@ -49,6 +49,15 @@ export default function PaymentSuccess() {
             <div className="bg-cream rounded-lg p-4 mb-6">
               <p className="text-sm text-gray-600 mb-1">Order Number</p>
               <p className="font-playfair font-semibold text-navy">{orderCode}</p>
+              <p className="text-xs text-gray-500 mt-2">
+                View your order details: <br />
+                <a 
+                  href={`/order/${orderCode}`}
+                  className="text-gold hover:text-gold/80 underline"
+                >
+                  /order/{orderCode}
+                </a>
+              </p>
             </div>
           )}
         </motion.div>

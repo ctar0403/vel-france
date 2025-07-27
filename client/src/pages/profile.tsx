@@ -324,7 +324,7 @@ export default function Profile() {
                           <div className="flex justify-between items-start mb-4">
                             <div>
                               <h3 className="font-semibold text-lg text-navy">
-                                Order #{order.id.slice(0, 8)}
+                                Order #{order.orderCode}
                               </h3>
                               <p className="text-gray-600">
                                 {new Date(order.createdAt!).toLocaleDateString('en-US', {
@@ -332,6 +332,14 @@ export default function Profile() {
                                   month: 'long',
                                   day: 'numeric'
                                 })}
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                <a 
+                                  href={`/order/${order.orderCode}`}
+                                  className="text-gold hover:text-gold/80 underline"
+                                >
+                                  /order/{order.orderCode}
+                                </a>
                               </p>
                             </div>
                             <div className="text-right">
@@ -356,7 +364,7 @@ export default function Profile() {
                             <p className="text-sm text-gray-600">
                               Order items
                             </p>
-                            <Link href={`/order/${order.id}`}>
+                            <Link href={`/order/${order.orderCode}`}>
                               <Button variant="outline" size="sm">
                                 <Eye className="h-4 w-4 mr-2" />
                                 View Details
