@@ -166,6 +166,17 @@ export default function Catalogue() {
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
 
+  // Debounced search - automatically apply after user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (tempSearchQuery !== filters.searchQuery) {
+        updateFilter('searchQuery', tempSearchQuery);
+      }
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer);
+  }, [tempSearchQuery]);
+
   // Parse URL parameters for initial filters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -338,7 +349,10 @@ export default function Catalogue() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setTempSearchQuery("")}
+                onClick={() => {
+                  setTempSearchQuery("");
+                  updateFilter('searchQuery', "");
+                }}
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
               >
                 <X className="h-3 w-3" />
@@ -346,15 +360,9 @@ export default function Catalogue() {
             )}
           </div>
           
-          {/* Search Button - shows when temp query differs from applied query */}
-          {tempSearchQuery !== filters.searchQuery && (
-            <Button 
-              onClick={() => updateFilter('searchQuery', tempSearchQuery)}
-              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
-            >
-              Search
-            </Button>
-          )}
+          <p className="text-xs text-gray-500">
+            Search automatically applies as you type
+          </p>
         </div>
       </div>
 
