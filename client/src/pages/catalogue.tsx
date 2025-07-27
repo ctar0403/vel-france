@@ -443,21 +443,9 @@ export default function Catalogue() {
       }
     };
 
-    // Debounced search on text change
     const handleTextChange = useCallback((value: string) => {
       setSearchText(value);
-      
-      // Clear previous timeout
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
-      
-      // Auto-search after 300ms of no typing
-      searchTimeoutRef.current = setTimeout(() => {
-        updateFilter('searchQuery', value);
-        setTempSearchQuery(value);
-      }, 300);
-    }, [updateFilter]);
+    }, []);
 
     // Sync only when filter changes externally (like clear all)
     useEffect(() => {
@@ -506,12 +494,6 @@ export default function Catalogue() {
               >
                 Search Fragrances
               </Button>
-            )}
-            
-            {searchText.length > 0 && (
-              <div className="text-xs text-gray-500 mt-2">
-                Auto-searching as you type...
-              </div>
             )}
           </div>
         </div>
