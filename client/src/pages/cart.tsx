@@ -196,7 +196,6 @@ export default function CartPage() {
                           </h3>
                           <div className="flex items-center gap-3">
                             <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
-                            <span className="text-navy/40 text-sm">per bottle</span>
                           </div>
                         </div>
 
@@ -230,7 +229,6 @@ export default function CartPage() {
                           <p className="font-roboto text-xl font-bold text-navy mb-1">
                             ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                           </p>
-                          <p className="text-navy/50 text-xs font-roboto">subtotal</p>
                         </div>
 
                         {/* Refined Remove Button */}
