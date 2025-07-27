@@ -126,7 +126,7 @@ export default function PaymentSuccess() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
-            className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-10 text-center relative overflow-hidden"
+            className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-6 text-center relative overflow-hidden"
           >
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-navy/5 pointer-events-none" />
@@ -136,7 +136,7 @@ export default function PaymentSuccess() {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.4, type: "spring", stiffness: 150, damping: 10 }}
-              className="relative z-10 mb-8"
+              className="relative z-10 mb-4"
             >
               <div className="mx-auto w-24 h-24 relative">
                 {/* Outer pulse ring */}
@@ -165,7 +165,7 @@ export default function PaymentSuccess() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="relative z-10 mb-10"
+              className="relative z-10 mb-6"
             >
               <motion.h1
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -202,7 +202,7 @@ export default function PaymentSuccess() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4, duration: 0.5 }}
-                className="bg-gradient-to-r from-cream/70 to-pastel-pink/40 rounded-2xl p-8 mb-10 relative z-10 border border-gold/30"
+                className="bg-gradient-to-r from-cream/70 to-pastel-pink/40 rounded-2xl p-6 mb-6 relative z-10 border border-gold/30"
               >
                 <motion.div
                   initial={{ scale: 0 }}
@@ -214,7 +214,7 @@ export default function PaymentSuccess() {
                   <p className="text-lg font-medium text-gray-700">Your Order Number</p>
                 </motion.div>
                 
-                <div className="flex items-center justify-center space-x-4 mb-6">
+                <div className="flex items-center justify-center space-x-4 mb-4">
                   <motion.div
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
