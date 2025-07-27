@@ -279,7 +279,6 @@ export default function CheckoutPage() {
             </Link>
             <div className="text-center">
               <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Secure Checkout</h1>
-              <p className="text-navy/60 text-sm mt-1">Complete your luxury fragrance purchase</p>
             </div>
             <div className="w-[160px]"></div> {/* Spacer for centering */}
           </div>
