@@ -186,14 +186,7 @@ export default function PaymentSuccess() {
                 <span className="font-semibold text-navy"> confirmed</span>
               </motion.p>
               
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.5 }}
-                className="text-gray-500 text-lg"
-              >
-                Each bottle will be carefully prepared with French elegance
-              </motion.p>
+              
             </motion.div>
 
             {/* Order Code Section */}
