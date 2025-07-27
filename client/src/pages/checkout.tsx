@@ -413,7 +413,7 @@ export default function CheckoutPage() {
                   {/* Compact Card Payment Button */}
                   <div
                     onClick={handleCardPayment}
-                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-2xl p-6 group relative bg-[#e8e8e8]"
+                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-2xl p-6 group relative bg-[#001f66]"
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
