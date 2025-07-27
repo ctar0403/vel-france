@@ -241,9 +241,6 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   <div className="bg-gradient-to-br from-white to-cream/40 rounded-2xl p-5 border border-gold/20">
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-roboto text-sm text-navy/70">Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                      <span className="font-roboto text-lg font-bold text-navy">
-                        ₾{total.toFixed(2)}
-                      </span>
                     </div>
                     <div className="h-px bg-gradient-to-r from-gold/20 via-gold/40 to-gold/20 my-3"></div>
                     <div className="flex items-center justify-between">
