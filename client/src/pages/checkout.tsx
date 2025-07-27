@@ -23,7 +23,7 @@ import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
 import amexLogo from "@assets/American-Express-Color_1753638617821.png";
 import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.png";
 import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.png";
-import partByPartLogo from "@assets/Untitled design (33)-removebg-preview (1)_1753641682056.png";
+import partByPartLogo from "@assets/Untitled_design__33_-removebg-preview (1)_1753641682056.png";
 
 // Declare BOG global for TypeScript
 declare global {

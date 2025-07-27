@@ -89,7 +89,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(product);
     } catch (error) {
       console.error("Error creating product:", error);
-      res.status(400).json({ message: "Failed to create product", error: error.message });
+      res.status(400).json({ message: "Failed to create product", error: (error as Error).message });
     }
   });
 
@@ -104,7 +104,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(product);
     } catch (error) {
       console.error("Error updating product:", error);
-      res.status(400).json({ message: "Failed to update product", error: error.message });
+      res.status(400).json({ message: "Failed to update product", error: (error as Error).message });
     }
   });
 
@@ -549,11 +549,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Clear user's cart after successful payment
       const order = await storage.getOrder(orderId as string);
-      if (order) {
+      if (order && order.userId) {
         await storage.clearCart(order.userId);
       }
       
-      await storage.updateOrderStatus(orderId as string, orderStatus, paymentStatus);
+      await storage.updateOrderStatus(orderId as string, orderStatus);
       
       // Redirect to success page
       res.redirect(`/?payment=success&orderId=${orderId}`);
