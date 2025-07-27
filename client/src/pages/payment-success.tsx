@@ -345,7 +345,7 @@ export default function PaymentSuccess() {
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button 
                     variant="outline" 
-                    className="w-full border-2 border-navy text-[#ffffff] hover:bg-navy hover:text-white transition-all duration-300 py-3 rounded-xl"
+                    className="w-full border-2 border-navy text-navy hover:bg-navy hover:text-white transition-all duration-300 py-3 rounded-xl"
                   >
                     <Home className="mr-2 h-5 w-5" />
                     Continue Shopping
