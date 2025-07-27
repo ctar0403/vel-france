@@ -115,16 +115,15 @@ function ProductDetailPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-cream/50">
       <Header />
-
-
+      
       {/* Main Product Content */}
-      <div className="container mx-auto px-4 py-8 pt-20">
+      <div className="container mx-auto px-4 py-4">
         {/* Back Navigation */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-4"
         >
           <Button 
             variant="ghost" 
