@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, Filter, X, Grid, List, SlidersHorizontal, ShoppingCart, Plus } from "lucide-react";
+import { Filter, X, Grid, List, SlidersHorizontal, ShoppingCart, Plus } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
@@ -20,24 +20,9 @@ import type { Product } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Fixed Search Input Component that doesn't lose focus
-function SearchInput({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  return (
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-      <Input
-        placeholder="Search perfumes, brands..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
-        autoComplete="off"
-      />
-    </div>
-  );
-}
+
 
 interface CatalogueFilters {
-  searchQuery: string;
   priceRange: [number, number];
   selectedBrands: string[];
   selectedCategories: string[];
@@ -167,9 +152,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
 
 export default function Catalogue() {
   const [location] = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<CatalogueFilters>({
-    searchQuery: "",
     priceRange: [0, 1000],
     selectedBrands: [],
     selectedCategories: [],
@@ -178,19 +161,6 @@ export default function Catalogue() {
   });
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-
-  // Debounced search effect
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setFilters(prev => ({ ...prev, searchQuery: searchTerm }));
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
-
-  // Handle search input changes
-  const handleSearchInputChange = useCallback((value: string) => {
-    setSearchTerm(value);
-  }, []);
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -238,15 +208,6 @@ export default function Catalogue() {
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
-      // Search query filter
-      if (filters.searchQuery) {
-        const query = filters.searchQuery.toLowerCase();
-        const matchesQuery = 
-          product.name.toLowerCase().includes(query) ||
-          product.brand?.toLowerCase().includes(query) ||
-          product.description?.toLowerCase().includes(query);
-        if (!matchesQuery) return false;
-      }
 
       // Price range filter
       const price = parseFloat(product.price.toString());
@@ -314,9 +275,7 @@ export default function Catalogue() {
   };
 
   const clearAllFilters = () => {
-    setSearchTerm("");
     setFilters({
-      searchQuery: "",
       priceRange: [priceRange[0], priceRange[1]] as [number, number],
       selectedBrands: [],
       selectedCategories: [],
@@ -326,18 +285,12 @@ export default function Catalogue() {
   };
 
   const activeFiltersCount = 
-    (searchTerm ? 1 : 0) +
     (filters.selectedBrands.length > 0 ? 1 : 0) +
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
   const FilterPanel = () => (
     <div className="space-y-8">
-      {/* Search */}
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
-        <SearchInput value={searchTerm} onChange={handleSearchInputChange} />
-      </div>
 
       {/* Price Range */}
       <div className="space-y-4">
@@ -535,15 +488,7 @@ export default function Catalogue() {
             {activeFiltersCount > 0 && (
               <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
-                  {searchTerm && (
-                    <Badge variant="secondary" className="gap-1">
-                      Search: "{searchTerm}"
-                      <X 
-                        className="h-3 w-3 cursor-pointer" 
-                        onClick={() => setSearchTerm('')}
-                      />
-                    </Badge>
-                  )}
+
                   {filters.selectedBrands.map(brand => (
                     <Badge key={brand} variant="secondary" className="gap-1">
                       {brand}
@@ -579,10 +524,10 @@ export default function Catalogue() {
             {filteredProducts.length === 0 ? (
               <div className="text-center py-20">
                 <div className="text-gray-400 mb-4">
-                  <Search className="h-16 w-16 mx-auto mb-4" />
+                  <Filter className="h-16 w-16 mx-auto mb-4" />
                 </div>
                 <h3 className="text-xl font-semibold text-navy mb-2">No products found</h3>
-                <p className="text-gray-600 mb-4">Try adjusting your filters or search terms</p>
+                <p className="text-gray-600 mb-4">Try adjusting your filters to see more products</p>
                 <Button onClick={clearAllFilters} variant="outline">
                   Clear All Filters
                 </Button>
