@@ -108,7 +108,11 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
             disabled={addToCartMutation.isPending}
             onHoverStart={() => setIsButtonHovered(true)}
             onHoverEnd={() => setIsButtonHovered(false)}
-            className="relative bg-[#001f66] backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg border border-[#001f66] hover:bg-[#002c8c] hover:text-white transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`relative backdrop-blur-sm px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${
+              isButtonHovered 
+                ? 'bg-[#001f66] text-white border-[#001f66]' 
+                : 'bg-white text-black border-white'
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: isCardHovered ? 1 : 0 }}
             transition={{ duration: 0.15 }}
@@ -141,7 +145,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
                     ease: "linear" 
                   }}
                 >
-                  <ShoppingCart className="h-4 w-4" />
+                  <ShoppingCart className={`h-4 w-4 ${isButtonHovered ? 'text-white' : 'text-black'}`} />
                 </motion.div>
                 <span>Add to Cart</span>
               </motion.div>
