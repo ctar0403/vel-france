@@ -56,43 +56,12 @@ export default function AuthPage() {
     <div className="min-h-screen bg-cream">
       <Header />
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
-          >
-            <h1 className="text-4xl lg:text-5xl font-bold text-navy mb-6">
-              Welcome to Vel France
-            </h1>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Discover our exclusive collection of luxury perfumes crafted with the finest ingredients. 
-              Create your account to enjoy personalized recommendations, exclusive offers, and a 
-              seamless shopping experience.
-            </p>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="bg-white rounded-lg p-4 shadow-md">
-                <div className="text-2xl font-bold text-gold">500+</div>
-                <div className="text-sm text-gray-600">Premium Perfumes</div>
-              </div>
-              <div className="bg-white rounded-lg p-4 shadow-md">
-                <div className="text-2xl font-bold text-gold">50+</div>
-                <div className="text-sm text-gray-600">Luxury Brands</div>
-              </div>
-              <div className="bg-white rounded-lg p-4 shadow-md">
-                <div className="text-2xl font-bold text-gold">24/7</div>
-                <div className="text-sm text-gray-600">Customer Support</div>
-              </div>
-            </div>
-          </motion.div>
-
+        <div className="flex justify-center">
           {/* Auth Forms */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
             <Card className="w-full max-w-md mx-auto shadow-xl">
               <CardHeader className="text-center">
