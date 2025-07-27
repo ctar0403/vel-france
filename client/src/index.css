@@ -138,6 +138,22 @@
   background-color: #002c8c !important;
   border-color: #002c8c !important;
 }
+
+/* Simple fade-in animation for product filtering */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
 .border-navy { border-color: hsl(var(--navy)); }
 .border-cream { border-color: hsl(var(--cream)); }
 

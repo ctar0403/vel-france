@@ -25,7 +25,7 @@ interface CatalogueFilters {
 }
 
 // Premium Product Card Component
-function LuxuryProductCard({ product, index }: { product: Product; index: number }) {
+function LuxuryProductCard({ product }: { product: Product; index?: number }) {
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
@@ -68,12 +68,9 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
       onHoverStart={() => setIsCardHovered(true)}
       onHoverEnd={() => setIsCardHovered(false)}
-      className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-full flex flex-col"
+      className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
     >
       {/* Fixed Height Image Container */}
       <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -156,23 +153,13 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
 
       {/* Fixed Height Content Container */}
       <div className="p-6 flex-grow flex flex-col min-h-[120px]">
-        <motion.h3 
-          className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-3"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.05 + 0.2 }}
-        >
+        <h3 className="text-lg font-bold text-navy leading-tight line-clamp-2 mb-3">
           {formatProductName(product.name, product.brand)}
-        </motion.h3>
+        </h3>
 
-        <motion.span 
-          className="text-base font-bold text-gold"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.05 + 0.3 }}
-        >
+        <span className="text-base font-bold text-gold">
           ${parseFloat(product.price.toString()).toFixed(2)}
-        </motion.span>
+        </span>
       </div>
     </motion.div>
   );
@@ -627,18 +614,9 @@ export default function Catalogue() {
             )}
 
             {/* Products Grid */}
-            <motion.div
-              key="products-container"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div>
               {filteredProducts.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center py-12"
-                >
+                <div className="text-center py-12">
                   <div className="text-gray-400 mb-4">
                     <Filter className="h-12 w-12 mx-auto" />
                   </div>
@@ -649,39 +627,32 @@ export default function Catalogue() {
                       Clear all filters
                     </Button>
                   )}
-                </motion.div>
+                </div>
               ) : (
-                <motion.div
+                <div
                   className={filters.viewMode === 'grid' 
                     ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
                     : "space-y-4"
                   }
-                  layout
                 >
-                  <AnimatePresence mode="popLayout">
-                    {filteredProducts.map((product, index) => (
-                      <motion.div
-                        key={product.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ 
-                          duration: 0.4, 
-                          delay: index * 0.02,
-                          ease: "easeOut"
-                        }}
-                        layout
-                      >
-                        <LuxuryProductCard 
-                          product={product} 
-                          index={index} 
-                        />
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </motion.div>
+                  {filteredProducts.map((product, index) => (
+                    <div
+                      key={product.id}
+                      className="opacity-0 animate-fade-in"
+                      style={{
+                        animationDelay: `${index * 20}ms`,
+                        animationFillMode: 'forwards'
+                      }}
+                    >
+                      <LuxuryProductCard 
+                        product={product} 
+                        index={index} 
+                      />
+                    </div>
+                  ))}
+                </div>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </motion.div>
