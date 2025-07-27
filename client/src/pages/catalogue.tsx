@@ -23,6 +23,7 @@ import Footer from "@/components/Footer";
 
 
 interface CatalogueFilters {
+  searchQuery: string;
   priceRange: [number, number];
   selectedBrands: string[];
   selectedCategories: string[];
@@ -153,6 +154,7 @@ function LuxuryProductCard({ product }: { product: Product }) {
 export default function Catalogue() {
   const [location] = useLocation();
   const [filters, setFilters] = useState<CatalogueFilters>({
+    searchQuery: "",
     priceRange: [0, 1000],
     selectedBrands: [],
     selectedCategories: [],
@@ -162,6 +164,7 @@ export default function Catalogue() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
+  const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
 
   // Parse URL parameters for initial filters
   useEffect(() => {
@@ -221,6 +224,17 @@ export default function Catalogue() {
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
+
+      // Search query filter
+      if (filters.searchQuery.trim()) {
+        const searchLower = filters.searchQuery.toLowerCase();
+        const matchesName = product.name.toLowerCase().includes(searchLower);
+        const matchesBrand = product.brand?.toLowerCase().includes(searchLower);
+        const matchesDescription = product.description?.toLowerCase().includes(searchLower);
+        if (!matchesName && !matchesBrand && !matchesDescription) {
+          return false;
+        }
+      }
 
       // Price range filter
       const price = parseFloat(product.price.toString());
@@ -290,6 +304,7 @@ export default function Catalogue() {
   const clearAllFilters = () => {
     const resetRange = [priceRange[0], priceRange[1]] as [number, number];
     setFilters({
+      searchQuery: "",
       priceRange: resetRange,
       selectedBrands: [],
       selectedCategories: [],
@@ -297,15 +312,51 @@ export default function Catalogue() {
       viewMode: filters.viewMode
     });
     setTempPriceRange(resetRange);
+    setTempSearchQuery("");
   };
 
   const activeFiltersCount = 
+    (filters.searchQuery.trim() ? 1 : 0) +
     (filters.selectedBrands.length > 0 ? 1 : 0) +
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
   const FilterPanel = () => (
     <div className="space-y-8">
+      {/* Search */}
+      <div className="space-y-4">
+        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
+        <div className="space-y-3">
+          <div className="relative">
+            <Input
+              placeholder="Search products, brands, descriptions..."
+              value={tempSearchQuery}
+              onChange={(e) => setTempSearchQuery(e.target.value)}
+              className="border-gold/20 focus:border-gold pr-8"
+            />
+            {tempSearchQuery && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTempSearchQuery("")}
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            )}
+          </div>
+          
+          {/* Search Button - shows when temp query differs from applied query */}
+          {tempSearchQuery !== filters.searchQuery && (
+            <Button 
+              onClick={() => updateFilter('searchQuery', tempSearchQuery)}
+              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
+            >
+              Search
+            </Button>
+          )}
+        </div>
+      </div>
 
       {/* Price Range */}
       <div className="space-y-4">
@@ -586,6 +637,19 @@ export default function Catalogue() {
             {activeFiltersCount > 0 && (
               <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
+                  {/* Search Query Filter */}
+                  {filters.searchQuery.trim() && (
+                    <Badge variant="secondary" className="gap-1">
+                      Search: "{filters.searchQuery}"
+                      <X 
+                        className="h-3 w-3 cursor-pointer" 
+                        onClick={() => {
+                          updateFilter('searchQuery', "");
+                          setTempSearchQuery("");
+                        }}
+                      />
+                    </Badge>
+                  )}
 
                   {filters.selectedBrands.map(brand => (
                     <Badge key={brand} variant="secondary" className="gap-1">
