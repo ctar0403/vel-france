@@ -536,43 +536,9 @@ export default function Catalogue() {
               className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
             >
               <div className="flex flex-col gap-2">
-                <motion.h1 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="text-3xl font-bold text-navy tracking-tight"
-                >
-                  Luxury Perfume Collection
-                </motion.h1>
                 
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-sm text-gray-600 flex items-center gap-2"
-                >
-                  {isFiltering ? (
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="flex items-center gap-2"
-                    >
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-                        className="w-4 h-4 border-2 border-gray-400/30 border-t-gray-600 rounded-full"
-                      />
-                      <span>Filtering...</span>
-                    </motion.div>
-                  ) : (
-                    <motion.span
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
-                    </motion.span>
-                  )}
-                </motion.div>
+                
+                
               </div>
 
               <div className="flex items-center gap-4">
