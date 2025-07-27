@@ -7,7 +7,7 @@ import { Link, useLocation } from "wouter";
 export default function PaymentSuccess() {
   const [location] = useLocation();
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
-  const orderId = urlParams.get('orderId');
+  const orderCode = urlParams.get('orderCode');
 
   useEffect(() => {
     // Clear any cart data from localStorage if needed
@@ -45,10 +45,10 @@ export default function PaymentSuccess() {
             Thank you for your purchase. Your order has been confirmed and will be processed shortly.
           </p>
           
-          {orderId && (
+          {orderCode && (
             <div className="bg-cream rounded-lg p-4 mb-6">
               <p className="text-sm text-gray-600 mb-1">Order Number</p>
-              <p className="font-playfair font-semibold text-navy">#{orderId.slice(-8).toUpperCase()}</p>
+              <p className="font-playfair font-semibold text-navy">{orderCode}</p>
             </div>
           )}
         </motion.div>

@@ -24,6 +24,14 @@ import {
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
 
+// Generate unique order code
+function generateOrderCode(): string {
+  const prefix = "VF";
+  const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
+  const random = Math.random().toString(36).substr(2, 4).toUpperCase(); // 4 random chars
+  return `${prefix}${timestamp}${random}`;
+}
+
 export interface IStorage {
   // User operations
   getUser(id: string): Promise<User | undefined>;
@@ -183,7 +191,24 @@ export class DatabaseStorage implements IStorage {
 
   // Order operations
   async createOrder(order: InsertOrder, orderItemsData: InsertOrderItem[]): Promise<Order> {
-    const [newOrder] = await db.insert(orders).values(order).returning();
+    // Generate unique order code
+    let orderCode = generateOrderCode();
+    
+    // Ensure uniqueness by checking if code already exists
+    let attempts = 0;
+    while (attempts < 10) {
+      const [existingOrder] = await db.select().from(orders).where(eq(orders.orderCode, orderCode));
+      if (!existingOrder) break;
+      orderCode = generateOrderCode();
+      attempts++;
+    }
+    
+    const orderWithCode = {
+      ...order,
+      orderCode
+    };
+    
+    const [newOrder] = await db.insert(orders).values(orderWithCode).returning();
     
     const orderItemsWithOrderId = orderItemsData.map(item => ({
       ...item,
@@ -196,10 +221,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getOrders(userId: string): Promise<(Order & { orderItems: (OrderItem & { product: Product })[] })[]> {
+    // Only return orders with completed payment status (successful orders)
     const userOrders = await db
       .select()
       .from(orders)
-      .where(eq(orders.userId, userId))
+      .where(and(
+        eq(orders.userId, userId),
+        eq(orders.paymentStatus, 'completed')
+      ))
       .orderBy(desc(orders.createdAt));
 
     const result = [];

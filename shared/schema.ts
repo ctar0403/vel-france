@@ -64,6 +64,7 @@ export const cartItems = pgTable("cart_items", {
 // Orders table
 export const orders = pgTable("orders", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  orderCode: varchar("order_code", { length: 20 }).unique().notNull(), // Unique readable order code
   userId: varchar("user_id").references(() => users.id),
   status: varchar("status", { length: 50 }).notNull().default("pending"), // 'pending', 'confirmed', 'shipped', 'delivered'
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
@@ -185,6 +186,7 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
 
 export const insertOrderSchema = createInsertSchema(orders).omit({
   id: true,
+  orderCode: true, // Auto-generated, so exclude from manual insertion
   createdAt: true,
   updatedAt: true,
 });

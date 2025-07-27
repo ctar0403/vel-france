@@ -524,16 +524,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log("BOG Payment callback received:", req.body);
       
-      // BOG will send payment status update here
-      const { order_id, payment_id, status } = req.body;
+      // Handle the actual BOG callback structure
+      const { body } = req.body;
       
-      if (order_id && payment_id && status) {
-        // Update order payment status based on BOG callback
-        const orderStatus = status === 'SUCCESS' ? 'completed' : status === 'FAILED' ? 'cancelled' : 'pending';
-        const paymentStatus = status === 'SUCCESS' ? 'completed' : status === 'FAILED' ? 'failed' : 'pending';
+      if (body && body.external_order_id && body.order_status) {
+        const externalOrderId = body.external_order_id; // This is our order ID
+        const bogOrderId = body.order_id; // BOG's order ID
+        const orderStatus = body.order_status.key; // 'completed', 'failed', etc.
         
-        await storage.updateOrderPayment(order_id, payment_id, paymentStatus);
-        await storage.updateOrderStatus(order_id, orderStatus);
+        // Update order payment status based on BOG callback
+        const mappedOrderStatus = orderStatus === 'completed' ? 'confirmed' : orderStatus === 'failed' ? 'cancelled' : 'pending';
+        const mappedPaymentStatus = orderStatus === 'completed' ? 'completed' : orderStatus === 'failed' ? 'failed' : 'pending';
+        
+        console.log(`Updating order ${externalOrderId} with status: ${mappedOrderStatus}, payment: ${mappedPaymentStatus}`);
+        
+        await storage.updateOrderPayment(externalOrderId, bogOrderId, mappedPaymentStatus);
+        await storage.updateOrderStatus(externalOrderId, mappedOrderStatus, mappedPaymentStatus);
+        
+        // Clear cart after successful payment
+        if (orderStatus === 'completed') {
+          const order = await storage.getOrder(externalOrderId);
+          if (order && order.userId) {
+            await storage.clearCart(order.userId);
+          }
+        }
       }
       
       // Always respond with 200 OK to acknowledge receipt
@@ -567,10 +581,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await storage.clearCart(order.userId);
       }
       
-      await storage.updateOrderStatus(orderId as string, orderStatus);
+      await storage.updateOrderStatus(orderId as string, orderStatus, paymentStatus);
       
-      // Redirect to success page
-      res.redirect(`/?payment=success&orderId=${orderId}`);
+      // Get the updated order to retrieve the order code
+      const updatedOrder = await storage.getOrder(orderId as string);
+      
+      // Redirect to success page with order code
+      res.redirect(`/payment-success?orderCode=${updatedOrder?.orderCode || orderId}`);
     } catch (error) {
       console.error("Error handling payment success:", error);
       res.redirect(`/?payment=error`);
