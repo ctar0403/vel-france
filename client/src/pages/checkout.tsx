@@ -419,7 +419,7 @@ export default function CheckoutPage() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
                         <div>
-                          <h3 className="text-lg font-bold text-slate-800">Instant Card Payment</h3>
+                          <h3 className="text-lg font-bold text-[#ffffff]">Instant Card Payment</h3>
                         </div>
                       </div>
                       <div className="text-right">
