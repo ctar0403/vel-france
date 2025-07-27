@@ -326,58 +326,60 @@ export default function Catalogue() {
     (filters.selectedCategories.length > 0 ? 1 : 0) +
     (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1] ? 1 : 0);
 
-  const SearchInput = React.memo(() => {
-    const [localSearchValue, setLocalSearchValue] = useState(tempSearchQuery);
+  // Isolated search component outside main render
+  const SearchInput = () => {
+    const [searchText, setSearchText] = useState("");
     
-    useEffect(() => {
-      setLocalSearchValue(tempSearchQuery);
-    }, [tempSearchQuery]);
+    const handleSearch = () => {
+      updateFilter('searchQuery', searchText);
+      setTempSearchQuery(searchText);
+    };
 
-    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setLocalSearchValue(value);
-      setTempSearchQuery(value);
-    }, []);
-
-    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        updateFilter('searchQuery', localSearchValue);
-      }
-    }, [localSearchValue]);
-
-    const handleClear = useCallback(() => {
-      setLocalSearchValue("");
+    const handleClear = () => {
+      setSearchText("");
+      updateFilter('searchQuery', "");
       setTempSearchQuery("");
-    }, []);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    };
+
+    // Sync only when filter changes externally (like clear all)
+    useEffect(() => {
+      if (filters.searchQuery === "") {
+        setSearchText("");
+      }
+    }, [filters.searchQuery]);
 
     return (
       <div className="space-y-4">
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
         <div className="space-y-3">
           <div className="relative">
-            <Input
+            <input
+              type="text"
               placeholder="Search products, brands, descriptions..."
-              value={localSearchValue}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              className="border-gold/20 focus:border-gold pr-8"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleKeyPress}
+              className="flex h-10 w-full rounded-md border border-gold/20 bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-8 focus:border-gold"
             />
-            {localSearchValue && (
-              <Button
-                variant="ghost"
-                size="sm"
+            {searchText && (
+              <button
                 onClick={handleClear}
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100 flex items-center justify-center rounded"
               >
                 <X className="h-3 w-3" />
-              </Button>
+              </button>
             )}
           </div>
           
-          {/* Search Button - always shows if there's text or difference */}
-          {localSearchValue.trim() && localSearchValue !== filters.searchQuery && (
+          {searchText.trim() && searchText !== filters.searchQuery && (
             <Button 
-              onClick={() => updateFilter('searchQuery', localSearchValue)}
+              onClick={handleSearch}
               className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
             >
               Search
@@ -386,7 +388,7 @@ export default function Catalogue() {
         </div>
       </div>
     );
-  });
+  };
 
   const FilterPanel = () => (
     <div className="space-y-8">
