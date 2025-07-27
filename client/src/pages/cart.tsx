@@ -92,181 +92,241 @@ export default function CartPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-navy">Loading your cart...</div>
+      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center animate-pulse">
+            <ShoppingBag className="h-8 w-8 text-navy/40" />
+          </div>
+          <p className="font-roboto text-lg text-navy/70 tracking-wide">Loading your collection...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <div className="bg-white border-b border-gold/20">
-        <div className="container mx-auto px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink">
+      {/* Luxury Header */}
+      <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
+        <div className="container mx-auto px-6 py-8 relative">
           <div className="flex items-center justify-between">
-            <Link href="/">
-              <Button variant="ghost" className="text-navy hover:text-gold">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+            <Link href="/catalogue">
+              <Button 
+                variant="ghost" 
+                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-6 py-3 group"
+              >
+                <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
                 Continue Shopping
               </Button>
             </Link>
-            <h1 className="font-playfair text-3xl text-navy">Shopping Cart</h1>
-            <div className="w-[140px]"></div> {/* Spacer for centering */}
+            <div className="text-center">
+              <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Shopping Cart</h1>
+              <p className="text-navy/60 text-sm mt-1">Curated luxury fragrances</p>
+            </div>
+            <div className="w-[180px]"></div> {/* Spacer for centering */}
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-6 py-12">
         {cartItems.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
+            className="text-center py-24"
           >
-            <ShoppingBag className="mx-auto h-16 w-16 text-gold/50 mb-4" />
-            <h2 className="font-playfair text-2xl text-navy mb-2">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Discover our exquisite perfume collection</p>
-            <Link href="/">
-              <Button className="bg-gradient-to-r from-gold to-deep-gold text-navy font-playfair font-semibold hover:shadow-lg transition-all duration-300">
-                Explore Perfumes
+            <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center">
+              <ShoppingBag className="h-16 w-16 text-navy/40" />
+            </div>
+            <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">Your collection awaits</h2>
+            <p className="text-navy/60 text-lg mb-8 max-w-md mx-auto leading-relaxed">
+              Discover our curated selection of luxury fragrances crafted for the discerning connoisseur
+            </p>
+            <Link href="/catalogue">
+              <Button className="bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative flex items-center">
+                  <span className="text-lg">Explore Fragrances</span>
+                  <ArrowLeft className="ml-3 h-5 w-5 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
               </Button>
             </Link>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Cart Items */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg border border-gold/20 p-6">
-                <h2 className="font-playfair text-xl text-navy mb-6">Cart Items ({cartItems.length})</h2>
-                <div className="space-y-6">
-                  {cartItems.map((item: CartItem & { product: Product }) => (
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
+            {/* Luxury Cart Items */}
+            <div className="xl:col-span-2">
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="font-roboto text-2xl font-light text-navy tracking-wide">Your Selection</h2>
+                  <div className="bg-gradient-to-r from-navy/10 to-gold/10 px-4 py-2 rounded-full">
+                    <span className="font-roboto text-sm font-medium text-navy">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</span>
+                  </div>
+                </div>
+                <div className="space-y-8">
+                  {cartItems.map((item: CartItem & { product: Product }, index) => (
                     <motion.div
                       key={item.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="flex items-center space-x-4 pb-6 border-b border-gold/20 last:border-b-0"
+                      transition={{ delay: index * 0.1 }}
+                      className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-2xl border border-gold/20 p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
                     >
-                      {/* Product Image */}
-                      <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-                        {item.product.imageUrl ? (
-                          <img 
-                            src={item.product.imageUrl} 
-                            alt={`${item.product.brand} ${item.product.name}`}
-                            className="w-16 h-16 object-cover rounded"
-                          />
-                        ) : (
-                          <div className="text-center">
-                            <div className="text-2xl mb-1">🍃</div>
-                            <div className="text-xs text-navy">No Image</div>
+                      <div className="flex items-center gap-6">
+                        {/* Luxury Product Image */}
+                        <div className="relative w-24 h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300">
+                          {item.product.imageUrl ? (
+                            <img 
+                              src={item.product.imageUrl} 
+                              alt={`${item.product.brand} ${item.product.name}`}
+                              className="w-20 h-20 object-cover rounded-lg shadow-sm"
+                            />
+                          ) : (
+                            <div className="text-center">
+                              <div className="text-3xl mb-1">🌸</div>
+                              <div className="text-xs text-navy/60 font-roboto">Fragrance</div>
+                            </div>
+                          )}
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
+                        </div>
+
+                        {/* Enhanced Product Details */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
+                            {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
+                          </h3>
+                          <p className="text-navy/60 text-sm font-roboto mb-2 capitalize">{item.product.category}</p>
+                          <div className="flex items-center gap-3">
+                            <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                            <span className="text-navy/40 text-sm">per bottle</span>
                           </div>
-                        )}
-                      </div>
+                        </div>
 
-                      {/* Product Details */}
-                      <div className="flex-1">
-                        <h3 className="font-playfair text-lg text-navy font-semibold">
-                          {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
-                        </h3>
-                        <p className="text-gray-600 text-sm">{item.product.category}</p>
-                        <p className="text-gold font-semibold">€{parseFloat(item.product.price).toFixed(2)}</p>
-                      </div>
+                        {/* Sophisticated Quantity Controls */}
+                        <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
+                            className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <div className="min-w-[3rem] text-center">
+                            <span className="font-roboto font-semibold text-navy text-lg">{item.quantity}</span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            disabled={updateQuantityMutation.isPending}
+                            className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center space-x-2 bg-cream rounded-lg p-2">
+                        {/* Elegant Subtotal */}
+                        <div className="text-right min-w-[100px]">
+                          <p className="font-roboto text-xl font-bold text-navy mb-1">
+                            ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                          </p>
+                          <p className="text-navy/50 text-xs font-roboto">subtotal</p>
+                        </div>
+
+                        {/* Refined Remove Button */}
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
-                          className="h-8 w-8 p-0 text-navy hover:bg-gold/20"
+                          onClick={() => removeItem(item.id)}
+                          disabled={removeItemMutation.isPending}
+                          className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
                         >
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                        <span className="min-w-[2rem] text-center font-semibold text-navy">{item.quantity}</span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          disabled={updateQuantityMutation.isPending}
-                          className="h-8 w-8 p-0 text-navy hover:bg-gold/20"
-                        >
-                          <Plus className="h-4 w-4" />
+                          <Trash2 className="h-5 w-5" />
                         </Button>
                       </div>
-
-                      {/* Subtotal */}
-                      <div className="text-right min-w-[80px]">
-                        <p className="font-playfair font-semibold text-navy">
-                          €{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
-                        </p>
-                      </div>
-
-                      {/* Remove Button */}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeItem(item.id)}
-                        disabled={removeItemMutation.isPending}
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      
+                      {/* Subtle bottom accent */}
+                      <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
                     </motion.div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Order Summary */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg border border-gold/20 p-6 sticky top-8">
-                <h2 className="font-playfair text-xl text-navy mb-6">Order Summary</h2>
+            {/* Sophisticated Order Summary */}
+            <div className="xl:col-span-1">
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8 sticky top-8">
+                <div className="text-center mb-8">
+                  <h2 className="font-roboto text-2xl font-light text-navy tracking-wide mb-2">Order Summary</h2>
+                  <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
+                </div>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Subtotal ({cartItems.length} items)</span>
-                    <span className="text-navy">€{total.toFixed(2)}</span>
+                <div className="space-y-6 mb-8">
+                  <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl p-4 border border-gold/20">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-navy/70 font-roboto text-sm">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                      <span className="text-navy font-roboto font-semibold">₾{total.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-navy/70 font-roboto text-sm">Shipping</span>
+                      <span className="text-emerald-600 font-roboto font-medium">Free</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-navy/70 font-roboto text-sm">VAT included</span>
+                      <span className="text-navy/70 font-roboto text-sm">₾0.00</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Shipping</span>
-                    <span className="text-green-600">Free</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Tax</span>
-                    <span className="text-navy">€0.00</span>
-                  </div>
-                  <div className="border-t border-gold/20 pt-4">
-                    <div className="flex justify-between">
-                      <span className="font-playfair text-lg font-semibold text-navy">Total</span>
-                      <span className="font-playfair text-lg font-semibold text-navy">€{total.toFixed(2)}</span>
+                  
+                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-5 border border-gold/30">
+                    <div className="flex justify-between items-center">
+                      <span className="font-roboto text-lg font-medium text-navy">Total</span>
+                      <span className="font-roboto text-2xl font-bold text-gold">₾{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
-                <Link href="/checkout">
-                  <Button 
-                    className="w-full bg-gradient-to-r from-gold to-deep-gold text-navy font-playfair font-semibold hover:shadow-lg transition-all duration-300 mb-4"
-                    disabled={cartItems.length === 0}
-                  >
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+                <div className="space-y-4 mb-8">
+                  <Link href="/checkout">
+                    <Button 
+                      className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
+                      disabled={cartItems.length === 0}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative flex items-center justify-center">
+                        <CreditCard className="mr-3 h-6 w-6 group-hover:rotate-3 transition-transform duration-300" />
+                        <span className="text-lg">Proceed to Checkout</span>
+                      </div>
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
+                    </Button>
+                  </Link>
 
-                <Link href="/">
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-navy text-navy hover:bg-navy hover:text-white"
-                  >
-                    Continue Shopping
-                  </Button>
-                </Link>
+                  <Link href="/catalogue">
+                    <Button 
+                      variant="outline" 
+                      className="w-full h-12 border-2 border-navy/20 text-navy hover:border-navy hover:bg-navy/5 hover:text-navy font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl group relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative flex items-center justify-center">
+                        <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                        <span>Continue Shopping</span>
+                      </div>
+                    </Button>
+                  </Link>
+                </div>
 
-                {/* Security Badge */}
-                <div className="mt-6 bg-pastel-pink/20 p-4 rounded-lg border border-gold/20">
+                {/* Enhanced Security Badge */}
+                <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl p-5 border border-emerald-200/50">
                   <div className="text-center">
-                    <p className="text-xs text-gray-600">Secure checkout powered by</p>
-                    <p className="font-semibold text-navy">Bank of Georgia</p>
+                    <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                      <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      </div>
+                    </div>
+                    <p className="font-roboto text-xs text-navy/60 mb-1">Secure checkout powered by</p>
+                    <p className="font-roboto font-semibold text-navy">Bank of Georgia</p>
+                    <p className="font-roboto text-xs text-navy/50 mt-1">256-bit SSL encryption</p>
                   </div>
                 </div>
               </div>
