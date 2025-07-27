@@ -395,11 +395,11 @@ export default function Catalogue() {
     
     setIsLoadingMore(true);
     
-    // Fast loading for better performance
-    setTimeout(() => {
+    // Instant loading with minimal delay for UI feedback
+    requestAnimationFrame(() => {
       setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, allFilteredProducts.length));
       setIsLoadingMore(false);
-    }, 200);
+    });
   }, [displayedCount, allFilteredProducts.length, isLoadingMore]);
 
   // Infinite scroll hook with balanced loading trigger
