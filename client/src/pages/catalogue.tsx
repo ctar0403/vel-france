@@ -312,8 +312,10 @@ export default function Catalogue() {
         <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
         <div className="px-3 py-2">
           <div 
-            className="relative w-full h-6 flex items-center cursor-pointer"
+            className="relative w-full h-6 flex items-center cursor-pointer select-none"
             onMouseDown={(e) => {
+              e.preventDefault(); // Prevent text selection
+              
               const rect = e.currentTarget.getBoundingClientRect();
               const totalWidth = rect.width;
               const clickX = e.clientX - rect.left;
@@ -329,6 +331,7 @@ export default function Catalogue() {
               
               const handleMouseMove = (e: MouseEvent) => {
                 if (!isDragging) return;
+                e.preventDefault(); // Prevent text selection during drag
                 
                 const newX = e.clientX - rect.left;
                 const newPercent = Math.max(0, Math.min(1, newX / totalWidth));
@@ -341,12 +344,20 @@ export default function Catalogue() {
                 }
               };
               
-              const handleMouseUp = () => {
+              const handleMouseUp = (e: MouseEvent) => {
+                e.preventDefault();
                 isDragging = false;
                 document.removeEventListener('mousemove', handleMouseMove);
                 document.removeEventListener('mouseup', handleMouseUp);
+                document.removeEventListener('selectstart', preventSelect);
+                document.body.style.userSelect = ''; // Re-enable text selection
               };
               
+              const preventSelect = (e: Event) => e.preventDefault();
+              
+              // Disable text selection during drag
+              document.body.style.userSelect = 'none';
+              document.addEventListener('selectstart', preventSelect);
               document.addEventListener('mousemove', handleMouseMove);
               document.addEventListener('mouseup', handleMouseUp);
             }}
