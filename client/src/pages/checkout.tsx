@@ -461,13 +461,11 @@ export default function CheckoutPage() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-center relative z-10">
-                      <div className="w-14 h-10 bg-white rounded-xl flex items-center justify-center mr-5 shadow-md">
-                        <img 
-                          src={bogInstallmentLogo} 
-                          alt="Bank of Georgia"
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
+                      <img 
+                        src={bogInstallmentLogo} 
+                        alt="Bank of Georgia"
+                        className="w-12 h-12 object-contain mr-5"
+                      />
                       <div className="text-left">
                         <div className="font-semibold text-lg tracking-wide">BOG Installments</div>
                         <div className="text-sm opacity-90 text-orange-100">Flexible monthly payment plan</div>
