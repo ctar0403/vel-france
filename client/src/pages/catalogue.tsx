@@ -355,52 +355,68 @@ export default function Catalogue() {
     }, [filters.searchQuery]);
 
     return (
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Search</h4>
-        <div className="space-y-3">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search products, brands, descriptions..."
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={handleKeyPress}
-              className="flex h-10 w-full rounded-md border border-gold/20 bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-8 focus:border-gold"
-            />
-            {searchText && (
-              <button
-                onClick={handleClear}
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100 flex items-center justify-center rounded"
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Discover Perfumes</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <div className="space-y-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search luxury fragrances, brands, or scent notes..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={handleKeyPress}
+                className="flex h-12 w-full rounded-xl border-2 border-gold/20 bg-gradient-to-r from-white to-cream/20 px-4 py-3 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-12 focus:border-gold focus:bg-white transition-all duration-200 shadow-sm font-medium"
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                {searchText && (
+                  <button
+                    onClick={handleClear}
+                    className="h-7 w-7 p-0 hover:bg-gold/10 flex items-center justify-center rounded-full transition-all duration-200 group"
+                  >
+                    <X className="h-4 w-4 text-gray-400 group-hover:text-gold" />
+                  </button>
+                )}
+                <div className="w-px h-6 bg-gold/20"></div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-gold/20 to-gold/30 flex items-center justify-center">
+                  <Filter className="h-3 w-3 text-gold" />
+                </div>
+              </div>
+            </div>
+            
+            {searchText.trim() && searchText !== filters.searchQuery && (
+              <Button 
+                onClick={handleSearch}
+                className="w-full bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 h-11 rounded-xl"
               >
-                <X className="h-3 w-3" />
-              </button>
+                Search Fragrances
+              </Button>
             )}
           </div>
-          
-          {searchText.trim() && searchText !== filters.searchQuery && (
-            <Button 
-              onClick={handleSearch}
-              className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold"
-            >
-              Search
-            </Button>
-          )}
         </div>
       </div>
     );
   };
 
   const FilterPanel = () => (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Search */}
-      <SearchInput />
+      <div className="relative">
+        <SearchInput />
+      </div>
 
       {/* Price Range */}
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Price Range</h4>
-        <div className="px-3 py-2">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Price Range</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-r from-cream/30 to-white/50 rounded-xl p-6 border border-gold/10 shadow-sm">
           <div 
-            className="relative w-full h-6 flex items-center cursor-pointer select-none"
+            className="relative w-full h-8 flex items-center cursor-pointer select-none"
             onMouseDown={(e) => {
               e.preventDefault(); // Prevent text selection
               
@@ -451,10 +467,10 @@ export default function Catalogue() {
             }}
           >
             {/* Track */}
-            <div className="absolute w-full h-2 bg-gray-200 rounded-full">
+            <div className="absolute w-full h-3 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-full shadow-inner">
               {/* Active Range */}
               <div 
-                className="absolute h-2 bg-gold rounded-full"
+                className="absolute h-3 bg-gradient-to-r from-gold/90 via-gold to-gold/90 rounded-full shadow-lg"
                 style={{
                   left: `${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`,
                   width: `${((tempPriceRange[1] - tempPriceRange[0]) / (priceRange[1] - priceRange[0])) * 100}%`
@@ -464,30 +480,41 @@ export default function Catalogue() {
             
             {/* Min Handle */}
             <div 
-              className="absolute w-5 h-5 bg-gold border-2 border-white rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"
+              className="absolute w-7 h-7 bg-white border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50"
               style={{
-                left: `calc(${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 10px)`,
+                left: `calc(${((tempPriceRange[0] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 14px)`,
                 top: '50%',
                 transform: 'translateY(-50%)',
                 zIndex: 2
               }}
-            />
+            >
+              <div className="absolute inset-1 bg-gold/20 rounded-full"></div>
+            </div>
             
             {/* Max Handle */}
             <div 
-              className="absolute w-5 h-5 bg-gold border-2 border-white rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"
+              className="absolute w-7 h-7 bg-white border-3 border-gold rounded-full shadow-xl cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-200 ring-2 ring-white/50"
               style={{
-                left: `calc(${((tempPriceRange[1] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 10px)`,
+                left: `calc(${((tempPriceRange[1] - priceRange[0]) / (priceRange[1] - priceRange[0])) * 100}% - 14px)`,
                 top: '50%',
                 transform: 'translateY(-50%)',
                 zIndex: 1
               }}
-            />
+            >
+              <div className="absolute inset-1 bg-gold/20 rounded-full"></div>
+            </div>
           </div>
         </div>
-        <div className="flex justify-between text-sm font-medium text-gold bg-cream/50 rounded-lg px-3 py-2">
-          <span>${tempPriceRange[0]}</span>
-          <span>${tempPriceRange[1]}</span>
+        <div className="flex justify-between items-center bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl px-4 py-3 border border-gold/10">
+          <div className="text-center">
+            <div className="text-xs text-gray-500 font-medium">FROM</div>
+            <div className="text-lg font-bold text-navy">${tempPriceRange[0]}</div>
+          </div>
+          <div className="w-px h-8 bg-gradient-to-b from-transparent via-gold/40 to-transparent"></div>
+          <div className="text-center">
+            <div className="text-xs text-gray-500 font-medium">TO</div>
+            <div className="text-lg font-bold text-navy">${tempPriceRange[1]}</div>
+          </div>
         </div>
         
         {/* Filter Button - shows when temp range differs from applied range */}
@@ -504,63 +531,100 @@ export default function Catalogue() {
       </div>
 
       {/* Brands */}
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Brands</h4>
-        <ScrollArea className="h-60 rounded-lg border border-gold/20 bg-white/50 p-3">
-          <div className="space-y-3">
-            {availableBrands.map(brand => (
-              <div key={brand} className="flex items-center space-x-3 p-2 hover:bg-cream/30 rounded-md transition-colors">
-                <Checkbox
-                  id={`brand-${brand}`}
-                  checked={filters.selectedBrands.includes(brand)}
-                  onCheckedChange={() => toggleBrand(brand)}
-                  className="border-gold data-[state=checked]:bg-gold data-[state=checked]:border-gold"
-                />
-                <Label 
-                  htmlFor={`brand-${brand}`}
-                  className="text-sm font-medium cursor-pointer text-navy flex-1"
-                >
-                  {brand}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Luxury Brands</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <ScrollArea className="h-72 pr-3">
+            <div className="space-y-3">
+              {availableBrands.map(brand => (
+                <div key={brand} className="group">
+                  <div className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gold/5 transition-all duration-200 cursor-pointer border border-transparent hover:border-gold/20"
+                       onClick={() => toggleBrand(brand)}>
+                    <div className="relative">
+                      <Checkbox
+                        id={`brand-${brand}`}
+                        checked={filters.selectedBrands.includes(brand)}
+                        onCheckedChange={() => toggleBrand(brand)}
+                        className="data-[state=checked]:bg-gold data-[state=checked]:border-gold border-2 border-gold/30 rounded-md w-5 h-5"
+                      />
+                      {filters.selectedBrands.includes(brand) && (
+                        <div className="absolute inset-0 bg-gold/20 rounded-md animate-pulse"></div>
+                      )}
+                    </div>
+                    <Label
+                      htmlFor={`brand-${brand}`}
+                      className="flex-1 font-medium text-navy group-hover:text-gold transition-colors cursor-pointer"
+                    >
+                      {brand}
+                    </Label>
+                    <div className="w-2 h-2 rounded-full bg-gold/20 group-hover:bg-gold/40 transition-colors"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
       </div>
 
       {/* Categories */}
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-navy border-b border-gold/20 pb-2">Categories</h4>
-        <div className="space-y-3">
-          {availableCategories.map(category => (
-            <div key={category} className="flex items-center space-x-3 p-2 hover:bg-cream/30 rounded-md transition-colors">
-              <Checkbox
-                id={`category-${category}`}
-                checked={filters.selectedCategories.includes(category)}
-                onCheckedChange={() => toggleCategory(category)}
-                className="border-gold data-[state=checked]:bg-gold data-[state=checked]:border-gold"
-              />
-              <Label 
-                htmlFor={`category-${category}`}
-                className="text-sm font-medium cursor-pointer capitalize text-navy flex-1"
-              >
-                {category}
-              </Label>
-            </div>
-          ))}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg font-bold text-navy tracking-wide">Collections</h4>
+          <div className="h-px flex-1 bg-gradient-to-r from-gold/40 to-transparent ml-4"></div>
+        </div>
+        <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-gold/10 shadow-sm">
+          <div className="space-y-4">
+            {availableCategories.map(category => (
+              <div key={category} className="group">
+                <div className="flex items-center space-x-4 p-4 rounded-xl bg-gradient-to-r from-transparent to-gold/5 hover:from-gold/5 hover:to-gold/10 transition-all duration-200 cursor-pointer border border-transparent hover:border-gold/20"
+                     onClick={() => toggleCategory(category)}>
+                  <div className="relative">
+                    <Checkbox
+                      id={`category-${category}`}
+                      checked={filters.selectedCategories.includes(category)}
+                      onCheckedChange={() => toggleCategory(category)}
+                      className="data-[state=checked]:bg-gold data-[state=checked]:border-gold border-2 border-gold/30 rounded-md w-5 h-5"
+                    />
+                    {filters.selectedCategories.includes(category) && (
+                      <div className="absolute inset-0 bg-gold/20 rounded-md animate-pulse"></div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <Label
+                      htmlFor={`category-${category}`}
+                      className="font-semibold text-navy group-hover:text-gold transition-colors capitalize text-lg cursor-pointer block"
+                    >
+                      {category}
+                    </Label>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {category === 'women' ? 'Elegant & Sophisticated' : 
+                       category === 'men' ? 'Bold & Distinguished' : 
+                       'Versatile & Timeless'}
+                    </div>
+                  </div>
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-gold/40 to-gold/60 group-hover:scale-125 transition-transform"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Clear Filters */}
       {activeFiltersCount > 0 && (
-        <Button 
-          variant="outline" 
-          onClick={clearAllFilters}
-          className="w-full bg-white border-gold text-navy hover:bg-gold hover:text-white transition-all duration-200"
-        >
-          <X className="h-4 w-4 mr-2" />
-          Clear All Filters ({activeFiltersCount})
-        </Button>
+        <div className="pt-4 border-t border-gold/20">
+          <Button 
+            variant="outline" 
+            onClick={clearAllFilters}
+            className="w-full bg-gradient-to-r from-white to-cream/50 border-2 border-gold/30 text-navy hover:bg-gradient-to-r hover:from-gold hover:to-gold/90 hover:text-white hover:border-gold transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear All Filters ({activeFiltersCount})
+          </Button>
+        </div>
       )}
     </div>
   );
