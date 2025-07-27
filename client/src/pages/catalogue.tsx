@@ -90,17 +90,35 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
         <motion.button
           onClick={handleAddToCart}
           disabled={addToCartMutation.isPending}
-          className="absolute bottom-4 right-4 bg-gold text-navy p-3 rounded-full shadow-lg hover:bg-gold/90 transition-all duration-200 opacity-0 group-hover:opacity-100 disabled:opacity-50"
-          initial={{ scale: 0, opacity: 0 }}
+          className="absolute bottom-4 right-4 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-50 bg-gradient-to-r from-gold to-gold/80 text-navy hover:from-navy hover:to-navy/90 hover:text-gold border-2 border-transparent hover:border-gold"
+          initial={{ scale: 0, opacity: 0, rotate: -180 }}
           animate={{ 
             scale: isHovered ? 1 : 0, 
-            opacity: isHovered ? 1 : 0 
+            opacity: isHovered ? 1 : 0,
+            rotate: isHovered ? 0 : -180
           }}
-          transition={{ duration: 0.3 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+          transition={{ 
+            duration: 0.4, 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 20 
+          }}
+          whileHover={{ 
+            scale: 1.15, 
+            rotate: [0, -10, 10, 0],
+            boxShadow: "0 10px 25px rgba(212, 175, 55, 0.4)"
+          }}
+          whileTap={{ 
+            scale: 0.9,
+            boxShadow: "0 5px 15px rgba(212, 175, 55, 0.6)"
+          }}
         >
-          <ShoppingCart className="h-5 w-5" />
+          <motion.div
+            animate={addToCartMutation.isPending ? { rotate: 360 } : {}}
+            transition={{ duration: 0.8, repeat: addToCartMutation.isPending ? Infinity : 0, ease: "linear" }}
+          >
+            <ShoppingCart className="h-5 w-5" />
+          </motion.div>
         </motion.button>
       </div>
 
@@ -113,17 +131,7 @@ function LuxuryProductCard({ product, index }: { product: Product; index: number
         >
           {formatProductName(product.name, product.brand)}
         </motion.h3>
-        
-        {product.description && (
-          <motion.p 
-            className="text-sm text-gray-600 line-clamp-2"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 + 0.25 }}
-          >
-            {product.description}
-          </motion.p>
-        )}
+
 
         <div className="flex items-center justify-between">
           <motion.span 
@@ -146,7 +154,7 @@ export default function Catalogue() {
   // Filter state
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
-    priceRange: [0, 1000],
+    priceRange: [0, 0], // Start with no price filter
     selectedBrands: [],
     selectedCategories: [],
     sortBy: "name-asc",
@@ -154,7 +162,7 @@ export default function Catalogue() {
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
   const [isFiltering, setIsFiltering] = useState(false);
 
   // Load products
@@ -168,8 +176,16 @@ export default function Catalogue() {
   const priceRange = useMemo(() => {
     if (products.length === 0) return [0, 1000];
     const prices = products.map(p => parseFloat(p.price.toString()));
-    return [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
-  }, [products]);
+    const range: [number, number] = [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
+    
+    // Initialize filters with actual price range on first load
+    if (filters.priceRange[0] === 0 && filters.priceRange[1] === 0 && range[0] !== 0) {
+      setFilters(prev => ({ ...prev, priceRange: range }));
+      setTempPriceRange(range);
+    }
+    
+    return range;
+  }, [products, filters.priceRange]);
 
   // Get unique brands and categories
   const availableBrands = useMemo(() => {
@@ -284,15 +300,16 @@ export default function Catalogue() {
 
   // Clear all filters
   const clearAllFilters = useCallback(() => {
+    const resetRange = priceRange as [number, number];
     setFilters({
       searchQuery: "",
-      priceRange: priceRange as [number, number],
+      priceRange: resetRange,
       selectedBrands: [],
       selectedCategories: [],
       sortBy: "name-asc",
       viewMode: filters.viewMode
     });
-    setTempPriceRange(priceRange as [number, number]);
+    setTempPriceRange(resetRange);
     setTempSearchQuery("");
     setIsFiltering(false);
   }, [priceRange, filters.viewMode]);
