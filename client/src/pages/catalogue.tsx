@@ -590,25 +590,7 @@ export default function Catalogue() {
                   </SelectContent>
                 </Select>
 
-                {/* View Mode Toggle */}
-                <div className="flex border border-blue-500/20 rounded-lg overflow-hidden">
-                  <Button
-                    variant={filters.viewMode === 'grid' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => updateFilter('viewMode', 'grid')}
-                    className={`rounded-none ${filters.viewMode === 'grid' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-500/10'}`}
-                  >
-                    <Grid className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={filters.viewMode === 'list' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => updateFilter('viewMode', 'list')}
-                    className={`rounded-none ${filters.viewMode === 'list' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-500/10'}`}
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                </div>
+                
               </div>
             </motion.div>
 
