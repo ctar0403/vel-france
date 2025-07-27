@@ -46,7 +46,6 @@ function ProductDetailPage() {
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const { toast } = useToast();
 
   // Fetch product data
@@ -109,93 +108,17 @@ function ProductDetailPage() {
   };
 
   const handleInstallmentPayment = () => {
-    if (!product) return;
-    
-    const totalAmount = parseFloat(product.price) * quantity;
-    setIsProcessingPayment(true);
-
-    // Handle adding to cart first
-    addToCartMutation.mutate();
-
-    if (typeof window !== 'undefined' && window.BOG) {
-      window.BOG.Calculator.open({
-        amount: totalAmount,
-        bnpl: false,
-        onClose: () => {
-          setIsProcessingPayment(false);
-        },
-        onRequest: (selected, successCb, closeCb) => {
-          setTimeout(() => {
-            const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-            successCb(orderId);
-            toast({
-              title: "Installment Plan Approved",
-              description: `Your ${selected.month}-month installment plan has been set up.`
-            });
-          }, 2000);
-        },
-        onComplete: (data) => {
-          setIsProcessingPayment(false);
-          toast({
-            title: "Payment Successful",
-            description: "Your installment payment has been processed successfully."
-          });
-          return true;
-        }
-      });
-    } else {
-      toast({
-        title: "Payment Service Unavailable",
-        description: "BOG payment service is currently unavailable. Please try again later.",
-        variant: "destructive"
-      });
-      setIsProcessingPayment(false);
-    }
+    handleAddToCart();
+    setTimeout(() => {
+      window.location.href = "/checkout";
+    }, 500);
   };
 
   const handleBnplPayment = () => {
-    if (!product) return;
-    
-    const totalAmount = parseFloat(product.price) * quantity;
-    setIsProcessingPayment(true);
-
-    // Handle adding to cart first
-    addToCartMutation.mutate();
-
-    if (typeof window !== 'undefined' && window.BOG) {
-      window.BOG.Calculator.open({
-        amount: totalAmount,
-        bnpl: true,
-        onClose: () => {
-          setIsProcessingPayment(false);
-        },
-        onRequest: (selected, successCb, closeCb) => {
-          setTimeout(() => {
-            const orderId = `BNPL-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-            successCb(orderId);
-            toast({
-              title: "Part-by-Part Payment Approved",
-              description: "Your 4-part payment plan has been set up."
-            });
-          }, 2000);
-        },
-        onComplete: (data) => {
-          setIsProcessingPayment(false);
-          toast({
-            title: "Payment Successful",
-            description: "Your part-by-part payment has been processed successfully."
-          });
-          return true;
-        }
-      });
-    } else {
-      toast({
-        title: "Payment Service Unavailable",
-        description: "Part-by-part payment service is currently unavailable. Please try again later.",
-        variant: "destructive"
-      });
-      setIsProcessingPayment(false);
-    }
+    handleAddToCart();
+    setTimeout(() => {
+      window.location.href = "/checkout";
+    }, 500);
   };
 
   const toggleWishlist = () => {
@@ -418,7 +341,7 @@ function ProductDetailPage() {
                     type="button"
                     onClick={handleInstallmentPayment}
                     className="w-full h-16 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-4 group relative overflow-hidden"
-                    disabled={isProcessingPayment || !product.inStock}
+                    disabled={addToCartMutation.isPending || !product.inStock}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-center relative z-10">
@@ -444,7 +367,7 @@ function ProductDetailPage() {
                     type="button"
                     onClick={handleBnplPayment}
                     className="w-full h-16 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-4 group relative overflow-hidden"
-                    disabled={isProcessingPayment || !product.inStock}
+                    disabled={addToCartMutation.isPending || !product.inStock}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-purple-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="flex items-center relative z-10">
@@ -469,20 +392,7 @@ function ProductDetailPage() {
                   <p className="text-red-600 text-center font-medium">Currently out of stock</p>
                 )}
 
-                {/* Processing State */}
-                {isProcessingPayment && (
-                  <div className="bg-gradient-to-r from-gold/10 via-white to-gold/10 rounded-2xl border border-gold/30 shadow-lg p-4">
-                    <div className="flex items-center justify-center">
-                      <div className="w-8 h-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center mr-3 animate-pulse">
-                        <Loader2 className="h-4 w-4 animate-spin text-gold" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-navy font-medium text-sm">Processing Payment Request</p>
-                        <p className="text-navy/60 text-xs">Connecting to Bank of Georgia...</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+
               </div>
             </div>
 
