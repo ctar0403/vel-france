@@ -174,7 +174,7 @@ export default function Catalogue() {
   // Filter state
   const [filters, setFilters] = useState<CatalogueFilters>({
     searchQuery: "",
-    priceRange: [0, 0], // Start with no price filter
+    priceRange: [0, 1000], // Wide range to show all products by default
     selectedBrands: [],
     selectedCategories: [],
     sortBy: "name-asc",
@@ -182,7 +182,7 @@ export default function Catalogue() {
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 1000]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -205,14 +205,14 @@ export default function Catalogue() {
     const prices = products.map(p => parseFloat(p.price.toString()));
     const range: [number, number] = [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
     
-    // Initialize filters with actual price range on first load
-    if (filters.priceRange[0] === 0 && filters.priceRange[1] === 0 && range[0] !== 0) {
+    // Initialize both filter and temp range with actual product price range on first load
+    if (filters.priceRange[0] === 0 && filters.priceRange[1] === 1000 && range[0] !== 0) {
       setFilters(prev => ({ ...prev, priceRange: range }));
       setTempPriceRange(range);
     }
     
     return range;
-  }, [products, filters.priceRange]);
+  }, [products, tempPriceRange]);
 
   // Get unique brands and categories
   const availableBrands = useMemo(() => {
