@@ -411,13 +411,7 @@ function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Share */}
-            <div className="flex items-center gap-4 pt-4">
-              <span className="text-navy/60">Share:</span>
-              <Button variant="ghost" size="icon" className="text-navy/60 hover:text-navy">
-                <Share2 className="w-5 h-5" />
-              </Button>
-            </div>
+            
           </motion.div>
         </div>
       </div>
