@@ -385,21 +385,7 @@ export default function CheckoutPage() {
 
               
 
-              {/* Luxury Security Notice */}
-              <div className="bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl border border-emerald-200 shadow-lg p-6">
-                <div className="flex items-start">
-                  <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full flex items-center justify-center mr-5 flex-shrink-0">
-                    <ShieldCheck className="h-7 w-7 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-roboto text-lg font-semibold text-navy mb-2 tracking-wide">Bank-Grade Security</h4>
-                    <p className="text-navy/70 font-roboto leading-relaxed">
-                      Your payment information is protected by Bank of Georgia's advanced encryption and security protocols. 
-                      All transactions are processed through secure, PCI-compliant channels.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              
 
               {/* Luxury Payment Method Selection */}
               <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
