@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -308,11 +308,11 @@ export default function Catalogue() {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
-            type="text"
             placeholder="Search perfumes, brands..."
             value={filters.searchQuery}
-            onChange={(e) => updateFilter('searchQuery', e.target.value)}
+            onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
             className="pl-10 border-gold/30 focus:border-gold focus:ring-gold/20 bg-white"
+            autoComplete="off"
           />
         </div>
       </div>
