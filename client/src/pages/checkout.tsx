@@ -413,17 +413,17 @@ export default function CheckoutPage() {
                   {/* Compact Card Payment Button */}
                   <div
                     onClick={handleCardPayment}
-                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-2xl p-6 group relative bg-[#001f66]"
+                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-2xl p-6 group relative bg-[#e8e8e8]"
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center">
                         <div>
-                          <h3 className="text-lg font-bold text-[#ffffff]">Instant Card Payment</h3>
+                          <h3 className="text-lg font-bold text-slate-800">Instant Card Payment</h3>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-[#ffffff]">₾{total.toFixed(2)}</div>
+                        <div className="text-2xl font-bold text-slate-800">₾{total.toFixed(2)}</div>
                       </div>
                     </div>
 
