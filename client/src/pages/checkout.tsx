@@ -49,18 +49,7 @@ export default function CheckoutPage() {
     country: "Georgia"
   });
   
-  const [billingForm, setBillingForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "Georgia"
-  });
-
-  const [sameBilling, setSameBilling] = useState(true);
+  
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'installment' | 'bnpl'>('card');
 
   const paymentMutation = useMutation({
@@ -70,7 +59,7 @@ export default function CheckoutPage() {
         quantity: item.quantity
       }));
 
-      const billingAddress = sameBilling ? shippingForm : billingForm;
+      const billingAddress = shippingForm;
 
       // Use different endpoints based on payment method
       if (paymentData.paymentMethod === 'card') {
@@ -142,18 +131,6 @@ export default function CheckoutPage() {
         variant: "destructive",
       });
       return false;
-    }
-
-    if (!sameBilling) {
-      const isBillingValid = requiredFields.every(field => billingForm[field as keyof typeof billingForm]);
-      if (!isBillingValid) {
-        toast({
-          title: "Missing Information", 
-          description: "Please fill in all billing information fields.",
-          variant: "destructive",
-        });
-        return false;
-      }
     }
 
     return true;
@@ -406,111 +383,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Luxury Billing Information */}
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
-                      <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">2</span>
-                      </div>
-                    </div>
-                    <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Billing Information</h3>
-                  </div>
-                  <label className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm rounded-xl px-4 py-3 border border-gold/20 hover:bg-white/80 transition-all duration-300 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={sameBilling}
-                      onChange={(e) => setSameBilling(e.target.checked)}
-                      className="w-5 h-5 text-gold rounded border-2 border-navy/20 focus:ring-gold/30"
-                    />
-                    <span className="font-roboto text-navy/80 tracking-wide">Same as shipping</span>
-                  </label>
-                </div>
-                
-                {!sameBilling && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">First Name *</Label>
-                      <Input
-                        id="billing-firstName"
-                        value={billingForm.firstName}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, firstName: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="Enter first name"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-lastName" className="text-navy/80 font-roboto font-medium tracking-wide">Last Name *</Label>
-                      <Input
-                        id="billing-lastName"
-                        value={billingForm.lastName}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, lastName: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="Enter last name"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email Address *</Label>
-                      <Input
-                        id="billing-email"
-                        type="email"
-                        value={billingForm.email}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, email: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="billing.email@example.com"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone Number *</Label>
-                      <Input
-                        id="billing-phone"
-                        value={billingForm.phone}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, phone: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="+995 XXX XXX XXX"
-                        required
-                      />
-                    </div>
-                    <div className="md:col-span-2 space-y-2">
-                      <Label htmlFor="billing-address" className="text-navy/80 font-roboto font-medium tracking-wide">Street Address *</Label>
-                      <Textarea
-                        id="billing-address"
-                        value={billingForm.address}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, address: e.target.value }))}
-                        className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
-                        placeholder="Enter billing address"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-city" className="text-navy/80 font-roboto font-medium tracking-wide">City *</Label>
-                      <Input
-                        id="billing-city"
-                        value={billingForm.city}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, city: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="Tbilisi"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="billing-postalCode" className="text-navy/80 font-roboto font-medium tracking-wide">Postal Code *</Label>
-                      <Input
-                        id="billing-postalCode"
-                        value={billingForm.postalCode}
-                        onChange={(e) => setBillingForm(prev => ({ ...prev, postalCode: e.target.value }))}
-                        className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                        placeholder="0100"
-                        required
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+              
 
               {/* Luxury Security Notice */}
               <div className="bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl border border-emerald-200 shadow-lg p-6">
@@ -533,7 +406,7 @@ export default function CheckoutPage() {
                 <div className="flex items-center mb-8">
                   <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
                     <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">3</span>
+                      <span className="text-white text-xs font-bold">2</span>
                     </div>
                   </div>
                   <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Choose Payment Method</h3>
@@ -629,21 +502,7 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Luxury Payment Disclaimer */}
-              <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 rounded-3xl border border-blue-200 shadow-lg p-6">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                    <span className="text-blue-600 font-bold text-sm">i</span>
-                  </div>
-                  <div>
-                    <h4 className="font-roboto font-semibold text-navy mb-2 tracking-wide">Payment Information</h4>
-                    <p className="text-navy/70 font-roboto text-sm leading-relaxed">
-                      All payments are processed securely through Bank of Georgia's certified payment infrastructure. 
-                      Installment and Part-by-Part options may require additional verification steps during checkout.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              
             </form>
           </div>
 
