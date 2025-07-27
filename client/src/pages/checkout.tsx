@@ -23,7 +23,7 @@ import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
 import amexLogo from "@assets/American-Express-Color_1753638617821.png";
 import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.png";
 import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.png";
-import partByPartLogo from "@assets/Untitled_design__33_-removebg-preview (1)_1753641682056.png";
+import partByPartLogo from "@assets/Untitled (500 x 200 px)_1753642797466.png";
 
 // Declare BOG global for TypeScript
 declare global {
@@ -504,7 +504,6 @@ export default function CheckoutPage() {
                       <div className="text-xl font-bold text-white">₾{(total / 4).toFixed(2)} × 4</div>
                       <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-60"></div>
                   </Button>
                 </div>
               </div>
