@@ -15,7 +15,7 @@ import type { CartItem, Product } from "@shared/schema";
 // Payment method logos
 import bogLogo from "@assets/BGEO.L-9c80f039_1753638321901.png";
 import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.png";
-import bogInstallmentLogo from "@assets/unnamed_1753639850039.png";
+import bogInstallmentLogo from "@assets/BGEO.L-9c80f039_1753640053849.png";
 import bankLogo from "@assets/Untitled design (29)_1753639145761.png";
 import visaLogo from "@assets/Visa_2021.svg_1753638560432.png";
 import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
