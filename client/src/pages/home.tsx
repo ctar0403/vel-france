@@ -61,7 +61,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
       >
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -86,7 +86,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
 
           {/* Badge */}
           <div className="absolute top-4 left-4">
-            <Badge className={`${badgeColor} text-white font-semibold px-3 py-1 text-sm shadow-lg`}>
+            <Badge className={`${badgeColor} text-white font-semibold px-3 py-1 text-sm`}>
               {badgeText}
             </Badge>
           </div>
@@ -103,7 +103,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
               disabled={isPending}
               onHoverStart={() => setIsButtonHovered(true)}
               onHoverEnd={() => setIsButtonHovered(false)}
-              className={`relative backdrop-blur-sm px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`relative backdrop-blur-sm px-6 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${
                 isButtonHovered 
                   ? 'bg-[#001f66] text-white border-[#001f66]' 
                   : 'bg-white text-black border-white'
@@ -420,12 +420,12 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(3 * 336px)" }}>
+          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 336px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
               onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
               disabled={mostSoldSlide === 0}
             >
@@ -434,13 +434,13 @@ export default function Home() {
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
               onClick={() => {
                 const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 3);
+                const maxSlide = Math.max(0, totalItems - 5);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={products.slice(0, 12).length <= 3 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 3)}
+              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 5)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -556,12 +556,12 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(3 * 336px)" }}>
+          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 336px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
               onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
               disabled={newArrivalsSlide === 0}
             >
@@ -570,13 +570,13 @@ export default function Home() {
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
               onClick={() => {
                 const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 3);
+                const maxSlide = Math.max(0, totalItems - 5);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={products.slice(12, 24).length <= 3 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 3)}
+              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 5)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
