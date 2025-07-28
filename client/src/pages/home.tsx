@@ -420,7 +420,7 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative max-w-7xl mx-auto">
+          <div className="relative w-full mx-auto" style={{ width: "calc(3 * 336px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
@@ -440,13 +440,13 @@ export default function Home() {
                 const maxSlide = Math.max(0, totalItems - 3);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 3)}
+              disabled={products.slice(0, 12).length <= 3 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 3)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden mx-12">
+            <div className="overflow-hidden mx-12 bg-transparent">
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -556,7 +556,7 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative max-w-7xl mx-auto">
+          <div className="relative w-full mx-auto" style={{ width: "calc(3 * 336px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
@@ -576,13 +576,13 @@ export default function Home() {
                 const maxSlide = Math.max(0, totalItems - 3);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 3)}
+              disabled={products.slice(12, 24).length <= 3 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 3)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden mx-12">
+            <div className="overflow-hidden mx-12 bg-transparent">
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
