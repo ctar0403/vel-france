@@ -267,28 +267,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Discount badge and buttons */}
+            {/* Empty space where discount badge and buttons were */}
             <div className="text-center space-y-4">
-              {/* Separate discount background */}
-              <div className="inline-block bg-black/50 backdrop-blur-sm rounded-xl px-6 py-3 border border-white/30 shadow-xl">
-                <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                  UP TO 60% OFF
-                </h1>
-              </div>
-              
-              {/* Buttons with backgrounds */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link href="/catalogue">
-                  <Button
-                    className="bg-white hover:bg-gray-100 text-black px-8 py-3 text-sm font-semibold uppercase tracking-wide shadow-xl border border-white/50 transition-all duration-200 hover:scale-105 rounded-lg"
-                  >
-                    <ShoppingBag className="mr-2 h-4 w-4" />
-                    Shop Now
-                  </Button>
-                </Link>
-                
-
-              </div>
             </div>
           </motion.div>
         </div>
