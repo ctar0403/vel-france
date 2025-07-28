@@ -271,71 +271,68 @@ export default function Home() {
 
       </section>
 
-      {/* Most Popular Section */}
-      <section className="py-16 bg-white">
+      {/* Most Sold Products Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-4xl font-bold text-navy mb-2">Most Popular</h2>
-                <p className="text-gray-600">Discover what everyone loves</p>
-              </div>
-              <Link href="/catalogue">
-                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
-                  View All
-                </Button>
-              </Link>
-            </div>
+            <h2 className="text-5xl font-bold text-navy mb-4 tracking-tight">Most Sold</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="overflow-x-auto">
-            <div className="flex space-x-6 pb-4">
-              {products.slice(0, 8).map((product, index) => (
+          <div className="relative overflow-hidden">
+            <div className="flex space-x-8 pb-6 overflow-x-auto">
+              {products.slice(0, 12).map((product, index) => (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-80 group"
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="flex-shrink-0 w-80 group cursor-pointer"
                 >
-                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                    <div className="relative overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                       <img 
-                        src={product.imageUrl} 
+                        src={product.imageUrl || ''} 
                         alt={product.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                        className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute top-4 left-4">
-                        <Badge className="bg-red-500 text-white font-semibold">Popular</Badge>
+                        <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                          #{index + 1} Bestseller
+                        </Badge>
                       </div>
                       <div className="absolute top-4 right-4">
                         <Button
                           size="sm"
                           variant="secondary"
-                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
                           onClick={() => addToCartMutation.mutate(product.id)}
                           disabled={addToCartMutation.isPending}
                         >
-                          <ShoppingBag className="h-4 w-4" />
+                          <ShoppingBag className="h-5 w-5 text-navy" />
                         </Button>
                       </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
-                      </div>
-                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                    <div className="p-6 bg-white">
+                      <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
+                      <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <span className="text-3xl font-bold text-navy">${product.price}</span>
                         <Link href={`/product/${product.id}`}>
-                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+                          >
                             View Details
                           </Button>
                         </Link>
@@ -349,227 +346,140 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Best Sellers Section */}
-      <section className="py-16 bg-cream">
-        <div className="container mx-auto px-4">
+      {/* Brand Logos Auto-Moving Carousel */}
+      <section className="py-16 bg-navy overflow-hidden">
+        <div className="container mx-auto px-4 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="text-center"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-4xl font-bold text-navy mb-2">Best Sellers</h2>
-                <p className="text-gray-600">Top-rated fragrances</p>
-              </div>
-              <Link href="/catalogue">
-                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
-                  Shop All
-                </Button>
-              </Link>
-            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">Luxury Brands We Carry</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto"></div>
           </motion.div>
-
-          <div className="overflow-x-auto">
-            <div className="flex space-x-6 pb-4">
-              {products.slice(8, 16).map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-80 group"
-                >
-                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                    <div className="relative overflow-hidden">
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-gold text-navy font-semibold">Best Seller</Badge>
-                      </div>
-                      <div className="absolute top-4 right-4">
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
-                      </div>
-                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-navy">${product.price}</span>
-                        <Link href={`/product/${product.id}`}>
-                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
-                            View Details
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+        </div>
+        
+        <div className="relative">
+          <div className="flex animate-marquee space-x-16 items-center">
+            {/* First set of brand logos */}
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">CHANEL</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">DIOR</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-xl font-bold text-black tracking-wider">ARMANI</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">CREED</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">GUCCI</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-xl font-bold text-black tracking-wider">VERSACE</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">YSL</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">PRADA</div>
+            </div>
+            
+            {/* Duplicate set for seamless loop */}
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">CHANEL</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">DIOR</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-xl font-bold text-black tracking-wider">ARMANI</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">CREED</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">GUCCI</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-xl font-bold text-black tracking-wider">VERSACE</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">YSL</div>
+            </div>
+            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-2xl font-bold text-black tracking-wider">PRADA</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gradient-to-br from-cream to-white">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-4xl font-bold text-navy mb-2">New Arrivals</h2>
-                <p className="text-gray-600">Latest luxury fragrances</p>
-              </div>
-              <Link href="/catalogue">
-                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
-                  Explore New
-                </Button>
-              </Link>
-            </div>
+            <h2 className="text-5xl font-bold text-navy mb-4 tracking-tight">New Arrivals</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="overflow-x-auto">
-            <div className="flex space-x-6 pb-4">
-              {products.slice(16, 24).map((product, index) => (
+          <div className="relative overflow-hidden">
+            <div className="flex space-x-8 pb-6 overflow-x-auto">
+              {products.slice(12, 24).map((product, index) => (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-80 group"
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="flex-shrink-0 w-80 group cursor-pointer"
                 >
-                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                    <div className="relative overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
                       <img 
-                        src={product.imageUrl} 
+                        src={product.imageUrl || ''} 
                         alt={product.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                        className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute top-4 left-4">
-                        <Badge className="bg-green-500 text-white font-semibold">New</Badge>
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                          New Arrival
+                        </Badge>
                       </div>
                       <div className="absolute top-4 right-4">
                         <Button
                           size="sm"
                           variant="secondary"
-                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
                           onClick={() => addToCartMutation.mutate(product.id)}
                           disabled={addToCartMutation.isPending}
                         >
-                          <ShoppingBag className="h-4 w-4" />
+                          <ShoppingBag className="h-5 w-5 text-navy" />
                         </Button>
                       </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
-                      </div>
-                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                    <div className="p-6 bg-white">
+                      <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
+                      <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <span className="text-3xl font-bold text-navy">${product.price}</span>
                         <Link href={`/product/${product.id}`}>
-                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
-                            View Details
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Premium Collection Section */}
-      <section className="py-16 bg-navy text-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-4xl font-bold mb-2">Premium Collection</h2>
-                <p className="text-gray-300">Exclusive luxury fragrances</p>
-              </div>
-              <Link href="/catalogue">
-                <Button variant="outline" className="border-gold text-gold hover:bg-gold hover:text-navy">
-                  View Collection
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-
-          <div className="overflow-x-auto">
-            <div className="flex space-x-6 pb-4">
-              {products.slice(24, 32).map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-80 group"
-                >
-                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                    <div className="relative overflow-hidden">
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-purple-600 text-white font-semibold">Premium</Badge>
-                      </div>
-                      <div className="absolute top-4 right-4">
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-4 w-4 text-navy" />
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
-                      </div>
-                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-navy">${product.price}</span>
-                        <Link href={`/product/${product.id}`}>
-                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+                          >
                             View Details
                           </Button>
                         </Link>

@@ -184,6 +184,20 @@ body {
   border-color: #002c8c !important;
 }
 
+/* Auto-moving marquee animation for brand logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
 /* Simple fade-in animation for product filtering */
 @keyframes fade-in {
   from {
