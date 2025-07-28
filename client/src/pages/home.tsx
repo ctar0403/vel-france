@@ -288,82 +288,74 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative">
+          <div className="relative px-16">
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
               onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
               disabled={mostSoldSlide === 0}
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
-              onClick={() => setMostSoldSlide(Math.min(Math.ceil(products.length / 4) - 1, mostSoldSlide + 1))}
-              disabled={mostSoldSlide >= Math.ceil(products.length / 4) - 1}
+              className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
+              onClick={() => setMostSoldSlide(Math.min(Math.ceil(products.slice(0, 12).length / 5) - 1, mostSoldSlide + 1))}
+              disabled={mostSoldSlide >= Math.ceil(products.slice(0, 12).length / 5) - 1}
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
 
             <div className="overflow-hidden">
               <motion.div 
-                className="flex space-x-6"
-                animate={{ x: -mostSoldSlide * (320 * 4 + 24 * 3) }}
+                className="grid grid-cols-5 gap-6"
+                animate={{ x: -mostSoldSlide * 100 + "%" }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ width: `${Math.ceil(products.slice(0, 12).length / 5) * 100}%` }}
               >
                 {products.slice(0, 12).map((product, index) => (
                   <motion.div
                     key={product.id}
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
-                    className="flex-shrink-0 w-80 group cursor-pointer"
+                    transition={{ duration: 0.5, delay: (index % 5) * 0.1 }}
+                    className="group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
                   >
-                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
-                      <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                        <img 
-                          src={product.imageUrl || ''} 
-                          alt={product.name}
-                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                            #{index + 1} Bestseller
-                          </Badge>
-                        </div>
-                        <div className="absolute top-4 right-4">
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
-                            onClick={() => addToCartMutation.mutate(product.id)}
-                            disabled={addToCartMutation.isPending}
-                          >
-                            <ShoppingBag className="h-5 w-5 text-navy" />
-                          </Button>
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative overflow-hidden rounded-t-xl bg-gray-50">
+                      <img 
+                        src={product.imageUrl || ''} 
+                        alt={product.name}
+                        className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-2 left-2">
+                        <Badge className="bg-red-500 text-white text-xs px-2 py-1">
+                          #{index + 1}
+                        </Badge>
                       </div>
-                      <div className="p-6 bg-white">
-                        <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
-                        <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-3xl font-bold text-navy">${product.price}</span>
-                          <Link href={`/product/${product.id}`}>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
-                            >
-                              View Details
-                            </Button>
-                          </Link>
+                    </div>
+                    <div className="p-4">
+                      <div className="text-center mb-3">
+                        <h3 className="font-semibold text-navy text-sm mb-1 line-clamp-1">{product.brand}</h3>
+                        <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="text-left">
+                          <span className="text-lg font-bold text-navy">${product.price}</span>
+                          <span className="text-gray-400 text-sm ml-1">/ 50ML</span>
                         </div>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-8 h-8 p-0 bg-gray-100 hover:bg-gold hover:text-white transition-colors"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
                   </motion.div>
@@ -461,82 +453,74 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative">
+          <div className="relative px-16">
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
               onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
               disabled={newArrivalsSlide === 0}
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
-              onClick={() => setNewArrivalsSlide(Math.min(Math.ceil(products.slice(12, 24).length / 4) - 1, newArrivalsSlide + 1))}
-              disabled={newArrivalsSlide >= Math.ceil(products.slice(12, 24).length / 4) - 1}
+              className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
+              onClick={() => setNewArrivalsSlide(Math.min(Math.ceil(products.slice(12, 24).length / 5) - 1, newArrivalsSlide + 1))}
+              disabled={newArrivalsSlide >= Math.ceil(products.slice(12, 24).length / 5) - 1}
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
 
             <div className="overflow-hidden">
               <motion.div 
-                className="flex space-x-6"
-                animate={{ x: -newArrivalsSlide * (320 * 4 + 24 * 3) }}
+                className="grid grid-cols-5 gap-6"
+                animate={{ x: -newArrivalsSlide * 100 + "%" }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ width: `${Math.ceil(products.slice(12, 24).length / 5) * 100}%` }}
               >
                 {products.slice(12, 24).map((product, index) => (
                   <motion.div
                     key={product.id}
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
-                    className="flex-shrink-0 w-80 group cursor-pointer"
+                    transition={{ duration: 0.5, delay: (index % 5) * 0.1 }}
+                    className="group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
                   >
-                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
-                      <div className="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
-                        <img 
-                          src={product.imageUrl || ''} 
-                          alt={product.name}
-                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                            New Arrival
-                          </Badge>
-                        </div>
-                        <div className="absolute top-4 right-4">
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
-                            onClick={() => addToCartMutation.mutate(product.id)}
-                            disabled={addToCartMutation.isPending}
-                          >
-                            <ShoppingBag className="h-5 w-5 text-navy" />
-                          </Button>
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative overflow-hidden rounded-t-xl bg-gray-50">
+                      <img 
+                        src={product.imageUrl || ''} 
+                        alt={product.name}
+                        className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-2 left-2">
+                        <Badge className="bg-green-500 text-white text-xs px-2 py-1">
+                          New
+                        </Badge>
                       </div>
-                      <div className="p-6 bg-white">
-                        <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
-                        <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-3xl font-bold text-navy">${product.price}</span>
-                          <Link href={`/product/${product.id}`}>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
-                            >
-                              View Details
-                            </Button>
-                          </Link>
+                    </div>
+                    <div className="p-4">
+                      <div className="text-center mb-3">
+                        <h3 className="font-semibold text-navy text-sm mb-1 line-clamp-1">{product.brand}</h3>
+                        <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="text-left">
+                          <span className="text-lg font-bold text-navy">${product.price}</span>
+                          <span className="text-gray-400 text-sm ml-1">/ 50ML</span>
                         </div>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-8 h-8 p-0 bg-gray-100 hover:bg-gold hover:text-white transition-colors"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
                   </motion.div>
