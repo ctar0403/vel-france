@@ -288,48 +288,44 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative px-16">
+          <div className="relative max-w-7xl mx-auto">
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
               onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
               disabled={mostSoldSlide === 0}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
-              onClick={() => setMostSoldSlide(Math.min(Math.ceil(products.slice(0, 12).length / 5) - 1, mostSoldSlide + 1))}
-              disabled={mostSoldSlide >= Math.ceil(products.slice(0, 12).length / 5) - 1}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              onClick={() => setMostSoldSlide(Math.min(products.slice(0, 12).length - 5, mostSoldSlide + 1))}
+              disabled={mostSoldSlide >= products.slice(0, 12).length - 5}
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
 
-            <div className="overflow-hidden">
+            {/* Carousel Container */}
+            <div className="overflow-hidden mx-12">
               <motion.div 
-                className="grid grid-cols-5 gap-6"
-                animate={{ x: -mostSoldSlide * 100 + "%" }}
+                className="flex gap-4"
+                animate={{ x: -mostSoldSlide * 250 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ width: `${Math.ceil(products.slice(0, 12).length / 5) * 100}%` }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <motion.div
+                  <div
                     key={product.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: (index % 5) * 0.1 }}
-                    className="group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                    className="flex-shrink-0 w-60 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200"
                   >
-                    <div className="relative overflow-hidden rounded-t-xl bg-gray-50">
+                    <div className="relative bg-gray-50 rounded-t-lg p-4">
                       <img 
                         src={product.imageUrl || ''} 
                         alt={product.name}
-                        className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-40 object-contain"
                       />
                       <div className="absolute top-2 left-2">
                         <Badge className="bg-red-500 text-white text-xs px-2 py-1">
@@ -339,13 +335,13 @@ export default function Home() {
                     </div>
                     <div className="p-4">
                       <div className="text-center mb-3">
-                        <h3 className="font-semibold text-navy text-sm mb-1 line-clamp-1">{product.brand}</h3>
+                        <h3 className="font-semibold text-gray-800 text-sm mb-1">{product.brand}</h3>
                         <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
                       </div>
                       <div className="flex items-center justify-between">
-                        <div className="text-left">
-                          <span className="text-lg font-bold text-navy">${product.price}</span>
-                          <span className="text-gray-400 text-sm ml-1">/ 50ML</span>
+                        <div>
+                          <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                          <span className="text-gray-400 text-xs ml-1">/ 50ML</span>
                         </div>
                         <Button
                           size="sm"
@@ -358,7 +354,7 @@ export default function Home() {
                         </Button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </motion.div>
             </div>
@@ -453,48 +449,44 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative px-16">
+          <div className="relative max-w-7xl mx-auto">
             {/* Navigation Arrows */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
               onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
               disabled={newArrivalsSlide === 0}
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-12 h-12 border-2"
-              onClick={() => setNewArrivalsSlide(Math.min(Math.ceil(products.slice(12, 24).length / 5) - 1, newArrivalsSlide + 1))}
-              disabled={newArrivalsSlide >= Math.ceil(products.slice(12, 24).length / 5) - 1}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
+              onClick={() => setNewArrivalsSlide(Math.min(products.slice(12, 24).length - 5, newArrivalsSlide + 1))}
+              disabled={newArrivalsSlide >= products.slice(12, 24).length - 5}
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
 
-            <div className="overflow-hidden">
+            {/* Carousel Container */}
+            <div className="overflow-hidden mx-12">
               <motion.div 
-                className="grid grid-cols-5 gap-6"
-                animate={{ x: -newArrivalsSlide * 100 + "%" }}
+                className="flex gap-4"
+                animate={{ x: -newArrivalsSlide * 250 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ width: `${Math.ceil(products.slice(12, 24).length / 5) * 100}%` }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <motion.div
+                  <div
                     key={product.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: (index % 5) * 0.1 }}
-                    className="group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                    className="flex-shrink-0 w-60 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200"
                   >
-                    <div className="relative overflow-hidden rounded-t-xl bg-gray-50">
+                    <div className="relative bg-gray-50 rounded-t-lg p-4">
                       <img 
                         src={product.imageUrl || ''} 
                         alt={product.name}
-                        className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-40 object-contain"
                       />
                       <div className="absolute top-2 left-2">
                         <Badge className="bg-green-500 text-white text-xs px-2 py-1">
@@ -504,13 +496,13 @@ export default function Home() {
                     </div>
                     <div className="p-4">
                       <div className="text-center mb-3">
-                        <h3 className="font-semibold text-navy text-sm mb-1 line-clamp-1">{product.brand}</h3>
+                        <h3 className="font-semibold text-gray-800 text-sm mb-1">{product.brand}</h3>
                         <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
                       </div>
                       <div className="flex items-center justify-between">
-                        <div className="text-left">
-                          <span className="text-lg font-bold text-navy">${product.price}</span>
-                          <span className="text-gray-400 text-sm ml-1">/ 50ML</span>
+                        <div>
+                          <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                          <span className="text-gray-400 text-xs ml-1">/ 50ML</span>
                         </div>
                         <Button
                           size="sm"
@@ -523,7 +515,7 @@ export default function Home() {
                         </Button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </motion.div>
             </div>
