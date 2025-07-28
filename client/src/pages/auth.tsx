@@ -6,17 +6,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
-import type { RegisterData, LoginData } from "@shared/schema";
+import type { RegisterData, LoginData, CartItem } from "@shared/schema";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartSidebar from "@/components/CartSidebar";
 
 export default function AuthPage() {
   const [, setLocation] = useLocation();
   const { user, loginMutation, registerMutation } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Fetch cart items for header
+  const { data: cartItems = [] } = useQuery<(CartItem & { product: any })[]>({
+    queryKey: ["/api/cart"],
+  });
   
   const [loginForm, setLoginForm] = useState<LoginData>({
     email: "",
@@ -48,13 +56,25 @@ export default function AuthPage() {
     registerMutation.mutate(registerForm);
   };
 
+  // Calculate cart count for header
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   if (user) {
     return null; // Will redirect via useEffect
   }
 
   return (
     <div className="min-h-screen bg-cream">
-      <Header />
+      <Header 
+        cartItemCount={cartItemCount}
+        onCartClick={() => setIsCartOpen(true)}
+      />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
+      />
       <div className="container mx-auto px-4 py-16">
         <div className="flex justify-center">
           {/* Auth Forms */}
@@ -152,7 +172,7 @@ export default function AuthPage() {
                             id="register-lastName"
                             type="text"
                             placeholder="Last name"
-                            value={registerForm.lastName || ""}
+                            value={registerForm.lastName ?? ""}
                             onChange={(e) => setRegisterForm(prev => ({ ...prev, lastName: e.target.value }))}
                             required
                           />

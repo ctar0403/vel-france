@@ -18,9 +18,10 @@ import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Product } from "@shared/schema";
+import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartSidebar from "@/components/CartSidebar";
 
 // Declare BOG global for TypeScript
 declare global {
@@ -43,10 +44,15 @@ function ProductDetailPage() {
   const [, params] = useRoute("/product/:id");
   const productId = params?.id;
   const [quantity, setQuantity] = useState(1);
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
+
+  // Fetch cart items for header (with product data for sidebar)
+  const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
+    queryKey: ["/api/cart"],
+  });
 
   // Fetch product data
   const { data: product, isLoading } = useQuery<Product>({
@@ -129,10 +135,22 @@ function ProductDetailPage() {
     });
   };
 
+  // Calculate cart count for header 
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-cream">
-        <Header />
+        <Header 
+          cartItemCount={cartItemCount}
+          onCartClick={() => setIsCartOpen(true)}
+        />
+        <CartSidebar 
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          isLoading={false}
+        />
         <div className="flex items-center justify-center h-96">
           <motion.div
             initial={{ opacity: 0.6, scale: 0.9 }}
@@ -149,7 +167,16 @@ function ProductDetailPage() {
   if (!product) {
     return (
       <div className="min-h-screen bg-cream">
-        <Header />
+        <Header 
+          cartItemCount={cartItemCount}
+          onCartClick={() => setIsCartOpen(true)}
+        />
+        <CartSidebar 
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          isLoading={false}
+        />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-navy mb-4">Product not found</h2>
@@ -169,7 +196,16 @@ function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-cream/50">
-      <Header />
+      <Header 
+        cartItemCount={cartItemCount}
+        onCartClick={() => setIsCartOpen(true)}
+      />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
+      />
       
       {/* Main Product Content */}
       <div className="container mx-auto px-4 py-4">

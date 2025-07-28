@@ -11,11 +11,13 @@ import FloatingParticles from "@/components/FloatingParticles";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Product } from "@shared/schema";
+import type { Product, CartItem } from "@shared/schema";
 
 export default function Landing() {
   const { toast } = useToast();
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [contactForm, setContactForm] = useState({
     firstName: "",
@@ -23,6 +25,11 @@ export default function Landing() {
     email: "",
     subject: "Personal consultation",
     message: ""
+  });
+
+  // Fetch cart items for header
+  const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
+    queryKey: ["/api/cart"],
   });
 
   // Fetch products
@@ -92,10 +99,22 @@ export default function Landing() {
 
   const featuredProducts = products.slice(0, 3);
 
+  // Calculate cart count for header
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="min-h-screen bg-cream">
       <FloatingParticles />
-      <Header />
+      <Header 
+        cartItemCount={cartItemCount}
+        onCartClick={() => setIsCartOpen(true)}
+      />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
+      />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
