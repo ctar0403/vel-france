@@ -61,7 +61,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
       >
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -435,8 +435,12 @@ export default function Home() {
               variant="outline"
               size="icon"
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
-              onClick={() => setMostSoldSlide(Math.min(products.slice(0, 12).length - 3, mostSoldSlide + 1))}
-              disabled={mostSoldSlide >= products.slice(0, 12).length - 3}
+              onClick={() => {
+                const totalItems = products.slice(0, 12).length;
+                const maxSlide = Math.max(0, totalItems - 3);
+                setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
+              }}
+              disabled={mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 3)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -567,8 +571,12 @@ export default function Home() {
               variant="outline"
               size="icon"
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
-              onClick={() => setNewArrivalsSlide(Math.min(products.slice(12, 24).length - 3, newArrivalsSlide + 1))}
-              disabled={newArrivalsSlide >= products.slice(12, 24).length - 3}
+              onClick={() => {
+                const totalItems = products.slice(12, 24).length;
+                const maxSlide = Math.max(0, totalItems - 3);
+                setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
+              }}
+              disabled={newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 3)}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
