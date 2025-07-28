@@ -40,12 +40,8 @@ export default function Home() {
     message: ""
   });
 
-  // Banner images for slideshow
+  // Banner images for slideshow (removed first 4 images)
   const banners = [
-    { image: banner1, alt: "Luxury perfume collection with 60% discount in Paris setting" },
-    { image: banner2, alt: "Chanel No. 5 perfume with citrus and botanical elements" },
-    { image: banner3, alt: "Creed Aventus luxury fragrance bottle in elegant black and white" },
-    { image: banner4, alt: "Bleu de Chanel perfume bottle on oceanic waves background" },
     { image: banner5, alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" }
   ];
 
@@ -260,18 +256,7 @@ export default function Home() {
           ))}
         </div>
         
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div 
-            className="relative z-10 text-center px-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Empty space where discount badge and buttons were */}
-            <div className="text-center space-y-4">
-            </div>
-          </motion.div>
-        </div>
+
       </section>
 
 
