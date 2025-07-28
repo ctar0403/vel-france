@@ -23,6 +23,12 @@ import banner2 from "@assets/2_1753538710752.png";
 import banner3 from "@assets/3_1753538715604.png";
 import banner4 from "@assets/4_1753538720559.png";
 import banner5 from "@assets/5_1753538726165.png";
+import banner7 from "@assets/7_1753734195721.png";
+import banner8 from "@assets/8_1753734262383.png";
+import banner9 from "@assets/9_1753734226839.png";
+import banner10 from "@assets/10_1753734237960.png";
+import banner11 from "@assets/11_1753734243609.png";
+import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.png";
 
 
 export default function Home() {
@@ -40,9 +46,14 @@ export default function Home() {
     message: ""
   });
 
-  // Banner images for slideshow (removed first 4 images)
+  // Banner images for slideshow in requested order
   const banners = [
-    { image: banner5, alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" }
+    { image: banner11, alt: "Vel France luxury perfume collection with up to 60% discount" },
+    { image: banner9, alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" },
+    { image: banner5, alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" },
+    { image: banner8, alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" },
+    { image: banner7, alt: "Coco Mademoiselle by Chanel with elegant model" },
+    { image: banner10, alt: "Miss Dior Parfum with sophisticated brunette model" }
   ];
 
   // Auto-advance slideshow
@@ -203,14 +214,15 @@ export default function Home() {
           <div 
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ 
-              transform: `translateX(-${currentSlide * 20}%)`,
-              width: '500%'
+              transform: `translateX(-${currentSlide * (100 / banners.length)}%)`,
+              width: `${banners.length * 100}%`
             }}
           >
             {banners.map((banner, index) => (
               <div 
                 key={index}
-                className="h-full flex-shrink-0 w-1/5"
+                className="h-full flex-shrink-0"
+                style={{ width: `${100 / banners.length}%` }}
               >
                 <img 
                   src={banner.image}
