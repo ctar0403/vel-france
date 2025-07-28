@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -271,244 +271,318 @@ export default function Home() {
 
       </section>
 
-
-
-      {/* About Section */}
-      <section className="py-20 bg-cream">
+      {/* Most Popular Section */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-vibes text-5xl text-navy mb-6">Our Story</h2>
-              <h3 className="font-roboto text-2xl text-navy mb-6">The Art of French Perfumery</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Since 1932, Vel France has perpetuated the tradition of exceptional French perfumery. 
-                Our master perfumers create unique compositions using the finest ingredients, 
-                sourced from around the world.
-              </p>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Each perfume tells a story, evokes an emotion, captures a moment of eternity. 
-                Our artisanal craftsmanship is passed down from generation to generation, preserving 
-                the authenticity and excellence of French perfumery.
-              </p>
-              <div className="flex items-center space-x-8 mt-8">
-                <div className="text-center">
-                  <div className="text-3xl font-roboto font-bold text-gold">90+</div>
-                  <div className="text-sm text-gray-600">Years of Excellence</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-roboto font-bold text-gold">50+</div>
-                  <div className="text-sm text-gray-600">Unique Creations</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-roboto font-bold text-gold">100%</div>
-                  <div className="text-sm text-gray-600">Artisanal</div>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div 
-              className="relative"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
-                alt="Master perfumer crafting fragrance in French atelier" 
-                className="rounded-2xl shadow-2xl w-full h-96 object-cover"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-gold text-navy p-6 rounded-2xl shadow-xl">
-                <div className="font-vibes text-2xl">Handcrafted</div>
-                <div className="font-roboto text-sm">Paris, France</div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-      {/* Contact Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="font-vibes text-5xl text-navy mb-4">Contact Us</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-roboto text-lg">
-              We would be delighted to accompany you in your quest for the perfect perfume
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-navy font-roboto mb-2">First Name</label>
-                    <Input 
-                      value={contactForm.firstName}
-                      onChange={(e) => setContactForm({...contactForm, firstName: e.target.value})}
-                      className="bg-cream border-gold/30 focus:border-gold"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-navy font-roboto mb-2">Last Name</label>
-                    <Input 
-                      value={contactForm.lastName}
-                      onChange={(e) => setContactForm({...contactForm, lastName: e.target.value})}
-                      className="bg-cream border-gold/30 focus:border-gold"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-navy font-roboto mb-2">Email</label>
-                  <Input 
-                    type="email"
-                    value={contactForm.email}
-                    onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                    className="bg-cream border-gold/30 focus:border-gold"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-navy font-roboto mb-2">Subject</label>
-                  <Select 
-                    value={contactForm.subject} 
-                    onValueChange={(value) => setContactForm({...contactForm, subject: value})}
-                  >
-                    <SelectTrigger className="bg-cream border-gold/30 focus:border-gold">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Personal consultation">Personal consultation</SelectItem>
-                      <SelectItem value="Product information">Product information</SelectItem>
-                      <SelectItem value="Customer service">Customer service</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="block text-navy font-roboto mb-2">Message</label>
-                  <Textarea 
-                    rows={5}
-                    value={contactForm.message}
-                    onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                    className="bg-cream border-gold/30 focus:border-gold resize-none"
-                    required
-                  />
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full bg-navy hover:bg-navy/90 text-white py-3 font-roboto font-semibold"
-                  disabled={contactMutation.isPending}
-                >
-                  {contactMutation.isPending ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="bg-cream rounded-2xl shadow-xl p-8 mb-8">
-                <h3 className="font-roboto text-2xl text-navy mb-6">Our Contact Info</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-map-marker-alt text-gold w-5"></i>
-                    <div>
-                      <div className="font-roboto text-navy">Address</div>
-                      <div className="text-gray-600">25 Place Vendôme, 75001 Paris</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-phone text-gold w-5"></i>
-                    <div>
-                      <div className="font-roboto text-navy">Phone</div>
-                      <div className="text-gray-600">+33 1 42 60 30 70</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-envelope text-gold w-5"></i>
-                    <div>
-                      <div className="font-roboto text-navy">Email</div>
-                      <div className="text-gray-600">contact@velfrance.com</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-clock text-gold w-5"></i>
-                    <div>
-                      <div className="font-roboto text-navy">Hours</div>
-                      <div className="text-gray-600">Mon-Sat: 10am-7pm</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.2145!2d2.3292!3d48.8674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sPlace%20Vend%C3%B4me%2C%2075001%20Paris%2C%20France!5e0!3m2!1sen!2sus!4v1234567890" 
-                  width="100%" 
-                  height="300" 
-                  style={{border:0}} 
-                  allowFullScreen 
-                  loading="lazy"
-                  title="Vel France Location"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-      {/* Newsletter Section */}
-      <section className="py-16 bg-navy text-white">
-        <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="mb-12"
           >
-            <h2 className="font-vibes text-4xl mb-4">Join Our Newsletter</h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Discover our new creations exclusively and benefit from privileged offers
-            </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col md:flex-row max-w-md mx-auto gap-4">
-              <Input 
-                type="email" 
-                placeholder="Your email address" 
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="flex-1 text-navy bg-white border-none"
-                required
-              />
-              <Button 
-                type="submit" 
-                className="bg-gold hover:bg-deep-gold text-navy px-8 py-3 font-roboto font-semibold"
-                disabled={newsletterMutation.isPending}
-              >
-                {newsletterMutation.isPending ? "..." : "Subscribe"}
-              </Button>
-            </form>
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-4xl font-bold text-navy mb-2">Most Popular</h2>
+                <p className="text-gray-600">Discover what everyone loves</p>
+              </div>
+              <Link href="/catalogue">
+                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
+                  View All
+                </Button>
+              </Link>
+            </div>
           </motion.div>
+
+          <div className="overflow-x-auto">
+            <div className="flex space-x-6 pb-4">
+              {products.slice(0, 8).map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-80 group"
+                >
+                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                    <div className="relative overflow-hidden">
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-red-500 text-white font-semibold">Popular</Badge>
+                      </div>
+                      <div className="absolute top-4 right-4">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
+                      </div>
+                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <Link href={`/product/${product.id}`}>
+                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                            View Details
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Best Sellers Section */}
+      <section className="py-16 bg-cream">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-4xl font-bold text-navy mb-2">Best Sellers</h2>
+                <p className="text-gray-600">Top-rated fragrances</p>
+              </div>
+              <Link href="/catalogue">
+                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
+                  Shop All
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          <div className="overflow-x-auto">
+            <div className="flex space-x-6 pb-4">
+              {products.slice(8, 16).map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-80 group"
+                >
+                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                    <div className="relative overflow-hidden">
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-gold text-navy font-semibold">Best Seller</Badge>
+                      </div>
+                      <div className="absolute top-4 right-4">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
+                      </div>
+                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <Link href={`/product/${product.id}`}>
+                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                            View Details
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* New Arrivals Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-4xl font-bold text-navy mb-2">New Arrivals</h2>
+                <p className="text-gray-600">Latest luxury fragrances</p>
+              </div>
+              <Link href="/catalogue">
+                <Button variant="outline" className="border-navy text-navy hover:bg-navy hover:text-white">
+                  Explore New
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          <div className="overflow-x-auto">
+            <div className="flex space-x-6 pb-4">
+              {products.slice(16, 24).map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-80 group"
+                >
+                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                    <div className="relative overflow-hidden">
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-green-500 text-white font-semibold">New</Badge>
+                      </div>
+                      <div className="absolute top-4 right-4">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
+                      </div>
+                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <Link href={`/product/${product.id}`}>
+                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                            View Details
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Collection Section */}
+      <section className="py-16 bg-navy text-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-4xl font-bold mb-2">Premium Collection</h2>
+                <p className="text-gray-300">Exclusive luxury fragrances</p>
+              </div>
+              <Link href="/catalogue">
+                <Button variant="outline" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                  View Collection
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          <div className="overflow-x-auto">
+            <div className="flex space-x-6 pb-4">
+              {products.slice(24, 32).map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-80 group"
+                >
+                  <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                    <div className="relative overflow-hidden">
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-purple-600 text-white font-semibold">Premium</Badge>
+                      </div>
+                      <div className="absolute top-4 right-4">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="rounded-full w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg"
+                          onClick={() => addToCartMutation.mutate(product.id)}
+                          disabled={addToCartMutation.isPending}
+                        >
+                          <ShoppingBag className="h-4 w-4 text-navy" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-bold text-lg text-navy leading-tight">{product.name}</h3>
+                      </div>
+                      <p className="text-gold font-semibold mb-3">{product.brand}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-navy">${product.price}</span>
+                        <Link href={`/product/${product.id}`}>
+                          <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                            View Details
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
