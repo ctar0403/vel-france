@@ -420,7 +420,7 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 336px)" }}>
+          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
@@ -446,7 +446,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden mx-12 bg-transparent">
+            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)", margin: "0 auto" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -556,7 +556,7 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 336px)" }}>
+          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
             {/* Navigation Arrows */}
             <Button
               variant="outline"
@@ -582,7 +582,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden mx-12 bg-transparent">
+            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)", margin: "0 auto" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
