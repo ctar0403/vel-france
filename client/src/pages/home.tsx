@@ -303,8 +303,8 @@ export default function Home() {
               variant="outline"
               size="icon"
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
-              onClick={() => setMostSoldSlide(Math.min(products.slice(0, 12).length - 5, mostSoldSlide + 1))}
-              disabled={mostSoldSlide >= products.slice(0, 12).length - 5}
+              onClick={() => setMostSoldSlide(Math.min(products.slice(0, 12).length - 3, mostSoldSlide + 1))}
+              disabled={mostSoldSlide >= products.slice(0, 12).length - 3}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -313,48 +313,79 @@ export default function Home() {
             <div className="overflow-hidden mx-12">
               <motion.div 
                 className="flex gap-4"
-                animate={{ x: -mostSoldSlide * 250 }}
+                animate={{ x: -mostSoldSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <div
+                  <motion.div
                     key={product.id}
-                    className="flex-shrink-0 w-60 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200"
+                    className="flex-shrink-0 w-80"
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <div className="relative bg-gray-50 rounded-t-lg p-4">
-                      <img 
-                        src={product.imageUrl || ''} 
-                        alt={product.name}
-                        className="w-full h-40 object-contain"
-                      />
-                      <div className="absolute top-2 left-2">
-                        <Badge className="bg-red-500 text-white text-xs px-2 py-1">
-                          #{index + 1}
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-center mb-3">
-                        <h3 className="font-semibold text-gray-800 text-sm mb-1">{product.brand}</h3>
-                        <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                          <span className="text-gray-400 text-xs ml-1">/ 50ML</span>
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
+                      <div className="relative overflow-hidden bg-gray-100">
+                        {product.imageUrl ? (
+                          <img 
+                            src={product.imageUrl} 
+                            alt={`${product.brand} ${product.name} luxury perfume`}
+                            className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                          />
+                        ) : (
+                          <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
+                            <div className="text-center p-4">
+                              <div className="text-6xl mb-2">🍃</div>
+                              <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
+                            </div>
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                            #{index + 1} Bestseller
+                          </Badge>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-8 h-8 p-0 bg-gray-100 hover:bg-gold hover:text-white transition-colors"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-4 w-4" />
-                        </Button>
+                        {!product.inStock && (
+                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <Badge variant="destructive" className="text-lg px-4 py-2">
+                              Out of Stock
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="p-6">
+                        <div className="mb-4">
+                          <h3 className="text-xl font-bold text-navy mb-2 line-clamp-2">{product.name}</h3>
+                          <p className="text-gold font-semibold text-lg mb-1">{product.brand}</p>
+                          <p className="text-gray-600 text-sm capitalize">{product.category}</p>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="text-left">
+                            <span className="text-3xl font-bold text-navy">${product.price}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Link href={`/product/${product.id}`}>
+                              <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                                View
+                              </Button>
+                            </Link>
+                            {product.inStock && (
+                              <Button
+                                size="sm"
+                                className="bg-navy hover:bg-navy/90 text-white"
+                                onClick={() => addToCartMutation.mutate(product.id)}
+                                disabled={addToCartMutation.isPending}
+                              >
+                                <ShoppingBag className="h-4 w-4 mr-1" />
+                                Add
+                              </Button>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </motion.div>
             </div>
@@ -464,8 +495,8 @@ export default function Home() {
               variant="outline"
               size="icon"
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 shadow-lg rounded-full w-10 h-10"
-              onClick={() => setNewArrivalsSlide(Math.min(products.slice(12, 24).length - 5, newArrivalsSlide + 1))}
-              disabled={newArrivalsSlide >= products.slice(12, 24).length - 5}
+              onClick={() => setNewArrivalsSlide(Math.min(products.slice(12, 24).length - 3, newArrivalsSlide + 1))}
+              disabled={newArrivalsSlide >= products.slice(12, 24).length - 3}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -474,48 +505,79 @@ export default function Home() {
             <div className="overflow-hidden mx-12">
               <motion.div 
                 className="flex gap-4"
-                animate={{ x: -newArrivalsSlide * 250 }}
+                animate={{ x: -newArrivalsSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <div
+                  <motion.div
                     key={product.id}
-                    className="flex-shrink-0 w-60 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200"
+                    className="flex-shrink-0 w-80"
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <div className="relative bg-gray-50 rounded-t-lg p-4">
-                      <img 
-                        src={product.imageUrl || ''} 
-                        alt={product.name}
-                        className="w-full h-40 object-contain"
-                      />
-                      <div className="absolute top-2 left-2">
-                        <Badge className="bg-green-500 text-white text-xs px-2 py-1">
-                          New
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-center mb-3">
-                        <h3 className="font-semibold text-gray-800 text-sm mb-1">{product.brand}</h3>
-                        <p className="text-gray-600 text-xs line-clamp-2">{product.name}</p>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                          <span className="text-gray-400 text-xs ml-1">/ 50ML</span>
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
+                      <div className="relative overflow-hidden bg-gray-100">
+                        {product.imageUrl ? (
+                          <img 
+                            src={product.imageUrl} 
+                            alt={`${product.brand} ${product.name} luxury perfume`}
+                            className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
+                          />
+                        ) : (
+                          <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
+                            <div className="text-center p-4">
+                              <div className="text-6xl mb-2">🍃</div>
+                              <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
+                            </div>
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                            New Arrival
+                          </Badge>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-8 h-8 p-0 bg-gray-100 hover:bg-gold hover:text-white transition-colors"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-4 w-4" />
-                        </Button>
+                        {!product.inStock && (
+                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <Badge variant="destructive" className="text-lg px-4 py-2">
+                              Out of Stock
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="p-6">
+                        <div className="mb-4">
+                          <h3 className="text-xl font-bold text-navy mb-2 line-clamp-2">{product.name}</h3>
+                          <p className="text-gold font-semibold text-lg mb-1">{product.brand}</p>
+                          <p className="text-gray-600 text-sm capitalize">{product.category}</p>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="text-left">
+                            <span className="text-3xl font-bold text-navy">${product.price}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Link href={`/product/${product.id}`}>
+                              <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
+                                View
+                              </Button>
+                            </Link>
+                            {product.inStock && (
+                              <Button
+                                size="sm"
+                                className="bg-navy hover:bg-navy/90 text-white"
+                                onClick={() => addToCartMutation.mutate(product.id)}
+                                disabled={addToCartMutation.isPending}
+                              >
+                                <ShoppingBag className="h-4 w-4 mr-1" />
+                                Add
+                              </Button>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </motion.div>
             </div>
