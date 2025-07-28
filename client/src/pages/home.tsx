@@ -38,6 +38,8 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mostSoldSlide, setMostSoldSlide] = useState(0);
+  const [newArrivalsSlide, setNewArrivalsSlide] = useState(0);
   const [contactForm, setContactForm] = useState({
     firstName: "",
     lastName: "",
@@ -286,61 +288,87 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative overflow-hidden">
-            <div className="flex space-x-8 pb-6 overflow-x-auto">
-              {products.slice(0, 12).map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.08 }}
-                  className="flex-shrink-0 w-80 group cursor-pointer"
-                >
-                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
-                    <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                      <img 
-                        src={product.imageUrl || ''} 
-                        alt={product.name}
-                        className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                          #{index + 1} Bestseller
-                        </Badge>
-                      </div>
-                      <div className="absolute top-4 right-4">
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-5 w-5 text-navy" />
-                        </Button>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    </div>
-                    <div className="p-6 bg-white">
-                      <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
-                      <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-3xl font-bold text-navy">${product.price}</span>
-                        <Link href={`/product/${product.id}`}>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+          <div className="relative">
+            {/* Navigation Arrows */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
+              disabled={mostSoldSlide === 0}
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              onClick={() => setMostSoldSlide(Math.min(Math.ceil(products.length / 4) - 1, mostSoldSlide + 1))}
+              disabled={mostSoldSlide >= Math.ceil(products.length / 4) - 1}
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+
+            <div className="overflow-hidden">
+              <motion.div 
+                className="flex space-x-6"
+                animate={{ x: -mostSoldSlide * (320 * 4 + 24 * 3) }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {products.slice(0, 12).map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
+                    className="flex-shrink-0 w-80 group cursor-pointer"
+                  >
+                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
+                      <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                        <img 
+                          src={product.imageUrl || ''} 
+                          alt={product.name}
+                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                            #{index + 1} Bestseller
+                          </Badge>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
+                            onClick={() => addToCartMutation.mutate(product.id)}
+                            disabled={addToCartMutation.isPending}
                           >
-                            View Details
+                            <ShoppingBag className="h-5 w-5 text-navy" />
                           </Button>
-                        </Link>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      </div>
+                      <div className="p-6 bg-white">
+                        <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
+                        <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-3xl font-bold text-navy">${product.price}</span>
+                          <Link href={`/product/${product.id}`}>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+                            >
+                              View Details
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </div>
@@ -433,61 +461,87 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative overflow-hidden">
-            <div className="flex space-x-8 pb-6 overflow-x-auto">
-              {products.slice(12, 24).map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.08 }}
-                  className="flex-shrink-0 w-80 group cursor-pointer"
-                >
-                  <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
-                    <div className="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
-                      <img 
-                        src={product.imageUrl || ''} 
-                        alt={product.name}
-                        className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                          New Arrival
-                        </Badge>
-                      </div>
-                      <div className="absolute top-4 right-4">
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
-                          onClick={() => addToCartMutation.mutate(product.id)}
-                          disabled={addToCartMutation.isPending}
-                        >
-                          <ShoppingBag className="h-5 w-5 text-navy" />
-                        </Button>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    </div>
-                    <div className="p-6 bg-white">
-                      <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
-                      <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-3xl font-bold text-navy">${product.price}</span>
-                        <Link href={`/product/${product.id}`}>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+          <div className="relative">
+            {/* Navigation Arrows */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
+              disabled={newArrivalsSlide === 0}
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-xl rounded-full w-12 h-12"
+              onClick={() => setNewArrivalsSlide(Math.min(Math.ceil(products.slice(12, 24).length / 4) - 1, newArrivalsSlide + 1))}
+              disabled={newArrivalsSlide >= Math.ceil(products.slice(12, 24).length / 4) - 1}
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+
+            <div className="overflow-hidden">
+              <motion.div 
+                className="flex space-x-6"
+                animate={{ x: -newArrivalsSlide * (320 * 4 + 24 * 3) }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {products.slice(12, 24).map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
+                    className="flex-shrink-0 w-80 group cursor-pointer"
+                  >
+                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
+                      <div className="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
+                        <img 
+                          src={product.imageUrl || ''} 
+                          alt={product.name}
+                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
+                            New Arrival
+                          </Badge>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 p-0 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110"
+                            onClick={() => addToCartMutation.mutate(product.id)}
+                            disabled={addToCartMutation.isPending}
                           >
-                            View Details
+                            <ShoppingBag className="h-5 w-5 text-navy" />
                           </Button>
-                        </Link>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      </div>
+                      <div className="p-6 bg-white">
+                        <h3 className="font-bold text-xl text-navy mb-2 line-clamp-2 group-hover:text-gold transition-colors duration-300">{product.name}</h3>
+                        <p className="text-gold font-semibold mb-4 text-lg">{product.brand}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-3xl font-bold text-navy">${product.price}</span>
+                          <Link href={`/product/${product.id}`}>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 font-semibold px-4 py-2"
+                            >
+                              View Details
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </div>

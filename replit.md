@@ -151,17 +151,24 @@ The application follows a monorepo structure with shared types and schemas, enab
 
 ### Home Page Redesign (January 28, 2025)
 - **Banner Slideshow Updated**: Replaced with 6 new luxury perfume campaign images in user-specified order
-- **Content Architecture**: Removed story-based content sections (About, Contact, Newsletter) and replaced with modern product reels
-- **Product Reels**: Added four distinct product sections with advanced animations:
-  - Most Popular: First 8 products with red "Popular" badges
-  - Best Sellers: Products 8-16 with gold "Best Seller" badges
-  - New Arrivals: Products 16-24 with green "New" badges
-  - Premium Collection: Products 24-32 with purple "Premium" badges
+- **Content Architecture**: Streamlined to exactly 3 sections as requested by user:
+  1. Most Sold carousel with arrow navigation
+  2. Auto-moving brand logos carousel 
+  3. New Arrivals carousel with arrow navigation
+- **Carousel Implementation**: 
+  - Proper carousel navigation with left/right arrow controls
+  - Smooth motion animations using Framer Motion
+  - 4 products displayed per slide with navigation between pages
+  - Products sized at 320px width with 80px height for images matching catalogue specifications
+- **Brand Showcase**: 
+  - Continuously moving brand logos (CHANEL, DIOR, ARMANI, CREED, GUCCI, VERSACE, YSL, PRADA)
+  - 25-second infinite scroll animation with seamless loop
+  - Navy background with white brand cards for luxury aesthetic
 - **Modern Design Elements**: 
-  - Horizontal scrolling product carousels
+  - Gradient backgrounds and advanced shadow effects
   - Hover animations with image scaling and card lifting effects
   - Advanced transition animations with staggered delays
-  - Rounded product cards with shadow effects
+  - Rounded product cards with sophisticated styling
   - Quick add-to-cart buttons on product images
-- **User Experience**: Each section includes "View All" buttons linking to the full catalogue
+- **User Experience**: Clean, focused design without scroll effects, using proper carousel controls
 - **Performance Optimized**: Uses product slices to display different ranges of products per section
