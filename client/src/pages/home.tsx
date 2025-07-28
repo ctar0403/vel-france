@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,138 @@ import banner10 from "@assets/10_1753734237960.png";
 import banner11 from "@assets/11_1753734243609.png";
 import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.png";
 
+interface CarouselProductCardProps {
+  product: Product;
+  index: number;
+  badgeText: string;
+  badgeColor: string;
+  onAddToCart: () => void;
+  isPending: boolean;
+}
+
+function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCart, isPending }: CarouselProductCardProps) {
+  const [isCardHovered, setIsCardHovered] = React.useState(false);
+  const [isButtonHovered, setIsButtonHovered] = React.useState(false);
+
+  const formatProductName = (name: string, brand?: string | null) => {
+    if (brand && !name.toLowerCase().includes(brand.toLowerCase())) {
+      return `${brand} – ${name}`;
+    }
+    return name;
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onAddToCart();
+  };
+
+  return (
+    <Link href={`/product/${product.id}`}>
+      <motion.div
+        onHoverStart={() => setIsCardHovered(true)}
+        onHoverEnd={() => setIsCardHovered(false)}
+        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+      >
+        {/* Fixed Height Image Container */}
+        <div className="aspect-square relative overflow-hidden flex-shrink-0">
+          <motion.img
+            src={product.imageUrl || "/placeholder-perfume.jpg"}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            animate={{ 
+              scale: isCardHovered ? 1.1 : 1,
+              filter: isCardHovered ? "brightness(0.8)" : "brightness(1)"
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+          
+          {/* Elegant overlay gradient */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isCardHovered ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+          />
+
+          {/* Badge */}
+          <div className="absolute top-4 left-4">
+            <Badge className={`${badgeColor} text-white font-semibold px-3 py-1 text-sm shadow-lg`}>
+              {badgeText}
+            </Badge>
+          </div>
+
+          {/* Professional Add to Cart Button */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isCardHovered ? 1 : 0 }}
+            transition={{ duration: 0.15 }}
+          >
+            <motion.button
+              onClick={handleAddToCart}
+              disabled={isPending}
+              onHoverStart={() => setIsButtonHovered(true)}
+              onHoverEnd={() => setIsButtonHovered(false)}
+              className={`relative backdrop-blur-sm px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${
+                isButtonHovered 
+                  ? 'bg-[#001f66] text-white border-[#001f66]' 
+                  : 'bg-white text-black border-white'
+              }`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isCardHovered ? 1 : 0 }}
+              transition={{ duration: 0.15 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <motion.div className="flex items-center gap-2">
+                <motion.span
+                  animate={{ 
+                    opacity: isButtonHovered ? 0 : 1,
+                  }}
+                  transition={{ duration: 0.1 }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  Add to Cart
+                </motion.span>
+                
+                <motion.div
+                  animate={{ 
+                    opacity: isButtonHovered ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.1 }}
+                  className="flex items-center gap-2"
+                >
+                  <motion.div
+                    animate={isPending ? { rotate: 360 } : {}}
+                    transition={{ 
+                      duration: 0.8, 
+                      repeat: isPending ? Infinity : 0, 
+                      ease: "linear" 
+                    }}
+                  >
+                    <ShoppingBag className={`h-4 w-4 ${isButtonHovered ? 'text-white' : 'text-black'}`} />
+                  </motion.div>
+                  <span>Add to Cart</span>
+                </motion.div>
+              </motion.div>
+            </motion.button>
+          </motion.div>
+        </div>
+        {/* Fixed Height Content Container */}
+        <div className="p-6 flex-grow flex flex-col min-h-[120px]">
+          <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
+            {formatProductName(product.name, product.brand)}
+          </h3>
+
+          <span className="text-base text-gold font-normal">
+            ${parseFloat(product.price.toString()).toFixed(2)}
+          </span>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
 
 export default function Home() {
   const { user } = useAuth();
@@ -317,75 +449,15 @@ export default function Home() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    className="flex-shrink-0 w-80"
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
-                      <div className="relative overflow-hidden bg-gray-100">
-                        {product.imageUrl ? (
-                          <img 
-                            src={product.imageUrl} 
-                            alt={`${product.brand} ${product.name} luxury perfume`}
-                            className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
-                          />
-                        ) : (
-                          <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
-                            <div className="text-center p-4">
-                              <div className="text-6xl mb-2">🍃</div>
-                              <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
-                            </div>
-                          </div>
-                        )}
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                            #{index + 1} Bestseller
-                          </Badge>
-                        </div>
-                        {!product.inStock && (
-                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                            <Badge variant="destructive" className="text-lg px-4 py-2">
-                              Out of Stock
-                            </Badge>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="p-6">
-                        <div className="mb-4">
-                          <h3 className="text-xl font-bold text-navy mb-2 line-clamp-2">{product.name}</h3>
-                          <p className="text-gold font-semibold text-lg mb-1">{product.brand}</p>
-                          <p className="text-gray-600 text-sm capitalize">{product.category}</p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="text-left">
-                            <span className="text-3xl font-bold text-navy">${product.price}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Link href={`/product/${product.id}`}>
-                              <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
-                                View
-                              </Button>
-                            </Link>
-                            {product.inStock && (
-                              <Button
-                                size="sm"
-                                className="bg-navy hover:bg-navy/90 text-white"
-                                onClick={() => addToCartMutation.mutate(product.id)}
-                                disabled={addToCartMutation.isPending}
-                              >
-                                <ShoppingBag className="h-4 w-4 mr-1" />
-                                Add
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <CarouselProductCard 
+                    key={product.id} 
+                    product={product} 
+                    index={index} 
+                    badgeText={`#${index + 1} Bestseller`}
+                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
                 ))}
               </motion.div>
             </div>
@@ -509,75 +581,15 @@ export default function Home() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    className="flex-shrink-0 w-80"
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
-                      <div className="relative overflow-hidden bg-gray-100">
-                        {product.imageUrl ? (
-                          <img 
-                            src={product.imageUrl} 
-                            alt={`${product.brand} ${product.name} luxury perfume`}
-                            className="w-full h-64 object-cover transition-transform duration-300 hover:scale-110"
-                          />
-                        ) : (
-                          <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
-                            <div className="text-center p-4">
-                              <div className="text-6xl mb-2">🍃</div>
-                              <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
-                            </div>
-                          </div>
-                        )}
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-3 py-1 text-sm shadow-lg">
-                            New Arrival
-                          </Badge>
-                        </div>
-                        {!product.inStock && (
-                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                            <Badge variant="destructive" className="text-lg px-4 py-2">
-                              Out of Stock
-                            </Badge>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="p-6">
-                        <div className="mb-4">
-                          <h3 className="text-xl font-bold text-navy mb-2 line-clamp-2">{product.name}</h3>
-                          <p className="text-gold font-semibold text-lg mb-1">{product.brand}</p>
-                          <p className="text-gray-600 text-sm capitalize">{product.category}</p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="text-left">
-                            <span className="text-3xl font-bold text-navy">${product.price}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Link href={`/product/${product.id}`}>
-                              <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold hover:text-navy">
-                                View
-                              </Button>
-                            </Link>
-                            {product.inStock && (
-                              <Button
-                                size="sm"
-                                className="bg-navy hover:bg-navy/90 text-white"
-                                onClick={() => addToCartMutation.mutate(product.id)}
-                                disabled={addToCartMutation.isPending}
-                              >
-                                <ShoppingBag className="h-4 w-4 mr-1" />
-                                Add
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <CarouselProductCard 
+                    key={product.id} 
+                    product={product} 
+                    index={index} 
+                    badgeText="New Arrival"
+                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
                 ))}
               </motion.div>
             </div>
