@@ -136,10 +136,13 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
                           {brandsByLetter[letter].map((brand) => (
                             <button
                               key={brand}
-                              onClick={(e) => {
+                              onClick={() => {
+                                console.log('SIMPLE TEST: Brand clicked:', brand);
+                                handleBrandClick(brand);
+                              }}
+                              onMouseDown={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                handleBrandClick(brand);
                               }}
                               className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-roboto px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
                             >
@@ -296,9 +299,8 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
                           {brands.map((brand) => (
                             <button
                               key={brand}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
+                              onClick={() => {
+                                console.log('MOBILE TEST: Brand clicked:', brand);
                                 handleBrandClick(brand);
                                 setIsBrandsOpen(false);
                               }}
