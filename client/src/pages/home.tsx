@@ -32,6 +32,18 @@ import banner10 from "@assets/10_1753734237960.png";
 import banner11 from "@assets/11_1753734243609.png";
 import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.png";
 
+// Import new brand logos
+import chanelLogo from "@assets/1_1753788502251.png";
+import versaceLogo from "@assets/2_1753788502252.png";
+import diorLogo from "@assets/3_1753788502252.png";
+import gucciLogo from "@assets/4_1753788502253.png";
+import armaneLogo from "@assets/5_1753788502254.png";
+import dgLogo from "@assets/6_1753788502254.png";
+import creedLogo from "@assets/7_1753788502255.png";
+import yslLogo from "@assets/8_1753788502255.png";
+import pradaLogo from "@assets/9_1753788502255.png";
+import claireFontaineLogo from "@assets/10_1753788502256.png";
+
 interface CarouselProductCardProps {
   product: Product;
   index: number;
@@ -506,55 +518,67 @@ export default function Home() {
         <div className="relative">
           <div className="flex animate-marquee space-x-16 items-center">
             {/* First set of brand logos */}
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">CHANEL</div>
+            <div className="flex-shrink-0">
+              <img src={chanelLogo} alt="Chanel" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">DIOR</div>
+            <div className="flex-shrink-0">
+              <img src={versaceLogo} alt="Versace" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-xl font-bold text-black tracking-wider">ARMANI</div>
+            <div className="flex-shrink-0">
+              <img src={diorLogo} alt="Dior" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">CREED</div>
+            <div className="flex-shrink-0">
+              <img src={gucciLogo} alt="Gucci" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">GUCCI</div>
+            <div className="flex-shrink-0">
+              <img src={armaneLogo} alt="Armane" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-xl font-bold text-black tracking-wider">VERSACE</div>
+            <div className="flex-shrink-0">
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">YSL</div>
+            <div className="flex-shrink-0">
+              <img src={creedLogo} alt="Creed" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">PRADA</div>
+            <div className="flex-shrink-0">
+              <img src={yslLogo} alt="YSL" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="flex-shrink-0">
+              <img src={pradaLogo} alt="Prada" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="flex-shrink-0">
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             
             {/* Duplicate set for seamless loop */}
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">CHANEL</div>
+            <div className="flex-shrink-0">
+              <img src={chanelLogo} alt="Chanel" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">DIOR</div>
+            <div className="flex-shrink-0">
+              <img src={versaceLogo} alt="Versace" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-xl font-bold text-black tracking-wider">ARMANI</div>
+            <div className="flex-shrink-0">
+              <img src={diorLogo} alt="Dior" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">CREED</div>
+            <div className="flex-shrink-0">
+              <img src={gucciLogo} alt="Gucci" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">GUCCI</div>
+            <div className="flex-shrink-0">
+              <img src={armaneLogo} alt="Armane" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-xl font-bold text-black tracking-wider">VERSACE</div>
+            <div className="flex-shrink-0">
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">YSL</div>
+            <div className="flex-shrink-0">
+              <img src={creedLogo} alt="Creed" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="flex-shrink-0 w-32 h-20 flex items-center justify-center bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-2xl font-bold text-black tracking-wider">PRADA</div>
+            <div className="flex-shrink-0">
+              <img src={yslLogo} alt="YSL" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="flex-shrink-0">
+              <img src={pradaLogo} alt="Prada" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="flex-shrink-0">
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>
