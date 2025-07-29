@@ -160,7 +160,7 @@ export default function Contact() {
             >
               <Card className="shadow-2xl border-0">
                 <CardHeader className="bg-gradient-to-r from-navy to-deep-navy text-white rounded-t-lg">
-                  <CardTitle className="text-2xl font-bold flex items-center gap-3">
+                  <CardTitle className="tracking-tight text-2xl font-bold flex items-center gap-3 text-[#000000]">
                     <MessageSquare className="h-6 w-6" />
                     Send Us a Message
                   </CardTitle>
