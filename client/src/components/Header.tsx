@@ -60,7 +60,10 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
 
   const handleBrandClick = (brand: string) => {
     // Navigate to catalogue page with brand filter using React routing
-    setLocation(`/catalogue?brand=${encodeURIComponent(brand)}`);
+    console.log('DEBUG: handleBrandClick called with brand:', brand);
+    const url = `/catalogue?brand=${encodeURIComponent(brand)}`;
+    console.log('DEBUG: Navigating to URL:', url);
+    setLocation(url);
   };
 
   const handleCategoryClick = (category: string) => {
