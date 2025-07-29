@@ -497,9 +497,9 @@ export default function Catalogue() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold text-navy tracking-wide">Discover Perfumes</h4>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#002c8c88] to-transparent ml-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
-                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#002c8c88] shadow-sm">
+                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
                   <div className="space-y-4">
                     <div className="relative">
                       <input
@@ -513,7 +513,7 @@ export default function Catalogue() {
                             handleSearch();
                           }
                         }}
-                        className="flex h-12 w-full rounded-xl border-2 border-[#002c8c88] bg-gradient-to-r from-white to-cream/20 px-4 py-3 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#002c8c88] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-24 focus:border-[#002c8c] focus:bg-white transition-all duration-200 shadow-sm font-medium"
+                        className="flex h-12 w-full rounded-xl border-2 border-[#00000088] bg-gradient-to-r from-white to-cream/20 px-4 py-3 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00000088] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-24 focus:border-[#000000] focus:bg-white transition-all duration-200 shadow-sm font-medium"
                       />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                         {tempSearchQuery && (
@@ -522,7 +522,7 @@ export default function Catalogue() {
                               setTempSearchQuery("");
                               updateFilter('searchQuery', "");
                             }}
-                            className="p-1 hover:bg-[#002c8c88] rounded-full transition-colors"
+                            className="p-1 hover:bg-[#00000088] rounded-full transition-colors"
                           >
                             <X className="h-4 w-4 text-gray-400" />
                           </button>
@@ -530,7 +530,7 @@ export default function Catalogue() {
                         <Button
                           onClick={handleSearch}
                           size="sm"
-                          className="bg-[#002c8c] hover:bg-[#000000] text-white font-medium h-8 px-3"
+                          className="bg-[#000000] hover:bg-[#000000] text-white font-medium h-8 px-3"
                         >
                           Search
                         </Button>
@@ -544,9 +544,9 @@ export default function Catalogue() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold text-navy tracking-wide">Price Range</h4>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#002c8c88] to-transparent ml-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
-                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#002c8c88] shadow-sm">
+                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
                   <div className="space-y-4">
                     <Slider
                       value={tempPriceRange}
@@ -572,9 +572,9 @@ export default function Catalogue() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold text-navy tracking-wide">Brands</h4>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#002c8c88] to-transparent ml-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
-                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#002c8c88] shadow-sm">
+                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
                   <ScrollArea className="h-40">
                     <div className="space-y-2">
                       {availableBrands.map((brand) => (
@@ -598,9 +598,9 @@ export default function Catalogue() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-lg font-bold text-navy tracking-wide">Categories</h4>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#002c8c88] to-transparent ml-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
-                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#002c8c88] shadow-sm">
+                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
                   <div className="space-y-2">
                     {availableCategories.map((category) => (
                       <div key={category} className="flex items-center space-x-2">
@@ -623,7 +623,7 @@ export default function Catalogue() {
                 <Button
                   onClick={clearAllFilters}
                   variant="outline"
-                  className="w-full border-[#002c8c88] text-navy hover:bg-[#002c8c88]"
+                  className="w-full border-[#00000088] text-navy hover:bg-[#00000088]"
                 >
                   Clear All Filters ({activeFiltersCount})
                 </Button>
@@ -648,10 +648,10 @@ export default function Catalogue() {
               <div className="flex items-center gap-4">
                 {/* Sort Dropdown */}
                 <Select value={filters.sortBy} onValueChange={(value) => updateFilter('sortBy', value)}>
-                  <SelectTrigger className="w-48 bg-white border-[#002c8c88] hover:border-[#002c8c] transition-colors">
+                  <SelectTrigger className="w-48 bg-white border-[#00000088] hover:border-[#000000] transition-colors">
                     <SelectValue placeholder="Sort by..." />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-[#002c8c88]">
+                  <SelectContent className="bg-white border-[#00000088]">
                     <SelectItem value="name-asc">Name (A-Z)</SelectItem>
                     <SelectItem value="name-desc">Name (Z-A)</SelectItem>
                     <SelectItem value="price-asc">Price (Low to High)</SelectItem>
@@ -675,7 +675,7 @@ export default function Catalogue() {
                 <div className="flex flex-wrap gap-2">
                   {/* Search Query Filter */}
                   {filters.searchQuery.trim() && (
-                    <Badge variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
+                    <Badge variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
                       Search: "{filters.searchQuery}"
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 
@@ -689,7 +689,7 @@ export default function Catalogue() {
 
                   {/* Brand Filters */}
                   {filters.selectedBrands.map(brand => (
-                    <Badge key={brand} variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
+                    <Badge key={brand} variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
                       {brand}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 
@@ -700,7 +700,7 @@ export default function Catalogue() {
 
                   {/* Category Filters */}
                   {filters.selectedCategories.map(category => (
-                    <Badge key={category} variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
+                    <Badge key={category} variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
                       {category}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 
@@ -712,7 +712,7 @@ export default function Catalogue() {
                   {/* Price Range Filter */}
                   {priceRangeModified && 
                    (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && (
-                    <Badge variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
+                    <Badge variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
                       ₾{filters.priceRange[0]} - ₾{filters.priceRange[1]}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 

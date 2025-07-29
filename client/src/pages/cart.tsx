@@ -142,7 +142,7 @@ export default function CartPage() {
               Discover our curated selection of luxury fragrances crafted for the discerning connoisseur
             </p>
             <Link href="/catalogue">
-              <Button className="bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 group relative overflow-hidden">
+              <Button className="bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative flex items-center">
                   <span className="text-lg">Explore Fragrances</span>
@@ -286,7 +286,7 @@ export default function CartPage() {
                 <div className="mb-8">
                   <Link href="/checkout">
                     <Button 
-                      className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden mb-6"
+                      className="w-full h-14 bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden mb-6"
                       disabled={cartItems.length === 0}
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

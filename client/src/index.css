@@ -32,7 +32,7 @@
   --card-foreground: hsl(217, 30%, 18%);
   --border: hsl(39, 15%, 90%);
   --input: hsl(39, 15%, 90%);
-  --primary: #002c8c;
+  --primary: #000000;
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(39, 100%, 97%);
   --secondary-foreground: hsl(217, 30%, 18%);
@@ -40,7 +40,7 @@
   --accent-foreground: hsl(217, 30%, 18%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: #002c8c88;
+  --ring: #00000088;
   --radius: 0.5rem;
   
   /* Custom Vel France colors */
@@ -62,7 +62,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(217, 30%, 15%);
   --input: hsl(217, 30%, 15%);
-  --primary: #002c8c;
+  --primary: #000000;
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(217, 30%, 15%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -70,7 +70,7 @@
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: #002c8c88;
+  --ring: #00000088;
 }
 
 /* Ensure scrollbars are visible */
@@ -171,7 +171,7 @@ body {
 
 /* Custom slider and checkbox styling */
 [data-radix-collection-item] {
-  border-color: #002c8c88 !important;
+  border-color: #00000088 !important;
 }
 
 /* React Multi Carousel Custom Styles */
@@ -224,12 +224,12 @@ body {
 
 /* Checkbox styling */
 [role="checkbox"] {
-  border-color: #002c8c88 !important;
+  border-color: #00000088 !important;
 }
 
 [role="checkbox"][data-state="checked"] {
-  background-color: #002c8c !important;
-  border-color: #002c8c !important;
+  background-color: #000000 !important;
+  border-color: #000000 !important;
 }
 
 /* Auto-moving marquee animation for brand logos */
