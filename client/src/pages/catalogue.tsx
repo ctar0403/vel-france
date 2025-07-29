@@ -189,6 +189,7 @@ export default function Catalogue() {
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([15, 150]); // Will be updated when products load
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [priceRangeModified, setPriceRangeModified] = useState(false);
 
   // Load products
   const { data: products = [], isLoading, error } = useQuery<Product[]>({
@@ -398,6 +399,7 @@ export default function Catalogue() {
     });
     setTempPriceRange(priceRange as [number, number]); // Reset temp to full range for slider
     setTempSearchQuery("");
+    setPriceRangeModified(false); // Reset price range modified state
     setIsFiltering(false);
   }, [priceRange, filters.viewMode]);
 
@@ -549,7 +551,10 @@ export default function Catalogue() {
                     <Slider
                       value={tempPriceRange}
                       onValueChange={(value) => setTempPriceRange(value as [number, number])}
-                      onValueCommit={(value) => updateFilter('priceRange', value)}
+                      onValueCommit={(value) => {
+                        setPriceRangeModified(true);
+                        updateFilter('priceRange', value);
+                      }}
                       max={priceRange[1]}
                       min={priceRange[0]}
                       step={1}
@@ -705,15 +710,14 @@ export default function Catalogue() {
                   ))}
 
                   {/* Price Range Filter */}
-                  {!productsQuery.isLoading && 
-                   (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && 
-                   priceRange[0] > 0 && priceRange[1] > 0 && 
-                   filters.priceRange[0] > 0 && filters.priceRange[1] > 0 && (
+                  {priceRangeModified && 
+                   (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && (
                     <Badge variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
                       ₾{filters.priceRange[0]} - ₾{filters.priceRange[1]}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 
                         onClick={() => {
+                          setPriceRangeModified(false);
                           updateFilter('priceRange', priceRange);
                           setTempPriceRange(priceRange as [number, number]);
                         }}
