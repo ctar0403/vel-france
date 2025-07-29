@@ -167,9 +167,10 @@ export default function Admin() {
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category.toLowerCase()) {
-      case 'women': return 'bg-pink-100 text-pink-800';
-      case 'men': return 'bg-blue-100 text-blue-800';
+      case 'women\'s': return 'bg-pink-100 text-pink-800';
+      case 'men\'s': return 'bg-blue-100 text-blue-800';
       case 'unisex': return 'bg-purple-100 text-purple-800';
+      case 'niche': return 'bg-green-100 text-green-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -414,12 +415,12 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
     name: '',
     description: '',
     price: '0.00',
-    category: 'unisex',
+    category: 'Unisex',
     brand: '',
     imageUrl: '',
     inStock: true,
   });
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(['unisex']);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['Unisex']);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -505,24 +506,24 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           name: product.name || '',
           description: product.description || '',
           price: product.price || '0.00',
-          category: product.category || 'unisex',
+          category: product.category || 'Unisex',
           brand: product.brand || '',
           imageUrl: product.imageUrl || '',
           inStock: product.inStock ?? true,
         });
-        setSelectedCategories([product.category || 'unisex']);
+        setSelectedCategories([product.category || 'Unisex']);
       } else {
         setFormData({
           name: '',
           description: '',
           price: '0.00',
-          category: 'unisex',
+          category: 'Unisex',
           brand: '',
 
           imageUrl: '',
           inStock: true,
         });
-        setSelectedCategories(['unisex']);
+        setSelectedCategories(['Unisex']);
       }
     }
   }, [isOpen, mode, product]);
@@ -666,8 +667,8 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           {/* Multiple Category Selection */}
           <div className="space-y-3">
             <Label>Product Categories *</Label>
-            <div className="grid grid-cols-3 gap-3">
-              {['women', 'men', 'unisex'].map((category) => (
+            <div className="grid grid-cols-4 gap-3">
+              {['Women\'s', 'Men\'s', 'Niche', 'Unisex'].map((category) => (
                 <div key={category} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
