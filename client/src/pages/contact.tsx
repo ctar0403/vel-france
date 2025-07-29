@@ -310,7 +310,44 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
               className="space-y-8"
             >
-              
+              <div>
+                <h3 className="text-3xl font-bold text-navy mb-6">Why Choose Vel France?</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-gold/20 p-2 rounded-lg">
+                      <User className="h-5 w-5 text-gold" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-navy mb-1">Expert Consultation</h4>
+                      <p className="text-gray-600 text-sm">
+                        Our fragrance experts help you find the perfect scent for every occasion.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="bg-gold/20 p-2 rounded-lg">
+                      <Mail className="h-5 w-5 text-gold" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-navy mb-1">Fast Response</h4>
+                      <p className="text-gray-600 text-sm">
+                        We respond to all inquiries within 24 hours, usually much faster.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="bg-gold/20 p-2 rounded-lg">
+                      <Phone className="h-5 w-5 text-gold" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-navy mb-1">Multiple Channels</h4>
+                      <p className="text-gray-600 text-sm">
+                        Reach us via phone, email.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               
             </motion.div>
