@@ -229,9 +229,6 @@ export default function Catalogue() {
     const urlBrand = urlParams.get('brand');
     const urlSearch = urlParams.get('search');
 
-    console.log('DEBUG: URL location changed:', location);
-    console.log('DEBUG: URL params:', { urlBrand, urlCategory, urlSearch });
-
     setFilters(prev => ({
       ...prev,
       searchQuery: urlSearch || "",
@@ -333,12 +330,9 @@ export default function Catalogue() {
 
     // Apply brand filter
     if (filters.selectedBrands.length > 0) {
-      console.log('DEBUG: Applying brand filter for:', filters.selectedBrands);
-      const beforeFilter = filtered.length;
       filtered = filtered.filter(product => 
         product.brand && filters.selectedBrands.includes(product.brand)
       );
-      console.log('DEBUG: Products before/after brand filter:', beforeFilter, '→', filtered.length);
     }
 
     // Apply category filter - check both category and categories array

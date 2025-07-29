@@ -59,16 +59,13 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
   };
 
   const handleBrandClick = (brand: string) => {
-    // Navigate to catalogue page with brand filter using React routing
-    console.log('DEBUG: handleBrandClick called with brand:', brand);
-    const url = `/catalogue?brand=${encodeURIComponent(brand)}`;
-    console.log('DEBUG: Navigating to URL:', url);
-    setLocation(url);
+    // Navigate to catalogue page with brand filter
+    window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
   };
 
   const handleCategoryClick = (category: string) => {
-    // Navigate to catalogue page with category filter using React routing
-    setLocation(`/catalogue?category=${encodeURIComponent(category)}`);
+    // Navigate to catalogue page with category filter
+    window.location.href = `/catalogue?category=${encodeURIComponent(category)}`;
   };
 
   return (
