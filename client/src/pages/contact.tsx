@@ -107,24 +107,7 @@ export default function Contact() {
     <div className="min-h-screen bg-gradient-to-br from-cream to-white">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-navy to-deep-navy overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center text-white"
-          >
-            <h1 className="text-6xl font-bold mb-6 tracking-tight">Contact Us</h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-8"></div>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-              Get in touch with our fragrance experts. We're here to help you discover your perfect scent 
-              and provide exceptional customer service.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      
 
       {/* Contact Information Cards */}
       <section className="py-16 bg-white">
