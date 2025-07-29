@@ -139,12 +139,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             >
               Catalogue
             </Link>
-            <Link 
-              href="/contact"
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Contact
-            </Link>
             <button 
               onClick={() => scrollToSection('mens')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -169,12 +163,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             >
               Niche
             </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
+            <Link 
+              href="/contact"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Contact
-            </button>
+            </Link>
           </div>
           
           {/* Action Buttons */}
