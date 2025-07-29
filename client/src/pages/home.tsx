@@ -422,50 +422,55 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full max-w-6xl mx-auto">
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={20}
-              slidesPerView={4}
-              slidesPerGroup={1}
-              navigation={{
-                prevEl: '.swiper-button-prev-most-sold',
-                nextEl: '.swiper-button-next-most-sold',
-              }}
-              breakpoints={{
-                320: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-                1280: { slidesPerView: 4 }
-              }}
-              className="!overflow-visible"
-            >
-              {products.slice(0, 12).map((product, index) => (
-                <SwiperSlide key={product.id}>
-                  <CarouselProductCard 
-                    product={product} 
-                    index={index} 
-                    badgeText={`#${index + 1} Bestseller`}
-                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            {/* Custom Navigation Buttons */}
+          <div className="relative w-full flex items-center justify-center">
+            {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="swiper-button-prev-most-sold absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+              className="swiper-button-prev-most-sold mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
+
+            {/* Carousel Container */}
+            <div className="max-w-6xl">
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={4}
+                slidesPerGroup={1}
+                navigation={{
+                  prevEl: '.swiper-button-prev-most-sold',
+                  nextEl: '.swiper-button-next-most-sold',
+                }}
+                breakpoints={{
+                  320: { slidesPerView: 1, spaceBetween: 16 },
+                  768: { slidesPerView: 2, spaceBetween: 16 },
+                  1024: { slidesPerView: 3, spaceBetween: 20 },
+                  1280: { slidesPerView: 4, spaceBetween: 20 }
+                }}
+                className="!overflow-visible"
+              >
+                {products.slice(0, 12).map((product, index) => (
+                  <SwiperSlide key={product.id}>
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText={`#${index + 1} Bestseller`}
+                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Right Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="swiper-button-next-most-sold absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+              className="swiper-button-next-most-sold ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -560,50 +565,55 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full max-w-6xl mx-auto">
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={20}
-              slidesPerView={4}
-              slidesPerGroup={1}
-              navigation={{
-                prevEl: '.swiper-button-prev-new-arrivals',
-                nextEl: '.swiper-button-next-new-arrivals',
-              }}
-              breakpoints={{
-                320: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-                1280: { slidesPerView: 4 }
-              }}
-              className="!overflow-visible"
-            >
-              {products.slice(12, 24).map((product, index) => (
-                <SwiperSlide key={product.id}>
-                  <CarouselProductCard 
-                    product={product} 
-                    index={index} 
-                    badgeText="New Arrival"
-                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            {/* Custom Navigation Buttons */}
+          <div className="relative w-full flex items-center justify-center">
+            {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="swiper-button-prev-new-arrivals absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+              className="swiper-button-prev-new-arrivals mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
+
+            {/* Carousel Container */}
+            <div className="max-w-6xl">
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={4}
+                slidesPerGroup={1}
+                navigation={{
+                  prevEl: '.swiper-button-prev-new-arrivals',
+                  nextEl: '.swiper-button-next-new-arrivals',
+                }}
+                breakpoints={{
+                  320: { slidesPerView: 1, spaceBetween: 16 },
+                  768: { slidesPerView: 2, spaceBetween: 16 },
+                  1024: { slidesPerView: 3, spaceBetween: 20 },
+                  1280: { slidesPerView: 4, spaceBetween: 20 }
+                }}
+                className="!overflow-visible"
+              >
+                {products.slice(12, 24).map((product, index) => (
+                  <SwiperSlide key={product.id}>
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText="New Arrival"
+                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Right Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="swiper-button-next-new-arrivals absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+              className="swiper-button-next-new-arrivals ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
