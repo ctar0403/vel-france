@@ -393,11 +393,11 @@ export default function CheckoutPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Information</Label>
-                    <Textarea
+                    <Input
                       id="shipping-additionalInfo"
                       value={shippingForm.additionalInfo}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
-                      className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
+                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
                       placeholder="Any special delivery instructions or notes (optional)"
                     />
                   </div>
