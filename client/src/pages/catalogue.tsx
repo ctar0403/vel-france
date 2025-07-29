@@ -556,8 +556,8 @@ export default function Catalogue() {
                       className="w-full"
                     />
                     <div className="flex justify-between text-sm text-gray-600">
-                      <span>${tempPriceRange[0]}</span>
-                      <span>${tempPriceRange[1]}</span>
+                      <span>₾{tempPriceRange[0]}</span>
+                      <span>₾{tempPriceRange[1]}</span>
                     </div>
                   </div>
                 </div>
@@ -705,9 +705,10 @@ export default function Catalogue() {
                   ))}
 
                   {/* Price Range Filter */}
-                  {(filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && (
+                  {(filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && 
+                   priceRange[0] > 0 && priceRange[1] > 0 && (
                     <Badge variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
-                      ${filters.priceRange[0]} - ${filters.priceRange[1]}
+                      ₾{filters.priceRange[0]} - ₾{filters.priceRange[1]}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-600" 
                         onClick={() => {
