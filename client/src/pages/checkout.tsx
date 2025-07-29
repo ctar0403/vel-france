@@ -58,8 +58,9 @@ export default function CheckoutPage() {
     email: "",
     phone: "",
     address: "",
+    additionalAddress: "",
     city: "",
-    postalCode: "",
+    additionalInfo: "",
     country: "Georgia"
   });
   
@@ -315,13 +316,13 @@ export default function CheckoutPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">First Name *</Label>
+                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">Name *</Label>
                     <Input
                       id="shipping-firstName"
                       value={shippingForm.firstName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, firstName: e.target.value }))}
                       className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                      placeholder="Enter your first name"
+                      placeholder="Enter your name"
                       required
                     />
                   </div>
@@ -337,19 +338,18 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email Address *</Label>
+                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide">City/Region *</Label>
                     <Input
-                      id="shipping-email"
-                      type="email"
-                      value={shippingForm.email}
-                      onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
+                      id="shipping-city"
+                      value={shippingForm.city}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
                       className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                      placeholder="your.email@example.com"
+                      placeholder="Tbilisi, Batumi, etc."
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone Number *</Label>
+                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone *</Label>
                     <Input
                       id="shipping-phone"
                       value={shippingForm.phone}
@@ -370,26 +370,35 @@ export default function CheckoutPage() {
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide">City *</Label>
+                  <div className="md:col-span-2 space-y-2">
+                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Address Info</Label>
                     <Input
-                      id="shipping-city"
-                      value={shippingForm.city}
-                      onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
+                      id="shipping-additionalAddress"
+                      value={shippingForm.additionalAddress}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, additionalAddress: e.target.value }))}
                       className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                      placeholder="Tbilisi"
-                      required
+                      placeholder="Apartment, suite, unit, building, floor, etc. (optional)"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="shipping-postalCode" className="text-navy/80 font-roboto font-medium tracking-wide">Postal Code *</Label>
+                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email</Label>
                     <Input
-                      id="shipping-postalCode"
-                      value={shippingForm.postalCode}
-                      onChange={(e) => setShippingForm(prev => ({ ...prev, postalCode: e.target.value }))}
+                      id="shipping-email"
+                      type="email"
+                      value={shippingForm.email}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
                       className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
-                      placeholder="0100"
-                      required
+                      placeholder="your.email@example.com (optional)"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Information</Label>
+                    <Textarea
+                      id="shipping-additionalInfo"
+                      value={shippingForm.additionalInfo}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
+                      className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
+                      placeholder="Any special delivery instructions or notes (optional)"
                     />
                   </div>
                 </div>
