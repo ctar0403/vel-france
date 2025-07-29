@@ -346,7 +346,6 @@ export default function Home() {
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
-        onBrandFilter={(brand) => window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`}
       />
       <CartSidebar 
         isOpen={isCartOpen}

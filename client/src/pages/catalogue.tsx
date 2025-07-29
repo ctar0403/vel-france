@@ -229,7 +229,7 @@ export default function Catalogue() {
     const urlBrand = urlParams.get('brand');
     const urlSearch = urlParams.get('search');
 
-    console.log('URL PARSING:', { urlCategory, urlBrand, urlSearch, fullURL: window.location.href });
+
 
     setFilters(prev => ({
       ...prev,
@@ -274,34 +274,7 @@ export default function Catalogue() {
     setTimeout(() => setIsFiltering(false), 300);
   }, []);
 
-  // Handle brand filter from header
-  const handleBrandFilter = useCallback((brand: string) => {
-    console.log('DEBUG: handleBrandFilter called with brand:', brand);
-    console.log('DEBUG: Current location:', location);
-    
-    // Navigate to catalogue if not already there
-    if (!location.includes('/catalogue')) {
-      console.log('DEBUG: Not on catalogue page, redirecting');
-      window.location.href = '/catalogue';
-      return;
-    }
-    
-    console.log('DEBUG: On catalogue page, applying filter');
-    // Apply brand filter directly
-    setFilters(prev => {
-      const newFilters = {
-        ...prev,
-        selectedBrands: [brand],
-        searchQuery: "",
-        selectedCategories: [],
-        priceRange: priceRange as [number, number]
-      };
-      console.log('DEBUG: New filters:', newFilters);
-      return newFilters;
-    });
-    setIsFiltering(true);
-    setTimeout(() => setIsFiltering(false), 300);
-  }, [location, priceRange]);
+
 
   // Handle search
   const handleSearch = useCallback(() => {
@@ -467,7 +440,6 @@ export default function Catalogue() {
         <Header 
           cartItemCount={cartItemCount} 
           onCartClick={() => setIsCartOpen(true)}
-          onBrandFilter={handleBrandFilter}
         />
         <div className="flex items-center justify-center min-h-[60vh]">
           <motion.div

@@ -12,10 +12,9 @@ import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 interface HeaderProps {
   cartItemCount?: number;
   onCartClick?: () => void;
-  onBrandFilter?: (brand: string) => void;
 }
 
-export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }: HeaderProps) {
+export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const { user, logoutMutation } = useAuth();
   const [, setLocation] = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -58,19 +57,7 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleBrandClick = (brand: string) => {
-    console.log('DEBUG: handleBrandClick called with brand:', brand);
-    console.log('DEBUG: onBrandFilter callback exists:', !!onBrandFilter);
-    
-    // If we have a brand filter callback, use it; otherwise navigate to catalogue
-    if (onBrandFilter) {
-      console.log('DEBUG: Calling onBrandFilter callback');
-      onBrandFilter(brand);
-    } else {
-      console.log('DEBUG: No callback, using window.location');
-      window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
-    }
-  };
+
 
   const handleCategoryClick = (category: string) => {
     // Navigate to catalogue page with category filter
@@ -100,24 +87,28 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
             >
               Home
             </Link>
-            <Link 
-              href="/catalogue?brand=Bvlgari"
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Bvlgari
-            </Link>
-            <Link 
-              href="/catalogue?brand=Chanel"
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Chanel
-            </Link>
-            <Link 
-              href="/catalogue?brand=Dior"
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Dior
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
+                  Brands
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-80 max-h-96 overflow-y-auto">
+                <div className="grid grid-cols-2 gap-1 p-2">
+                  {brands.map((brand) => (
+                    <DropdownMenuItem key={brand} asChild>
+                      <Link
+                        href={`/catalogue?brand=${encodeURIComponent(brand)}`}
+                        className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200"
+                      >
+                        {brand}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link 
               href="/catalogue"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -259,17 +250,14 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
                       {isBrandsOpen && (
                         <div className="ml-4 mt-2 max-h-48 overflow-y-auto border-l border-gold/20 pl-4">
                           {brands.map((brand) => (
-                            <button
+                            <Link
                               key={brand}
-                              onClick={() => {
-                                console.log('MOBILE TEST: Brand clicked:', brand);
-                                handleBrandClick(brand);
-                                setIsBrandsOpen(false);
-                              }}
+                              href={`/catalogue?brand=${encodeURIComponent(brand)}`}
+                              onClick={() => setIsBrandsOpen(false)}
                               className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-roboto"
                             >
                               {brand}
-                            </button>
+                            </Link>
                           ))}
                         </div>
                       )}
