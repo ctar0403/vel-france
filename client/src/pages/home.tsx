@@ -432,8 +432,8 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - Exactly 4 items: 4×320px + 3×16px = 1328px */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1328px" }}>
+            {/* Carousel Container - 4 items with buffer */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1360px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -570,8 +570,8 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - Exactly 4 items: 4×320px + 3×16px = 1328px */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1328px" }}>
+            {/* Carousel Container - 4 items with buffer */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1360px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
