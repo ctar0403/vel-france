@@ -315,13 +315,8 @@ export default function Contact() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="bg-gold/20 p-2 rounded-lg">
-                      <User className="h-5 w-5 text-gold" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-navy mb-1">Expert Consultation</h4>
-                      <p className="text-gray-600 text-sm">
-                        Our fragrance experts help you find the perfect scent for every occasion.
-                      </p>
+                     
+                     
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
