@@ -72,7 +72,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-1">
             <Link href="/">
               <img 
                 src={logoImage}
@@ -82,8 +82,8 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6 font-roboto">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex items-center justify-center space-x-6 font-roboto flex-1">
             <Link 
               href="/"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -153,7 +153,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           </div>
           
           {/* Action Buttons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 flex-1 justify-end">
             {/* Search */}
             <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
