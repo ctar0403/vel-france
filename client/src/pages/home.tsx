@@ -10,7 +10,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import FloatingParticles from "@/components/FloatingParticles";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -342,7 +342,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <FloatingParticles />
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
@@ -380,7 +379,6 @@ export default function Home() {
           </div>
         </div>
         <div className="absolute inset-0 bg-navy/40" />
-        <div className="absolute inset-0 lace-border" />
         
         {/* Navigation Controls */}
         <button
