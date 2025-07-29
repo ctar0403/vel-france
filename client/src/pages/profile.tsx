@@ -275,7 +275,7 @@ export default function Profile() {
             <Card>
               <CardContent className="p-6 text-center">
                 <Calendar className="h-8 w-8 text-gold mx-auto mb-2" />
-                <h3 className="text-2xl font-bold text-navy">€{totalSpent.toFixed(2)}</h3>
+                <h3 className="text-2xl font-bold text-navy">₾{totalSpent.toFixed(2)}</h3>
                 <p className="text-gray-600">Total Spent</p>
               </CardContent>
             </Card>
@@ -336,7 +336,7 @@ export default function Profile() {
                               
                             </div>
                             <div className="text-right">
-                              <p className="text-2xl font-bold text-gold">€{order.total}</p>
+                              <p className="text-2xl font-bold text-gold">₾{order.total}</p>
                               <Badge className={`${getStatusColor(order.status)} flex items-center gap-1`}>
                                 {getStatusIcon(order.status)}
                                 {order.status.charAt(0).toUpperCase() + order.status.slice(1)}

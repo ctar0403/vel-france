@@ -97,7 +97,7 @@ export default function ProductCard({
           
           <div className="flex items-center justify-between">
             <span className="text-2xl font-roboto font-bold text-gold">
-              €{product.price}
+              ₾{product.price}
             </span>
             
             {showAddToCart && onAddToCart && product.inStock && (

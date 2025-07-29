@@ -143,7 +143,7 @@ export default function OrderDetails() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-3xl font-bold text-gold">€{order.total}</p>
+                      <p className="text-3xl font-bold text-gold">₾{order.total}</p>
                       <Badge className={`${getStatusColor(order.status)} flex items-center gap-1 mt-2`}>
                         {getStatusIcon(order.status)}
                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
@@ -182,7 +182,7 @@ export default function OrderDetails() {
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Total Amount:</span>
-                        <span className="font-semibold text-gold">€{order.total}</span>
+                        <span className="font-semibold text-gold">₾{order.total}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Payment Status:</span>
@@ -290,7 +290,7 @@ export default function OrderDetails() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center pb-4 border-b">
                       <span className="text-lg font-semibold text-navy">Total</span>
-                      <span className="text-2xl font-bold text-gold">€{order.total}</span>
+                      <span className="text-2xl font-bold text-gold">₾{order.total}</span>
                     </div>
                     <div className="text-sm text-gray-600">
                       <p>Order placed on {new Date(order.createdAt!).toLocaleDateString()}</p>
