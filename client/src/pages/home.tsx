@@ -18,6 +18,10 @@ import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 import banner1 from "@assets/1_1753538704078.png";
 import banner2 from "@assets/2_1753538710752.png";
 import banner3 from "@assets/3_1753538715604.png";
@@ -170,8 +174,6 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [mostSoldSlide, setMostSoldSlide] = useState(0);
-  const [newArrivalsSlide, setNewArrivalsSlide] = useState(0);
   const [contactForm, setContactForm] = useState({
     firstName: "",
     lastName: "",
@@ -420,52 +422,50 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center">
-            {/* Left Navigation Arrow */}
+          <div className="relative w-full max-w-6xl mx-auto">
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={20}
+              slidesPerView={4}
+              slidesPerGroup={1}
+              navigation={{
+                prevEl: '.swiper-button-prev-most-sold',
+                nextEl: '.swiper-button-next-most-sold',
+              }}
+              breakpoints={{
+                320: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 }
+              }}
+              className="!overflow-visible"
+            >
+              {products.slice(0, 12).map((product, index) => (
+                <SwiperSlide key={product.id}>
+                  <CarouselProductCard 
+                    product={product} 
+                    index={index} 
+                    badgeText={`#${index + 1} Bestseller`}
+                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Custom Navigation Buttons */}
             <Button
               variant="outline"
               size="icon"
-              className="mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
-              onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
-              disabled={mostSoldSlide === 0}
+              className="swiper-button-prev-most-sold absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
-
-            {/* Carousel Container - Simple 4-item layout */}
-            <div className="overflow-hidden" style={{ width: "1400px" }}>
-              <motion.div 
-                className="flex"
-                style={{ gap: "20px" }}
-                animate={{ x: -mostSoldSlide * 340 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                {products.slice(0, 12).map((product, index) => (
-                  <div key={product.id} style={{ width: "320px", flexShrink: 0 }}>
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText={`#${index + 1} Bestseller`}
-                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Right Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
-              onClick={() => {
-                const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 4);
-                setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
-              }}
-              disabled={products.slice(0, 12).length <= 4 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 4)}
+              className="swiper-button-next-most-sold absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -560,52 +560,50 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center">
-            {/* Left Navigation Arrow */}
+          <div className="relative w-full max-w-6xl mx-auto">
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={20}
+              slidesPerView={4}
+              slidesPerGroup={1}
+              navigation={{
+                prevEl: '.swiper-button-prev-new-arrivals',
+                nextEl: '.swiper-button-next-new-arrivals',
+              }}
+              breakpoints={{
+                320: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 }
+              }}
+              className="!overflow-visible"
+            >
+              {products.slice(12, 24).map((product, index) => (
+                <SwiperSlide key={product.id}>
+                  <CarouselProductCard 
+                    product={product} 
+                    index={index} 
+                    badgeText="New Arrival"
+                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Custom Navigation Buttons */}
             <Button
               variant="outline"
               size="icon"
-              className="mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
-              onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
-              disabled={newArrivalsSlide === 0}
+              className="swiper-button-prev-new-arrivals absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
-
-            {/* Carousel Container - Simple 4-item layout */}
-            <div className="overflow-hidden" style={{ width: "1400px" }}>
-              <motion.div 
-                className="flex"
-                style={{ gap: "20px" }}
-                animate={{ x: -newArrivalsSlide * 340 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                {products.slice(12, 24).map((product, index) => (
-                  <div key={product.id} style={{ width: "320px", flexShrink: 0 }}>
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText="New Arrival"
-                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Right Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
-              onClick={() => {
-                const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 4);
-                setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
-              }}
-              disabled={products.slice(12, 24).length <= 4 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 4)}
+              className="swiper-button-next-new-arrivals absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
