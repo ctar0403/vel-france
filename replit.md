@@ -159,10 +159,11 @@ The application follows a monorepo structure with shared types and schemas, enab
   - Removed CHR(10), CHR(13), and Unicode line separators from all 219 products
   - Applied regex cleaning to handle various types of line breaks and whitespace
   - Cleaned up multiple spaces and trimmed descriptions for consistent formatting
-- **Admin Panel Category Updates**: Synchronized admin panel categories with catalogue page
-  - Updated category options from ['women', 'men', 'unisex'] to ['Women's', 'Men's', 'Niche', 'Unisex']
-  - Updated default category values throughout admin interface
-  - Added proper color coding for 'Niche' category (green)
+- **Admin Panel Category Updates**: Synchronized admin panel categories with database and catalogue
+  - Database stores Georgian categories: კაცის (Men's), ქალის (Women's), უნისექსი (Unisex), ნიშური (Niche)
+  - Admin interface uses English labels: Men's, Women's, Unisex, Niche for user-friendly management
+  - Added bilingual category badge color function to handle both Georgian and English category names
+  - Color coding: Women's (pink), Men's (blue), Unisex (purple), Niche (green)
   - Changed grid layout to accommodate 4 categories instead of 3
 - **Price Update Results**: Successfully updated 214 out of 219 products with new pricing from Excel file
   - Only 5 products remain with original prices (no matching entries found in price list)

@@ -166,10 +166,17 @@ export default function Admin() {
   };
 
   const getCategoryBadgeColor = (category: string) => {
+    // Handle both Georgian and English category names
     switch (category.toLowerCase()) {
-      case 'women\'s': return 'bg-pink-100 text-pink-800';
-      case 'men\'s': return 'bg-blue-100 text-blue-800';
+      case 'ქალის': 
+      case 'women\'s': 
+      case 'women': return 'bg-pink-100 text-pink-800';
+      case 'კაცის': 
+      case 'men\'s': 
+      case 'men': return 'bg-blue-100 text-blue-800';
+      case 'უნისექსი': 
       case 'unisex': return 'bg-purple-100 text-purple-800';
+      case 'ნიშური': 
       case 'niche': return 'bg-green-100 text-green-800';
       default: return 'bg-gray-100 text-gray-800';
     }
@@ -668,7 +675,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           <div className="space-y-3">
             <Label>Product Categories *</Label>
             <div className="grid grid-cols-4 gap-3">
-              {['Women\'s', 'Men\'s', 'Niche', 'Unisex'].map((category) => (
+              {['Men\'s', 'Women\'s', 'Unisex', 'Niche'].map((category) => (
                 <div key={category} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
