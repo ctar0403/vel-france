@@ -94,18 +94,43 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-80 max-h-96 overflow-y-auto">
-                <div className="grid grid-cols-2 gap-1 p-2">
-                  {brands.map((brand) => (
-                    <DropdownMenuItem key={brand} asChild>
-                      <a
-                        href={`/catalogue?brand=${encodeURIComponent(brand)}`}
-                        className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200"
-                      >
-                        {brand}
-                      </a>
-                    </DropdownMenuItem>
-                  ))}
+              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto">
+                <div className="p-3">
+                  {(() => {
+                    // Group brands by first letter
+                    const brandsByLetter = brands.reduce((acc, brand) => {
+                      const firstLetter = brand.charAt(0).toUpperCase();
+                      if (!acc[firstLetter]) {
+                        acc[firstLetter] = [];
+                      }
+                      acc[firstLetter].push(brand);
+                      return acc;
+                    }, {} as Record<string, string[]>);
+
+                    // Sort letters and render
+                    return Object.keys(brandsByLetter).sort().map((letter) => (
+                      <div key={letter} className="mb-4">
+                        <div className="flex items-center mb-2">
+                          <div className="w-6 h-6 bg-gradient-to-r from-[#002c8c] to-[#001f66] text-white text-xs font-bold rounded-full flex items-center justify-center">
+                            {letter}
+                          </div>
+                          <div className="flex-1 h-px bg-gradient-to-r from-[#002c8c88] to-transparent ml-2"></div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-1 ml-8">
+                          {brandsByLetter[letter].map((brand) => (
+                            <DropdownMenuItem key={brand} asChild>
+                              <a
+                                href={`/catalogue?brand=${encodeURIComponent(brand)}`}
+                                className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200 rounded"
+                              >
+                                {brand}
+                              </a>
+                            </DropdownMenuItem>
+                          ))}
+                        </div>
+                      </div>
+                    ));
+                  })()}
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -248,17 +273,42 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isBrandsOpen ? 'rotate-180' : ''}`} />
                       </button>
                       {isBrandsOpen && (
-                        <div className="ml-4 mt-2 max-h-48 overflow-y-auto border-l border-gold/20 pl-4">
-                          {brands.map((brand) => (
-                            <a
-                              key={brand}
-                              href={`/catalogue?brand=${encodeURIComponent(brand)}`}
-                              onClick={() => setIsBrandsOpen(false)}
-                              className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-roboto"
-                            >
-                              {brand}
-                            </a>
-                          ))}
+                        <div className="ml-4 mt-2 max-h-64 overflow-y-auto border-l border-gold/20 pl-4">
+                          {(() => {
+                            // Group brands by first letter for mobile
+                            const brandsByLetter = brands.reduce((acc, brand) => {
+                              const firstLetter = brand.charAt(0).toUpperCase();
+                              if (!acc[firstLetter]) {
+                                acc[firstLetter] = [];
+                              }
+                              acc[firstLetter].push(brand);
+                              return acc;
+                            }, {} as Record<string, string[]>);
+
+                            // Sort letters and render
+                            return Object.keys(brandsByLetter).sort().map((letter) => (
+                              <div key={letter} className="mb-3">
+                                <div className="flex items-center mb-1">
+                                  <div className="w-5 h-5 bg-gradient-to-r from-[#002c8c] to-[#001f66] text-white text-xs font-bold rounded-full flex items-center justify-center">
+                                    {letter}
+                                  </div>
+                                  <div className="flex-1 h-px bg-gradient-to-r from-[#002c8c88] to-transparent ml-2"></div>
+                                </div>
+                                <div className="space-y-1 ml-7">
+                                  {brandsByLetter[letter].map((brand) => (
+                                    <a
+                                      key={brand}
+                                      href={`/catalogue?brand=${encodeURIComponent(brand)}`}
+                                      onClick={() => setIsBrandsOpen(false)}
+                                      className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1 font-roboto"
+                                    >
+                                      {brand}
+                                    </a>
+                                  ))}
+                                </div>
+                              </div>
+                            ));
+                          })()}
                         </div>
                       )}
                     </div>
