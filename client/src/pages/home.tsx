@@ -414,9 +414,8 @@ export default function Home() {
         
 
       </section>
-
       {/* Most Sold Products Section */}
-      <section className="py-20 bg-gradient-to-br from-cream to-white">
+      <section className="py-20 bg-gradient-to-br from-cream to-white pt-[0px] pb-[0px]">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -497,7 +496,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Brand Logos Auto-Moving Carousel */}
       <section className="py-16 bg-navy overflow-hidden">
         
@@ -570,7 +568,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* New Arrivals Section */}
       <section className="py-20 bg-gradient-to-br from-cream to-white">
         <div className="container mx-auto px-4">
@@ -653,7 +650,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
