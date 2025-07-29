@@ -149,6 +149,28 @@ The application follows a monorepo structure with shared types and schemas, enab
 
 ## Recent Changes
 
+### Multi-Category System Implementation (January 29, 2025)
+- **Database Schema Enhancement**: Added `categories` array field to support products appearing in multiple categories
+  - Maintained backward compatibility with existing `category` field for primary category designation
+  - 91 out of 219 products now have multi-category support for enhanced discoverability
+- **Frontend Category Filtering**: Updated catalogue page to support multi-category filtering
+  - Products can now appear in multiple filter results based on their categories array
+  - Category filter displays all unique categories from both primary and categories array fields
+  - Examples: Ganymede appears in Men's, Niche, Unisex, and Women's filters
+- **Admin Panel Multi-Category Management**: Enhanced admin interface for category management
+  - Checkbox-based category selection allowing multiple categories per product
+  - Visual indication of primary category and additional category count
+  - Form submission includes categories array for complete category management
+- **Comprehensive Category Updates**: Successfully categorized products based on fragrance characteristics
+  - Unisex luxury fragrances: Sauvage, Phantom, Bleu de Chanel, Allure Homme Sport
+  - Multi-gender Tom Ford collection: Lost Cherry, Bitter Peach, Vanilla Sex, Rose Prick  
+  - Niche unisex fragrances: Beach Walk, When the Rain Stops, Under The Lemon Trees
+  - Women's fragrances: Good Girl, Si collection, Miss Dior, J'adore
+- **Technical Implementation**: Direct SQL approach for reliable category updates
+  - Pattern-based matching for product identification using ILIKE queries
+  - Batch updates for efficiency while maintaining data integrity
+  - Category arrays properly formatted for PostgreSQL array type compatibility
+
 ### Currency & Content Cleanup (January 29, 2025)
 - **Complete Currency Conversion**: All 219 products now display Georgian Lari (₾) instead of dollar signs ($)
   - Fixed CarouselProductCard components on home page

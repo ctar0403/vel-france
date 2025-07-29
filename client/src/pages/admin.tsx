@@ -518,7 +518,15 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           imageUrl: product.imageUrl || '',
           inStock: product.inStock ?? true,
         });
-        setSelectedCategories([product.category || 'Unisex']);
+        // Initialize with all categories from both category and categories array
+        const allCategories: string[] = [];
+        if (product.category) allCategories.push(product.category);
+        if (product.categories && Array.isArray(product.categories)) {
+          product.categories.forEach((cat: string) => {
+            if (!allCategories.includes(cat)) allCategories.push(cat);
+          });
+        }
+        setSelectedCategories(allCategories.length > 0 ? allCategories : ['Unisex']);
       } else {
         setFormData({
           name: '',
@@ -537,7 +545,12 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    // Include categories array in the form data
+    const dataWithCategories = {
+      ...formData,
+      categories: selectedCategories
+    };
+    onSubmit(dataWithCategories);
   };
 
   return (
