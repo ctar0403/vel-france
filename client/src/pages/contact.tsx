@@ -14,7 +14,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare, User } from "lucide-react";
+import { Phone, Mail, Clock, Send, MessageSquare, User } from "lucide-react";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -78,12 +78,6 @@ export default function Contact() {
 
   const contactInfo = [
     {
-      icon: MapPin,
-      title: "Visit Our Boutique",
-      details: ["123 Luxury Avenue", "Paris, France 75001"],
-      color: "text-blue-600",
-    },
-    {
       icon: Phone,
       title: "Call Us",
       details: ["+33 1 42 86 87 88", "Mon-Sat: 10AM-8PM"],
@@ -125,7 +119,7 @@ export default function Contact() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {contactInfo.map((info, index) => (
               <motion.div
                 key={index}
