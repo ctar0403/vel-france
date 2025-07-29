@@ -208,10 +208,12 @@ export default function Catalogue() {
     return range;
   }, [products]);
 
-  // Initialize temp price range when products load
+  // Initialize temp price range and filters when products load
   useEffect(() => {
     if (products.length > 0 && (tempPriceRange[0] === 15 && tempPriceRange[1] === 150)) {
       setTempPriceRange(priceRange as [number, number]);
+      // Initialize filters price range to full range (no filter)
+      setFilters(prev => ({ ...prev, priceRange: priceRange as [number, number] }));
     }
   }, [products, priceRange, tempPriceRange]);
 
@@ -294,8 +296,8 @@ export default function Catalogue() {
       );
     }
 
-    // Apply price filter only if explicitly set (not [0,0])
-    if (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 0) {
+    // Apply price filter only if it differs from the full price range
+    if (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) {
       filtered = filtered.filter(product => 
         product.numericPrice >= filters.priceRange[0] && 
         product.numericPrice <= filters.priceRange[1]
@@ -350,7 +352,7 @@ export default function Catalogue() {
   const clearAllFilters = useCallback(() => {
     setFilters({
       searchQuery: "",
-      priceRange: [0, 0], // Reset to no price filter
+      priceRange: priceRange as [number, number], // Reset to full price range
       selectedBrands: [],
       selectedCategories: [],
       sortBy: "name-asc",
@@ -363,13 +365,14 @@ export default function Catalogue() {
 
   // Count active filters
   const activeFiltersCount = useMemo(() => {
+    const hasPriceFilter = (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]);
     return (
       (filters.searchQuery.trim() ? 1 : 0) +
       (filters.selectedBrands.length > 0 ? 1 : 0) +
       (filters.selectedCategories.length > 0 ? 1 : 0) +
-      (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 0 ? 1 : 0)
+      (hasPriceFilter ? 1 : 0)
     );
-  }, [filters]);
+  }, [filters, priceRange]);
 
   // Calculate cart count for header
   const cartItemCount = useMemo(() => {
