@@ -176,17 +176,37 @@ body {
 
 /* React Multi Carousel Custom Styles */
 .carousel-wrapper {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .carousel-container {
-  padding: 0 40px;
+  padding: 0 60px;
+  margin: 0 auto;
 }
 
 .carousel-item-padding {
-  padding: 0 10px;
+  padding: 0 12px;
+}
+
+/* Ensure items are properly spaced */
+.react-multi-carousel-list {
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.react-multi-carousel-track {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.react-multi-carousel-item {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 /* Hide default arrows and use custom ones */
@@ -199,6 +219,7 @@ body {
   border: none !important;
   min-width: auto !important;
   min-height: auto !important;
+  position: absolute !important;
 }
 
 /* Checkbox styling */

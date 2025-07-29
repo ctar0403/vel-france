@@ -420,39 +420,43 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="carousel-wrapper">
+          <div className="carousel-wrapper relative">
             <Carousel
               responsive={{
                 desktop: {
                   breakpoint: { max: 3000, min: 1024 },
                   items: 4,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 },
                 tablet: {
                   breakpoint: { max: 1024, min: 464 },
                   items: 2,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 },
                 mobile: {
                   breakpoint: { max: 464, min: 0 },
                   items: 1,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 }
               }}
               infinite={true}
               keyBoardControl={true}
-              customTransition="all .5s"
+              customTransition="all 0.5s ease"
               transitionDuration={500}
               containerClass="carousel-container"
               itemClass="carousel-item-padding"
               centerMode={false}
               arrows={true}
               renderArrowsWhenDisabled={false}
+              partialVisible={false}
               customLeftArrow={
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
@@ -461,14 +465,14 @@ export default function Home() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               }
             >
               {products.slice(0, 12).map((product, index) => (
-                <div key={product.id}>
+                <div key={product.id} className="flex justify-center items-center">
                   <CarouselProductCard 
                     product={product} 
                     index={index} 
@@ -571,39 +575,43 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="carousel-wrapper">
+          <div className="carousel-wrapper relative">
             <Carousel
               responsive={{
                 desktop: {
                   breakpoint: { max: 3000, min: 1024 },
                   items: 4,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 },
                 tablet: {
                   breakpoint: { max: 1024, min: 464 },
                   items: 2,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 },
                 mobile: {
                   breakpoint: { max: 464, min: 0 },
                   items: 1,
-                  slidesToSlide: 1
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
                 }
               }}
               infinite={true}
               keyBoardControl={true}
-              customTransition="all .5s"
+              customTransition="all 0.5s ease"
               transitionDuration={500}
               containerClass="carousel-container"
               itemClass="carousel-item-padding"
               centerMode={false}
               arrows={true}
               renderArrowsWhenDisabled={false}
+              partialVisible={false}
               customLeftArrow={
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
@@ -612,14 +620,14 @@ export default function Home() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               }
             >
               {products.slice(12, 24).map((product, index) => (
-                <div key={product.id}>
+                <div key={product.id} className="flex justify-center items-center">
                   <CarouselProductCard 
                     product={product} 
                     index={index} 
