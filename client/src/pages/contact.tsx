@@ -342,7 +342,7 @@ export default function Contact() {
                     <div>
                       <h4 className="font-semibold text-navy mb-1">Multiple Channels</h4>
                       <p className="text-gray-600 text-sm">
-                        Reach us via phone, email, or visit our boutique in person.
+                        Reach us via phone, email.
                       </p>
                     </div>
                   </div>
