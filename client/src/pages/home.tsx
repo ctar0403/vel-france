@@ -415,7 +415,7 @@ export default function Home() {
 
       </section>
       {/* Most Sold Products Section */}
-      <section className="py-20 bg-gradient-to-br from-cream to-white pt-[0px] pb-[0px]">
+      <section className="pt-20 bg-gradient-to-br from-cream to-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
