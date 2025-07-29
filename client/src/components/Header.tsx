@@ -107,7 +107,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 </div>
               </PopoverTrigger>
               <PopoverContent 
-                className="w-[1400px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl max-h-[80vh] overflow-hidden" 
+                className="w-[1400px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl max-h-[80vh] overflow-hidden z-50" 
                 align="center"
                 side="bottom"
                 sideOffset={10}
@@ -129,7 +129,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                           {brandsByLetter[letter].map((brand) => (
                             <button
                               key={brand}
-                              onClick={() => handleBrandClick(brand)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleBrandClick(brand);
+                              }}
                               className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-roboto px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
                             >
                               {brand}
@@ -285,7 +289,9 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                           {brands.map((brand) => (
                             <button
                               key={brand}
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
                                 handleBrandClick(brand);
                                 setIsBrandsOpen(false);
                               }}
