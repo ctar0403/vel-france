@@ -438,6 +438,7 @@ export default function Home() {
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ width: `${products.slice(0, 12).length * 336}px` }}
               >
                 {products.slice(0, 12).map((product, index) => (
                   <CarouselProductCard 
@@ -460,10 +461,10 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 5);
+                const maxSlide = Math.max(0, totalItems - 4);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 5)}
+              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 4)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -576,6 +577,7 @@ export default function Home() {
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ width: `${products.slice(12, 24).length * 336}px` }}
               >
                 {products.slice(12, 24).map((product, index) => (
                   <CarouselProductCard 
@@ -598,10 +600,10 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 5);
+                const maxSlide = Math.max(0, totalItems - 4);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 5)}
+              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 4)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
