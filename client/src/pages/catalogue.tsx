@@ -176,20 +176,13 @@ export default function Catalogue() {
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
   
   // Filter state
-  const [filters, setFilters] = useState<CatalogueFilters>(() => {
-    console.log('Initializing filters with URL params:', { 
-      brand: urlParams.get('brand'), 
-      category: urlParams.get('category'),
-      search: urlParams.get('search')
-    });
-    return {
-      searchQuery: urlParams.get('search') || "",
-      priceRange: [0, 0], // No price filter by default
-      selectedBrands: urlParams.get('brand') ? [urlParams.get('brand')!] : [],
-      selectedCategories: urlParams.get('category') ? [urlParams.get('category')!] : [],
-      sortBy: "name-asc",
-      viewMode: 'grid'
-    };
+  const [filters, setFilters] = useState<CatalogueFilters>({
+    searchQuery: urlParams.get('search') || "",
+    priceRange: [0, 0], // No price filter by default
+    selectedBrands: urlParams.get('brand') ? [urlParams.get('brand')!] : [],
+    selectedCategories: urlParams.get('category') ? [urlParams.get('category')!] : [],
+    sortBy: "name-asc",
+    viewMode: 'grid'
   });
 
   const [tempSearchQuery, setTempSearchQuery] = useState("");
@@ -226,7 +219,6 @@ export default function Catalogue() {
       // Initialize filters price range to full range (no filter)
       // Only update price range, preserve other filters
       setFilters(prev => ({ ...prev, priceRange: priceRange as [number, number] }));
-      console.log('Price range initialized, current filters preserved');
     }
   }, [products, priceRange, tempPriceRange]);
 
@@ -236,8 +228,6 @@ export default function Catalogue() {
     const urlCategory = urlParams.get('category');
     const urlBrand = urlParams.get('brand');
     const urlSearch = urlParams.get('search');
-
-    console.log('URL Params Debug:', { location, urlBrand, urlCategory, urlSearch });
 
     setFilters(prev => ({
       ...prev,
@@ -321,7 +311,6 @@ export default function Catalogue() {
     if (!processedProducts.length) return [];
     
     let filtered = [...processedProducts];
-    console.log('Starting filtering with', filtered.length, 'products. Current filters:', filters);
 
     // Apply search filter
     if (filters.searchQuery.trim()) {
@@ -341,11 +330,9 @@ export default function Catalogue() {
 
     // Apply brand filter
     if (filters.selectedBrands.length > 0) {
-      console.log('Applying brand filter:', filters.selectedBrands);
       filtered = filtered.filter(product => 
         product.brand && filters.selectedBrands.includes(product.brand)
       );
-      console.log('Filtered products after brand filter:', filtered.length);
     }
 
     // Apply category filter - check both category and categories array
