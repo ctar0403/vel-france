@@ -109,7 +109,6 @@ export default function Contact() {
       
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-r from-navy to-deep-navy overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
