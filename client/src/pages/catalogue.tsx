@@ -705,8 +705,10 @@ export default function Catalogue() {
                   ))}
 
                   {/* Price Range Filter */}
-                  {(filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && 
-                   priceRange[0] > 0 && priceRange[1] > 0 && (
+                  {!productsQuery.isLoading && 
+                   (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && 
+                   priceRange[0] > 0 && priceRange[1] > 0 && 
+                   filters.priceRange[0] > 0 && filters.priceRange[1] > 0 && (
                     <Badge variant="secondary" className="gap-1 bg-[#002c8c88] text-navy border-[#002c8c88]">
                       ₾{filters.priceRange[0]} - ₾{filters.priceRange[1]}
                       <X 
