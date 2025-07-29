@@ -109,49 +109,7 @@ export default function Contact() {
       
       
 
-      {/* Contact Information Cards */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-navy mb-4">Get In Touch</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Multiple ways to reach us. Choose what works best for you.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="h-full hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
-                  <CardContent className="p-6 text-center">
-                    <div className={`${info.color} mb-4 flex justify-center`}>
-                      <info.icon className="h-12 w-12" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-navy mb-3">{info.title}</h3>
-                    {info.details.map((detail, idx) => (
-                      <p key={idx} className="text-gray-600 text-sm leading-relaxed">
-                        {detail}
-                      </p>
-                    ))}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Contact Form */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
