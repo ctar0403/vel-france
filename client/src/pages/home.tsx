@@ -502,18 +502,7 @@ export default function Home() {
 
       {/* Brand Logos Auto-Moving Carousel */}
       <section className="py-16 bg-navy overflow-hidden">
-        <div className="container mx-auto px-4 mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h2 className="text-4xl font-bold text-white mb-4">Luxury Brands We Carry</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto"></div>
-          </motion.div>
-        </div>
+        
         
         <div className="relative">
           <div className="flex animate-marquee space-x-16 items-center">
