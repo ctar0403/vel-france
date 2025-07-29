@@ -62,6 +62,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
     window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
   };
 
+  const handleCategoryClick = (category: string) => {
+    // Navigate to catalogue page with category filter
+    window.location.href = `/catalogue?category=${encodeURIComponent(category)}`;
+  };
+
   return (
     <header className="bg-white shadow-lg border-b border-gold/20 sticky top-0 z-50">
       <nav className="container mx-auto px-4 py-4">
@@ -140,25 +145,25 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               Catalogue
             </Link>
             <button 
-              onClick={() => scrollToSection('mens')}
+              onClick={() => handleCategoryClick("Men's")}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Men's
             </button>
             <button 
-              onClick={() => scrollToSection('womens')}
+              onClick={() => handleCategoryClick("Women's")}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Women's
             </button>
             <button 
-              onClick={() => scrollToSection('unisex')}
+              onClick={() => handleCategoryClick("Unisex")}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Unisex
             </button>
             <button 
-              onClick={() => scrollToSection('niche')}
+              onClick={() => handleCategoryClick("Niche")}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Niche
@@ -323,25 +328,25 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       )}
                     </div>
                     <button 
-                      onClick={() => scrollToSection('mens')}
+                      onClick={() => handleCategoryClick("Men's")}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Men's
                     </button>
                     <button 
-                      onClick={() => scrollToSection('womens')}
+                      onClick={() => handleCategoryClick("Women's")}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Women's
                     </button>
                     <button 
-                      onClick={() => scrollToSection('unisex')}
+                      onClick={() => handleCategoryClick("Unisex")}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Unisex
                     </button>
                     <button 
-                      onClick={() => scrollToSection('niche')}
+                      onClick={() => handleCategoryClick("Niche")}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                     >
                       Niche

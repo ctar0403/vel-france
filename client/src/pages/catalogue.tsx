@@ -15,7 +15,7 @@ import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -170,13 +170,17 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
 
 export default function Catalogue() {
   const { toast } = useToast();
+  const [location] = useLocation();
+  
+  // Parse URL parameters for initial filters
+  const urlParams = new URLSearchParams(location.split('?')[1] || '');
   
   // Filter state
   const [filters, setFilters] = useState<CatalogueFilters>({
-    searchQuery: "",
+    searchQuery: urlParams.get('search') || "",
     priceRange: [0, 0], // No price filter by default
-    selectedBrands: [],
-    selectedCategories: [],
+    selectedBrands: urlParams.get('brand') ? [urlParams.get('brand')!] : [],
+    selectedCategories: urlParams.get('category') ? [urlParams.get('category')!] : [],
     sortBy: "name-asc",
     viewMode: 'grid'
   });
@@ -216,6 +220,25 @@ export default function Catalogue() {
       setFilters(prev => ({ ...prev, priceRange: priceRange as [number, number] }));
     }
   }, [products, priceRange, tempPriceRange]);
+
+  // Update filters when URL changes
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.split('?')[1] || '');
+    const urlCategory = urlParams.get('category');
+    const urlBrand = urlParams.get('brand');
+    const urlSearch = urlParams.get('search');
+
+    setFilters(prev => ({
+      ...prev,
+      searchQuery: urlSearch || "",
+      selectedBrands: urlBrand ? [urlBrand] : [],
+      selectedCategories: urlCategory ? [urlCategory] : [],
+    }));
+
+    if (urlSearch) {
+      setTempSearchQuery(urlSearch);
+    }
+  }, [location]);
 
   // Get unique brands and categories
   const availableBrands = useMemo(() => {
