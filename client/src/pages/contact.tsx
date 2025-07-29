@@ -80,19 +80,19 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+33 1 42 86 87 88", "Mon-Sat: 10AM-8PM"],
+      details: ["+995 557 91 51 46"],
       color: "text-green-600",
     },
     {
       icon: Mail,
       title: "Email Us",
-      details: ["contact@velfrance.com", "support@velfrance.com"],
+      details: ["info@velfrance.ge"],
       color: "text-purple-600",
     },
     {
       icon: Clock,
       title: "Business Hours",
-      details: ["Monday - Saturday: 10AM - 8PM", "Sunday: 12PM - 6PM"],
+      details: ["Monday - Sunday: 10AM - 7PM"],
       color: "text-orange-600",
     },
   ];
@@ -349,18 +349,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <Card className="border-0 shadow-lg bg-gradient-to-br from-navy to-deep-navy text-white">
-                <CardContent className="p-6">
-                  <h4 className="text-xl font-semibold mb-3">Need Immediate Help?</h4>
-                  <p className="text-gray-200 text-sm mb-4">
-                    For urgent inquiries or immediate assistance, call us directly during business hours.
-                  </p>
-                  <Button variant="outline" className="text-navy bg-white hover:bg-gray-100">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Call Now: +33 1 42 86 87 88
-                  </Button>
-                </CardContent>
-              </Card>
+              
             </motion.div>
           </div>
         </div>
