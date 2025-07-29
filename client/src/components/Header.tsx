@@ -324,17 +324,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         </div>
                       </div>
                       
-                      {user.isAdmin && (
-                        <Button
-                          variant="outline"
-                          className="w-full mb-3 border-gold text-navy hover:bg-gold hover:text-navy"
-                          onClick={() => window.location.href = '/admin'}
-                        >
-                          <Settings className="h-4 w-4 mr-2" />
-                          Administration
-                        </Button>
-                      )}
-                      
                       <Button
                         variant="outline"
                         className="w-full border-navy text-navy hover:bg-navy hover:text-white"
