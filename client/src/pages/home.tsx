@@ -433,7 +433,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "1664px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -452,6 +452,21 @@ export default function Home() {
                 ))}
               </motion.div>
             </div>
+
+            {/* Right Navigation Arrow */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              onClick={() => {
+                const totalItems = products.slice(0, 12).length;
+                const maxSlide = Math.max(0, totalItems - 5);
+                setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
+              }}
+              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 5)}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </section>
@@ -556,7 +571,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "1664px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
