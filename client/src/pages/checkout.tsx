@@ -371,7 +371,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="md:col-span-2 space-y-2">
-                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Address Info</Label>
+                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Address Information</Label>
                     <Input
                       id="shipping-additionalAddress"
                       value={shippingForm.additionalAddress}
