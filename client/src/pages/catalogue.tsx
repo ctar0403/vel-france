@@ -274,20 +274,29 @@ export default function Catalogue() {
 
   // Handle brand filter from header
   const handleBrandFilter = useCallback((brand: string) => {
+    console.log('DEBUG: handleBrandFilter called with brand:', brand);
+    console.log('DEBUG: Current location:', location);
+    
     // Navigate to catalogue if not already there
     if (!location.includes('/catalogue')) {
+      console.log('DEBUG: Not on catalogue page, redirecting');
       window.location.href = '/catalogue';
       return;
     }
     
+    console.log('DEBUG: On catalogue page, applying filter');
     // Apply brand filter directly
-    setFilters(prev => ({
-      ...prev,
-      selectedBrands: [brand],
-      searchQuery: "",
-      selectedCategories: [],
-      priceRange: priceRange as [number, number]
-    }));
+    setFilters(prev => {
+      const newFilters = {
+        ...prev,
+        selectedBrands: [brand],
+        searchQuery: "",
+        selectedCategories: [],
+        priceRange: priceRange as [number, number]
+      };
+      console.log('DEBUG: New filters:', newFilters);
+      return newFilters;
+    });
     setIsFiltering(true);
     setTimeout(() => setIsFiltering(false), 300);
   }, [location, priceRange]);

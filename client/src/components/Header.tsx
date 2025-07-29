@@ -60,10 +60,15 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
   };
 
   const handleBrandClick = (brand: string) => {
+    console.log('DEBUG: handleBrandClick called with brand:', brand);
+    console.log('DEBUG: onBrandFilter callback exists:', !!onBrandFilter);
+    
     // If we have a brand filter callback, use it; otherwise navigate to catalogue
     if (onBrandFilter) {
+      console.log('DEBUG: Calling onBrandFilter callback');
       onBrandFilter(brand);
     } else {
+      console.log('DEBUG: No callback, using window.location');
       window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
     }
   };
