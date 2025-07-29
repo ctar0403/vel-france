@@ -110,7 +110,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
             onHoverEnd={() => setIsButtonHovered(false)}
             className={`relative backdrop-blur-sm px-6 py-3 rounded-full font-semibold text-sm tracking-wide shadow-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed ${
               isButtonHovered 
-                ? 'bg-[#001f66] text-white border-[#001f66]' 
+                ? 'bg-[#000000] text-white border-[#000000]' 
                 : 'bg-white text-black border-white'
             }`}
             initial={{ opacity: 0 }}
@@ -530,7 +530,7 @@ export default function Catalogue() {
                         <Button
                           onClick={handleSearch}
                           size="sm"
-                          className="bg-[#002c8c] hover:bg-[#001f66] text-white font-medium h-8 px-3"
+                          className="bg-[#002c8c] hover:bg-[#000000] text-white font-medium h-8 px-3"
                         >
                           Search
                         </Button>

@@ -266,7 +266,7 @@ export default function CheckoutPage() {
           <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">Your cart is empty</h2>
           <p className="text-navy/60 text-lg mb-8">Add some luxury fragrances to proceed with checkout</p>
           <Link href="/catalogue">
-            <Button className="bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <Button className="bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
               Explore Fragrances
             </Button>
           </Link>

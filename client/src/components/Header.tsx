@@ -111,7 +111,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     return Object.keys(brandsByLetter).sort().map((letter) => (
                       <div key={letter} className="mb-4">
                         <div className="flex items-center mb-2">
-                          <div className="w-6 h-6 bg-gradient-to-r from-[#002c8c] to-[#001f66] text-white text-xs font-bold rounded-full flex items-center justify-center">
+                          <div className="w-6 h-6 bg-gradient-to-r from-[#002c8c] to-[#000000] text-white text-xs font-bold rounded-full flex items-center justify-center">
                             {letter}
                           </div>
                           <div className="flex-1 h-px bg-gradient-to-r from-[#002c8c88] to-transparent ml-2"></div>
@@ -289,7 +289,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                             return Object.keys(brandsByLetter).sort().map((letter) => (
                               <div key={letter} className="mb-3">
                                 <div className="flex items-center mb-1">
-                                  <div className="w-5 h-5 bg-gradient-to-r from-[#002c8c] to-[#001f66] text-white text-xs font-bold rounded-full flex items-center justify-center">
+                                  <div className="w-5 h-5 bg-gradient-to-r from-[#002c8c] to-[#000000] text-white text-xs font-bold rounded-full flex items-center justify-center">
                                     {letter}
                                   </div>
                                   <div className="flex-1 h-px bg-gradient-to-r from-[#002c8c88] to-transparent ml-2"></div>

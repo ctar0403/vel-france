@@ -268,7 +268,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                     
                     <Link href="/checkout" onClick={onClose} className="block">
                       <Button
-                        className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#001f66] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
+                        className="w-full h-14 bg-gradient-to-r from-[#002c8c88] via-[#002c8c] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative flex items-center justify-center">
