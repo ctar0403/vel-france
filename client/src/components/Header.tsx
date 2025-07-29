@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Search, User, ShoppingBag, Menu, Settings, ChevronDown, LogOut } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, ChevronDown, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 
@@ -184,16 +184,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             {/* User Account */}
             {user ? (
               <div className="flex items-center space-x-2">
-                {user.isAdmin && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => window.location.href = '/admin'}
-                    className="text-navy hover:text-gold"
-                  >
-                    <Settings className="h-5 w-5" />
-                  </Button>
-                )}
                 <Link href="/profile">
                   <div className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
                     {user.profileImageUrl ? (
