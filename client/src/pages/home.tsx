@@ -420,36 +420,36 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center">
+          <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center">
             {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="mr-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              className="mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
               disabled={mostSoldSlide === 0}
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1680px" }}>
+            {/* Carousel Container - Exactly 4 items */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1344px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ width: `${products.slice(0, 12).length * 336}px` }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <CarouselProductCard 
-                    key={product.id} 
-                    product={product} 
-                    index={index} 
-                    badgeText={`#${index + 1} Bestseller`}
-                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
+                  <div key={product.id} className="flex-shrink-0 w-80">
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText={`#${index + 1} Bestseller`}
+                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </div>
                 ))}
               </motion.div>
             </div>
@@ -458,23 +458,13 @@ export default function Home() {
             <Button
               variant="outline"
               size="icon"
-              className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              className="ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(0, 12).length;
-                const totalWidth = totalItems * 336; // 320px card + 16px gap
-                const containerWidth = 1680;
-                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
-                const maxSlide = Math.floor(maxScrollDistance / 336);
+                const maxSlide = Math.max(0, totalItems - 4);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={products.slice(0, 12).length <= 5 || (() => {
-                const totalItems = products.slice(0, 12).length;
-                const totalWidth = totalItems * 336;
-                const containerWidth = 1680;
-                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
-                const maxSlide = Math.floor(maxScrollDistance / 336);
-                return mostSoldSlide >= maxSlide;
-              })()}
+              disabled={products.slice(0, 12).length <= 4 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 4)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -569,36 +559,36 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center">
+          <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center">
             {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="mr-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              className="mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
               disabled={newArrivalsSlide === 0}
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1680px" }}>
+            {/* Carousel Container - Exactly 4 items */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1344px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ width: `${products.slice(12, 24).length * 336}px` }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <CarouselProductCard 
-                    key={product.id} 
-                    product={product} 
-                    index={index} 
-                    badgeText="New Arrival"
-                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
+                  <div key={product.id} className="flex-shrink-0 w-80">
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText="New Arrival"
+                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </div>
                 ))}
               </motion.div>
             </div>
@@ -607,23 +597,13 @@ export default function Home() {
             <Button
               variant="outline"
               size="icon"
-              className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              className="ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(12, 24).length;
-                const totalWidth = totalItems * 336; // 320px card + 16px gap
-                const containerWidth = 1680;
-                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
-                const maxSlide = Math.floor(maxScrollDistance / 336);
+                const maxSlide = Math.max(0, totalItems - 4);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={products.slice(12, 24).length <= 5 || (() => {
-                const totalItems = products.slice(12, 24).length;
-                const totalWidth = totalItems * 336;
-                const containerWidth = 1680;
-                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
-                const maxSlide = Math.floor(maxScrollDistance / 336);
-                return newArrivalsSlide >= maxSlide;
-              })()}
+              disabled={products.slice(12, 24).length <= 4 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 4)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
