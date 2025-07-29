@@ -222,8 +222,21 @@ export default function Catalogue() {
   }, [products]);
 
   const availableCategories = useMemo(() => {
-    const categories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
-    return categories.sort();
+    const categorySet = new Set<string>();
+    
+    products.forEach(product => {
+      // Add primary category
+      if (product.category) {
+        categorySet.add(product.category);
+      }
+      
+      // Add all categories from categories array
+      if (product.categories && Array.isArray(product.categories)) {
+        product.categories.forEach(cat => categorySet.add(cat));
+      }
+    });
+    
+    return Array.from(categorySet).filter(Boolean).sort();
   }, [products]);
 
   // Update filter function
@@ -296,11 +309,19 @@ export default function Catalogue() {
       );
     }
 
-    // Apply category filter
+    // Apply category filter - check both category and categories array
     if (filters.selectedCategories.length > 0) {
-      filtered = filtered.filter(product => 
-        filters.selectedCategories.includes(product.category)
-      );
+      filtered = filtered.filter(product => {
+        // Check if primary category matches
+        const primaryCategoryMatch = filters.selectedCategories.includes(product.category);
+        
+        // Check if any category in categories array matches
+        const categoriesArrayMatch = product.categories && Array.isArray(product.categories) 
+          ? product.categories.some(cat => filters.selectedCategories.includes(cat))
+          : false;
+        
+        return primaryCategoryMatch || categoriesArrayMatch;
+      });
     }
 
     // Apply sorting

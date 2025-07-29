@@ -45,6 +45,7 @@ export const products = pgTable("products", {
   description: text("description").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
+  categories: text("categories").array().notNull().default(sql`'{}'`), // Multiple categories for filtering
   brand: varchar("brand", { length: 100 }), // brand name
   imageUrl: text("image_url"),
   inStock: boolean("in_stock").default(true),
