@@ -12,9 +12,10 @@ import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 interface HeaderProps {
   cartItemCount?: number;
   onCartClick?: () => void;
+  onBrandFilter?: (brand: string) => void;
 }
 
-export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
+export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }: HeaderProps) {
   const { user, logoutMutation } = useAuth();
   const [, setLocation] = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -59,8 +60,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
   };
 
   const handleBrandClick = (brand: string) => {
-    // Navigate to catalogue page with brand filter
-    window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
+    // If we have a brand filter callback, use it; otherwise navigate to catalogue
+    if (onBrandFilter) {
+      onBrandFilter(brand);
+    } else {
+      window.location.href = `/catalogue?brand=${encodeURIComponent(brand)}`;
+    }
   };
 
   const handleCategoryClick = (category: string) => {

@@ -272,6 +272,26 @@ export default function Catalogue() {
     setTimeout(() => setIsFiltering(false), 300);
   }, []);
 
+  // Handle brand filter from header
+  const handleBrandFilter = useCallback((brand: string) => {
+    // Navigate to catalogue if not already there
+    if (!location.includes('/catalogue')) {
+      window.location.href = '/catalogue';
+      return;
+    }
+    
+    // Apply brand filter directly
+    setFilters(prev => ({
+      ...prev,
+      selectedBrands: [brand],
+      searchQuery: "",
+      selectedCategories: [],
+      priceRange: priceRange as [number, number]
+    }));
+    setIsFiltering(true);
+    setTimeout(() => setIsFiltering(false), 300);
+  }, [location, priceRange]);
+
   // Handle search
   const handleSearch = useCallback(() => {
     updateFilter('searchQuery', tempSearchQuery.trim());
@@ -433,7 +453,11 @@ export default function Catalogue() {
         animate={{ opacity: 1 }}
         className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink"
       >
-        <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartOpen(true)} />
+        <Header 
+          cartItemCount={cartItemCount} 
+          onCartClick={() => setIsCartOpen(true)}
+          onBrandFilter={handleBrandFilter}
+        />
         <div className="flex items-center justify-center min-h-[60vh]">
           <motion.div
             initial={{ opacity: 0.5, scale: 0.8 }}
