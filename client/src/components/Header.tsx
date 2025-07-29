@@ -21,7 +21,6 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
-  const [isBrandsHovered, setIsBrandsHovered] = useState(false);
 
   const brands = [
     "Armani", "Azzaro", "Boss", "Bottega Veneta", "Burberry", "Bvlgari", "Byredo", 
@@ -101,61 +100,28 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
             >
               Home
             </Link>
-            <Popover open={isBrandsHovered} onOpenChange={setIsBrandsHovered}>
-              <PopoverTrigger asChild>
-                <div
-                  onMouseEnter={() => setIsBrandsHovered(true)}
-                  onMouseLeave={() => setIsBrandsHovered(false)}
-                >
-                  <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
-                    Brands
-                    <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isBrandsHovered ? 'rotate-180' : ''}`} />
-                  </button>
-                </div>
-              </PopoverTrigger>
-              <PopoverContent 
-                className="w-[1400px] max-w-none p-0 bg-white border border-gold/20 shadow-2xl max-h-[80vh] overflow-hidden z-50" 
-                align="center"
-                side="bottom"
-                sideOffset={10}
-                onOpenAutoFocus={(e) => e.preventDefault()}
-                onMouseEnter={() => setIsBrandsHovered(true)}
-                onMouseLeave={() => setIsBrandsHovered(false)}
-              >
-                <div className="p-8 overflow-y-auto scrollbar-hide" style={{ scrollBehavior: 'smooth' }}>
-                  <h3 className="font-roboto-slab text-xl font-semibold text-navy mb-8 border-b border-gold/20 pb-3 text-center">
-                    Luxury Brands Collection
-                  </h3>
-                  <div className="grid grid-cols-9 gap-6">
-                    {sortedLetters.map((letter) => (
-                      <div key={letter} className="space-y-2">
-                        <h4 className="font-roboto text-lg font-bold text-gold border-b border-gold/30 pb-1 mb-3 text-center">
-                          {letter}
-                        </h4>
-                        <div className="space-y-1">
-                          {brandsByLetter[letter].map((brand) => (
-                            <button
-                              key={brand}
-                              onClick={() => {
-                                console.log('SIMPLE TEST: Brand clicked:', brand);
-                                handleBrandClick(brand);
-                              }}
-                              onMouseDown={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                              }}
-                              className="block w-full text-left text-xs text-navy hover:bg-cream hover:text-gold cursor-pointer font-roboto px-3 py-2 rounded-md transition-colors duration-200 border border-transparent hover:border-gold/20 whitespace-nowrap"
-                            >
-                              {brand}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
+                  Brands
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto">
+                {brands.slice(0, 20).map((brand) => (
+                  <DropdownMenuItem
+                    key={brand}
+                    onClick={() => {
+                      console.log('DROPDOWN TEST: Brand clicked:', brand);
+                      handleBrandClick(brand);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    {brand}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link 
               href="/catalogue"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
