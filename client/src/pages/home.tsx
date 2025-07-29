@@ -432,23 +432,25 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - 4 items with buffer */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1360px" }}>
+            {/* Carousel Container - Simple 4-item layout */}
+            <div className="overflow-hidden" style={{ width: "1400px" }}>
               <motion.div 
-                className="flex gap-4"
-                animate={{ x: -mostSoldSlide * 336 }}
+                className="flex"
+                style={{ gap: "20px" }}
+                animate={{ x: -mostSoldSlide * 340 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <CarouselProductCard 
-                    key={product.id}
-                    product={product} 
-                    index={index} 
-                    badgeText={`#${index + 1} Bestseller`}
-                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
+                  <div key={product.id} style={{ width: "320px", flexShrink: 0 }}>
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText={`#${index + 1} Bestseller`}
+                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </div>
                 ))}
               </motion.div>
             </div>
@@ -570,23 +572,25 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - 4 items with buffer */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1360px" }}>
+            {/* Carousel Container - Simple 4-item layout */}
+            <div className="overflow-hidden" style={{ width: "1400px" }}>
               <motion.div 
-                className="flex gap-4"
-                animate={{ x: -newArrivalsSlide * 336 }}
+                className="flex"
+                style={{ gap: "20px" }}
+                animate={{ x: -newArrivalsSlide * 340 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <CarouselProductCard 
-                    key={product.id}
-                    product={product} 
-                    index={index} 
-                    badgeText="New Arrival"
-                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
+                  <div key={product.id} style={{ width: "320px", flexShrink: 0 }}>
+                    <CarouselProductCard 
+                      product={product} 
+                      index={index} 
+                      badgeText="New Arrival"
+                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                      onAddToCart={() => addToCartMutation.mutate(product.id)}
+                      isPending={addToCartMutation.isPending}
+                    />
+                  </div>
                 ))}
               </motion.div>
             </div>
