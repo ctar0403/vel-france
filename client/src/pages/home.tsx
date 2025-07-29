@@ -169,7 +169,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           </h3>
 
           <span className="text-base text-gold font-normal">
-            ${parseFloat(product.price.toString()).toFixed(2)}
+            ₾{parseFloat(product.price.toString()).toFixed(2)}
           </span>
         </div>
       </motion.div>

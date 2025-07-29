@@ -160,7 +160,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
         </h3>
 
         <span className="text-base text-gold font-normal">
-          ${parseFloat(product.price.toString()).toFixed(2)}
+          ₾{parseFloat(product.price.toString()).toFixed(2)}
         </span>
       </div>
       </motion.div>
