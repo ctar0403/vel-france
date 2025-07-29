@@ -149,6 +149,20 @@ The application follows a monorepo structure with shared types and schemas, enab
 
 ## Recent Changes
 
+### Currency & Content Cleanup (January 29, 2025)
+- **Complete Currency Conversion**: All 219 products now display Georgian Lari (₾) instead of dollar signs ($)
+  - Fixed CarouselProductCard components on home page
+  - Fixed LuxuryProductCard components on catalogue page
+  - Updated all price displays across shopping cart, checkout, orders, and profile pages
+- **Product Description Cleanup**: Comprehensive removal of all newline characters from product descriptions
+  - Eliminated 211 products with "\n" characters using PostgreSQL REPLACE operations
+  - Removed CHR(10), CHR(13), and Unicode line separators from all 219 products
+  - Applied regex cleaning to handle various types of line breaks and whitespace
+  - Cleaned up multiple spaces and trimmed descriptions for consistent formatting
+- **Price Update Results**: Successfully updated 214 out of 219 products with new pricing from Excel file
+  - Only 5 products remain with original prices (no matching entries found in price list)
+  - All updated products now display accurate Georgian Lari pricing
+
 ### Home Page Redesign (January 28, 2025)
 - **Banner Slideshow Updated**: Replaced with 6 new luxury perfume campaign images in user-specified order
 - **Content Architecture**: Streamlined to exactly 3 sections as requested by user:
