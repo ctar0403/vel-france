@@ -461,10 +461,10 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 4);
+                const maxSlide = Math.max(0, totalItems - 1);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 4)}
+              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 1)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -600,10 +600,10 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 4);
+                const maxSlide = Math.max(0, totalItems - 1);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 4)}
+              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 1)}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
