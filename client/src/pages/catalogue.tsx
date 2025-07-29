@@ -224,10 +224,12 @@ export default function Catalogue() {
 
   // Update filters when URL changes
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.split('?')[1] || '');
+    const urlParams = new URLSearchParams(window.location.search);
     const urlCategory = urlParams.get('category');
     const urlBrand = urlParams.get('brand');
     const urlSearch = urlParams.get('search');
+
+    console.log('URL PARSING:', { urlCategory, urlBrand, urlSearch, fullURL: window.location.href });
 
     setFilters(prev => ({
       ...prev,

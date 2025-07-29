@@ -100,28 +100,24 @@ export default function Header({ cartItemCount = 0, onCartClick, onBrandFilter }
             >
               Home
             </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
-                  Brands
-                  <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto">
-                {brands.slice(0, 20).map((brand) => (
-                  <DropdownMenuItem
-                    key={brand}
-                    onClick={() => {
-                      console.log('DROPDOWN TEST: Brand clicked:', brand);
-                      handleBrandClick(brand);
-                    }}
-                    className="cursor-pointer"
-                  >
-                    {brand}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link 
+              href="/catalogue?brand=Bvlgari"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Bvlgari
+            </Link>
+            <Link 
+              href="/catalogue?brand=Chanel"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Chanel
+            </Link>
+            <Link 
+              href="/catalogue?brand=Dior"
+              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
+            >
+              Dior
+            </Link>
             <Link 
               href="/catalogue"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
