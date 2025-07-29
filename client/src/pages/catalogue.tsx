@@ -224,23 +224,33 @@ export default function Catalogue() {
 
   // Update filters when URL changes
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlCategory = urlParams.get('category');
-    const urlBrand = urlParams.get('brand');
-    const urlSearch = urlParams.get('search');
+    const handleURLChange = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCategory = urlParams.get('category');
+      const urlBrand = urlParams.get('brand');
+      const urlSearch = urlParams.get('search');
 
+      setFilters(prev => ({
+        ...prev,
+        searchQuery: urlSearch || "",
+        selectedBrands: urlBrand ? [urlBrand] : [],
+        selectedCategories: urlCategory ? [urlCategory] : [],
+      }));
 
+      if (urlSearch) {
+        setTempSearchQuery(urlSearch);
+      }
+    };
 
-    setFilters(prev => ({
-      ...prev,
-      searchQuery: urlSearch || "",
-      selectedBrands: urlBrand ? [urlBrand] : [],
-      selectedCategories: urlCategory ? [urlCategory] : [],
-    }));
+    // Handle initial load
+    handleURLChange();
 
-    if (urlSearch) {
-      setTempSearchQuery(urlSearch);
-    }
+    // Listen for popstate events (back/forward button)
+    window.addEventListener('popstate', handleURLChange);
+
+    return () => {
+      window.removeEventListener('popstate', handleURLChange);
+    };
   }, [location]);
 
   // Get unique brands and categories

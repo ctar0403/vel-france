@@ -98,12 +98,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 <div className="grid grid-cols-2 gap-1 p-2">
                   {brands.map((brand) => (
                     <DropdownMenuItem key={brand} asChild>
-                      <Link
+                      <a
                         href={`/catalogue?brand=${encodeURIComponent(brand)}`}
                         className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200"
                       >
                         {brand}
-                      </Link>
+                      </a>
                     </DropdownMenuItem>
                   ))}
                 </div>
@@ -250,14 +250,14 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       {isBrandsOpen && (
                         <div className="ml-4 mt-2 max-h-48 overflow-y-auto border-l border-gold/20 pl-4">
                           {brands.map((brand) => (
-                            <Link
+                            <a
                               key={brand}
                               href={`/catalogue?brand=${encodeURIComponent(brand)}`}
                               onClick={() => setIsBrandsOpen(false)}
                               className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1.5 font-roboto"
                             >
                               {brand}
-                            </Link>
+                            </a>
                           ))}
                         </div>
                       )}
