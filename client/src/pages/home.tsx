@@ -18,10 +18,8 @@ import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import banner1 from "@assets/1_1753538704078.png";
 import banner2 from "@assets/2_1753538710752.png";
 import banner3 from "@assets/3_1753538715604.png";
@@ -422,58 +420,66 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full flex items-center justify-center">
-            {/* Left Navigation Arrow */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="swiper-button-prev-most-sold mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
+          <div className="carousel-wrapper">
+            <Carousel
+              responsive={{
+                desktop: {
+                  breakpoint: { max: 3000, min: 1024 },
+                  items: 4,
+                  slidesToSlide: 1
+                },
+                tablet: {
+                  breakpoint: { max: 1024, min: 464 },
+                  items: 2,
+                  slidesToSlide: 1
+                },
+                mobile: {
+                  breakpoint: { max: 464, min: 0 },
+                  items: 1,
+                  slidesToSlide: 1
+                }
+              }}
+              infinite={true}
+              keyBoardControl={true}
+              customTransition="all .5s"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              itemClass="carousel-item-padding"
+              centerMode={false}
+              arrows={true}
+              renderArrowsWhenDisabled={false}
+              customLeftArrow={
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+              }
+              customRightArrow={
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
+              }
             >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-
-            {/* Carousel Container */}
-            <div className="max-w-6xl">
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={20}
-                slidesPerView={4}
-                slidesPerGroup={1}
-                navigation={{
-                  prevEl: '.swiper-button-prev-most-sold',
-                  nextEl: '.swiper-button-next-most-sold',
-                }}
-                breakpoints={{
-                  320: { slidesPerView: 1, spaceBetween: 16 },
-                  768: { slidesPerView: 2, spaceBetween: 16 },
-                  1024: { slidesPerView: 3, spaceBetween: 20 },
-                  1280: { slidesPerView: 4, spaceBetween: 20 }
-                }}
-                className="!overflow-visible"
-              >
-                {products.slice(0, 12).map((product, index) => (
-                  <SwiperSlide key={product.id}>
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText={`#${index + 1} Bestseller`}
-                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-
-            {/* Right Navigation Arrow */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="swiper-button-next-most-sold ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
+              {products.slice(0, 12).map((product, index) => (
+                <div key={product.id}>
+                  <CarouselProductCard 
+                    product={product} 
+                    index={index} 
+                    badgeText={`#${index + 1} Bestseller`}
+                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>
@@ -565,58 +571,66 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full flex items-center justify-center">
-            {/* Left Navigation Arrow */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="swiper-button-prev-new-arrivals mr-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
+          <div className="carousel-wrapper">
+            <Carousel
+              responsive={{
+                desktop: {
+                  breakpoint: { max: 3000, min: 1024 },
+                  items: 4,
+                  slidesToSlide: 1
+                },
+                tablet: {
+                  breakpoint: { max: 1024, min: 464 },
+                  items: 2,
+                  slidesToSlide: 1
+                },
+                mobile: {
+                  breakpoint: { max: 464, min: 0 },
+                  items: 1,
+                  slidesToSlide: 1
+                }
+              }}
+              infinite={true}
+              keyBoardControl={true}
+              customTransition="all .5s"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              itemClass="carousel-item-padding"
+              centerMode={false}
+              arrows={true}
+              renderArrowsWhenDisabled={false}
+              customLeftArrow={
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+              }
+              customRightArrow={
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-12 h-12"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
+              }
             >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-
-            {/* Carousel Container */}
-            <div className="max-w-6xl">
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={20}
-                slidesPerView={4}
-                slidesPerGroup={1}
-                navigation={{
-                  prevEl: '.swiper-button-prev-new-arrivals',
-                  nextEl: '.swiper-button-next-new-arrivals',
-                }}
-                breakpoints={{
-                  320: { slidesPerView: 1, spaceBetween: 16 },
-                  768: { slidesPerView: 2, spaceBetween: 16 },
-                  1024: { slidesPerView: 3, spaceBetween: 20 },
-                  1280: { slidesPerView: 4, spaceBetween: 20 }
-                }}
-                className="!overflow-visible"
-              >
-                {products.slice(12, 24).map((product, index) => (
-                  <SwiperSlide key={product.id}>
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText="New Arrival"
-                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-
-            {/* Right Navigation Arrow */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="swiper-button-next-new-arrivals ml-6 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10 flex-shrink-0"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
+              {products.slice(12, 24).map((product, index) => (
+                <div key={product.id}>
+                  <CarouselProductCard 
+                    product={product} 
+                    index={index} 
+                    badgeText="New Arrival"
+                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>

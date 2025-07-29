@@ -174,21 +174,31 @@ body {
   border-color: #002c8c88 !important;
 }
 
-/* Swiper Custom Styles */
-.swiper-button-prev-most-sold,
-.swiper-button-next-most-sold,
-.swiper-button-prev-new-arrivals,
-.swiper-button-next-new-arrivals {
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* React Multi Carousel Custom Styles */
+.carousel-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.swiper-button-prev-most-sold:hover,
-.swiper-button-next-most-sold:hover,
-.swiper-button-prev-new-arrivals:hover,
-.swiper-button-next-new-arrivals:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+.carousel-container {
+  padding: 0 40px;
+}
+
+.carousel-item-padding {
+  padding: 0 10px;
+}
+
+/* Hide default arrows and use custom ones */
+.react-multi-carousel-arrow::before {
+  display: none;
+}
+
+.react-multi-carousel-arrow {
+  background: transparent !important;
+  border: none !important;
+  min-width: auto !important;
+  min-height: auto !important;
 }
 
 /* Checkbox styling */
