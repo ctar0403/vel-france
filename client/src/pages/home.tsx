@@ -461,10 +461,20 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 1);
+                const totalWidth = totalItems * 336; // 320px card + 16px gap
+                const containerWidth = 1680;
+                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
+                const maxSlide = Math.floor(maxScrollDistance / 336);
                 setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
               }}
-              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 1)}
+              disabled={products.slice(0, 12).length <= 5 || (() => {
+                const totalItems = products.slice(0, 12).length;
+                const totalWidth = totalItems * 336;
+                const containerWidth = 1680;
+                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
+                const maxSlide = Math.floor(maxScrollDistance / 336);
+                return mostSoldSlide >= maxSlide;
+              })()}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -600,10 +610,20 @@ export default function Home() {
               className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => {
                 const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 1);
+                const totalWidth = totalItems * 336; // 320px card + 16px gap
+                const containerWidth = 1680;
+                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
+                const maxSlide = Math.floor(maxScrollDistance / 336);
                 setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
               }}
-              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 1)}
+              disabled={products.slice(12, 24).length <= 5 || (() => {
+                const totalItems = products.slice(12, 24).length;
+                const totalWidth = totalItems * 336;
+                const containerWidth = 1680;
+                const maxScrollDistance = Math.max(0, totalWidth - containerWidth);
+                const maxSlide = Math.floor(maxScrollDistance / 336);
+                return newArrivalsSlide >= maxSlide;
+              })()}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
