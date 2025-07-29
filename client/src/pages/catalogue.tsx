@@ -675,10 +675,10 @@ export default function Catalogue() {
                 <div className="flex flex-wrap gap-2">
                   {/* Search Query Filter */}
                   {filters.searchQuery.trim() && (
-                    <Badge variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
+                    <Badge variant="secondary" className="gap-1 bg-black text-white border-black">
                       Search: "{filters.searchQuery}"
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => {
                           updateFilter('searchQuery', "");
                           setTempSearchQuery("");
@@ -689,10 +689,10 @@ export default function Catalogue() {
 
                   {/* Brand Filters */}
                   {filters.selectedBrands.map(brand => (
-                    <Badge key={brand} variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
+                    <Badge key={brand} variant="secondary" className="gap-1 bg-black text-white border-black">
                       {brand}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => toggleBrand(brand)}
                       />
                     </Badge>
@@ -700,10 +700,10 @@ export default function Catalogue() {
 
                   {/* Category Filters */}
                   {filters.selectedCategories.map(category => (
-                    <Badge key={category} variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
+                    <Badge key={category} variant="secondary" className="gap-1 bg-black text-white border-black">
                       {category}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => toggleCategory(category)}
                       />
                     </Badge>
@@ -712,10 +712,10 @@ export default function Catalogue() {
                   {/* Price Range Filter */}
                   {priceRangeModified && 
                    (filters.priceRange[0] !== priceRange[0] || filters.priceRange[1] !== priceRange[1]) && (
-                    <Badge variant="secondary" className="gap-1 bg-[#00000088] text-navy border-[#00000088]">
+                    <Badge variant="secondary" className="gap-1 bg-black text-white border-black">
                       ₾{filters.priceRange[0]} - ₾{filters.priceRange[1]}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-600" 
+                        className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => {
                           setPriceRangeModified(false);
                           updateFilter('priceRange', priceRange);
