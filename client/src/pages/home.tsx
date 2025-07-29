@@ -432,24 +432,23 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - Exactly 4 items */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1344px" }}>
+            {/* Carousel Container - Exactly 4 items: 4×320px + 3×16px = 1328px */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1328px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(0, 12).map((product, index) => (
-                  <div key={product.id} className="flex-shrink-0 w-80">
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText={`#${index + 1} Bestseller`}
-                      badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </div>
+                  <CarouselProductCard 
+                    key={product.id}
+                    product={product} 
+                    index={index} 
+                    badgeText={`#${index + 1} Bestseller`}
+                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
                 ))}
               </motion.div>
             </div>
@@ -571,24 +570,23 @@ export default function Home() {
               <ChevronLeft className="h-5 w-5" />
             </Button>
 
-            {/* Carousel Container - Exactly 4 items */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1344px" }}>
+            {/* Carousel Container - Exactly 4 items: 4×320px + 3×16px = 1328px */}
+            <div className="overflow-hidden bg-transparent" style={{ width: "1328px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {products.slice(12, 24).map((product, index) => (
-                  <div key={product.id} className="flex-shrink-0 w-80">
-                    <CarouselProductCard 
-                      product={product} 
-                      index={index} 
-                      badgeText="New Arrival"
-                      badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                      onAddToCart={() => addToCartMutation.mutate(product.id)}
-                      isPending={addToCartMutation.isPending}
-                    />
-                  </div>
+                  <CarouselProductCard 
+                    key={product.id}
+                    product={product} 
+                    index={index} 
+                    badgeText="New Arrival"
+                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+                    onAddToCart={() => addToCartMutation.mutate(product.id)}
+                    isPending={addToCartMutation.isPending}
+                  />
                 ))}
               </motion.div>
             </div>
