@@ -433,7 +433,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1664px" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "1680px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -571,7 +571,7 @@ export default function Home() {
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "1664px" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "1680px" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
