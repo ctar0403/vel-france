@@ -144,30 +144,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             >
               Catalogue
             </Link>
-            <button 
-              onClick={() => handleCategoryClick("Men's")}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Men's
-            </button>
-            <button 
-              onClick={() => handleCategoryClick("Women's")}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Women's
-            </button>
-            <button 
-              onClick={() => handleCategoryClick("Unisex")}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Unisex
-            </button>
-            <button 
-              onClick={() => handleCategoryClick("Niche")}
-              className="text-navy hover:text-gold transition-colors duration-300 font-medium"
-            >
-              Niche
-            </button>
             <Link 
               href="/contact"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -327,30 +303,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         </div>
                       )}
                     </div>
-                    <button 
-                      onClick={() => handleCategoryClick("Men's")}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
-                    >
-                      Men's
-                    </button>
-                    <button 
-                      onClick={() => handleCategoryClick("Women's")}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
-                    >
-                      Women's
-                    </button>
-                    <button 
-                      onClick={() => handleCategoryClick("Unisex")}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
-                    >
-                      Unisex
-                    </button>
-                    <button 
-                      onClick={() => handleCategoryClick("Niche")}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
-                    >
-                      Niche
-                    </button>
+
                     <Link 
                       href="/contact"
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"

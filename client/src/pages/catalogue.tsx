@@ -228,8 +228,6 @@ export default function Catalogue() {
     const urlBrand = urlParams.get('brand');
     const urlSearch = urlParams.get('search');
 
-    console.log('URL Params:', { urlCategory, urlBrand, urlSearch });
-
     setFilters(prev => ({
       ...prev,
       searchQuery: urlSearch || "",
@@ -338,7 +336,6 @@ export default function Catalogue() {
 
     // Apply category filter - check both category and categories array
     if (filters.selectedCategories.length > 0) {
-      console.log('Filtering by categories:', filters.selectedCategories);
       filtered = filtered.filter(product => {
         // Check if primary category matches
         const primaryCategoryMatch = filters.selectedCategories.includes(product.category);
@@ -348,14 +345,8 @@ export default function Catalogue() {
           ? product.categories.some(cat => filters.selectedCategories.includes(cat))
           : false;
         
-        const shouldInclude = primaryCategoryMatch || categoriesArrayMatch;
-        if (shouldInclude) {
-          console.log('Including product:', product.name, 'Categories:', product.categories, 'Primary:', product.category);
-        }
-        
-        return shouldInclude;
+        return primaryCategoryMatch || categoriesArrayMatch;
       });
-      console.log('Filtered products count:', filtered.length);
     }
 
     // Apply sorting
