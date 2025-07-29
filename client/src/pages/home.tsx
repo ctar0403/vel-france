@@ -420,33 +420,20 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
-            {/* Navigation Arrows */}
+          <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center">
+            {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
+              className="mr-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => setMostSoldSlide(Math.max(0, mostSoldSlide - 1))}
               disabled={mostSoldSlide === 0}
             >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
-              onClick={() => {
-                const totalItems = products.slice(0, 12).length;
-                const maxSlide = Math.max(0, totalItems - 5);
-                setMostSoldSlide(Math.min(maxSlide, mostSoldSlide + 1));
-              }}
-              disabled={products.slice(0, 12).length <= 5 || mostSoldSlide >= Math.max(0, products.slice(0, 12).length - 5)}
-            >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)", margin: "0 auto" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -mostSoldSlide * 336 }}
@@ -556,33 +543,20 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="relative w-full mx-auto" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
-            {/* Navigation Arrows */}
+          <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center">
+            {/* Left Navigation Arrow */}
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
+              className="mr-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
               onClick={() => setNewArrivalsSlide(Math.max(0, newArrivalsSlide - 1))}
               disabled={newArrivalsSlide === 0}
             >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 rounded-full w-10 h-10"
-              onClick={() => {
-                const totalItems = products.slice(12, 24).length;
-                const maxSlide = Math.max(0, totalItems - 5);
-                setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
-              }}
-              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 5)}
-            >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
 
             {/* Carousel Container */}
-            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)", margin: "0 auto" }}>
+            <div className="overflow-hidden bg-transparent" style={{ width: "calc(5 * 320px + 4 * 16px)" }}>
               <motion.div 
                 className="flex gap-4"
                 animate={{ x: -newArrivalsSlide * 336 }}
@@ -601,6 +575,21 @@ export default function Home() {
                 ))}
               </motion.div>
             </div>
+
+            {/* Right Navigation Arrow */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="ml-8 bg-white hover:bg-gray-50 rounded-full w-12 h-12 z-10"
+              onClick={() => {
+                const totalItems = products.slice(12, 24).length;
+                const maxSlide = Math.max(0, totalItems - 5);
+                setNewArrivalsSlide(Math.min(maxSlide, newArrivalsSlide + 1));
+              }}
+              disabled={products.slice(12, 24).length <= 5 || newArrivalsSlide >= Math.max(0, products.slice(12, 24).length - 5)}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </section>
