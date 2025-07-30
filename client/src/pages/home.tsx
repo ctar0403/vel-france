@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -198,6 +198,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
 export default function Home() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
@@ -240,6 +241,11 @@ export default function Home() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  // Handle banner click to redirect to catalogue
+  const handleBannerClick = () => {
+    setLocation('/catalogue');
   };
 
   // Fetch products
@@ -418,7 +424,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="absolute inset-0 bg-navy/40" />
+        <div 
+          className="absolute inset-0 bg-navy/40 cursor-pointer" 
+          onClick={handleBannerClick}
+        />
         
         {/* Navigation Controls */}
         <button
