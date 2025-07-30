@@ -32,7 +32,7 @@ export default function Returns() {
               </div>
               <h2 className="text-2xl font-semibold text-navy mb-4">No Returns Accepted</h2>
               <p className="text-lg text-gray-700 mb-6">
-                Due to the nature of luxury perfume products and hygiene considerations, we do not accept returns on any items.
+                Due to the nature of perfume products and hygiene considerations, we do not accept returns on any items.
               </p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function Returns() {
                 <div>
                   <h3 className="font-semibold text-navy mb-2">Product Integrity</h3>
                   <p className="text-gray-600">
-                    We ensure that all our customers receive authentic, unopened products. Accepting returns would compromise this guarantee.
+                    We ensure that all our customers receive unopened products. Accepting returns would compromise this guarantee.
                   </p>
                 </div>
               </div>
@@ -80,43 +80,7 @@ export default function Returns() {
             </div>
           </div>
 
-          {/* What We Offer Instead */}
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-navy mb-6">What We Offer Instead</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Detailed Product Information</h3>
-                <p className="text-gray-600">
-                  We provide comprehensive descriptions, fragrance notes, and customer reviews to help you make the right choice.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Personal Consultation</h3>
-                <p className="text-gray-600">
-                  Our fragrance experts are available to help you choose the perfect perfume based on your preferences.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Quality Guarantee</h3>
-                <p className="text-gray-600">
-                  All our products are 100% authentic and sourced directly from authorized distributors. If you receive a damaged item, please contact us immediately.
-                </p>
-              </div>
-
-              <div className="bg-gold/10 rounded-lg p-4 mt-6">
-                <div className="flex items-center">
-                  <Phone className="h-5 w-5 text-gold mr-2" />
-                  <span className="font-medium text-navy">Need Help?</span>
-                </div>
-                <p className="text-gray-600 mt-2">
-                  If you have any concerns about your order or need assistance choosing a fragrance, please contact our customer service team before placing your order.
-                </p>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
       

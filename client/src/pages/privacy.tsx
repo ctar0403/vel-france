@@ -53,7 +53,6 @@ export default function Privacy() {
                 <ul className="list-disc list-inside text-gray-600 space-y-1">
                   <li>Name, email address, and phone number</li>
                   <li>Delivery and billing addresses</li>
-                  <li>Payment information (processed securely through our payment partners)</li>
                   <li>Order history and preferences</li>
                 </ul>
               </div>
@@ -164,14 +163,10 @@ export default function Privacy() {
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <h2 className="text-2xl font-semibold text-navy mb-4">Contact Us</h2>
             <p className="text-gray-600 mb-4">
-              If you have any questions about this Privacy Policy or how we handle your personal information, please contact us:
+              If you have any questions about this Privacy Policy or how we handle your personal information, please contact us
             </p>
             
-            <div className="bg-gold/10 rounded-lg p-4">
-              <p className="text-navy font-medium">Vel France</p>
-              <p className="text-gray-600">Email: privacy@velfrance.ge</p>
-              <p className="text-gray-600">Address: Tbilisi, Vaja Pshavela 70g</p>
-            </div>
+            
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ export default function Delivery() {
               <div>
                 <h3 className="text-lg font-medium text-navy mb-2">Order Processing</h3>
                 <p className="text-gray-600">
-                  Orders are processed within 24 hours on business days. You will receive a confirmation email with tracking information once your order has been dispatched.
+                  Orders are processed within 24 hours on business days.
                 </p>
               </div>
 

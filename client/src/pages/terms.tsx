@@ -59,7 +59,7 @@ export default function Terms() {
 
             <p className="text-gray-600">
               Vel France operates under I/E PERFUMETRADE NETWORK, a registered company specializing in luxury perfume retail. 
-              We are committed to providing authentic, high-quality fragrances from the world's most prestigious brands.
+              We are committed to providing high-quality fragrances from the world's most prestigious brands.
             </p>
           </div>
 
@@ -130,12 +130,7 @@ export default function Terms() {
             <h2 className="text-2xl font-semibold text-navy mb-6">Product Information</h2>
             
             <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Authenticity Guarantee</h3>
-                <p className="text-gray-600">
-                  All products sold on our website are 100% authentic and sourced directly from authorized distributors and brand partners.
-                </p>
-              </div>
+              
 
               <div>
                 <h3 className="text-lg font-medium text-navy mb-2">Product Descriptions</h3>
@@ -187,7 +182,7 @@ export default function Terms() {
             
             <div className="bg-gold/10 rounded-lg p-4">
               <p className="text-navy font-medium">I/E PERFUMETRADE NETWORK</p>
-              <p className="text-gray-600">Trading as: Vel France</p>
+              <p className="text-gray-600">Operating as: Vel France</p>
               <p className="text-gray-600">ID: 39001004952</p>
               <p className="text-gray-600">Address: Tbilisi, Vaja Pshavela 70g</p>
               <p className="text-gray-600">Email: info@velfrance.ge</p>
