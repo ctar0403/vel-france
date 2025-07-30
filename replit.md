@@ -160,9 +160,10 @@ The application follows a monorepo structure with shared types and schemas, enab
 - **Payment Integration**: All payment calculations (instant, BOG installments, part-by-part) automatically use updated discount rates
 
 ### Home Page Carousel Content Update (January 30, 2025)
-- **Most Sold Products**: Updated carousel to display specific curated bestsellers
-  - Delina, Bleu de Chanel, Goddess, Kirke, Chance Eau Tendre, Libre, Sauvage Elixir, N5, Stronger With You Intensely, Queen Of Silk, K, Le Male Elixir
-  - Product filtering by name matching for accurate display of specified products
+- **Most Sold Products**: Updated carousel to display specific curated bestsellers in exact ranking order
+  - Ranking: 1) Delina, 2) Bleu de Chanel, 3) Goddess, 4) Kirke, 5) Chance Eau Tendre, 6) Libre, 7) Sauvage Elixir, 8) N5, 9) Stronger With You Intensely, 10) Queen Of Silk, 11) K, 12) Le Male Elixir
+  - Each product displays with correct ranking badge (#1 Bestseller, #2 Bestseller, etc.)
+  - Product order maintained using map/find logic for precise sequence control
 - **New Arrivals Products**: Updated carousel to showcase specific recent additions
   - Italian Leather, Russian Leather, Divine, Ganymede, Tilia, Encelade, Libre Intense, Homme Intense, Erba Pura, Ombre Nomade, Oud Satin Mood, Paradoxe Intense
   - Includes products from premium brands: Memo, Marc Antoine Barrois, Jean Paul Gaultier, Xerjoff, Sospiro, Louis Vuitton, Maison Francis Kurkdjian, Prada

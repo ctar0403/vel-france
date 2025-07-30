@@ -358,7 +358,7 @@ export default function Home() {
   const featuredProducts = products.slice(0, 3);
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Define specific product lists
+  // Define specific product lists in ranking order
   const mostSoldProductNames = [
     "Delina", "Bleu de Chanel", "Goddess", "Kirke", "Chance Eau Tendre", 
     "Libre", "Sauvage Elixir", "N5", "Stronger With You Intensely", 
@@ -371,10 +371,10 @@ export default function Home() {
     "Ombre Nomade", "Oud Satin Mood", "Paradoxe Intense"
   ];
 
-  // Filter products by name for specific sections using exact matching
-  const mostSoldProducts = products.filter(product => 
-    mostSoldProductNames.includes(product.name)
-  );
+  // Filter and sort products by ranking order
+  const mostSoldProducts = mostSoldProductNames
+    .map(name => products.find(product => product.name === name))
+    .filter(product => product !== undefined) as Product[];
 
   const newArrivalsProducts = products.filter(product => 
     newArrivalsProductNames.includes(product.name)
@@ -520,7 +520,7 @@ export default function Home() {
                 </Button>
               }
             >
-              {mostSoldProducts.slice(0, 12).map((product, index) => (
+              {mostSoldProducts.map((product, index) => (
                 <div key={product.id} className="flex justify-center items-center">
                   <CarouselProductCard 
                     product={product} 
