@@ -182,7 +182,10 @@ export default function CheckoutPage() {
   const handleInstallmentPayment = () => {
     if (!validateForm()) return;
     
-    if (!window.BOG) {
+    console.log("Attempting installment payment with total:", total);
+    
+    if (typeof window.BOG === 'undefined') {
+      console.error("BOG SDK not loaded");
       toast({
         title: "Payment Error",
         description: "BOG payment system is not available. Please try again later.",
@@ -191,34 +194,58 @@ export default function CheckoutPage() {
       return;
     }
 
-    window.BOG.Calculator.open({
-      amount: total,
-      bnpl: false, // Standard installment plan
-      onClose: () => {
-        console.log("BOG Calculator closed");
-      },
-      onRequest: (selected, successCb, closeCb) => {
-        console.log("BOG Calculator selection:", selected);
-        
-        // Use the calculator results to create payment
-        paymentMutation.mutate({ 
-          paymentMethod: 'installment', 
-          calculatorResult: selected 
-        });
-        
-        // Close the modal since we're handling the flow ourselves
-        closeCb();
-      },
-      onComplete: ({ redirectUrl }) => {
-        return false; // Prevent automatic redirect
-      }
-    });
+    if (typeof window.BOG.Calculator === 'undefined') {
+      console.error("BOG Calculator not available");
+      toast({
+        title: "Payment Error", 
+        description: "BOG Calculator is not available. Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      console.log("Opening BOG Calculator for installments with amount:", Math.round(total));
+      window.BOG.Calculator.open({
+        amount: Math.round(total),
+        bnpl: false, // Standard installment plan
+        onClose: () => {
+          console.log("BOG Calculator closed by user");
+        },
+        onRequest: (selected, successCb, closeCb) => {
+          console.log("BOG Calculator installment selection:", selected);
+          
+          // Use the calculator results to create payment
+          paymentMutation.mutate({ 
+            paymentMethod: 'installment', 
+            calculatorResult: selected 
+          });
+          
+          // Close the modal since we're handling the flow ourselves
+          closeCb();
+        },
+        onComplete: ({ redirectUrl }) => {
+          console.log("BOG Calculator onComplete called with:", redirectUrl);
+          return false; // Prevent automatic redirect
+        }
+      });
+    } catch (error) {
+      console.error("Error opening BOG Calculator:", error);
+      toast({
+        title: "Payment Error",
+        description: "Unable to open payment calculator. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleBnplPayment = () => {
     if (!validateForm()) return;
+    
+    console.log("Attempting BNPL payment with total:", total);
   
-    if (!window.BOG) {
+    if (typeof window.BOG === 'undefined') {
+      console.error("BOG SDK not loaded");
       toast({
         title: "Payment Error",
         description: "BOG payment system is not available. Please try again later.",
@@ -227,28 +254,49 @@ export default function CheckoutPage() {
       return;
     }
 
-    window.BOG.Calculator.open({
-      amount: total,
-      bnpl: true, // Part-by-part plan
-      onClose: () => {
-        console.log("BOG Calculator closed");
-      },
-      onRequest: (selected, successCb, closeCb) => {
-        console.log("BOG Calculator selection:", selected);
-        
-        // Use the calculator results to create payment
-        paymentMutation.mutate({ 
-          paymentMethod: 'bnpl', 
-          calculatorResult: selected 
-        });
-        
-        // Close the modal since we're handling the flow ourselves
-        closeCb();
-      },
-      onComplete: ({ redirectUrl }) => {
-        return false; // Prevent automatic redirect
-      }
-    });
+    if (typeof window.BOG.Calculator === 'undefined') {
+      console.error("BOG Calculator not available");
+      toast({
+        title: "Payment Error",
+        description: "BOG Calculator is not available. Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      console.log("Opening BOG Calculator for BNPL with amount:", Math.round(total));
+      window.BOG.Calculator.open({
+        amount: Math.round(total),
+        bnpl: true, // Part-by-part plan
+        onClose: () => {
+          console.log("BOG Calculator closed by user");
+        },
+        onRequest: (selected, successCb, closeCb) => {
+          console.log("BOG Calculator BNPL selection:", selected);
+          
+          // Use the calculator results to create payment
+          paymentMutation.mutate({ 
+            paymentMethod: 'bnpl', 
+            calculatorResult: selected 
+          });
+          
+          // Close the modal since we're handling the flow ourselves
+          closeCb();
+        },
+        onComplete: ({ redirectUrl }) => {
+          console.log("BOG Calculator onComplete called with:", redirectUrl);
+          return false; // Prevent automatic redirect
+        }
+      });
+    } catch (error) {
+      console.error("Error opening BOG Calculator:", error);
+      toast({
+        title: "Payment Error",
+        description: "Unable to open payment calculator. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isLoading) {

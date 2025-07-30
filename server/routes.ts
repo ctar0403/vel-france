@@ -315,7 +315,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = (req.session as any).userId || null;
       const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod } = req.body;
       
-      // Calculate total
+      // Calculate total with discounts
       let total = 0;
       const orderItems = [];
       
@@ -325,13 +325,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ message: `Product ${item.productId} not found` });
         }
         
-        const itemTotal = parseFloat(product.price) * item.quantity;
+        // Calculate price with discount if applicable
+        const basePrice = parseFloat(product.price);
+        const discountedPrice = product.discountPercentage && product.discountPercentage > 0 
+          ? basePrice * (1 - product.discountPercentage / 100)
+          : basePrice;
+        
+        const itemTotal = discountedPrice * item.quantity;
         total += itemTotal;
         
         orderItems.push({
           productId: item.productId,
           quantity: item.quantity,
-          price: product.price
+          price: discountedPrice.toString()
         });
       }
 
@@ -384,13 +390,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         external_order_id: order.id,
         purchase_units: {
           currency: 'GEL',
-          total_amount: total,
+          total_amount: Math.round(total),
           basket: orderItems.map((item) => ({
             product_id: item.productId,
             description: `Product ${item.productId}`,
             quantity: item.quantity,
-            unit_price: parseFloat(item.price),
-            total_price: item.quantity * parseFloat(item.price)
+            unit_price: Math.round(parseFloat(item.price)),
+            total_price: Math.round(item.quantity * parseFloat(item.price))
           }))
         },
         redirect_urls: {
@@ -433,7 +439,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = (req.session as any).userId || null;
       const { shippingAddress, billingAddress, items, paymentMethod = 'card' } = req.body;
       
-      // Calculate total
+      // Calculate total with discounts
       let total = 0;
       const orderItems = [];
       
@@ -443,13 +449,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ message: `Product ${item.productId} not found` });
         }
         
-        const itemTotal = parseFloat(product.price) * item.quantity;
+        // Calculate price with discount if applicable
+        const basePrice = parseFloat(product.price);
+        const discountedPrice = product.discountPercentage && product.discountPercentage > 0 
+          ? basePrice * (1 - product.discountPercentage / 100)
+          : basePrice;
+        
+        const itemTotal = discountedPrice * item.quantity;
         total += itemTotal;
         
         orderItems.push({
           productId: item.productId,
           quantity: item.quantity,
-          price: product.price
+          price: discountedPrice.toString()
         });
       }
 
@@ -472,13 +484,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         external_order_id: order.id,
         purchase_units: {
           currency: 'GEL',
-          total_amount: total,
+          total_amount: Math.round(total),
           basket: orderItems.map((item) => ({
             product_id: item.productId,
             description: `Product ${item.productId}`, // You might want to get actual product name
             quantity: item.quantity,
-            unit_price: parseFloat(item.price),
-            total_price: item.quantity * parseFloat(item.price)
+            unit_price: Math.round(parseFloat(item.price)),
+            total_price: Math.round(item.quantity * parseFloat(item.price))
           }))
         },
         redirect_urls: {
