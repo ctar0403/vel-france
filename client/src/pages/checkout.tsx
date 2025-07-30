@@ -578,18 +578,18 @@ export default function CheckoutPage() {
                             <div className="flex flex-col items-end gap-1">
                               <div className="flex items-center gap-2">
                                 <p className="text-navy/60">
-                                  ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)} each
+                                  ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
                                 </p>
                                 <span className="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded-full font-medium">
                                   -{item.product.discountPercentage}%
                                 </span>
                               </div>
                               <p className="text-gray-500 line-through text-xs">
-                                ₾{parseFloat(item.product.price).toFixed(2)} each
+                                ₾{parseFloat(item.product.price).toFixed(2)}
                               </p>
                             </div>
                           ) : (
-                            <p className="text-navy/60">₾{parseFloat(item.product.price).toFixed(2)} each</p>
+                            <p className="text-navy/60">₾{parseFloat(item.product.price).toFixed(2)}</p>
                           )}
                         </div>
                       </div>
