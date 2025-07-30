@@ -8,13 +8,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartSidebar from "@/components/CartSidebar";
+import type { CartItem, Product } from "@shared/schema";
 import { Phone, Mail, Clock, Send, MessageSquare, User } from "lucide-react";
+import { useState } from "react";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -29,6 +32,15 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function Contact() {
   const { toast } = useToast();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Fetch cart items for header
+  const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
+    queryKey: ["/api/cart"],
+    retry: false,
+  });
+
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -99,7 +111,16 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream to-white">
-      <Header />
+      <Header 
+        cartItemCount={cartItemCount} 
+        onCartClick={() => setIsCartOpen(true)}
+      />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
+      />
       
       
 

@@ -1,10 +1,14 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartSidebar from "@/components/CartSidebar";
 import { useQuery } from "@tanstack/react-query";
 import type { CartItem, Product } from "@shared/schema";
 import { FileText, Building, Info, Scale } from "lucide-react";
+import { useState } from "react";
 
 export default function Terms() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   // Fetch cart items for header
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
@@ -17,7 +21,13 @@ export default function Terms() {
     <div className="min-h-screen bg-cream">
       <Header 
         cartItemCount={cartItemCount} 
-        onCartClick={() => {}}
+        onCartClick={() => setIsCartOpen(true)}
+      />
+      <CartSidebar 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        isLoading={false}
       />
       
       <div className="container mx-auto px-4 py-16">
