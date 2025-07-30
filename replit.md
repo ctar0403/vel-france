@@ -149,6 +149,15 @@ The application follows a monorepo structure with shared types and schemas, enab
 
 ## Recent Changes
 
+### Discount System Update (January 30, 2025)
+- **Adjusted Discount Rates**: Modified discount structure for better balance
+  - Creed brand maintains 60% discount (4 products) - premium luxury positioning
+  - All other luxury brands reduced to 50% discount (56 products total)
+  - Includes: Amouage, Bottega Veneta, Byredo, Initio, Kilian, Le Labo, Louis Vuitton, Maison Francis Kurkdjian, Memo, Parfums de Marly, Roja, Tiziana Terenzi, Tom Ford
+- **Database Updates**: Direct SQL updates to discount_percentage column for targeted brand adjustments
+- **Display Consistency**: All product displays automatically reflect new discount rates across home page, catalogue, cart, checkout, and product detail pages
+- **Payment Integration**: All payment calculations (instant, BOG installments, part-by-part) automatically use updated discount rates
+
 ### Multi-Category System Implementation (January 29, 2025)
 - **Database Schema Enhancement**: Added `categories` array field to support products appearing in multiple categories
   - Maintained backward compatibility with existing `category` field for primary category designation
