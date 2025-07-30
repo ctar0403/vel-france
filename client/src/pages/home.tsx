@@ -371,19 +371,13 @@ export default function Home() {
     "Ombre Nomade", "Oud Satin Mood", "Paradoxe Intense"
   ];
 
-  // Filter products by name for specific sections
+  // Filter products by name for specific sections using exact matching
   const mostSoldProducts = products.filter(product => 
-    mostSoldProductNames.some(name => 
-      product.name.toLowerCase().includes(name.toLowerCase()) ||
-      (product.brand && product.name.toLowerCase().includes(name.toLowerCase().replace(/\s+/g, ' ')))
-    )
+    mostSoldProductNames.includes(product.name)
   );
 
   const newArrivalsProducts = products.filter(product => 
-    newArrivalsProductNames.some(name => 
-      product.name.toLowerCase().includes(name.toLowerCase()) ||
-      (product.brand && product.name.toLowerCase().includes(name.toLowerCase().replace(/\s+/g, ' ')))
-    )
+    newArrivalsProductNames.includes(product.name)
   );
 
   return (
