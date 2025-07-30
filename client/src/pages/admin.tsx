@@ -142,8 +142,47 @@ function OrderDetailsDialog({ isOpen, onOpenChange, order }: OrderDetailsDialogP
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="whitespace-pre-line text-gray-900">
-                  {order.shippingAddress}
+                <div className="text-gray-900">
+                  {(() => {
+                    try {
+                      const address = typeof order.shippingAddress === 'string' 
+                        ? JSON.parse(order.shippingAddress) 
+                        : order.shippingAddress;
+                      
+                      return (
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">Full Name</Label>
+                              <p>{address.firstName} {address.lastName}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">Phone</Label>
+                              <p>{address.phone}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">Address</Label>
+                              <p>{address.address}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">City</Label>
+                              <p>{address.city}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">Postal Code</Label>
+                              <p>{address.postalCode}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-600">Country</Label>
+                              <p>{address.country}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    } catch (e) {
+                      return <div className="whitespace-pre-line">{order.shippingAddress}</div>;
+                    }
+                  })()}
                 </div>
               </CardContent>
             </Card>
@@ -813,12 +852,13 @@ export default function Admin() {
                             <TableCell>
                               <div className="flex items-center space-x-2">
                                 <Button
-                                  variant="ghost"
+                                  variant="outline"
                                   size="sm"
                                   onClick={() => handleViewOrder(order)}
-                                  className="text-blue-600 hover:text-blue-700"
+                                  className="text-blue-600 hover:text-blue-700 border-blue-200 hover:border-blue-300"
                                 >
-                                  <Eye className="h-4 w-4" />
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  View Details
                                 </Button>
                                 <Select
                                   value={order.status}
