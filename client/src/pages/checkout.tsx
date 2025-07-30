@@ -136,13 +136,17 @@ export default function CheckoutPage() {
   });
 
   const validateForm = (): boolean => {
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode'];
-    const isShippingValid = requiredFields.every(field => shippingForm[field as keyof typeof shippingForm]);
+    // Only validate required fields that actually exist in the form
+    const requiredFields = ['firstName', 'lastName', 'phone', 'address', 'city'];
+    const isShippingValid = requiredFields.every(field => {
+      const value = shippingForm[field as keyof typeof shippingForm];
+      return value && value.toString().trim() !== '';
+    });
     
     if (!isShippingValid) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all shipping information fields.",
+        description: "Please fill in all required shipping information fields (Name, Last Name, Phone, Address, City).",
         variant: "destructive",
       });
       return false;
