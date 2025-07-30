@@ -15,7 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Product, InsertProduct } from "@shared/schema";
-import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown } from "lucide-react";
+import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard } from "lucide-react";
 
 export default function Admin() {
   const [, setLocation] = useLocation();
@@ -39,6 +39,11 @@ export default function Admin() {
   // Fetch products
   const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ["/api/admin/products"],
+  });
+
+  // Fetch orders for admin
+  const { data: orders = [], isLoading: ordersLoading } = useQuery({
+    queryKey: ["/api/admin/orders"],
   });
 
   // Filter and sort products
@@ -147,6 +152,42 @@ export default function Admin() {
     },
   });
 
+  // Order status update mutation
+  const updateOrderStatusMutation = useMutation({
+    mutationFn: async ({ orderId, status, paymentStatus }: { orderId: string; status: string; paymentStatus?: string }) => {
+      return await apiRequest("PATCH", `/api/admin/orders/${orderId}/status`, { status, paymentStatus });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      toast({ title: "Order status updated successfully" });
+    },
+    onError: (error: Error) => {
+      toast({ 
+        title: "Failed to update order status", 
+        description: error.message, 
+        variant: "destructive" 
+      });
+    },
+  });
+
+  // Delete order mutation
+  const deleteOrderMutation = useMutation({
+    mutationFn: async (orderId: string) => {
+      return await apiRequest("DELETE", `/api/admin/orders/${orderId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      toast({ title: "Order deleted successfully" });
+    },
+    onError: (error: Error) => {
+      toast({ 
+        title: "Failed to delete order", 
+        description: error.message, 
+        variant: "destructive" 
+      });
+    },
+  });
+
   const handleCreateProduct = () => {
     setSelectedProduct(null);
     setDialogMode('create');
@@ -179,6 +220,33 @@ export default function Admin() {
       case 'ნიშური': 
       case 'niche': return 'bg-green-100 text-green-800';
       default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleUpdateOrderStatus = (orderId: string, status: string, paymentStatus?: string) => {
+    updateOrderStatusMutation.mutate({ orderId, status, paymentStatus });
+  };
+
+  const handleDeleteOrder = (orderId: string) => {
+    if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
+      deleteOrderMutation.mutate(orderId);
+    }
+  };
+
+  const getOrderStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'confirmed':
+        return 'bg-green-100 text-green-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'shipped':
+        return 'bg-blue-100 text-blue-800';
+      case 'delivered':
+        return 'bg-emerald-100 text-emerald-800';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -350,14 +418,189 @@ export default function Admin() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="orders">
+          <TabsContent value="orders" className="space-y-6">
+            {/* Order Statistics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center space-x-2">
+                    <ShoppingCart className="h-5 w-5 text-blue-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Total Orders</p>
+                      <p className="text-2xl font-bold text-gray-900">{orders.length}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-5 w-5 text-green-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Today's Orders</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {orders.filter(order => {
+                          const today = new Date().toDateString();
+                          const orderDate = new Date(order.createdAt).toDateString();
+                          return today === orderDate;
+                        }).length}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center space-x-2">
+                    <DollarSign className="h-5 w-5 text-gold" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        ₾{orders.reduce((sum, order) => sum + parseFloat(order.total || '0'), 0).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center space-x-2">
+                    <CreditCard className="h-5 w-5 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Pending Orders</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {orders.filter(order => order.status === 'pending').length}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Orders Table */}
             <Card>
               <CardHeader>
-                <CardTitle>Order Management</CardTitle>
-                <CardDescription>View and manage customer orders</CardDescription>
+                <CardTitle className="flex items-center">
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Orders Management
+                </CardTitle>
+                <CardDescription>
+                  Manage customer orders, update statuses, and process shipments
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-center text-gray-500 py-8">Order management coming soon...</p>
+                {ordersLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="text-navy">Loading orders...</div>
+                  </div>
+                ) : orders.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    No orders found
+                  </div>
+                ) : (
+                  <div className="rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Order Code</TableHead>
+                          <TableHead>Customer</TableHead>
+                          <TableHead>Items</TableHead>
+                          <TableHead>Total</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Payment</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {orders.map((order: any) => (
+                          <TableRow key={order.id}>
+                            <TableCell className="font-mono font-medium">
+                              {order.orderCode}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center space-x-2">
+                                <User className="h-4 w-4 text-gray-400" />
+                                <div>
+                                  <p className="font-medium">
+                                    {order.user?.firstName || order.user?.lastName 
+                                      ? `${order.user.firstName || ''} ${order.user.lastName || ''}`.trim()
+                                      : order.user?.email || 'Unknown User'
+                                    }
+                                  </p>
+                                  <p className="text-sm text-gray-500 flex items-center">
+                                    <Mail className="h-3 w-3 mr-1" />
+                                    {order.user?.email || 'No email'}
+                                  </p>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="space-y-1">
+                                {order.orderItems?.slice(0, 2).map((item: any) => (
+                                  <div key={item.id} className="text-sm">
+                                    {item.quantity}x {item.product?.name || `Product ${item.productId}`}
+                                  </div>
+                                ))}
+                                {order.orderItems?.length > 2 && (
+                                  <div className="text-xs text-gray-500">
+                                    +{order.orderItems.length - 2} more items
+                                  </div>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              ₾{parseFloat(order.total || '0').toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getOrderStatusColor(order.status)}>
+                                {order.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getOrderStatusColor(order.paymentStatus)}>
+                                {order.paymentStatus}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm text-gray-500">
+                              {new Date(order.createdAt).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center space-x-2">
+                                <Select
+                                  value={order.status}
+                                  onValueChange={(status) => handleUpdateOrderStatus(order.id, status)}
+                                >
+                                  <SelectTrigger className="w-[120px]">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="pending">Pending</SelectItem>
+                                    <SelectItem value="confirmed">Confirmed</SelectItem>
+                                    <SelectItem value="shipped">Shipped</SelectItem>
+                                    <SelectItem value="delivered">Delivered</SelectItem>
+                                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleDeleteOrder(order.id)}
+                                  className="text-red-600 hover:text-red-700"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>

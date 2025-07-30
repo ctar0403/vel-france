@@ -322,6 +322,20 @@ export class DatabaseStorage implements IStorage {
     return updatedOrder;
   }
 
+  async deleteOrder(orderId: string): Promise<boolean> {
+    try {
+      // First delete order items
+      await db.delete(orderItems).where(eq(orderItems.orderId, orderId));
+      
+      // Then delete the order
+      const result = await db.delete(orders).where(eq(orders.id, orderId));
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      return false;
+    }
+  }
+
   async updateOrderPayment(orderId: string, paymentId: string, paymentStatus: string): Promise<Order> {
     const [updatedOrder] = await db
       .update(orders)

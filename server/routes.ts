@@ -11,6 +11,7 @@ import {
   insertNewsletterSchema,
   insertContactMessageSchema
 } from "@shared/schema";
+import { sendOrderNotificationEmail, sendOrderConfirmationToCustomer } from './email';
 
 // Helper function to configure BOG payment options
 function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): { 
@@ -541,11 +542,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await storage.updateOrderPayment(externalOrderId, bogOrderId, mappedPaymentStatus);
         await storage.updateOrderStatus(externalOrderId, mappedOrderStatus, mappedPaymentStatus);
         
-        // Clear cart after successful payment
+        // Clear cart after successful payment and send emails
         if (orderStatus === 'completed') {
           const order = await storage.getOrder(externalOrderId);
           if (order && order.userId) {
             await storage.clearCart(order.userId);
+            
+            // Send email notifications
+            try {
+              const user = await storage.getUser(order.userId);
+              const orderWithItems = await storage.getOrderByCode(order.orderCode);
+              if (user && orderWithItems?.orderItems) {
+                const emailData = {
+                  orderId: order.orderCode,
+                  customerName: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email,
+                  customerEmail: user.email,
+                  totalAmount: parseFloat(order.total),
+                  items: orderWithItems.orderItems.map((item: any) => ({
+                    productName: item.product?.name || `Product ${item.productId}`,
+                    quantity: item.quantity,
+                    price: parseFloat(item.price)
+                  })),
+                  shippingAddress: order.shippingAddress,
+                  paymentMethod: 'BOG Payment Gateway'
+                };
+                
+                // Send notification to admin and confirmation to customer
+                await Promise.all([
+                  sendOrderNotificationEmail(emailData),
+                  sendOrderConfirmationToCustomer(emailData)
+                ]);
+              }
+            } catch (emailError) {
+              console.error('Failed to send order emails:', emailError);
+              // Don't fail the order if email fails
+            }
           }
         }
       }
@@ -575,10 +606,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let orderStatus = 'confirmed';
       let paymentStatus = 'completed';
       
-      // Clear user's cart after successful payment
+      // Clear user's cart after successful payment and send emails
       const order = await storage.getOrder(orderId as string);
       if (order && order.userId) {
         await storage.clearCart(order.userId);
+        
+        // Send email notifications
+        try {
+          const user = await storage.getUser(order.userId);
+          const orderWithItems = await storage.getOrderByCode(order.orderCode);
+          if (user && orderWithItems?.orderItems) {
+            const emailData = {
+              orderId: order.orderCode,
+              customerName: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email,
+              customerEmail: user.email,
+              totalAmount: parseFloat(order.total),
+              items: orderWithItems.orderItems.map((item: any) => ({
+                productName: item.product?.name || `Product ${item.productId}`,
+                quantity: item.quantity,
+                price: parseFloat(item.price)
+              })),
+              shippingAddress: order.shippingAddress,
+              paymentMethod: 'BOG Payment Gateway'
+            };
+            
+            // Send notification to admin and confirmation to customer
+            await Promise.all([
+              sendOrderNotificationEmail(emailData),
+              sendOrderConfirmationToCustomer(emailData)
+            ]);
+          }
+        } catch (emailError) {
+          console.error('Failed to send order emails:', emailError);
+          // Don't fail the order if email fails
+        }
       }
       
       await storage.updateOrderStatus(orderId as string, orderStatus, paymentStatus);
@@ -680,6 +741,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching order by code:", error);
       res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
+  // Admin order management routes
+  app.get("/api/admin/orders", requireAdmin, async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching all orders:", error);
+      res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+
+  app.get("/api/admin/orders/:id", requireAdmin, async (req, res) => {
+    try {
+      const order = await storage.getOrder(req.params.id);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      res.json(order);
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
+  app.patch("/api/admin/orders/:id/status", requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status, paymentStatus } = req.body;
+      
+      if (!status) {
+        return res.status(400).json({ message: "Status is required" });
+      }
+
+      await storage.updateOrderStatus(id, status, paymentStatus || status);
+      
+      const updatedOrder = await storage.getOrder(id);
+      res.json(updatedOrder);
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      res.status(500).json({ message: "Failed to update order status" });
+    }
+  });
+
+  app.delete("/api/admin/orders/:id", requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteOrder(id);
+      if (!success) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      res.status(500).json({ message: "Failed to delete order" });
     }
   });
 
