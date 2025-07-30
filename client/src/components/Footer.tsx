@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import footerLogoImage from "@assets/Your paragraph text (5)_1753895494203.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,9 +11,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/">
-              <h3 className="font-vibes text-3xl text-navy mb-4 cursor-pointer hover:text-gold transition-colors">
-                Vel France
-              </h3>
+              <img 
+                src={footerLogoImage}
+                alt="Vel France Logo"
+                className="h-16 mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+              />
             </Link>
             
             <div className="flex space-x-4">
