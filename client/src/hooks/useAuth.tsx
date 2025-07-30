@@ -77,6 +77,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
+      // Clear all queries to ensure fresh state
+      queryClient.clear();
       toast({
         title: "Goodbye!",
         description: "You have been logged out successfully.",

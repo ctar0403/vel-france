@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Search, User, ShoppingBag, Menu, ChevronDown, LogOut } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import LogoutButton from "@/components/LogoutButton";
 import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 
 interface HeaderProps {
@@ -15,7 +16,7 @@ interface HeaderProps {
 }
 
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
-  const { user, logoutMutation } = useAuth();
+  const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -198,16 +199,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     </span>
                   </div>
                 </Link>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => logoutMutation.mutate()}
-                  className="text-navy hover:text-gold font-roboto"
-                  disabled={logoutMutation.isPending}
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  {logoutMutation.isPending ? "Logging out..." : "Logout"}
-                </Button>
+                <LogoutButton 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-navy hover:text-gold font-roboto" 
+                />
               </div>
             ) : (
               <Link to="/auth">
@@ -343,13 +339,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         </div>
                       </div>
                       
-                      <Button
-                        variant="outline"
+                      <LogoutButton 
+                        variant="outline" 
                         className="w-full border-navy text-navy hover:bg-navy hover:text-white"
-                        onClick={() => window.location.href = '/api/logout'}
-                      >
-                        Logout
-                      </Button>
+                        showIcon={false}
+                      />
                     </div>
                   )}
                 </div>
