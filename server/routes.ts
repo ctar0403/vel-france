@@ -137,6 +137,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bulk pricing management routes
+  app.post("/api/admin/products/bulk-pricing", requireAdmin, async (req, res) => {
+    try {
+      const { productIds, discountPercentage } = req.body;
+      
+      if (!Array.isArray(productIds) || productIds.length === 0) {
+        return res.status(400).json({ message: "Product IDs array is required" });
+      }
+      
+      if (typeof discountPercentage !== 'number' || discountPercentage < 0 || discountPercentage > 100) {
+        return res.status(400).json({ message: "Discount percentage must be between 0 and 100" });
+      }
+      
+      const updatedProducts = await storage.bulkUpdateProductPricing(productIds, discountPercentage);
+      res.json({ 
+        message: `Successfully updated pricing for ${updatedProducts.length} products`,
+        updatedProducts 
+      });
+    } catch (error) {
+      console.error("Error updating bulk pricing:", error);
+      res.status(500).json({ message: "Failed to update bulk pricing" });
+    }
+  });
+
+  app.post("/api/admin/products/reset-discounts", requireAdmin, async (req, res) => {
+    try {
+      const resetProducts = await storage.resetAllProductDiscounts();
+      res.json({ 
+        message: `Successfully reset discounts for ${resetProducts.length} products`,
+        resetProducts 
+      });
+    } catch (error) {
+      console.error("Error resetting discounts:", error);
+      res.status(500).json({ message: "Failed to reset discounts" });
+    }
+  });
+
   app.get("/api/products/:id", async (req, res) => {
     try {
       const product = await storage.getProduct(req.params.id);

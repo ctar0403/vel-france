@@ -45,6 +45,8 @@ export interface IStorage {
   createProduct(product: InsertProduct): Promise<Product>;
   updateProduct(id: string, product: Partial<InsertProduct>): Promise<Product | undefined>;
   deleteProduct(id: string): Promise<boolean>;
+  bulkUpdateProductPricing(productIds: string[], discountPercentage: number): Promise<Product[]>;
+  resetAllProductDiscounts(): Promise<Product[]>;
   
   // Cart operations
   getCartItems(userId: string): Promise<(CartItem & { product: Product })[]>;
@@ -130,6 +132,39 @@ export class DatabaseStorage implements IStorage {
   async getProductById(id: string): Promise<Product | undefined> {
     const [product] = await db.select().from(products).where(eq(products.id, id));
     return product;
+  }
+
+  async bulkUpdateProductPricing(productIds: string[], discountPercentage: number): Promise<Product[]> {
+    const updatedProducts = [];
+    
+    for (const productId of productIds) {
+      const [updatedProduct] = await db
+        .update(products)
+        .set({ 
+          discountPercentage: discountPercentage,
+          updatedAt: new Date() 
+        })
+        .where(eq(products.id, productId))
+        .returning();
+      
+      if (updatedProduct) {
+        updatedProducts.push(updatedProduct);
+      }
+    }
+    
+    return updatedProducts;
+  }
+
+  async resetAllProductDiscounts(): Promise<Product[]> {
+    const updatedProducts = await db
+      .update(products)
+      .set({ 
+        discountPercentage: 0,
+        updatedAt: new Date() 
+      })
+      .returning();
+    
+    return updatedProducts;
   }
 
   // Cart operations

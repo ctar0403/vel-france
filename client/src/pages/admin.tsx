@@ -15,7 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Product, InsertProduct } from "@shared/schema";
-import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard, Eye, Phone } from "lucide-react";
+import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard, Eye, Phone, Loader2 } from "lucide-react";
 
 interface OrderDetailsDialogProps {
   isOpen: boolean;
@@ -301,6 +301,8 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'brand' | 'price' | 'category'>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [bulkDiscountPercentage, setBulkDiscountPercentage] = useState<number>(0);
+  const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   // Check if user is authenticated as admin
@@ -428,6 +430,45 @@ export default function Admin() {
     },
   });
 
+  // Bulk pricing mutations
+  const bulkUpdatePricingMutation = useMutation({
+    mutationFn: async ({ productIds, discountPercentage }: { productIds: string[]; discountPercentage: number }) => {
+      return await apiRequest("POST", "/api/admin/products/bulk-pricing", { productIds, discountPercentage });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/products"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/products"] });
+      setSelectedProducts(new Set());
+      setBulkDiscountPercentage(0);
+      toast({ title: "Bulk pricing updated successfully" });
+    },
+    onError: (error: Error) => {
+      toast({ 
+        title: "Failed to update pricing", 
+        description: error.message, 
+        variant: "destructive" 
+      });
+    },
+  });
+
+  const resetAllDiscountsMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("POST", "/api/admin/products/reset-discounts", {});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/products"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/products"] });
+      toast({ title: "All discounts reset successfully" });
+    },
+    onError: (error: Error) => {
+      toast({ 
+        title: "Failed to reset discounts", 
+        description: error.message, 
+        variant: "destructive" 
+      });
+    },
+  });
+
   // Order status update mutation
   const updateOrderStatusMutation = useMutation({
     mutationFn: async ({ orderId, status, paymentStatus }: { orderId: string; status: string; paymentStatus?: string }) => {
@@ -514,6 +555,56 @@ export default function Admin() {
     setIsOrderDialogOpen(true);
   };
 
+  // Bulk pricing handlers
+  const handleBulkPricingUpdate = () => {
+    if (selectedProducts.size === 0) {
+      toast({
+        title: "No products selected",
+        description: "Please select products to update pricing for.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (bulkDiscountPercentage < 0 || bulkDiscountPercentage > 100) {
+      toast({
+        title: "Invalid discount",
+        description: "Discount percentage must be between 0 and 100.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    bulkUpdatePricingMutation.mutate({
+      productIds: Array.from(selectedProducts),
+      discountPercentage: bulkDiscountPercentage,
+    });
+  };
+
+  const handleResetAllDiscounts = () => {
+    if (confirm('Are you sure you want to reset all product discounts to 0%? This action cannot be undone.')) {
+      resetAllDiscountsMutation.mutate();
+    }
+  };
+
+  const handleSelectProduct = (productId: string, selected: boolean) => {
+    const newSelection = new Set(selectedProducts);
+    if (selected) {
+      newSelection.add(productId);
+    } else {
+      newSelection.delete(productId);
+    }
+    setSelectedProducts(newSelection);
+  };
+
+  const handleSelectAllProducts = (selected: boolean) => {
+    if (selected) {
+      setSelectedProducts(new Set(filteredAndSortedProducts.map(p => p.id)));
+    } else {
+      setSelectedProducts(new Set());
+    }
+  };
+
   const getOrderStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'confirmed':
@@ -548,8 +639,9 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="products">Products</TabsTrigger>
+            <TabsTrigger value="pricing">Pricing</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -639,7 +731,9 @@ export default function Admin() {
                         <TableHead>Name</TableHead>
                         <TableHead>Brand</TableHead>
                         <TableHead>Category</TableHead>
-                        <TableHead>Price</TableHead>
+                        <TableHead>Original Price</TableHead>
+                        <TableHead>Current Price</TableHead>
+                        <TableHead>Discount</TableHead>
                         <TableHead>In Stock</TableHead>
                         <TableHead>Actions</TableHead>
                       </TableRow>
@@ -667,7 +761,25 @@ export default function Admin() {
                               {product.category}
                             </Badge>
                           </TableCell>
-                          <TableCell className="font-medium">${product.price}</TableCell>
+                          <TableCell className="font-medium">₾{parseFloat(product.price).toFixed(2)}</TableCell>
+                          <TableCell className="font-medium">
+                            {product.discountPercentage && product.discountPercentage > 0 ? (
+                              <span className="text-green-600">
+                                ₾{(parseFloat(product.price) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                              </span>
+                            ) : (
+                              <span>₾{parseFloat(product.price).toFixed(2)}</span>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {product.discountPercentage && product.discountPercentage > 0 ? (
+                              <Badge className="bg-red-100 text-red-800">
+                                -{product.discountPercentage}%
+                              </Badge>
+                            ) : (
+                              <span className="text-gray-400">No discount</span>
+                            )}
+                          </TableCell>
                           <TableCell>
                             <Badge variant={product.inStock ? "default" : "destructive"}>
                               {product.inStock ? "In Stock" : "Out of Stock"}
@@ -689,6 +801,175 @@ export default function Admin() {
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="pricing" className="space-y-6">
+            {/* Bulk Pricing Management */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <DollarSign className="h-5 w-5 mr-2" />
+                  Bulk Pricing Management
+                </CardTitle>
+                <CardDescription>
+                  Manage discounts for multiple products at once or reset all discounts.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Bulk Actions */}
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+                  <div className="flex-1">
+                    <Label htmlFor="bulk-discount">Discount Percentage</Label>
+                    <Input
+                      id="bulk-discount"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={bulkDiscountPercentage}
+                      onChange={(e) => setBulkDiscountPercentage(Number(e.target.value))}
+                      placeholder="Enter discount percentage (0-100)"
+                      className="mt-1"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleBulkPricingUpdate}
+                      disabled={bulkUpdatePricingMutation.isPending || selectedProducts.size === 0}
+                      className="bg-gold hover:bg-gold/90 text-navy"
+                    >
+                      {bulkUpdatePricingMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Updating...
+                        </>
+                      ) : (
+                        <>
+                          <DollarSign className="h-4 w-4 mr-2" />
+                          Apply Discount ({selectedProducts.size} products)
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleResetAllDiscounts}
+                      disabled={resetAllDiscountsMutation.isPending}
+                      className="text-red-600 border-red-200 hover:bg-red-50"
+                    >
+                      {resetAllDiscountsMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Resetting...
+                        </>
+                      ) : (
+                        <>
+                          <X className="h-4 w-4 mr-2" />
+                          Reset All Discounts
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                {selectedProducts.size > 0 && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-sm text-blue-800">
+                      <strong>{selectedProducts.size}</strong> products selected for bulk pricing update.
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedProducts(new Set())}
+                        className="ml-2 h-auto p-1 text-blue-600 hover:bg-blue-100"
+                      >
+                        Clear selection
+                      </Button>
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Products Selection Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Select Products for Pricing Updates</CardTitle>
+                <CardDescription>
+                  Check the products you want to apply bulk discount pricing to.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-12">
+                          <input
+                            type="checkbox"
+                            checked={selectedProducts.size === filteredAndSortedProducts.length && filteredAndSortedProducts.length > 0}
+                            onChange={(e) => handleSelectAllProducts(e.target.checked)}
+                            className="rounded border-gray-300"
+                          />
+                        </TableHead>
+                        <TableHead>Product</TableHead>
+                        <TableHead>Brand</TableHead>
+                        <TableHead>Original Price</TableHead>
+                        <TableHead>Current Discount</TableHead>
+                        <TableHead>Current Price</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredAndSortedProducts.map((product) => (
+                        <TableRow key={product.id}>
+                          <TableCell>
+                            <input
+                              type="checkbox"
+                              checked={selectedProducts.has(product.id)}
+                              onChange={(e) => handleSelectProduct(product.id, e.target.checked)}
+                              className="rounded border-gray-300"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center space-x-3">
+                              {product.imageUrl ? (
+                                <img 
+                                  src={product.imageUrl} 
+                                  alt={product.name}
+                                  className="w-10 h-10 object-cover rounded-md"
+                                />
+                              ) : (
+                                <div className="w-10 h-10 bg-gray-200 rounded-md flex items-center justify-center">
+                                  <Package className="h-5 w-5 text-gray-400" />
+                                </div>
+                              )}
+                              <span className="font-medium">{product.name}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>{product.brand}</TableCell>
+                          <TableCell className="font-medium">₾{parseFloat(product.price).toFixed(2)}</TableCell>
+                          <TableCell>
+                            {product.discountPercentage && product.discountPercentage > 0 ? (
+                              <Badge className="bg-red-100 text-red-800">
+                                -{product.discountPercentage}%
+                              </Badge>
+                            ) : (
+                              <span className="text-gray-400">No discount</span>
+                            )}
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            {product.discountPercentage && product.discountPercentage > 0 ? (
+                              <span className="text-green-600">
+                                ₾{(parseFloat(product.price) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                              </span>
+                            ) : (
+                              <span>₾{parseFloat(product.price).toFixed(2)}</span>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
