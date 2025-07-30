@@ -49,9 +49,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement search functionality
-    console.log("Searching for:", searchQuery);
-    setIsSearchOpen(false);
+    if (searchQuery.trim()) {
+      // Navigate to catalogue page with search query
+      setLocation(`/catalogue?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setIsSearchOpen(false);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
