@@ -340,7 +340,10 @@ function ProductDetailPage() {
                   ) : (
                     <>
                       <ShoppingCart className="w-5 h-5 mr-2" />
-                      Add to Cart - ₾{(parseFloat(product.price) * quantity).toFixed(2)}
+                      Add to Cart - ₾{(product.discountPercentage && product.discountPercentage > 0 
+                        ? parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity
+                        : parseFloat(product.price) * quantity
+                      ).toFixed(2)}
                     </>
                   )}
                 </Button>
