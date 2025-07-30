@@ -1,14 +1,29 @@
 import nodemailer from 'nodemailer';
 
-// Create a transporter using Gmail (free option)
+// Create a transporter with support for multiple email providers
 const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER, // Your Gmail address
-      pass: process.env.EMAIL_APP_PASSWORD, // Gmail App Password (not regular password)
-    },
-  });
+  const emailProvider = process.env.EMAIL_PROVIDER || 'gmail';
+  
+  if (emailProvider === 'outlook' || emailProvider === 'hotmail') {
+    return nodemailer.createTransport({
+      host: 'smtp-mail.outlook.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER, // Your Outlook/Hotmail address
+        pass: process.env.EMAIL_PASSWORD, // Your regular password
+      },
+    });
+  } else {
+    // Default to Gmail
+    return nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER, // Your Gmail address
+        pass: process.env.EMAIL_APP_PASSWORD, // Gmail App Password (not regular password)
+      },
+    });
+  }
 };
 
 interface OrderEmailData {
@@ -28,8 +43,12 @@ interface OrderEmailData {
 export async function sendOrderNotificationEmail(orderData: OrderEmailData): Promise<boolean> {
   try {
     // Skip email sending if credentials are not configured
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-      console.log('Email credentials not configured, skipping email notification');
+    const emailProvider = process.env.EMAIL_PROVIDER || 'gmail';
+    const passwordField = emailProvider === 'outlook' || emailProvider === 'hotmail' ? 'EMAIL_PASSWORD' : 'EMAIL_APP_PASSWORD';
+    const requiredPassword = emailProvider === 'outlook' || emailProvider === 'hotmail' ? process.env.EMAIL_PASSWORD : process.env.EMAIL_APP_PASSWORD;
+    
+    if (!process.env.EMAIL_USER || !requiredPassword) {
+      console.log(`Email credentials not configured for ${emailProvider}, skipping email notification`);
       return true; // Return true to not break the order flow
     }
 
@@ -86,8 +105,11 @@ export async function sendOrderNotificationEmail(orderData: OrderEmailData): Pro
 
 export async function sendOrderConfirmationToCustomer(orderData: OrderEmailData): Promise<boolean> {
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-      console.log('Email credentials not configured, skipping customer confirmation email');
+    const emailProvider = process.env.EMAIL_PROVIDER || 'gmail';
+    const requiredPassword = emailProvider === 'outlook' || emailProvider === 'hotmail' ? process.env.EMAIL_PASSWORD : process.env.EMAIL_APP_PASSWORD;
+    
+    if (!process.env.EMAIL_USER || !requiredPassword) {
+      console.log(`Email credentials not configured for ${emailProvider}, skipping customer confirmation email`);
       return true;
     }
 
