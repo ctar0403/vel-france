@@ -149,6 +149,21 @@ The application follows a monorepo structure with shared types and schemas, enab
 
 ## Recent Changes
 
+### Footer Navigation & Information Pages Update (January 30, 2025)
+- **Footer Navigation Enhancement**: Updated footer to use proper Link components instead of scroll-based navigation
+  - Home, Catalogue, and Contact links now navigate to their respective pages
+  - Added hover effects and consistent styling for all navigation links
+  - Logo/brand name now links back to home page
+- **New Information Pages**: Created four new essential pages with comprehensive content
+  - **Delivery Page**: Detailed delivery information for Tbilisi (1-2 business days) and Regions (2-3 business days)
+  - **Returns Page**: Clear no-returns policy with explanations about hygiene/safety considerations
+  - **Privacy Policy**: Comprehensive privacy policy covering data collection, usage, and user rights
+  - **Terms & Conditions**: Complete terms including company information (I/E PERFUMETRADE NETWORK, ID: 39001004952, Address: Tbilisi, Vaja Pshavela 70g)
+- **Routing System**: Added new routes to App.tsx for all information pages (/delivery, /returns, /privacy, /terms)
+- **Consistent Design**: All new pages follow the established design system with Header, Footer, and cream background
+- **Company Information Integration**: Terms & Conditions includes complete "About Us" section with legal entity details
+- **React Carousel Warnings Fix**: Resolved React Multi-Carousel prop warnings by creating custom arrow components that filter out problematic props
+
 ### Discount System Update (January 30, 2025)
 - **Comprehensive Discount Implementation**: Applied tiered discount structure across entire catalog
   - **60% Discount**: Creed brand (4 products) - premium luxury positioning

@@ -1,3 +1,5 @@
+import { Link } from "wouter";
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -7,10 +9,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="font-vibes text-3xl text-navy mb-4">Vel France</h3>
-            <p className="text-gray-600 mb-6">
-              Excellence in French perfumery since 1932
-            </p>
+            <Link href="/">
+              <h3 className="font-vibes text-3xl text-navy mb-4 cursor-pointer hover:text-gold transition-colors">
+                Vel France
+              </h3>
+            </Link>
+            
             <div className="flex space-x-4">
               <a 
                 href="#" 
@@ -48,36 +52,25 @@ export default function Footer() {
             <h4 className="font-roboto text-lg text-navy mb-4">Navigation</h4>
             <ul className="space-y-2">
               <li>
-                <button 
-                  onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-gray-600 hover:text-gold transition-colors text-left"
-                >
-                  Home
-                </button>
+                <Link href="/">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Home
+                  </span>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-gray-600 hover:text-gold transition-colors text-left"
-                >
-                  Perfumes
-                </button>
+                <Link href="/catalogue">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Catalogue
+                  </span>
+                </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-gray-600 hover:text-gold transition-colors text-left"
-                >
-                  About
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-gray-600 hover:text-gold transition-colors text-left"
-                >
-                  Contact
-                </button>
+                <Link href="/contact">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Contact
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -87,24 +80,18 @@ export default function Footer() {
             <h4 className="font-roboto text-lg text-navy mb-4">Services</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Personal Consultation
-                </a>
+                <Link href="/delivery">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Delivery
+                  </span>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Delivery
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Returns
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Stores
-                </a>
+                <Link href="/returns">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Returns
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -114,24 +101,18 @@ export default function Footer() {
             <h4 className="font-roboto text-lg text-navy mb-4">Information</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Legal Notice
-                </a>
+                <Link href="/privacy">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Privacy Policy
+                  </span>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  Terms & Conditions
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gold transition-colors">
-                  FAQ
-                </a>
+                <Link href="/terms">
+                  <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
+                    Terms & Conditions
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -139,7 +120,7 @@ export default function Footer() {
         
         <div className="border-t border-gold/20 mt-12 pt-8 text-center">
           <p className="text-gray-600">
-            © {currentYear} Vel France. All rights reserved. | Created with passion in Paris
+            © {currentYear} Vel France. All rights reserved.
           </p>
         </div>
       </div>

@@ -18,6 +18,10 @@ import Admin from "@/pages/admin";
 import AdminLogin from "@/pages/admin-login";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
+import Delivery from "@/pages/delivery";
+import Returns from "@/pages/returns";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -50,6 +54,10 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminLogin} />
       <Route path="/admin-panel" component={Admin} />
+      <Route path="/delivery" component={Delivery} />
+      <Route path="/returns" component={Returns} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
       
       {/* Protected routes - only accessible when logged in */}
       {user && (
