@@ -11,6 +11,37 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 
+// Custom arrow components that filter out carousel-specific props
+const CustomLeftArrow = ({ onClick, ...rest }: any) => {
+  // Filter out carousel-specific props to avoid React warnings
+  const { carouselState, rtl, ...buttonProps } = rest;
+  return (
+    <button
+      {...buttonProps}
+      onClick={onClick}
+      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg border border-gray-200 transition-all duration-200 flex items-center justify-center"
+      aria-label="Previous products"
+    >
+      <ChevronLeft className="h-5 w-5 text-gray-600" />
+    </button>
+  );
+};
+
+const CustomRightArrow = ({ onClick, ...rest }: any) => {
+  // Filter out carousel-specific props to avoid React warnings
+  const { carouselState, rtl, ...buttonProps } = rest;
+  return (
+    <button
+      {...buttonProps}
+      onClick={onClick}
+      className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg border border-gray-200 transition-all duration-200 flex items-center justify-center"
+      aria-label="Next products"
+    >
+      <ChevronRight className="h-5 w-5 text-gray-600" />
+    </button>
+  );
+};
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -510,24 +541,8 @@ export default function Home() {
               arrows={true}
               renderArrowsWhenDisabled={false}
               partialVisible={false}
-              customLeftArrow={
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              }
-              customRightArrow={
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              }
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
             >
               {mostSoldProducts.map((product, index) => (
                 <div key={product.id} className="flex justify-center items-center">
@@ -664,24 +679,8 @@ export default function Home() {
               arrows={true}
               renderArrowsWhenDisabled={false}
               partialVisible={false}
-              customLeftArrow={
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              }
-              customRightArrow={
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              }
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
             >
               {newArrivalsProducts.slice(0, 12).map((product, index) => (
                 <div key={product.id} className="flex justify-center items-center">
