@@ -54,11 +54,7 @@ export default function AdminLogin() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <img 
-            src={logoImage}
-            alt="Vel France Logo"
-            className="h-16 mx-auto mb-4"
-          />
+          
           <h1 className="text-2xl font-bold text-navy">Admin Access</h1>
           <p className="text-navy/70">Secure login for administrators</p>
         </div>

@@ -15,12 +15,249 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Product, InsertProduct } from "@shared/schema";
-import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard } from "lucide-react";
+import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard, Eye, Phone } from "lucide-react";
+
+interface OrderDetailsDialogProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  order: any | null;
+}
+
+function OrderDetailsDialog({ isOpen, onOpenChange, order }: OrderDetailsDialogProps) {
+  if (!order) return null;
+
+  const orderTotal = parseFloat(order.total || '0');
+  const itemsTotal = order.orderItems?.reduce((sum: number, item: any) => 
+    sum + (parseFloat(item.price || '0') * item.quantity), 0) || 0;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center space-x-2">
+            <ShoppingCart className="h-5 w-5" />
+            <span>Order Details - {order.orderCode}</span>
+          </DialogTitle>
+          <DialogDescription>
+            Complete order information and customer details
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-6">
+          {/* Order Status and Basic Info */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="pt-4">
+                <div className="text-center">
+                  <Badge 
+                    className={`mb-2 ${order.status === 'confirmed' ? 'bg-green-100 text-green-800' : 
+                      order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                      order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                      order.status === 'delivered' ? 'bg-emerald-100 text-emerald-800' :
+                      'bg-gray-100 text-gray-800'}`}
+                  >
+                    {order.status}
+                  </Badge>
+                  <p className="text-sm text-gray-600 mb-1">Order Status</p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-4">
+                <div className="text-center">
+                  <Badge 
+                    className={`mb-2 ${order.paymentStatus === 'completed' ? 'bg-green-100 text-green-800' : 
+                      order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'}`}
+                  >
+                    {order.paymentStatus}
+                  </Badge>
+                  <p className="text-sm text-gray-600 mb-1">Payment Status</p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-4">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-gray-900 mb-1">₾{orderTotal.toFixed(2)}</p>
+                  <p className="text-sm text-gray-600">Total Amount</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Customer Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <User className="h-5 w-5 mr-2" />
+                Customer Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Customer Name</Label>
+                  <p className="text-gray-900 font-medium">
+                    {order.user?.firstName || order.user?.lastName 
+                      ? `${order.user.firstName || ''} ${order.user.lastName || ''}`.trim()
+                      : 'N/A'
+                    }
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Email Address</Label>
+                  <p className="text-gray-900 flex items-center">
+                    <Mail className="h-4 w-4 mr-1" />
+                    {order.user?.email || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Phone Number</Label>
+                  <p className="text-gray-900 flex items-center">
+                    <Phone className="h-4 w-4 mr-1" />
+                    {order.phone || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Order Date</Label>
+                  <p className="text-gray-900 flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {new Date(order.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Shipping Address */}
+          {order.shippingAddress && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <MapPin className="h-5 w-5 mr-2" />
+                  Shipping Address
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="whitespace-pre-line text-gray-900">
+                  {order.shippingAddress}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Order Items */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Package className="h-5 w-5 mr-2" />
+                Order Items
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {order.orderItems?.map((item: any) => (
+                  <div key={item.id} className="flex items-center space-x-4 border-b pb-4 last:border-b-0">
+                    {item.product?.imageUrl ? (
+                      <img 
+                        src={item.product.imageUrl} 
+                        alt={item.product?.name || 'Product'}
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center">
+                        <Package className="h-8 w-8 text-gray-400" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900">
+                        {item.product?.name || `Product ${item.productId}`}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        {item.product?.brand && `${item.product.brand} • `}
+                        Quantity: {item.quantity}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium text-gray-900">
+                        ₾{(parseFloat(item.price || '0') * item.quantity).toFixed(2)}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        ₾{parseFloat(item.price || '0').toFixed(2)} each
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Order Summary */}
+                <div className="border-t pt-4 space-y-2">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Subtotal ({order.orderItems?.length || 0} items)</span>
+                    <span>₾{itemsTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between font-medium text-gray-900 text-lg">
+                    <span>Total</span>
+                    <span>₾{orderTotal.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Payment Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <CreditCard className="h-5 w-5 mr-2" />
+                Payment Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Payment Method</Label>
+                  <p className="text-gray-900">BOG Payment Gateway</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Payment ID</Label>
+                  <p className="text-gray-900 font-mono text-sm">
+                    {order.paymentId || 'N/A'}
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Payment Status</Label>
+                  <Badge 
+                    className={`${order.paymentStatus === 'completed' ? 'bg-green-100 text-green-800' : 
+                      order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'}`}
+                  >
+                    {order.paymentStatus}
+                  </Badge>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-600">Payment Date</Label>
+                  <p className="text-gray-900">
+                    {order.updatedAt ? new Date(order.updatedAt).toLocaleString() : 'N/A'}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function Admin() {
   const [, setLocation] = useLocation();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isOrderDialogOpen, setIsOrderDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<'create' | 'edit'>('create');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'brand' | 'price' | 'category'>('name');
@@ -231,6 +468,11 @@ export default function Admin() {
     if (confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
       deleteOrderMutation.mutate(orderId);
     }
+  };
+
+  const handleViewOrder = (order: any) => {
+    setSelectedOrder(order);
+    setIsOrderDialogOpen(true);
   };
 
   const getOrderStatusColor = (status: string) => {
@@ -570,6 +812,14 @@ export default function Admin() {
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center space-x-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleViewOrder(order)}
+                                  className="text-blue-600 hover:text-blue-700"
+                                >
+                                  <Eye className="h-4 w-4" />
+                                </Button>
                                 <Select
                                   value={order.status}
                                   onValueChange={(status) => handleUpdateOrderStatus(order.id, status)}
@@ -644,6 +894,13 @@ export default function Admin() {
             }
           }}
           isSubmitting={createProductMutation.isPending || updateProductMutation.isPending}
+        />
+
+        {/* Order Details Dialog */}
+        <OrderDetailsDialog
+          isOpen={isOrderDialogOpen}
+          onOpenChange={setIsOrderDialogOpen}
+          order={selectedOrder}
         />
       </div>
     </div>
