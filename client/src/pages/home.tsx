@@ -358,6 +358,34 @@ export default function Home() {
   const featuredProducts = products.slice(0, 3);
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+  // Define specific product lists
+  const mostSoldProductNames = [
+    "Delina", "Bleu de Chanel", "Goddess", "Kirke", "Chance Eau Tendre", 
+    "Libre", "Sauvage Elixir", "N5", "Stronger With You Intensely", 
+    "Queen Of Silk", "K", "Le Male Elixir"
+  ];
+
+  const newArrivalsProductNames = [
+    "Italian Leather", "Russian Leather", "Divine", "Ganymede", "Tilia", 
+    "Encelade", "Libre Intense", "Homme Intense", "Erba Pura", 
+    "Ombre Nomade", "Oud Satin Mood", "Paradoxe Intense"
+  ];
+
+  // Filter products by name for specific sections
+  const mostSoldProducts = products.filter(product => 
+    mostSoldProductNames.some(name => 
+      product.name.toLowerCase().includes(name.toLowerCase()) ||
+      (product.brand && product.name.toLowerCase().includes(name.toLowerCase().replace(/\s+/g, ' ')))
+    )
+  );
+
+  const newArrivalsProducts = products.filter(product => 
+    newArrivalsProductNames.some(name => 
+      product.name.toLowerCase().includes(name.toLowerCase()) ||
+      (product.brand && product.name.toLowerCase().includes(name.toLowerCase().replace(/\s+/g, ' ')))
+    )
+  );
+
   return (
     <div className="min-h-screen bg-cream">
       <Header 
@@ -498,7 +526,7 @@ export default function Home() {
                 </Button>
               }
             >
-              {products.slice(0, 12).map((product, index) => (
+              {mostSoldProducts.slice(0, 12).map((product, index) => (
                 <div key={product.id} className="flex justify-center items-center">
                   <CarouselProductCard 
                     product={product} 
@@ -652,7 +680,7 @@ export default function Home() {
                 </Button>
               }
             >
-              {products.slice(12, 24).map((product, index) => (
+              {newArrivalsProducts.slice(0, 12).map((product, index) => (
                 <div key={product.id} className="flex justify-center items-center">
                   <CarouselProductCard 
                     product={product} 

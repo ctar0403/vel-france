@@ -159,6 +159,15 @@ The application follows a monorepo structure with shared types and schemas, enab
 - **Display Consistency**: All product displays automatically reflect new discount rates across home page, catalogue, cart, checkout, and product detail pages
 - **Payment Integration**: All payment calculations (instant, BOG installments, part-by-part) automatically use updated discount rates
 
+### Home Page Carousel Content Update (January 30, 2025)
+- **Most Sold Products**: Updated carousel to display specific curated bestsellers
+  - Delina, Bleu de Chanel, Goddess, Kirke, Chance Eau Tendre, Libre, Sauvage Elixir, N5, Stronger With You Intensely, Queen Of Silk, K, Le Male Elixir
+  - Product filtering by name matching for accurate display of specified products
+- **New Arrivals Products**: Updated carousel to showcase specific recent additions
+  - Italian Leather, Russian Leather, Divine, Ganymede, Tilia, Encelade, Libre Intense, Homme Intense, Erba Pura, Ombre Nomade, Oud Satin Mood, Paradoxe Intense
+  - Includes products from premium brands: Memo, Marc Antoine Barrois, Jean Paul Gaultier, Xerjoff, Sospiro, Louis Vuitton, Maison Francis Kurkdjian, Prada
+- **Product Selection Logic**: Implemented name-based filtering to ensure accurate product matching for both carousel sections
+
 ### Multi-Category System Implementation (January 29, 2025)
 - **Database Schema Enhancement**: Added `categories` array field to support products appearing in multiple categories
   - Maintained backward compatibility with existing `category` field for primary category designation
