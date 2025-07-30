@@ -4,6 +4,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent layout shift on dropdown */
+[data-radix-popper-content-wrapper] {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+/* Ensure header doesn't cause layout shift */
+header {
+  width: 100% !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+/* Fix dropdown positioning */
+[data-radix-dropdown-menu-content] {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+/* Prevent body overflow and maintain layout stability */
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure container stability */
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Prevent any element from causing horizontal overflow */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix flex shrinking issues */
+.flex-1 {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
 /* Line clamp utilities for product names */
 @layer utilities {
   .line-clamp-1 {

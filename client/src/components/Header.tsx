@@ -69,11 +69,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
   };
 
   return (
-    <header className="bg-white shadow-lg border-b border-gold/20 sticky top-0 z-50">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+    <header className="bg-white shadow-lg border-b border-gold/20 sticky top-0 z-50 w-full">
+      <nav className="container mx-auto px-4 py-4 w-full">
+        <div className="flex items-center justify-between min-w-0">
           {/* Logo */}
-          <div className="flex items-center space-x-2 flex-1">
+          <div className="flex items-center space-x-2 flex-1 min-w-0">
             <Link href="/">
               <img 
                 src={logoImage}
@@ -84,21 +84,21 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           </div>
           
           {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center justify-center space-x-6 font-roboto flex-1">
+          <div className="hidden lg:flex items-center justify-center space-x-6 font-roboto flex-1 min-w-0">
             <Link 
               href="/"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               Home
             </Link>
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
                   Brands
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto z-50">
+              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto z-[9999] min-w-0" sideOffset={5} align="center">
                 <div className="p-3">
                   {(() => {
                     // Group brands by first letter
@@ -153,7 +153,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           </div>
           
           {/* Action Buttons */}
-          <div className="flex items-center space-x-4 flex-1 justify-end">
+          <div className="flex items-center space-x-4 flex-1 justify-end min-w-0">
             {/* Search */}
             <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
