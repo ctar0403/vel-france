@@ -158,7 +158,10 @@ export default function CheckoutPage() {
 
   const calculateTotal = () => {
     return cartItems.reduce((total: number, item: CartItem & { product: Product }) => {
-      return total + (parseFloat(item.product.price) * item.quantity);
+      const itemPrice = item.product.discountPercentage && item.product.discountPercentage > 0 
+        ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)
+        : parseFloat(item.product.price);
+      return total + (itemPrice * item.quantity);
     }, 0);
   };
 
@@ -565,11 +568,30 @@ export default function CheckoutPage() {
                       </div>
                       <div className="text-right">
                         <p className="font-roboto font-bold text-navy text-xl">
-                          ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                          ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                            ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                            : parseFloat(item.product.price) * item.quantity
+                          ).toFixed(2)}
                         </p>
-                        <p className="text-navy/60 text-sm font-roboto">
-                          ₾{parseFloat(item.product.price).toFixed(2)} each
-                        </p>
+                        <div className="text-sm font-roboto">
+                          {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                            <div className="flex flex-col items-end gap-1">
+                              <div className="flex items-center gap-2">
+                                <p className="text-navy/60">
+                                  ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)} each
+                                </p>
+                                <span className="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded-full font-medium">
+                                  -{item.product.discountPercentage}%
+                                </span>
+                              </div>
+                              <p className="text-gray-500 line-through text-xs">
+                                ₾{parseFloat(item.product.price).toFixed(2)} each
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="text-navy/60">₾{parseFloat(item.product.price).toFixed(2)} each</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

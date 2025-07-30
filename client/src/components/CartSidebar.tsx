@@ -77,7 +77,10 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
 
 
   const total = cartItems.reduce((sum, item) => {
-    return sum + (parseFloat(item.product.price) * item.quantity);
+    const itemPrice = item.product.discountPercentage && item.product.discountPercentage > 0 
+      ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)
+      : parseFloat(item.product.price);
+    return sum + (itemPrice * item.quantity);
   }, 0);
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
@@ -183,7 +186,20 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                             <h4 className="font-roboto text-navy font-medium text-sm leading-tight mb-1 line-clamp-2">
                               {item.product.name}
                             </h4>
-                            <p className="text-xs text-navy/60 mb-3">₾{item.product.price} each</p>
+                            <div className="mb-3">
+                              {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                                <div className="flex items-center gap-2">
+                                  <p className="text-xs text-navy/60">
+                                    ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)} each
+                                  </p>
+                                  <span className="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded-full font-medium">
+                                    -{item.product.discountPercentage}%
+                                  </span>
+                                </div>
+                              ) : (
+                                <p className="text-xs text-navy/60">₾{item.product.price} each</p>
+                              )}
+                            </div>
                             
                             {/* Elegant Quantity Controls */}
                             <div className="flex items-center space-x-3">
@@ -223,7 +239,10 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                             </Button>
                             <div className="text-right">
                               <p className="font-roboto font-bold text-lg text-gold">
-                                ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                                ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                                  ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                                  : parseFloat(item.product.price) * item.quantity
+                                ).toFixed(2)}
                               </p>
                             </div>
                           </div>

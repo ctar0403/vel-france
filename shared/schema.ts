@@ -44,6 +44,7 @@ export const products = pgTable("products", {
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  discountPercentage: integer("discount_percentage").default(0), // Discount percentage (0-100)
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
   categories: text("categories").array().notNull().default(sql`'{}'`), // Multiple categories for filtering
   brand: varchar("brand", { length: 100 }), // brand name

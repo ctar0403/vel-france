@@ -273,8 +273,26 @@ function ProductDetailPage() {
               
 
               {/* Price */}
-              <div className="text-4xl font-bold text-navy">
-                ₾{parseFloat(product.price).toFixed(2)}
+              <div className="space-y-2">
+                {product.discountPercentage && product.discountPercentage > 0 ? (
+                  <>
+                    <div className="flex items-center gap-4">
+                      <div className="text-4xl font-bold text-navy">
+                        ₾{(parseFloat(product.price) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                      </div>
+                      <span className="text-lg bg-red-500 text-white px-3 py-1 rounded-full font-medium">
+                        -{product.discountPercentage}% OFF
+                      </span>
+                    </div>
+                    <div className="text-2xl text-gray-500 line-through">
+                      ₾{parseFloat(product.price).toFixed(2)}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-4xl font-bold text-navy">
+                    ₾{parseFloat(product.price).toFixed(2)}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -346,7 +364,12 @@ function ProductDetailPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-xl font-bold text-slate-800">₾{(parseFloat(product.price) * quantity).toFixed(2)}</div>
+                        <div className="text-xl font-bold text-slate-800">
+                          ₾{(product.discountPercentage && product.discountPercentage > 0 
+                            ? parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity
+                            : parseFloat(product.price) * quantity
+                          ).toFixed(2)}
+                        </div>
                       </div>
                     </div>
 
@@ -397,7 +420,11 @@ function ProductDetailPage() {
                       </div>
                     </div>
                     <div className="text-right relative z-10">
-                      <div className="text-lg font-bold text-white">₾{((parseFloat(product.price) * quantity) / 12).toFixed(2)}/mo</div>
+                      <div className="text-lg font-bold text-white">
+                        ₾{(product.discountPercentage && product.discountPercentage > 0 
+                          ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 12
+                          : (parseFloat(product.price) * quantity) / 12
+                        ).toFixed(2)}/mo</div>
                       <div className="text-sm opacity-90 text-orange-100">12 months available</div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
@@ -423,7 +450,11 @@ function ProductDetailPage() {
                       </div>
                     </div>
                     <div className="text-right relative z-10">
-                      <div className="text-lg font-bold text-white">₾{((parseFloat(product.price) * quantity) / 4).toFixed(2)} × 4</div>
+                      <div className="text-lg font-bold text-white">
+                        ₾{(product.discountPercentage && product.discountPercentage > 0 
+                          ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 4
+                          : (parseFloat(product.price) * quantity) / 4
+                        ).toFixed(2)} × 4</div>
                       <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
                     </div>
                   </Button>

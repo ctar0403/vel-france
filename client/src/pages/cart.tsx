@@ -13,7 +13,7 @@ export default function CartPage() {
   const { toast } = useToast();
 
   // Fetch cart items
-  const { data: cartItems = [], isLoading } = useQuery({
+  const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
   });
 
@@ -84,7 +84,10 @@ export default function CartPage() {
 
   const calculateTotal = () => {
     return cartItems.reduce((total: number, item: CartItem & { product: Product }) => {
-      return total + (parseFloat(item.product.price) * item.quantity);
+      const itemPrice = item.product.discountPercentage && item.product.discountPercentage > 0 
+        ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)
+        : parseFloat(item.product.price);
+      return total + (itemPrice * item.quantity);
     }, 0);
   };
 
@@ -194,8 +197,24 @@ export default function CartPage() {
                           <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
                             {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
                           </h3>
-                          <div className="flex items-center gap-3">
-                            <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                          <div className="flex flex-col gap-1">
+                            {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                              <>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gold font-roboto font-semibold text-lg">
+                                    ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
+                                  </span>
+                                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                                    -{item.product.discountPercentage}%
+                                  </span>
+                                </div>
+                                <span className="text-sm text-gray-500 line-through">
+                                  ₾{parseFloat(item.product.price).toFixed(2)}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                            )}
                           </div>
                         </div>
 
@@ -227,7 +246,10 @@ export default function CartPage() {
                         {/* Elegant Subtotal */}
                         <div className="text-right min-w-[100px]">
                           <p className="font-roboto text-xl font-bold text-navy mb-1">
-                            ₾{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
+                            ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                              ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                              : parseFloat(item.product.price) * item.quantity
+                            ).toFixed(2)}
                           </p>
                         </div>
 

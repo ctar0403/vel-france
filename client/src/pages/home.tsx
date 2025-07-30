@@ -168,9 +168,27 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
             {formatProductName(product.name, product.brand)}
           </h3>
 
-          <span className="text-base text-gold font-normal">
-            ₾{parseFloat(product.price.toString()).toFixed(2)}
-          </span>
+          <div className="flex flex-col gap-1">
+            {product.discountPercentage && product.discountPercentage > 0 ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <span className="text-base text-gold font-normal">
+                    ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                  </span>
+                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                    -{product.discountPercentage}%
+                  </span>
+                </div>
+                <span className="text-sm text-gray-500 line-through">
+                  ₾{parseFloat(product.price.toString()).toFixed(2)}
+                </span>
+              </>
+            ) : (
+              <span className="text-base text-gold font-normal">
+                ₾{parseFloat(product.price.toString()).toFixed(2)}
+              </span>
+            )}
+          </div>
         </div>
       </motion.div>
     </Link>
