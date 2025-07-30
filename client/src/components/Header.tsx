@@ -65,7 +65,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
 
   const handleCategoryClick = (category: string) => {
     // Navigate to catalogue page with category filter
-    window.location.href = `/catalogue?category=${encodeURIComponent(category)}`;
+    setLocation(`/catalogue?category=${encodeURIComponent(category)}`);
   };
 
   return (
@@ -98,7 +98,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto">
+              <DropdownMenuContent className="w-96 max-h-96 overflow-y-auto z-50">
                 <div className="p-3">
                   {(() => {
                     // Group brands by first letter
@@ -123,12 +123,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         <div className="grid grid-cols-2 gap-1 ml-8">
                           {brandsByLetter[letter].map((brand) => (
                             <DropdownMenuItem key={brand} asChild>
-                              <a
+                              <Link
                                 href={`/catalogue?brand=${encodeURIComponent(brand)}`}
-                                className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200 rounded"
+                                className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200 rounded block"
                               >
                                 {brand}
-                              </a>
+                              </Link>
                             </DropdownMenuItem>
                           ))}
                         </div>
@@ -251,18 +251,18 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                   </div>
                   
                   <nav className="flex flex-col space-y-4 font-roboto">
-                    <button 
-                      onClick={() => scrollToSection('home')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    <Link 
+                      href="/"
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block"
                     >
                       Home
-                    </button>
-                    <button 
-                      onClick={() => scrollToSection('products')}
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    </Link>
+                    <Link 
+                      href="/catalogue"
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block"
                     >
                       Catalogue
-                    </button>
+                    </Link>
                     <div>
                       <button 
                         onClick={() => setIsBrandsOpen(!isBrandsOpen)}
@@ -295,14 +295,14 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                                 </div>
                                 <div className="space-y-1 ml-7">
                                   {brandsByLetter[letter].map((brand) => (
-                                    <a
+                                    <Link
                                       key={brand}
                                       href={`/catalogue?brand=${encodeURIComponent(brand)}`}
                                       onClick={() => setIsBrandsOpen(false)}
                                       className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1 font-roboto"
                                     >
                                       {brand}
-                                    </a>
+                                    </Link>
                                   ))}
                                 </div>
                               </div>
