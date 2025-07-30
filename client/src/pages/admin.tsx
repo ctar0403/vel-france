@@ -605,6 +605,24 @@ export default function Admin() {
     }
   };
 
+  const handleUpdateProductPrice = (productId: string, newPrice: number) => {
+    if (newPrice < 0) return;
+    
+    updateProductMutation.mutate({
+      id: productId,
+      product: { price: newPrice.toString() }
+    });
+  };
+
+  const handleUpdateProductDiscount = (productId: string, newDiscount: number) => {
+    if (newDiscount < 0 || newDiscount > 100) return;
+    
+    updateProductMutation.mutate({
+      id: productId,
+      product: { discountPercentage: newDiscount }
+    });
+  };
+
   const getOrderStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'confirmed':
@@ -919,9 +937,9 @@ export default function Admin() {
                         </TableHead>
                         <TableHead>Product</TableHead>
                         <TableHead>Brand</TableHead>
-                        <TableHead>Original Price</TableHead>
-                        <TableHead>Current Discount</TableHead>
-                        <TableHead>Current Price</TableHead>
+                        <TableHead>Original Price (₾)</TableHead>
+                        <TableHead>Discount (%)</TableHead>
+                        <TableHead>Final Price</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -952,15 +970,25 @@ export default function Admin() {
                             </div>
                           </TableCell>
                           <TableCell>{product.brand}</TableCell>
-                          <TableCell className="font-medium">₾{parseFloat(product.price).toFixed(2)}</TableCell>
                           <TableCell>
-                            {product.discountPercentage && product.discountPercentage > 0 ? (
-                              <Badge className="bg-red-100 text-red-800">
-                                -{product.discountPercentage}%
-                              </Badge>
-                            ) : (
-                              <span className="text-gray-400">No discount</span>
-                            )}
+                            <Input
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              value={parseFloat(product.price)}
+                              onChange={(e) => handleUpdateProductPrice(product.id, parseFloat(e.target.value))}
+                              className="w-24 text-sm"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Input
+                              type="number"
+                              min="0"
+                              max="100"
+                              value={product.discountPercentage || 0}
+                              onChange={(e) => handleUpdateProductDiscount(product.id, parseFloat(e.target.value))}
+                              className="w-20 text-sm"
+                            />
                           </TableCell>
                           <TableCell className="font-medium">
                             {product.discountPercentage && product.discountPercentage > 0 ? (
