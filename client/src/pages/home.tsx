@@ -287,6 +287,19 @@ export default function Home() {
   // Use default query behavior from queryClient
   const { data: products = [], isLoading: productsLoading, error: productsError, refetch: refetchProducts } = useQuery<Product[]>({
     queryKey: ["/api/products"],
+    queryFn: async () => {
+      console.log('🔍 Fetching products...');
+      const response = await fetch('/api/products', {
+        credentials: 'include',
+      });
+      console.log('🔍 Response status:', response.status, response.ok);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('🔍 Received data:', Array.isArray(data) ? `${data.length} products` : typeof data);
+      return data;
+    },
   });
 
   // Simple debug logging
@@ -295,8 +308,10 @@ export default function Home() {
       console.log('✅ Products loaded successfully:', products.length);
     } else if (productsError) {
       console.log('❌ Products error:', productsError.message);
+    } else if (!productsLoading) {
+      console.log('⚠️ No products loaded, no error, not loading');
     }
-  }, [products, productsError]);
+  }, [products, productsError, productsLoading]);
 
   // Test direct fetch for debugging
   const testDirectFetch = async () => {
