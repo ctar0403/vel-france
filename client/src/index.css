@@ -110,26 +110,35 @@ body {
   }
   
   /* Hide arrows on mobile */
-  .react-multi-carousel-arrow {
+  .react-multi-carousel-arrow,
+  .react-multi-carousel-arrow--left,
+  .react-multi-carousel-arrow--right {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
   
   .carousel-product-card {
-    min-height: 340px !important;
-    max-height: 340px !important;
+    min-height: 420px !important;
+    max-height: 420px !important;
   }
   
   /* Hide badges on mobile */
   .mobile-hide-badge {
     display: none !important;
   }
+  
+  /* Adjust content height to prevent overflow */
+  .mobile-content-height {
+    height: 140px !important;
+  }
 }
 
 /* Medium mobile screens */
 @media (min-width: 480px) and (max-width: 768px) {
   .carousel-product-card {
-    min-height: 360px !important;
-    max-height: 360px !important;
+    min-height: 440px !important;
+    max-height: 440px !important;
   }
 }
 

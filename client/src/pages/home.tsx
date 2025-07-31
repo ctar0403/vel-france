@@ -194,7 +194,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           </motion.div>
         </div>
         {/* Fixed Height Content Container */}
-        <div className="p-4 flex flex-col justify-between h-[120px]">
+        <div className="p-4 flex flex-col justify-between h-[120px] mobile-content-height">
           <div className="flex-1 flex flex-col justify-center">
             <h3 className="text-sm text-navy leading-tight line-clamp-2 mb-2 font-normal min-h-[32px] flex items-center">
               {formatProductName(product.name, product.brand)}
