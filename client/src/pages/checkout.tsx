@@ -333,126 +333,127 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink">
-      {/* Luxury Header */}
+      {/* Mobile-Optimized Luxury Header */}
       <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
-        <div className="container mx-auto px-6 py-8 relative">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 relative">
           <div className="flex items-center justify-between">
             <Link href="/cart">
               <Button 
                 variant="ghost" 
-                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-6 py-3 group"
+                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-3 sm:px-6 py-2 sm:py-3 group"
               >
-                <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                Back to Cart
+                <ArrowLeft className="mr-1 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                <span className="hidden sm:inline">Back to Cart</span>
+                <span className="sm:hidden">Back</span>
               </Button>
             </Link>
-            <div className="text-center">
-              <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Secure Checkout</h1>
+            <div className="text-center flex-1 mx-2 sm:mx-0">
+              <h1 className="font-roboto text-xl sm:text-4xl font-light text-navy tracking-wide">Secure Checkout</h1>
             </div>
-            <div className="w-[160px]"></div> {/* Spacer for centering */}
+            <div className="w-[70px] sm:w-[160px]"></div> {/* Responsive spacer for centering */}
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-12">
-          {/* Enhanced Checkout Form */}
-          <div className="xl:col-span-3 space-y-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-12 pb-20 sm:pb-12">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 sm:gap-12">
+          {/* Mobile-Optimized Checkout Form */}
+          <div className="xl:col-span-3 space-y-6 sm:space-y-8">
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Luxury Shipping Information */}
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
-                    <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+              {/* Mobile-Optimized Shipping Information */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8">
+                <div className="flex items-center mb-4 sm:mb-6">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">1</span>
                     </div>
                   </div>
-                  <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Shipping Information</h3>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Shipping Information</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide">Name *</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Name *</Label>
                     <Input
                       id="shipping-firstName"
                       value={shippingForm.firstName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, firstName: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="Enter your name"
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide">Last Name *</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Last Name *</Label>
                     <Input
                       id="shipping-lastName"
                       value={shippingForm.lastName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, lastName: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="Enter your last name"
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide">City/Region *</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">City/Region *</Label>
                     <Input
                       id="shipping-city"
                       value={shippingForm.city}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="Tbilisi, Batumi, etc."
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide">Phone *</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Phone *</Label>
                     <Input
                       id="shipping-phone"
                       value={shippingForm.phone}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, phone: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="+995 XXX XXX XXX"
                       required
                     />
                   </div>
-                  <div className="md:col-span-2 space-y-2">
-                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide">Street Address *</Label>
+                  <div className="sm:col-span-2 space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Street Address *</Label>
                     <Textarea
                       id="shipping-address"
                       value={shippingForm.address}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, address: e.target.value }))}
-                      className="min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none"
+                      className="min-h-[70px] sm:min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none text-sm sm:text-base"
                       placeholder="Enter your complete street address"
                       required
                     />
                   </div>
-                  <div className="md:col-span-2 space-y-2">
-                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Address Information</Label>
+                  <div className="sm:col-span-2 space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Additional Address Information</Label>
                     <Input
                       id="shipping-additionalAddress"
                       value={shippingForm.additionalAddress}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, additionalAddress: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="Apartment, suite, unit, building, floor, etc. (optional)"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide">Email</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Email</Label>
                     <Input
                       id="shipping-email"
                       type="email"
                       value={shippingForm.email}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="your.email@example.com (optional)"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide">Additional Information</Label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Additional Information</Label>
                     <Input
                       id="shipping-additionalInfo"
                       value={shippingForm.additionalInfo}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
-                      className="h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20"
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
                       placeholder="Any special delivery instructions or notes (optional)"
                     />
                   </div>
@@ -463,58 +464,58 @@ export default function CheckoutPage() {
 
               
 
-              {/* Luxury Payment Method Selection */}
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
-                <div className="flex items-center mb-8">
-                  <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-4">
-                    <div className="w-6 h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+              {/* Mobile-Optimized Payment Method Selection */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8">
+                <div className="flex items-center mb-4 sm:mb-8">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">2</span>
                     </div>
                   </div>
-                  <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Choose Payment Method</h3>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Choose Payment Method</h3>
                 </div>
                 
-                <div className="space-y-6">
-                  {/* Compact Card Payment Button */}
+                <div className="space-y-3 sm:space-y-6">
+                  {/* Mobile-Optimized Card Payment Button */}
                   <div
                     onClick={handleCardPayment}
-                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-2xl p-6 group relative bg-[#e8e8e8]"
+                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-xl sm:rounded-2xl p-3 sm:p-6 group relative bg-[#e8e8e8]"
                   >
                     {/* Header */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
                       <div className="flex items-center">
                         <div>
-                          <h3 className="text-lg font-bold text-slate-800">Instant Card Payment</h3>
+                          <h3 className="text-sm sm:text-lg font-bold text-slate-800">Instant Card Payment</h3>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-slate-800">₾{total.toFixed(2)}</div>
+                        <div className="text-lg sm:text-2xl font-bold text-slate-800">₾{total.toFixed(2)}</div>
                       </div>
                     </div>
 
                     {/* Payment Methods */}
-                    <div className="bg-gray-50 rounded-xl p-4">
-                      <div className="flex items-center justify-between mb-3">
+                    <div className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
+                      <div className="flex items-center justify-between mb-2 sm:mb-3">
                         <span className="text-xs font-medium text-slate-600">ACCEPTED METHODS</span>
                         <div className="flex items-center space-x-1">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                           <span className="text-xs text-green-600 font-medium">SECURE</span>
                         </div>
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <img src={visaLogo} alt="Visa" className="h-5 object-contain opacity-80 hover:opacity-100" />
-                          <img src={mastercardLogo} alt="Mastercard" className="h-5 object-contain opacity-80 hover:opacity-100" />
-                          <img src={amexLogo} alt="American Express" className="h-5 object-contain opacity-80 hover:opacity-100" />
-                          <div className="w-px h-4 bg-gray-300"></div>
-                          <img src={googlePayLogo} alt="Google Pay" className="h-4 object-contain opacity-80 hover:opacity-100" />
-                          <img src={applePayLogo} alt="Apple Pay" className="h-4 object-contain opacity-80 hover:opacity-100" />
-                          <div className="w-px h-4 bg-gray-300"></div>
-                          <img src={bankLogo} alt="Bank Transfer" className="h-5 object-contain opacity-80 hover:opacity-100" />
-                          <img src={bogLogo2} alt="Bank of Georgia" className="h-5 object-contain opacity-80 hover:opacity-100" />
+                        <div className="flex items-center space-x-1 sm:space-x-3 overflow-x-auto">
+                          <img src={visaLogo} alt="Visa" className="h-3 sm:h-5 object-contain opacity-80 hover:opacity-100 flex-shrink-0" />
+                          <img src={mastercardLogo} alt="Mastercard" className="h-3 sm:h-5 object-contain opacity-80 hover:opacity-100 flex-shrink-0" />
+                          <img src={amexLogo} alt="American Express" className="h-3 sm:h-5 object-contain opacity-80 hover:opacity-100 flex-shrink-0" />
+                          <div className="w-px h-3 sm:h-4 bg-gray-300"></div>
+                          <img src={googlePayLogo} alt="Google Pay" className="h-2 sm:h-4 object-contain opacity-80 hover:opacity-100 flex-shrink-0" />
+                          <img src={applePayLogo} alt="Apple Pay" className="h-2 sm:h-4 object-contain opacity-80 hover:opacity-100 flex-shrink-0" />
+                          <div className="w-px h-3 sm:h-4 bg-gray-300 hidden sm:block"></div>
+                          <img src={bankLogo} alt="Bank Transfer" className="h-3 sm:h-5 object-contain opacity-80 hover:opacity-100 flex-shrink-0 hidden sm:block" />
+                          <img src={bogLogo2} alt="Bank of Georgia" className="h-3 sm:h-5 object-contain opacity-80 hover:opacity-100 flex-shrink-0 hidden sm:block" />
                         </div>
-                        <span className="text-xs text-slate-500">Instant</span>
+                        <span className="text-xs text-slate-500 ml-2">Instant</span>
                       </div>
                     </div>
                   </div>
@@ -573,16 +574,16 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Premium Processing State */}
+              {/* Mobile-Optimized Processing State */}
               {paymentMutation.isPending && (
-                <div className="bg-gradient-to-r from-gold/10 via-white to-gold/10 rounded-3xl border border-gold/30 shadow-lg p-6">
+                <div className="bg-gradient-to-r from-gold/10 via-white to-gold/10 rounded-2xl sm:rounded-3xl border border-gold/30 shadow-lg p-4 sm:p-6">
                   <div className="flex items-center justify-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center mr-4 animate-pulse">
-                      <Loader2 className="h-6 w-6 animate-spin text-gold" />
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center mr-2 sm:mr-4 animate-pulse">
+                      <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin text-gold" />
                     </div>
                     <div className="text-center">
-                      <p className="text-navy font-roboto font-semibold text-lg tracking-wide">Processing Payment Request</p>
-                      <p className="text-navy/60 text-sm mt-1">Connecting to Bank of Georgia secure gateway...</p>
+                      <p className="text-navy font-roboto font-semibold text-sm sm:text-lg tracking-wide">Processing Payment Request</p>
+                      <p className="text-navy/60 text-xs sm:text-sm mt-1">Connecting to Bank of Georgia secure gateway...</p>
                     </div>
                   </div>
                 </div>
@@ -592,47 +593,47 @@ export default function CheckoutPage() {
             </form>
           </div>
 
-          {/* Luxury Order Summary */}
+          {/* Mobile-Optimized Order Summary */}
           <div className="xl:col-span-2">
-            <div className="bg-gradient-to-br from-white via-cream/30 to-white rounded-3xl border border-gold/30 shadow-2xl p-8 sticky top-8">
-              <div className="flex items-center mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-navy/10 to-gold/20 rounded-full flex items-center justify-center mr-4">
-                  <CreditCard className="h-6 w-6 text-navy" />
+            <div className="bg-gradient-to-br from-white via-cream/30 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-2xl p-4 sm:p-8 sticky top-4 sm:top-8">
+              <div className="flex items-center mb-4 sm:mb-8">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/20 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                  <CreditCard className="h-4 w-4 sm:h-6 sm:w-6 text-navy" />
                 </div>
-                <h2 className="font-roboto text-3xl font-light text-navy tracking-wide">Order Summary</h2>
+                <h2 className="font-roboto text-xl sm:text-3xl font-light text-navy tracking-wide">Order Summary</h2>
               </div>
               
-              <div className="space-y-6 mb-8">
+              <div className="space-y-3 sm:space-y-6 mb-4 sm:mb-8">
                 {cartItems.map((item: CartItem & { product: Product }) => (
-                  <div key={item.id} className="bg-gradient-to-r from-white/60 to-cream/40 rounded-2xl p-5 border border-gold/20 shadow-md">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-gold/10 to-navy/5 rounded-xl flex items-center justify-center shadow-inner">
+                  <div key={item.id} className="bg-gradient-to-r from-white/60 to-cream/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-gold/20 shadow-md">
+                    <div className="flex items-center space-x-2 sm:space-x-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gold/10 to-navy/5 rounded-lg sm:rounded-xl flex items-center justify-center shadow-inner flex-shrink-0">
                         <img 
                           src={item.product.imageUrl || "/placeholder-perfume.jpg"} 
                           alt={item.product.name}
-                          className="w-12 h-12 object-cover rounded-lg"
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-md sm:rounded-lg"
                         />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-roboto font-medium text-navy text-lg tracking-wide">{item.product.name}</h4>
-                        <p className="text-navy/60 font-roboto">Quantity: {item.quantity}</p>
-                        <p className="text-navy/50 text-sm font-roboto mt-1">{item.product.brand}</p>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-roboto font-medium text-navy text-sm sm:text-lg tracking-wide truncate">{item.product.name}</h4>
+                        <p className="text-navy/60 font-roboto text-xs sm:text-sm">Quantity: {item.quantity}</p>
+                        <p className="text-navy/50 text-xs sm:text-sm font-roboto mt-1 truncate">{item.product.brand}</p>
                       </div>
-                      <div className="text-right">
-                        <p className="font-roboto font-bold text-navy text-xl">
+                      <div className="text-right flex-shrink-0">
+                        <p className="font-roboto font-bold text-navy text-sm sm:text-xl">
                           ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
                             ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
                             : parseFloat(item.product.price) * item.quantity
                           ).toFixed(2)}
                         </p>
-                        <div className="text-sm font-roboto">
+                        <div className="text-xs sm:text-sm font-roboto">
                           {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
-                            <div className="flex flex-col items-end gap-1">
-                              <div className="flex items-center gap-2">
-                                <p className="text-navy/60">
+                            <div className="flex flex-col items-end gap-0.5 sm:gap-1">
+                              <div className="flex items-center gap-1 sm:gap-2">
+                                <p className="text-navy/60 text-xs sm:text-sm">
                                   ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
                                 </p>
-                                <span className="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded-full font-medium">
+                                <span className="text-xs bg-red-500 text-white px-1 sm:px-1.5 py-0.5 rounded-full font-medium">
                                   -{item.product.discountPercentage}%
                                 </span>
                               </div>
@@ -641,7 +642,7 @@ export default function CheckoutPage() {
                               </p>
                             </div>
                           ) : (
-                            <p className="text-navy/60">₾{parseFloat(item.product.price).toFixed(2)}</p>
+                            <p className="text-navy/60 text-xs sm:text-sm">₾{parseFloat(item.product.price).toFixed(2)}</p>
                           )}
                         </div>
                       </div>
@@ -650,27 +651,27 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <div className="bg-gradient-to-r from-cream/30 to-white rounded-2xl p-6 border border-gold/30">
-                <div className="space-y-4 mb-6">
+              <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-gold/30">
+                <div className="space-y-2 sm:space-y-4 mb-3 sm:mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
-                    <span className="text-navy font-roboto font-semibold text-lg">₾{total.toFixed(2)}</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                    <span className="text-navy font-roboto font-semibold text-sm sm:text-lg">₾{total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide">Shipping</span>
-                    <span className="text-emerald-600 font-roboto font-semibold">Free</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">Shipping</span>
+                    <span className="text-emerald-600 font-roboto font-semibold text-sm sm:text-base">Free</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide">VAT included</span>
-                    <span className="text-navy/70 font-roboto">₾0.00</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">VAT included</span>
+                    <span className="text-navy/70 font-roboto text-sm sm:text-base">₾0.00</span>
                   </div>
                 </div>
                 
-                <div className="border-t border-gold/30 pt-4">
-                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-4">
+                <div className="border-t border-gold/30 pt-3 sm:pt-4">
+                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-lg sm:rounded-xl p-3 sm:p-4">
                     <div className="flex justify-between items-center">
-                      <span className="font-roboto text-xl font-medium text-navy tracking-wide">Total Amount</span>
-                      <span className="font-roboto text-3xl font-bold text-gold">₾{total.toFixed(2)}</span>
+                      <span className="font-roboto text-lg sm:text-xl font-medium text-navy tracking-wide">Total Amount</span>
+                      <span className="font-roboto text-xl sm:text-3xl font-bold text-gold">₾{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
