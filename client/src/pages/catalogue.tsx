@@ -97,9 +97,9 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
           transition={{ duration: 0.4 }}
         />
 
-        {/* Professional Add to Cart Button */}
+        {/* Desktop Hover Add to Cart Button */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center"
+          className="hidden md:flex absolute inset-0 items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: isCardHovered ? 1 : 0 }}
           transition={{ duration: 0.15 }}
@@ -114,9 +114,6 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
                 ? 'bg-[#000000] text-white border-[#000000]' 
                 : 'bg-white text-black border-white'
             }`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isCardHovered ? 1 : 0 }}
-            transition={{ duration: 0.15 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -153,6 +150,33 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
             </motion.div>
           </motion.button>
         </motion.div>
+
+        {/* Mobile Always-Visible Add to Cart Button */}
+        <div className="md:hidden absolute bottom-2 right-2">
+          <motion.button
+            onClick={handleAddToCart}
+            disabled={addToCartMutation.isPending}
+            className="bg-white/90 backdrop-blur-sm text-navy p-2 rounded-full shadow-lg transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed border border-gold/20"
+            whileTap={{ scale: 0.95 }}
+          >
+            {addToCartMutation.isPending ? (
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ 
+                  duration: 0.8, 
+                  repeat: Infinity, 
+                  ease: "linear" 
+                }}
+              >
+                <ShoppingCart className="h-4 w-4" />
+              </motion.div>
+            ) : (
+              <ShoppingCart className="h-4 w-4" />
+            )}
+          </motion.button>
+        </div>
+
+
       </div>
       {/* Fixed Height Content Container */}
       <div className="p-6 flex-grow flex flex-col min-h-[120px]">
