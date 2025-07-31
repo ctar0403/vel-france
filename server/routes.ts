@@ -427,13 +427,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         external_order_id: order.id,
         purchase_units: {
           currency: 'GEL',
-          total_amount: Math.round(total * 100), // Convert to tetri (smallest currency unit)
+          total_amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
           basket: orderItems.map((item) => ({
             product_id: item.productId,
             description: `Product ${item.productId}`,
             quantity: item.quantity,
-            unit_price: Math.round(parseFloat(item.price) * 100), // Convert to tetri
-            total_price: Math.round(item.quantity * parseFloat(item.price) * 100) // Convert to tetri
+            unit_price: parseFloat(parseFloat(item.price).toFixed(2)), // Keep as lari with decimal precision
+            total_price: parseFloat((item.quantity * parseFloat(item.price)).toFixed(2)) // Keep as lari with decimal precision
           }))
         },
         redirect_urls: {
@@ -521,13 +521,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         external_order_id: order.id,
         purchase_units: {
           currency: 'GEL',
-          total_amount: Math.round(total * 100), // Convert to tetri (smallest currency unit)
+          total_amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
           basket: orderItems.map((item) => ({
             product_id: item.productId,
             description: `Product ${item.productId}`, // You might want to get actual product name
             quantity: item.quantity,
-            unit_price: Math.round(parseFloat(item.price) * 100), // Convert to tetri
-            total_price: Math.round(item.quantity * parseFloat(item.price) * 100) // Convert to tetri
+            unit_price: parseFloat(parseFloat(item.price).toFixed(2)), // Keep as lari with decimal precision
+            total_price: parseFloat((item.quantity * parseFloat(item.price)).toFixed(2)) // Keep as lari with decimal precision
           }))
         },
         redirect_urls: {

@@ -207,7 +207,7 @@ export default function CheckoutPage() {
     try {
       console.log("Opening BOG Calculator for installments with amount:", total);
       window.BOG.Calculator.open({
-        amount: Math.round(total * 100), // Convert to tetri for BOG calculator
+        amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
         bnpl: false, // Standard installment plan
         onClose: () => {
           console.log("BOG Calculator closed by user");
@@ -267,7 +267,7 @@ export default function CheckoutPage() {
     try {
       console.log("Opening BOG Calculator for BNPL with amount:", total);
       window.BOG.Calculator.open({
-        amount: Math.round(total * 100), // Convert to tetri for BOG calculator
+        amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
         bnpl: true, // Part-by-part plan
         onClose: () => {
           console.log("BOG Calculator closed by user");
