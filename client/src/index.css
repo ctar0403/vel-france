@@ -77,22 +77,16 @@ body {
   padding: 20px 0 50px 0; /* Space for pagination */
 }
 
-/* Product card styling - consistent and responsive */
+/* Product card styling - matching catalogue without shadows */
 .swiper-product-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.swiper-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
 }
 
 /* Image container */

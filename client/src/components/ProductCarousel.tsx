@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'wouter';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -91,12 +92,17 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       >
         {products.map((product, index) => (
           <SwiperSlide key={product.id}>
+            <Link 
+              to={`/product/${product.id}`}
+              className="block h-full"
+            >
             <motion.div
-              className="swiper-product-card"
+              className="swiper-product-card group cursor-pointer h-full"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
             >
               {/* Product Image */}
               <div className="product-image relative">
@@ -143,6 +149,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                 </div>
               </div>
             </motion.div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
