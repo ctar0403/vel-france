@@ -1,4 +1,4 @@
-import { Home, ShoppingCart, User } from 'lucide-react';
+import { Home, Store, ShoppingCart, User, LogIn } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 
@@ -10,14 +10,26 @@ export function MobileBottomNav() {
     queryKey: ['/api/cart'],
   });
 
+  // Get user authentication status
+  const { data: user } = useQuery<any>({
+    queryKey: ['/api/user'],
+  });
+
   const cartCount = Array.isArray(cartItems) ? cartItems.length : 0;
+  const isLoggedIn = !!user;
 
   const navItems = [
     {
       icon: Home,
-      label: 'Store',
+      label: 'Home',
       path: '/',
-      isActive: location === '/' || location === '/catalogue'
+      isActive: location === '/'
+    },
+    {
+      icon: Store,
+      label: 'Store',
+      path: '/catalogue',
+      isActive: location === '/catalogue' || location.startsWith('/product/')
     },
     {
       icon: ShoppingCart,
@@ -27,10 +39,10 @@ export function MobileBottomNav() {
       badge: cartCount > 0 ? cartCount : null
     },
     {
-      icon: User,
+      icon: isLoggedIn ? User : LogIn,
       label: 'Account',
-      path: '/profile',
-      isActive: location === '/profile' || location === '/admin' || location.startsWith('/order/')
+      path: isLoggedIn ? '/profile' : '/auth',
+      isActive: location === '/profile' || location === '/admin' || location.startsWith('/order/') || location === '/auth'
     }
   ];
 
