@@ -106,7 +106,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="flex-shrink-0 w-full max-w-xs group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col mx-auto"
+        className="carousel-product-card group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer flex flex-col"
       >
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -194,28 +194,30 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           </motion.div>
         </div>
         {/* Fixed Height Content Container */}
-        <div className="p-6 flex-grow flex flex-col min-h-[120px]">
-          <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
-            {formatProductName(product.name, product.brand)}
-          </h3>
+        <div className="p-4 flex flex-col justify-between h-[120px]">
+          <div className="flex-1 flex flex-col justify-center">
+            <h3 className="text-sm text-navy leading-tight line-clamp-2 mb-2 font-normal min-h-[32px] flex items-center">
+              {formatProductName(product.name, product.brand)}
+            </h3>
+          </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 mt-auto">
             {product.discountPercentage && product.discountPercentage > 0 ? (
               <>
                 <div className="flex items-center gap-2">
-                  <span className="text-base text-gold font-normal">
+                  <span className="text-sm text-gold font-normal">
                     ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
                   </span>
                   <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
                     -{product.discountPercentage}%
                   </span>
                 </div>
-                <span className="text-sm text-gray-500 line-through">
+                <span className="text-xs text-gray-500 line-through">
                   ₾{parseFloat(product.price.toString()).toFixed(2)}
                 </span>
               </>
             ) : (
-              <span className="text-base text-gold font-normal">
+              <span className="text-sm text-gold font-normal">
                 ₾{parseFloat(product.price.toString()).toFixed(2)}
               </span>
             )}
