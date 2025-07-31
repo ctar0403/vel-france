@@ -9,11 +9,21 @@
     <link rel="preconnect" href="https://api.bog.ge" />
     <link rel="dns-prefetch" href="https://payment.bog.ge" />
     
-    <!-- Preload absolutely critical resources for sub-1s FCP -->
+    <!-- Ultra-critical resources for instant FCP -->
     <link rel="preload" as="font" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2" type="font/woff2" crossorigin>
-    <link rel="preload" as="font" href="https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="/attached_assets/11_1753734243609.png" fetchpriority="high">
-    <link rel="preload" as="fetch" href="/api/products" crossorigin="anonymous">
+    <link rel="prefetch" href="/api/products" crossorigin="anonymous">
+    
+    <!-- Inline critical CSS for instant rendering -->
+    <style>
+      body{margin:0;font-family:'Roboto',sans-serif;background:#f8fafc}
+      .container{max-width:1200px;margin:0 auto;padding:0 1rem}
+      .text-navy{color:#1e3a8a}
+      .text-gold{color:#d97706}
+      .bg-gradient-primary{background:linear-gradient(135deg,#f8fafc 0%,#ffffff 100%)}
+      .animate-spin{animation:spin 1s linear infinite}
+      @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
     
     <!-- SEO Meta Tags -->
     <title>Vel France - Luxury Perfumes & Fragrances</title>

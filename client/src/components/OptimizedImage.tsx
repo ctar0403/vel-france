@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps {
@@ -6,43 +6,30 @@ interface OptimizedImageProps {
   alt: string;
   className?: string;
   priority?: boolean;
-  width?: number;
-  height?: number;
-  sizes?: string;
+  placeholder?: string;
   onLoad?: () => void;
   onError?: () => void;
 }
 
-// Ultra-optimized image component for critical performance
-const OptimizedImage = memo(({
-  src,
-  alt,
-  className,
+export function OptimizedImage({ 
+  src, 
+  alt, 
+  className, 
   priority = false,
-  width,
-  height,
-  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3C/svg%3E",
   onLoad,
-  onError
-}: OptimizedImageProps) => {
+  onError 
+}: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  // Preload critical images immediately
-  useEffect(() => {
-    if (priority && src) {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      link.setAttribute('fetchpriority', 'high');
-      document.head.appendChild(link);
-      
-      return () => {
-        document.head.removeChild(link);
-      };
-    }
-  }, [src, priority]);
+  // Convert to WebP if browser supports it
+  const getOptimizedSrc = (originalSrc: string) => {
+    // For development, return original src
+    // In production, you could implement WebP conversion
+    return originalSrc;
+  };
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -54,35 +41,51 @@ const OptimizedImage = memo(({
     onError?.();
   };
 
+  useEffect(() => {
+    if (priority && imgRef.current) {
+      // Preload high priority images
+      const img = new Image();
+      img.src = getOptimizedSrc(src);
+      img.onload = handleLoad;
+      img.onerror = handleError;
+    }
+  }, [src, priority]);
+
   if (hasError) {
     return (
-      <div className={cn("bg-gray-200 flex items-center justify-center", className)}>
-        <span className="text-gray-400 text-sm">Failed to load</span>
+      <div className={cn("bg-gray-100 flex items-center justify-center", className)}>
+        <span className="text-gray-400 text-sm">Image unavailable</span>
       </div>
     );
   }
 
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={cn(
-        "transition-opacity duration-150",
-        isLoaded ? "opacity-100" : "opacity-0",
-        className
+    <div className={cn("relative overflow-hidden", className)}>
+      {/* Placeholder while loading */}
+      {!isLoaded && (
+        <img
+          src={placeholder}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover blur-sm"
+          aria-hidden="true"
+        />
       )}
-      onLoad={handleLoad}
-      onError={handleError}
-      loading={priority ? "eager" : "lazy"}
-      decoding="async"
-      fetchPriority={priority ? "high" : "auto"}
-      width={width}
-      height={height}
-      sizes={sizes}
-    />
+      
+      {/* Main image */}
+      <img
+        ref={imgRef}
+        src={getOptimizedSrc(src)}
+        alt={alt}
+        className={cn(
+          "w-full h-full object-cover transition-opacity duration-300",
+          isLoaded ? "opacity-100" : "opacity-0"
+        )}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        onLoad={handleLoad}
+        onError={handleError}
+        decoding="async"
+      />
+    </div>
   );
-});
-
-OptimizedImage.displayName = 'OptimizedImage';
-
-export { OptimizedImage };
+}

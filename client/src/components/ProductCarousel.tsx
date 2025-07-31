@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
-import { LazyImage } from '@/components/LazyImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import { memo, useCallback, useMemo, lazy, Suspense } from 'react';
 
 // Import motion directly (will be optimized later)
@@ -104,10 +104,11 @@ const ProductCarousel = memo<ProductCarouselProps>(({
             >
               {/* Product Image */}
               <div className="product-image relative">
-                <LazyImage
+                <OptimizedImage
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
                   className="w-full h-full object-cover"
+                  priority={index < 4} // Prioritize first 4 images
                 />
                 
                 {/* Badge - Hidden on mobile */}

@@ -106,10 +106,20 @@ function Router() {
 
 function App() {
   useEffect(() => {
-    // Initialize critical performance optimizations
-    optimizeCriticalPath();
-    analyzeBundleSize();
-    monitorPerformance();
+    // Initialize critical performance optimizations immediately
+    const initPerformance = async () => {
+      optimizeCriticalPath();
+      analyzeBundleSize();
+      monitorPerformance();
+      
+      // Import and run critical path optimizations
+      const { optimizeCriticalRenderingPath, prefetchCriticalResources, enablePerformanceObserver } = await import('@/utils/criticalPathOptimization');
+      optimizeCriticalRenderingPath();
+      prefetchCriticalResources();
+      enablePerformanceObserver();
+    };
+    
+    initPerformance();
     
     // Performance monitoring in development
     if (process.env.NODE_ENV === "development") {
