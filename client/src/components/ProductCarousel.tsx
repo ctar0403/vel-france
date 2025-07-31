@@ -45,6 +45,20 @@ const ProductCarousel = memo<ProductCarouselProps>(({
   badgeText,
   badgeColor = "bg-gradient-to-r from-red-500 to-pink-500"
 }) => {
+  // Add debugging for carousel issues
+  console.log(`${title} carousel:`, { 
+    productCount: products?.length || 0, 
+    hasProducts: !!products && products.length > 0 
+  });
+  
+  // Early return if no products
+  if (!products || products.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">No products available for {title}</p>
+      </div>
+    );
+  }
   const formatProductName = useCallback((name: string, brand: string | null) => {
     return brand ? `${brand} – ${name}` : name;
   }, []);

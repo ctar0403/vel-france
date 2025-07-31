@@ -419,14 +419,41 @@ export default function Home() {
     "Ombre Nomade", "Oud Satin Mood", "Paradoxe Intense"
   ];
 
-  // Filter and sort products by ranking order
-  const mostSoldProducts = mostSoldProductNames
-    .map(name => products.find(product => product.name === name))
-    .filter(product => product !== undefined) as Product[];
+  // Filter and sort products by ranking order with fallbacks
+  const mostSoldProducts = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
+    // Try exact name matches first
+    let matched = mostSoldProductNames
+      .map(name => products.find(product => product.name === name))
+      .filter(product => product !== undefined) as Product[];
+    
+    // If no exact matches, use first 12 products as fallback
+    if (matched.length === 0) {
+      matched = products.slice(0, 12);
+      console.log('Using fallback products for Most Sold carousel, total products:', products.length);
+    }
+    
+    console.log('Most Sold products final count:', matched.length);
+    return matched;
+  }, [products]);
 
-  const newArrivalsProducts = products.filter(product => 
-    newArrivalsProductNames.includes(product.name)
-  );
+  const newArrivalsProducts = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
+    // Try exact name matches first
+    let matched = products.filter(product => 
+      newArrivalsProductNames.includes(product.name)
+    );
+    
+    // If no exact matches, use last 12 products as fallback
+    if (matched.length === 0) {
+      matched = products.slice(-12);
+      console.log('Using fallback products for New Arrivals carousel');
+    }
+    
+    return matched;
+  }, [products, newArrivalsProductNames]);
 
   return (
     <div className="min-h-screen bg-cream">
@@ -521,15 +548,35 @@ export default function Home() {
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <ProductCarousel
-            products={mostSoldProducts}
-            title="Most Sold"
-            showBadges={true}
-            badgeText={(index) => `#${index + 1} Bestseller`}
-            badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
-            isAddingToCart={addToCartMutation.isPending}
-          />
+          {/* Debug info for troubleshooting */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="bg-yellow-100 p-4 mb-4 rounded">
+              <p>Debug: Total products: {products.length}</p>
+              <p>Debug: Products loading: {productsLoading ? 'YES' : 'NO'}</p>
+              <p>Debug: Most sold products: {mostSoldProducts.length}</p>
+              <p>Debug: New arrivals products: {newArrivalsProducts.length}</p>
+            </div>
+          )}
+          
+          {productsLoading ? (
+            <div className="flex justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy"></div>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">No products available</p>
+            </div>
+          ) : (
+            <ProductCarousel
+              products={mostSoldProducts}
+              title="Most Sold"
+              showBadges={true}
+              badgeText={(index) => `#${index + 1} Bestseller`}
+              badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+              onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+              isAddingToCart={addToCartMutation.isPending}
+            />
+          )}
         </div>
       </section>
       {/* Brand Logos Auto-Moving Carousel */}
@@ -619,15 +666,25 @@ export default function Home() {
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <ProductCarousel
-            products={newArrivalsProducts.slice(0, 12)}
-            title="New Arrivals"
-            showBadges={true}
-            badgeText={() => "New Arrival"}
-            badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
-            isAddingToCart={addToCartMutation.isPending}
-          />
+          {productsLoading ? (
+            <div className="flex justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy"></div>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">No products available</p>
+            </div>
+          ) : (
+            <ProductCarousel
+              products={newArrivalsProducts.slice(0, 12)}
+              title="New Arrivals"
+              showBadges={true}
+              badgeText={() => "New Arrival"}
+              badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+              onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+              isAddingToCart={addToCartMutation.isPending}
+            />
+          )}
         </div>
       </section>
       <Footer />
