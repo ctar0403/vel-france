@@ -150,6 +150,49 @@ export function setupAuth(app: Express) {
       res.status(500).json({ message: "Failed to get user" });
     }
   });
+
+  // Update user profile route
+  app.put("/api/user/profile", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { firstName, lastName, email } = req.body;
+      
+      // Validate the input
+      if (!firstName || !lastName || !email) {
+        return res.status(400).json({ message: "First name, last name, and email are required" });
+      }
+
+      // Check if email is being changed and if it's already taken by another user
+      if (email) {
+        const existingUser = await storage.getUserByEmail(email);
+        if (existingUser && existingUser.id !== userId) {
+          return res.status(400).json({ message: "Email is already taken by another user" });
+        }
+      }
+
+      // Update the user
+      const updatedUser = await storage.updateUser(userId, {
+        firstName,
+        lastName,
+        email
+      });
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return user without password
+      const { password, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error("Update profile error:", error);
+      res.status(500).json({ message: "Failed to update profile" });
+    }
+  });
 }
 
 // Middleware functions
