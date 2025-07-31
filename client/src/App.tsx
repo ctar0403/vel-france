@@ -1,22 +1,22 @@
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect, Suspense, lazy } from "react";
+import { optimizedQueryClient } from "./lib/optimizedQueryClient";
+import { HeaderSkeleton } from "@/components/Skeleton/HeaderSkeleton";
 import { PageLoader } from "@/components/Suspense/PageLoader";
-import { PerformanceMetrics } from "@/components/PerformanceMetrics";
 
-// Critical pages - loaded immediately
+// Only load Home immediately for FCP optimization
 import Home from "@/pages/home";
-import Catalogue from "@/pages/catalogue";
-import ProductDetail from "@/pages/product-detail";
-import Cart from "@/pages/cart";
-import Checkout from "@/pages/checkout";
 
-// Non-critical pages - lazy loaded
+// All other pages lazy loaded for performance
+const Catalogue = lazy(() => import("@/pages/catalogue"));
+const ProductDetail = lazy(() => import("@/pages/product-detail"));
+const Cart = lazy(() => import("@/pages/cart"));
+const Checkout = lazy(() => import("@/pages/checkout"));
 const Contact = lazy(() => import("@/pages/contact"));
 const AuthPage = lazy(() => import("@/pages/auth"));
 const Profile = lazy(() => import("@/pages/profile"));
@@ -60,21 +60,14 @@ function Router() {
       <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Switch>
-          {/* Payment routes available to all users */}
-          <Route path="/payment-success" component={PaymentSuccess} />
-          <Route path="/payment-cancel" component={PaymentCancel} />
-          
-          {/* Public order route for unique URLs */}
-          <Route path="/order/:orderCode" component={OrderPage} />
-          
-          {/* Critical public routes - no lazy loading */}
+          {/* Home route - critical path, loaded immediately */}
           <Route path="/" component={Home} />
+          
+          {/* All other routes lazy loaded */}
           <Route path="/catalogue" component={Catalogue} />
           <Route path="/product/:id" component={ProductDetail} />
           <Route path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
-          
-          {/* Non-critical public routes - lazy loaded */}
           <Route path="/contact" component={Contact} />
           <Route path="/auth" component={AuthPage} />
           <Route path="/admin" component={AdminLogin} />
@@ -84,7 +77,14 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           
-          {/* Protected routes - only accessible when logged in */}
+          {/* Payment routes */}
+          <Route path="/payment-success" component={PaymentSuccess} />
+          <Route path="/payment-cancel" component={PaymentCancel} />
+          
+          {/* Order routes */}
+          <Route path="/order/:orderCode" component={OrderPage} />
+          
+          {/* Protected routes */}
           {user && (
             <>
               <Route path="/profile" component={Profile} />
@@ -101,13 +101,12 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={optimizedQueryClient}>
       <AuthProvider>
         <TooltipProvider>
           <Toaster />
           <Router />
           <MobileBottomNav />
-          <PerformanceMetrics />
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
