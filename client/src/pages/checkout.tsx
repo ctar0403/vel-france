@@ -205,9 +205,9 @@ export default function CheckoutPage() {
     }
 
     try {
-      console.log("Opening BOG Calculator for installments with amount:", Math.round(total));
+      console.log("Opening BOG Calculator for installments with amount:", total);
       window.BOG.Calculator.open({
-        amount: Math.round(total),
+        amount: Math.round(total * 100), // Convert to tetri for BOG calculator
         bnpl: false, // Standard installment plan
         onClose: () => {
           console.log("BOG Calculator closed by user");
@@ -265,9 +265,9 @@ export default function CheckoutPage() {
     }
 
     try {
-      console.log("Opening BOG Calculator for BNPL with amount:", Math.round(total));
+      console.log("Opening BOG Calculator for BNPL with amount:", total);
       window.BOG.Calculator.open({
-        amount: Math.round(total),
+        amount: Math.round(total * 100), // Convert to tetri for BOG calculator
         bnpl: true, // Part-by-part plan
         onClose: () => {
           console.log("BOG Calculator closed by user");
