@@ -106,64 +106,40 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   loading="lazy"
                 />
                 
-                {/* Badge */}
+                {/* Badge - Hidden on mobile */}
                 {showBadges && badgeText && (
-                  <div className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-1 rounded-full ${badgeColor} mobile-hide-badge`}>
+                  <div className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-1 rounded-full ${badgeColor} hidden md:block`}>
                     {badgeText(index)}
                   </div>
                 )}
-
-                {/* Quick Add to Cart */}
-                <motion.button
-                  className="absolute top-2 right-2 bg-white bg-opacity-90 hover:bg-opacity-100 p-2 rounded-full shadow-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => onAddToCart?.(product.id)}
-                  disabled={isAddingToCart}
-                >
-                  <ShoppingCart className="w-4 h-4 text-navy" />
-                </motion.button>
               </div>
 
               {/* Product Content */}
               <div className="product-content">
-                <h3 className="product-title">
+                <h3 className="product-title font-medium text-gray-900 mb-2">
                   {formatProductName(product.name, product.brand)}
                 </h3>
 
-                {product.description && (
-                  <p className="product-description">
-                    {truncateDescription(product.description)}
-                  </p>
-                )}
-
-                {/* Price */}
-                <div className="product-price">
+                {/* Price - matching catalogue design */}
+                <div className="mt-auto">
                   {product.discountPercentage && product.discountPercentage > 0 ? (
-                    <div className="product-price discounted">
-                      <span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-semibold text-red-600">
                         ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
                       </span>
-                      <span className="original-price">
+                      <span className="text-sm text-gray-500 line-through">
                         ₾{parseFloat(product.price.toString()).toFixed(2)}
                       </span>
-                      <span className="discount-badge">
+                      <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
                         -{product.discountPercentage}%
                       </span>
                     </div>
                   ) : (
-                    <span>₾{parseFloat(product.price.toString()).toFixed(2)}</span>
+                    <span className="text-lg font-semibold text-gray-900">
+                      ₾{parseFloat(product.price.toString()).toFixed(2)}
+                    </span>
                   )}
                 </div>
-
-                {/* Add to Cart Button */}
-                <button
-                  className="add-to-cart-btn"
-                  onClick={() => onAddToCart?.(product.id)}
-                  disabled={isAddingToCart}
-                >
-                  {isAddingToCart ? 'Adding...' : 'Add to Cart'}
-                </button>
               </div>
             </motion.div>
           </SwiperSlide>
