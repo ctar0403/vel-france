@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'wouter';
-import { OptimizedImage } from '@/components/OptimizedImage';
+import { LazyImage } from '@/components/LazyImage';
 import { memo, useCallback, useMemo, lazy, Suspense } from 'react';
 
 // Import motion directly (will be optimized later)
@@ -45,20 +45,6 @@ const ProductCarousel = memo<ProductCarouselProps>(({
   badgeText,
   badgeColor = "bg-gradient-to-r from-red-500 to-pink-500"
 }) => {
-  // Add debugging for carousel issues
-  console.log(`${title} carousel:`, { 
-    productCount: products?.length || 0, 
-    hasProducts: !!products && products.length > 0 
-  });
-  
-  // Early return if no products
-  if (!products || products.length === 0) {
-    return (
-      <div className="text-center py-8">
-        <p className="text-gray-500">No products available for {title}</p>
-      </div>
-    );
-  }
   const formatProductName = useCallback((name: string, brand: string | null) => {
     return brand ? `${brand} – ${name}` : name;
   }, []);
@@ -93,10 +79,9 @@ const ProductCarousel = memo<ProductCarouselProps>(({
       768: { slidesPerView: 3, spaceBetween: 25 },
       1024: { slidesPerView: 4, spaceBetween: 30 },
     },
+    lazy: true,
+    preloadImages: false,
     watchSlidesProgress: true,
-    // Optimize for performance
-    preventInteractionOnTransition: true,
-    updateOnWindowResize: false,
   }), [autoplay]);
 
   return (
@@ -118,11 +103,10 @@ const ProductCarousel = memo<ProductCarouselProps>(({
             >
               {/* Product Image */}
               <div className="product-image relative">
-                <OptimizedImage
+                <LazyImage
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
                   className="w-full h-full object-cover"
-                  priority={index < 4} // Prioritize first 4 images
                 />
                 
                 {/* Badge - Hidden on mobile */}

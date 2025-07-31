@@ -284,45 +284,10 @@ export default function Home() {
     setLocation('/catalogue');
   };
 
-  // Use default query behavior from queryClient
-  const { data: products = [], isLoading: productsLoading, error: productsError, refetch: refetchProducts } = useQuery<Product[]>({
+  // Fetch products
+  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
-    queryFn: async () => {
-      console.log('🔍 Fetching products...');
-      const response = await fetch('/api/products', {
-        credentials: 'include',
-      });
-      console.log('🔍 Response status:', response.status, response.ok);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log('🔍 Received data:', Array.isArray(data) ? `${data.length} products` : typeof data);
-      return data;
-    },
   });
-
-  // Simple debug logging
-  React.useEffect(() => {
-    if (products.length > 0) {
-      console.log('✅ Products loaded successfully:', products.length);
-    } else if (productsError) {
-      console.log('❌ Products error:', productsError.message);
-    } else if (!productsLoading) {
-      console.log('⚠️ No products loaded, no error, not loading');
-    }
-  }, [products, productsError, productsLoading]);
-
-  // Test direct fetch for debugging
-  const testDirectFetch = async () => {
-    try {
-      const response = await fetch('/api/products');
-      const data = await response.json();
-      console.log('Direct fetch success:', data.length, 'products');
-    } catch (error) {
-      console.error('Direct fetch error:', error);
-    }
-  };
 
   // Fetch cart items
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
@@ -448,41 +413,14 @@ export default function Home() {
     "Ombre Nomade", "Oud Satin Mood", "Paradoxe Intense"
   ];
 
-  // Filter and sort products by ranking order with fallbacks
-  const mostSoldProducts = React.useMemo(() => {
-    if (!products || products.length === 0) return [];
-    
-    // Try exact name matches first
-    let matched = mostSoldProductNames
-      .map(name => products.find(product => product.name === name))
-      .filter(product => product !== undefined) as Product[];
-    
-    // If no exact matches, use first 12 products as fallback
-    if (matched.length === 0) {
-      matched = products.slice(0, 12);
-      console.log('Using fallback products for Most Sold carousel, total products:', products.length);
-    }
-    
-    console.log('Most Sold products final count:', matched.length);
-    return matched;
-  }, [products]);
+  // Filter and sort products by ranking order
+  const mostSoldProducts = mostSoldProductNames
+    .map(name => products.find(product => product.name === name))
+    .filter(product => product !== undefined) as Product[];
 
-  const newArrivalsProducts = React.useMemo(() => {
-    if (!products || products.length === 0) return [];
-    
-    // Try exact name matches first
-    let matched = products.filter(product => 
-      newArrivalsProductNames.includes(product.name)
-    );
-    
-    // If no exact matches, use last 12 products as fallback
-    if (matched.length === 0) {
-      matched = products.slice(-12);
-      console.log('Using fallback products for New Arrivals carousel');
-    }
-    
-    return matched;
-  }, [products, newArrivalsProductNames]);
+  const newArrivalsProducts = products.filter(product => 
+    newArrivalsProductNames.includes(product.name)
+  );
 
   return (
     <div className="min-h-screen bg-cream">
@@ -517,7 +455,6 @@ export default function Home() {
                   src={banner.image}
                   alt={banner.alt}
                   className="w-full h-full object-cover"
-
                 />
               </div>
             ))}
@@ -577,48 +514,15 @@ export default function Home() {
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          {/* Debug info for troubleshooting */}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="bg-yellow-100 p-4 mb-4 rounded text-sm">
-              <p>Products: {products.length} | Loading: {productsLoading ? 'YES' : 'NO'}</p>
-              <p>Error: {productsError ? String(productsError.message) : 'NONE'}</p>
-              <p>Most sold: {mostSoldProducts.length} | New arrivals: {newArrivalsProducts.length}</p>
-              <div className="flex gap-2 mt-2">
-                <button 
-                  onClick={() => refetchProducts()} 
-                  className="px-3 py-1 bg-blue-500 text-white rounded text-xs"
-                >
-                  Refetch Products
-                </button>
-                <button 
-                  onClick={testDirectFetch} 
-                  className="px-3 py-1 bg-green-500 text-white rounded text-xs"
-                >
-                  Test Direct Fetch
-                </button>
-              </div>
-            </div>
-          )}
-          
-          {productsLoading ? (
-            <div className="flex justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy"></div>
-            </div>
-          ) : products.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No products available</p>
-            </div>
-          ) : (
-            <ProductCarousel
-              products={mostSoldProducts}
-              title="Most Sold"
-              showBadges={true}
-              badgeText={(index) => `#${index + 1} Bestseller`}
-              badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-              onAddToCart={(productId) => addToCartMutation.mutate(productId)}
-              isAddingToCart={addToCartMutation.isPending}
-            />
-          )}
+          <ProductCarousel
+            products={mostSoldProducts}
+            title="Most Sold"
+            showBadges={true}
+            badgeText={(index) => `#${index + 1} Bestseller`}
+            badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            isAddingToCart={addToCartMutation.isPending}
+          />
         </div>
       </section>
       {/* Brand Logos Auto-Moving Carousel */}
@@ -708,25 +612,15 @@ export default function Home() {
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          {productsLoading ? (
-            <div className="flex justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy"></div>
-            </div>
-          ) : products.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No products available</p>
-            </div>
-          ) : (
-            <ProductCarousel
-              products={newArrivalsProducts.slice(0, 12)}
-              title="New Arrivals"
-              showBadges={true}
-              badgeText={() => "New Arrival"}
-              badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-              onAddToCart={(productId) => addToCartMutation.mutate(productId)}
-              isAddingToCart={addToCartMutation.isPending}
-            />
-          )}
+          <ProductCarousel
+            products={newArrivalsProducts.slice(0, 12)}
+            title="New Arrivals"
+            showBadges={true}
+            badgeText={() => "New Arrival"}
+            badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            isAddingToCart={addToCartMutation.isPending}
+          />
         </div>
       </section>
       <Footer />

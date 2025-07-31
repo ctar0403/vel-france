@@ -2,13 +2,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { compressionMiddleware } from "./middleware/compression";
-import { performanceMiddleware, apiOptimizationMiddleware } from "./middleware/performance";
 
 const app = express();
-
-// Ultra-fast performance middleware
-app.use(performanceMiddleware);
-app.use('/api', apiOptimizationMiddleware);
 
 // Enable compression for all responses
 app.use(compressionMiddleware);

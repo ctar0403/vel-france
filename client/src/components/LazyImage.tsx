@@ -10,9 +10,6 @@ interface LazyImageProps {
   onError?: () => void;
   priority?: boolean;
   sizes?: string;
-  width?: number;
-  height?: number;
-  fetchPriority?: 'high' | 'low' | 'auto';
 }
 
 const LazyImage = memo(({ 
@@ -23,10 +20,7 @@ const LazyImage = memo(({
   onLoad,
   onError,
   priority = false,
-  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
-  width,
-  height,
-  fetchPriority = priority ? 'high' : 'auto'
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority); // Priority images load immediately
@@ -105,9 +99,6 @@ const LazyImage = memo(({
             loading={priority ? "eager" : "lazy"}
             decoding="async"
             sizes={sizes}
-            width={width}
-            height={height}
-
           />
         </>
       )}
