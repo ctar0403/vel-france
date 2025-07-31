@@ -10,165 +10,94 @@
     <link rel="preconnect" href="https://api.bog.ge" />
     <link rel="dns-prefetch" href="https://payment.bog.ge" />
     
-    <!-- Critical CSS - Optimized Google Fonts with font-display: swap -->
+    <!-- Critical CSS - Google Fonts -->
     <link 
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" 
       rel="stylesheet"
     />
     
     <!-- SEO Meta Tags -->
     <title>Vel France - Luxury Perfumes & Fragrances</title>
     <meta name="description" content="Discover premium luxury perfumes and fragrances at Vel France. Shop authentic designer perfumes for men and women with fast delivery across Georgia." />
+    <meta name="keywords" content="luxury perfumes, designer fragrances, perfume store Georgia, Vel France, premium scents" />
     
-    <!-- Open Graph -->
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
     <meta property="og:title" content="Vel France - Luxury Perfumes & Fragrances" />
     <meta property="og:description" content="Discover premium luxury perfumes and fragrances at Vel France. Shop authentic designer perfumes with fast delivery." />
-    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vel France" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vel France - Luxury Perfumes" />
+    <meta name="twitter:description" content="Premium luxury perfumes and designer fragrances with fast delivery across Georgia." />
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
     
     <!-- Theme -->
     <meta name="theme-color" content="#2D3748" />
+    <meta name="msapplication-TileColor" content="#2D3748" />
     
-    <!-- Icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
+    <!-- Performance -->
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     
-    <!-- BOG Payment Scripts - deferred -->
+    <!-- BOG Payment Scripts -->
     <script src="https://checkout.bog.ge/bog-calculator.js" defer></script>
     
-    <!-- Critical CSS - Inlined for instant rendering -->
+    <!-- Critical inline styles for above-the-fold content -->
     <style>
-      /* CSS Variables */
-      :root {
-        --navy: #2d3748;
-        --gold: #d4af37;
-        --cream: #f7fafc;
-        --white: #ffffff;
-        --gray-100: #f7fafc;
-        --gray-600: #718096;
-        --pastel-pink: #fdf2f8;
-      }
-      
-      /* Critical above-the-fold styles */
-      * {
-        box-sizing: border-box;
-      }
-      
+      /* Critical CSS - Prevents layout shift */
       body {
         margin: 0;
         font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        line-height: 1.6;
-        color: var(--navy);
-        background: var(--white);
       }
       
       #root {
         min-height: 100vh;
       }
       
-      /* Header skeleton */
-      .header-skeleton {
-        height: 80px;
-        background: var(--white);
-        border-bottom: 1px solid var(--gray-100);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 1rem;
-      }
-      
-      .header-skeleton .logo {
-        width: 120px;
-        height: 32px;
-        background: linear-gradient(90deg, var(--gray-100) 25%, #ffffff 50%, var(--gray-100) 75%);
-        background-size: 200% 100%;
-        animation: shimmer 2s infinite;
-        border-radius: 4px;
-      }
-      
-      .header-skeleton .nav {
-        display: flex;
-        gap: 1rem;
-      }
-      
-      .header-skeleton .nav-item {
-        width: 80px;
-        height: 20px;
-        background: linear-gradient(90deg, var(--gray-100) 25%, #ffffff 50%, var(--gray-100) 75%);
-        background-size: 200% 100%;
-        animation: shimmer 2s infinite;
-        border-radius: 4px;
-      }
-      
-      /* Hero skeleton */
-      .hero-skeleton {
-        height: 60vh;
-        background: linear-gradient(135deg, var(--cream) 0%, var(--white) 50%, var(--pastel-pink) 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-      }
-      
-      .hero-skeleton::before {
-        content: '';
-        position: absolute;
+      /* Loading state */
+      .app-loading {
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%);
-        background-size: 200% 100%;
-        animation: shimmer 2s infinite;
+        background: linear-gradient(135deg, #f7fafc 0%, #ffffff 50%, #fdf2f8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
       }
       
-      /* Loading spinner */
       .loading-spinner {
-        width: 2rem;
-        height: 2rem;
-        border: 2px solid var(--gold);
+        width: 3rem;
+        height: 3rem;
+        border: 2px solid #d4af37;
         border-top: 2px solid transparent;
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
       
-      /* Animations */
       @keyframes spin {
         to { transform: rotate(360deg); }
-      }
-      
-      @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-      }
-      
-      /* Mobile bottom nav space */
-      @media (max-width: 768px) {
-        body { padding-bottom: 70px; }
-      }
-      
-      /* Hide skeleton when app loads */
-      .app-loaded .initial-skeleton {
-        display: none;
       }
     </style>
   </head>
   <body>
     <div id="root">
-      <!-- Instant skeleton loading for FCP -->
-      <div class="initial-skeleton">
-        <div class="header-skeleton">
-          <div class="logo"></div>
-          <div class="nav">
-            <div class="nav-item"></div>
-            <div class="nav-item"></div>
-            <div class="nav-item"></div>
-          </div>
-        </div>
-        <div class="hero-skeleton">
-          <div class="loading-spinner"></div>
-        </div>
+      <div class="app-loading">
+        <div class="loading-spinner"></div>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
