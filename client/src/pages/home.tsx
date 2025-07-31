@@ -75,6 +75,24 @@ import yslLogo from "@assets/8_1753788502255.png";
 import pradaLogo from "@assets/9_1753788502255.png";
 import claireFontaineLogo from "@assets/10_1753788502256.png";
 
+// Hook to detect mobile screen size
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+  
+  return isMobile;
+};
+
 interface CarouselProductCardProps {
   product: Product;
   index: number;
@@ -130,7 +148,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           />
 
           {/* Badge - Hidden on mobile */}
-          <div className="absolute top-4 left-4 mobile-hide-badge">
+          <div className="absolute top-4 left-4 mobile-hide-badge hidden md:block">
             <Badge className={`${badgeColor} text-white font-semibold px-3 py-1 text-sm`}>
               {badgeText}
             </Badge>
@@ -243,6 +261,7 @@ export default function Home() {
     subject: "Personal consultation",
     message: ""
   });
+  const isMobile = useIsMobile();
 
   // Banner images for slideshow in requested order
   const banners = [
