@@ -175,54 +175,68 @@ export default function CartPage() {
                       transition={{ delay: index * 0.1 }}
                       className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-lg sm:rounded-2xl border border-gold/20 p-2 sm:p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
                     >
-                      {/* Mobile: Horizontal layout, Desktop: Keep existing */}
-                      <div className="flex items-center gap-2 sm:gap-6 sm:flex-col sm:items-start lg:flex-row lg:items-center">
-                        {/* Ultra Compact Product Image */}
-                        <div className="relative w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-md sm:rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
-                          {item.product.imageUrl ? (
-                            <img 
-                              src={item.product.imageUrl} 
-                              alt={`${item.product.brand} ${item.product.name}`}
-                              className="w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-md sm:rounded-lg shadow-sm"
-                            />
-                          ) : (
-                            <div className="text-center">
-                              <div className="text-lg sm:text-3xl">🌸</div>
-                              <div className="text-xs text-navy/60 font-roboto hidden sm:block">Fragrance</div>
-                            </div>
-                          )}
-                          <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
-                        </div>
-
-                        {/* Ultra Compact Product Details */}
-                        <div className="flex-1 min-w-0 sm:w-full">
-                          <h3 className="font-roboto text-sm sm:text-xl font-medium text-navy mb-0.5 sm:mb-1 tracking-wide truncate">
-                            {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
-                          </h3>
-                          <div className="flex items-center gap-1 sm:flex-col sm:items-start sm:gap-1">
-                            {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
-                              <>
-                                <div className="flex items-center gap-1 sm:gap-2">
-                                  <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">
-                                    ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
-                                  </span>
-                                  <span className="text-xs bg-red-500 text-white px-1 py-0.5 sm:px-2 rounded-full font-medium">
-                                    -{item.product.discountPercentage}%
-                                  </span>
-                                </div>
-                                <span className="text-xs sm:text-sm text-gray-500 line-through">
-                                  ₾{parseFloat(item.product.price).toFixed(2)}
-                                </span>
-                              </>
+                      {/* Mobile: 2-Row Compact Layout */}
+                      <div className="space-y-2 sm:space-y-0">
+                        {/* Row 1: Image + Product Details (Mobile) */}
+                        <div className="flex items-start gap-2 sm:gap-6">
+                          {/* Ultra Compact Product Image */}
+                          <div className="relative w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-md sm:rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
+                            {item.product.imageUrl ? (
+                              <img 
+                                src={item.product.imageUrl} 
+                                alt={`${item.product.brand} ${item.product.name}`}
+                                className="w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-md sm:rounded-lg shadow-sm"
+                              />
                             ) : (
-                              <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                              <div className="text-center">
+                                <div className="text-lg sm:text-3xl">🌸</div>
+                                <div className="text-xs text-navy/60 font-roboto hidden sm:block">Fragrance</div>
+                              </div>
                             )}
+                            <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
                           </div>
+
+                          {/* Ultra Compact Product Details */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-roboto text-sm sm:text-xl font-medium text-navy mb-1 tracking-wide truncate">
+                              {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
+                            </h3>
+                            <div className="flex flex-col gap-0.5 sm:gap-1">
+                              {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                                <>
+                                  <div className="flex items-center gap-1 sm:gap-2">
+                                    <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">
+                                      ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
+                                    </span>
+                                    <span className="text-xs bg-red-500 text-white px-1 py-0.5 sm:px-2 rounded-full font-medium">
+                                      -{item.product.discountPercentage}%
+                                    </span>
+                                  </div>
+                                  <span className="text-xs sm:text-sm text-gray-500 line-through">
+                                    ₾{parseFloat(item.product.price).toFixed(2)}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Remove Button (Mobile Only) */}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeItem(item.id)}
+                            disabled={removeItemMutation.isPending}
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-6 w-6 p-0 rounded-md transition-all duration-200 sm:hidden"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
                         </div>
 
-                        {/* Ultra Compact Mobile Controls */}
-                        <div className="flex items-center gap-1 sm:gap-4 sm:w-full sm:justify-between lg:gap-6">
-                          {/* Minimal Quantity Controls */}
+                        {/* Row 2: Quantity + Subtotal (Mobile), Full Controls (Desktop) */}
+                        <div className="flex items-center justify-between gap-2 sm:gap-4 pl-14 sm:pl-0">
+                          {/* Quantity Controls */}
                           <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-lg border border-gold/20 p-0.5 sm:p-1">
                             <Button
                               variant="ghost"
@@ -247,9 +261,9 @@ export default function CartPage() {
                             </Button>
                           </div>
 
-                          {/* Minimal Subtotal */}
-                          <div className="text-center sm:text-right">
-                            <p className="font-roboto text-xs sm:text-lg lg:text-xl font-bold text-navy whitespace-nowrap">
+                          {/* Subtotal */}
+                          <div className="text-right">
+                            <p className="font-roboto text-sm sm:text-lg lg:text-xl font-bold text-navy">
                               ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
                                 ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
                                 : parseFloat(item.product.price) * item.quantity
@@ -257,15 +271,15 @@ export default function CartPage() {
                             </p>
                           </div>
 
-                          {/* Minimal Remove Button */}
+                          {/* Remove Button (Desktop Only) */}
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
                             disabled={removeItemMutation.isPending}
-                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-6 w-6 sm:h-10 sm:w-10 p-0 rounded-md sm:rounded-lg transition-all duration-200 sm:opacity-0 sm:group-hover:opacity-100"
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 hidden sm:block"
                           >
-                            <Trash2 className="h-3 w-3 sm:h-5 sm:w-5" />
+                            <Trash2 className="h-5 w-5" />
                           </Button>
                         </div>
                       </div>
