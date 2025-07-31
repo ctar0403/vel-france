@@ -107,30 +107,31 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink">
-      {/* Luxury Header */}
+    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink pb-20 sm:pb-0">
+      {/* Optimized Mobile Header */}
       <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
-        <div className="container mx-auto px-6 py-8 relative">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 relative">
           <div className="flex items-center justify-between">
-            <Link href="/catalogue">
+            <Link href="/catalogue" className="sm:block">
               <Button 
                 variant="ghost" 
-                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-6 py-3 group"
+                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-3 sm:px-6 py-2 sm:py-3 group"
               >
-                <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                Continue Shopping
+                <ArrowLeft className="mr-1 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                <span className="hidden sm:inline">Continue Shopping</span>
+                <span className="sm:hidden">Back</span>
               </Button>
             </Link>
-            <div className="text-center">
-              <h1 className="font-roboto text-4xl font-light text-navy tracking-wide">Shopping Cart</h1>
+            <div className="text-center flex-1">
+              <h1 className="font-roboto text-2xl sm:text-4xl font-light text-navy tracking-wide">Shopping Cart</h1>
             </div>
-            <div className="w-[180px]"></div> {/* Spacer for centering */}
+            <div className="w-16 sm:w-[180px]"></div> {/* Spacer for centering */}
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-12">
         {cartItems.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -155,73 +156,73 @@ export default function CartPage() {
             </Link>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-12">
-            {/* Luxury Cart Items */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-8 lg:gap-12">
+            {/* Optimized Cart Items */}
             <div className="xl:col-span-2">
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-6 lg:p-8">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="font-roboto text-2xl font-light text-navy tracking-wide">Your Selection</h2>
-                  <div className="bg-gradient-to-r from-navy/10 to-gold/10 px-4 py-2 rounded-full">
-                    <span className="font-roboto text-sm font-medium text-navy">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</span>
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-3 sm:p-6 lg:p-8">
+                <div className="flex items-center justify-between mb-4 sm:mb-8">
+                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Your Selection</h2>
+                  <div className="bg-gradient-to-r from-navy/10 to-gold/10 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
+                    <span className="font-roboto text-xs sm:text-sm font-medium text-navy">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</span>
                   </div>
                 </div>
-                <div className="space-y-8">
+                <div className="space-y-4 sm:space-y-8">
                   {cartItems.map((item: CartItem & { product: Product }, index) => (
                     <motion.div
                       key={item.id}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-2xl border border-gold/20 p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
+                      className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-xl sm:rounded-2xl border border-gold/20 p-3 sm:p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
                     >
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                        {/* Luxury Product Image */}
-                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+                        {/* Compact Product Image */}
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-lg sm:rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
                           {item.product.imageUrl ? (
                             <img 
                               src={item.product.imageUrl} 
                               alt={`${item.product.brand} ${item.product.name}`}
-                              className="w-20 h-20 object-cover rounded-lg shadow-sm"
+                              className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-lg shadow-sm"
                             />
                           ) : (
                             <div className="text-center">
-                              <div className="text-3xl mb-1">🌸</div>
+                              <div className="text-2xl sm:text-3xl mb-1">🌸</div>
                               <div className="text-xs text-navy/60 font-roboto">Fragrance</div>
                             </div>
                           )}
                           <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
                         </div>
 
-                        {/* Enhanced Product Details */}
+                        {/* Compact Product Details */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
+                          <h3 className="font-roboto text-base sm:text-xl font-medium text-navy mb-1 tracking-wide truncate">
                             {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
                           </h3>
                           <div className="flex flex-col gap-1">
                             {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
                               <>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-gold font-roboto font-semibold text-lg">
+                                  <span className="text-gold font-roboto font-semibold text-sm sm:text-lg">
                                     ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
                                   </span>
-                                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                                  <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full font-medium">
                                     -{item.product.discountPercentage}%
                                   </span>
                                 </div>
-                                <span className="text-sm text-gray-500 line-through">
+                                <span className="text-xs sm:text-sm text-gray-500 line-through">
                                   ₾{parseFloat(item.product.price).toFixed(2)}
                                 </span>
                               </>
                             ) : (
-                              <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                              <span className="text-gold font-roboto font-semibold text-sm sm:text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
                             )}
                           </div>
                         </div>
 
-                        {/* Mobile-responsive controls section */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 w-full">
+                        {/* Compact Mobile Controls */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 w-full">
                           {/* Quantity and subtotal group */}
-                          <div className="flex items-center justify-between sm:justify-start gap-4">
+                          <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
                             {/* Sophisticated Quantity Controls */}
                             <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
                               <Button
@@ -247,9 +248,9 @@ export default function CartPage() {
                               </Button>
                             </div>
 
-                            {/* Elegant Subtotal */}
+                            {/* Compact Subtotal */}
                             <div className="text-right">
-                              <p className="font-roboto text-lg sm:text-xl font-bold text-navy mb-1">
+                              <p className="font-roboto text-base sm:text-lg lg:text-xl font-bold text-navy">
                                 ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
                                   ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
                                   : parseFloat(item.product.price) * item.quantity
@@ -279,48 +280,48 @@ export default function CartPage() {
               </div>
             </div>
 
-            {/* Sophisticated Order Summary */}
+            {/* Mobile-Optimized Order Summary */}
             <div className="xl:col-span-1">
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8 sticky top-8">
-                <div className="text-center mb-8">
-                  <h2 className="font-roboto text-2xl font-light text-navy tracking-wide mb-2">Order Summary</h2>
-                  <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8 sticky top-8">
+                <div className="text-center mb-4 sm:mb-8">
+                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide mb-2">Order Summary</h2>
+                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
                 </div>
                 
-                <div className="space-y-6 mb-8">
-                  <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl p-4 border border-gold/20">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-navy/70 font-roboto text-sm">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
-                      <span className="text-navy font-roboto font-semibold">₾{total.toFixed(2)}</span>
+                <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+                  <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl p-3 sm:p-4 border border-gold/20">
+                    <div className="flex justify-between items-center mb-2 sm:mb-3">
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                      <span className="text-navy font-roboto font-semibold text-sm sm:text-base">₾{total.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-navy/70 font-roboto text-sm">Shipping</span>
-                      <span className="text-emerald-600 font-roboto font-medium">Free</span>
+                    <div className="flex justify-between items-center mb-2 sm:mb-3">
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">Shipping</span>
+                      <span className="text-emerald-600 font-roboto font-medium text-sm sm:text-base">Free</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-navy/70 font-roboto text-sm">VAT included</span>
-                      <span className="text-navy/70 font-roboto text-sm">₾0.00</span>
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">VAT included</span>
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">₾0.00</span>
                     </div>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-5 border border-gold/30">
+                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-4 sm:p-5 border border-gold/30">
                     <div className="flex justify-between items-center">
-                      <span className="font-roboto text-lg font-medium text-navy">Total</span>
-                      <span className="font-roboto text-2xl font-bold text-gold">₾{total.toFixed(2)}</span>
+                      <span className="font-roboto text-base sm:text-lg font-medium text-navy">Total</span>
+                      <span className="font-roboto text-xl sm:text-2xl font-bold text-gold">₾{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mb-8">
+                <div className="mb-4 sm:mb-8">
                   <Link href="/checkout">
                     <Button 
-                      className="w-full h-14 bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden mb-6"
+                      className="w-full h-12 sm:h-14 bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden mb-4 sm:mb-6"
                       disabled={cartItems.length === 0}
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="relative flex items-center justify-center">
-                        <CreditCard className="mr-3 h-6 w-6 group-hover:rotate-3 transition-transform duration-300" />
-                        <span className="text-lg">Proceed to Checkout</span>
+                        <CreditCard className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-3 transition-transform duration-300" />
+                        <span className="text-base sm:text-lg">Proceed to Checkout</span>
                       </div>
                       <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                     </Button>
@@ -329,12 +330,12 @@ export default function CartPage() {
                   <Link href="/catalogue">
                     <Button 
                       variant="outline" 
-                      className="w-full h-12 border-2 border-navy/20 text-navy hover:border-navy hover:bg-navy/5 hover:text-navy font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl group relative overflow-hidden"
+                      className="w-full h-10 sm:h-12 border-2 border-navy/20 text-navy hover:border-navy hover:bg-navy/5 hover:text-navy font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl group relative overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="relative flex items-center justify-center">
-                        <ArrowLeft className="mr-3 h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                        <span>Continue Shopping</span>
+                        <ArrowLeft className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                        <span className="text-sm sm:text-base">Continue Shopping</span>
                       </div>
                     </Button>
                   </Link>
