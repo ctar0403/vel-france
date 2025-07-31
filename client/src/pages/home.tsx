@@ -515,69 +515,69 @@ export default function Home() {
         
         
         <div className="relative">
-          <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
+          <div className="flex animate-marquee space-x-4 sm:space-x-8 lg:space-x-12 items-center">
             {/* First set of brand logos */}
             <div className="flex-shrink-0">
-              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={versaceLogo} alt="Versace" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={versaceLogo} alt="Versace" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={diorLogo} alt="Dior" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={diorLogo} alt="Dior" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={gucciLogo} alt="Gucci" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={gucciLogo} alt="Gucci" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={armaneLogo} alt="Armane" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={armaneLogo} alt="Armane" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={creedLogo} alt="Creed" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={creedLogo} alt="Creed" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={yslLogo} alt="YSL" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={yslLogo} alt="YSL" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={pradaLogo} alt="Prada" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={pradaLogo} alt="Prada" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             
             {/* Duplicate set for seamless loop */}
             <div className="flex-shrink-0">
-              <img src={chanelLogo} alt="Chanel" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={versaceLogo} alt="Versace" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={versaceLogo} alt="Versace" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={diorLogo} alt="Dior" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={diorLogo} alt="Dior" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={gucciLogo} alt="Gucci" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={gucciLogo} alt="Gucci" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={armaneLogo} alt="Armane" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={armaneLogo} alt="Armane" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={creedLogo} alt="Creed" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={creedLogo} alt="Creed" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={yslLogo} alt="YSL" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={yslLogo} alt="YSL" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={pradaLogo} alt="Prada" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={pradaLogo} alt="Prada" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-8 sm:h-12 lg:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>
