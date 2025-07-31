@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Filter, X, Grid, List, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
@@ -504,11 +505,11 @@ export default function Catalogue() {
         className="container mx-auto px-4 py-8"
       >
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          {/* Sidebar Filters */}
+          {/* Desktop Sidebar Filters - Hidden on Mobile */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:w-80 xl:w-96 flex-shrink-0"
+            className="hidden lg:block lg:w-80 xl:w-96 flex-shrink-0"
           >
             <div className="space-y-6">
               {/* Search Section */}
@@ -651,16 +652,201 @@ export default function Catalogue() {
 
           {/* Main Content */}
           <div className="flex-1">
-            {/* Header Controls */}
+            {/* Mobile Filters Row - Visible only on mobile */}
+            <div className="flex lg:hidden items-center gap-3 mb-6">
+              {/* Mobile Filters Button */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2 border-gold/30 hover:border-gold">
+                    <Filter className="h-4 w-4" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <span className="bg-gold text-navy rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                        {activeFiltersCount}
+                      </span>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-80 sm:w-96 overflow-y-auto">
+                  <div className="space-y-6 pt-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-navy">Filters</h3>
+                      {activeFiltersCount > 0 && (
+                        <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-navy hover:text-gold">
+                          Clear All
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Mobile Search Section */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-bold text-navy tracking-wide">Search</h4>
+                        <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
+                      </div>
+                      <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder="Search fragrances..."
+                            value={tempSearchQuery}
+                            onChange={(e) => setTempSearchQuery(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleSearch();
+                              }
+                            }}
+                            className="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-20"
+                          />
+                          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                            {tempSearchQuery && (
+                              <button
+                                onClick={() => {
+                                  setTempSearchQuery("");
+                                  updateFilter('searchQuery', "");
+                                }}
+                                className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                              >
+                                <X className="h-3 w-3 text-gray-400" />
+                              </button>
+                            )}
+                            <Button
+                              onClick={handleSearch}
+                              size="sm"
+                              className="bg-gold hover:bg-deep-gold text-navy font-medium h-7 px-2 text-xs"
+                            >
+                              Go
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile Price Filter */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-bold text-navy tracking-wide">Price Range</h4>
+                        <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
+                      </div>
+                      <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
+                        <div className="space-y-4">
+                          <Slider
+                            value={tempPriceRange}
+                            onValueChange={(value) => setTempPriceRange(value as [number, number])}
+                            onValueCommit={(value) => {
+                              setPriceRangeModified(true);
+                              updateFilter('priceRange', value);
+                            }}
+                            max={priceRange[1]}
+                            min={priceRange[0]}
+                            step={1}
+                            className="w-full"
+                          />
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>₾{tempPriceRange[0]}</span>
+                            <span>₾{tempPriceRange[1]}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile Brand Filter */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-bold text-navy tracking-wide">Brands</h4>
+                        <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
+                      </div>
+                      <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
+                        <ScrollArea className="h-40">
+                          <div className="space-y-2">
+                            {availableBrands.map((brand) => (
+                              <div key={brand} className="flex items-center space-x-2">
+                                <Checkbox
+                                  id={`mobile-brand-${brand}`}
+                                  checked={filters.selectedBrands.includes(brand)}
+                                  onCheckedChange={() => toggleBrand(brand)}
+                                />
+                                <Label htmlFor={`mobile-brand-${brand}`} className="text-sm font-medium cursor-pointer">
+                                  {brand}
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
+                        </ScrollArea>
+                      </div>
+                    </div>
+
+                    {/* Mobile Category Filter */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-bold text-navy tracking-wide">Categories</h4>
+                        <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
+                      </div>
+                      <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
+                        <div className="space-y-2">
+                          {availableCategories.map((category) => (
+                            <div key={category} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`mobile-category-${category}`}
+                                checked={filters.selectedCategories.includes(category)}
+                                onCheckedChange={() => toggleCategory(category)}
+                              />
+                              <Label htmlFor={`mobile-category-${category}`} className="text-sm font-medium cursor-pointer">
+                                {category}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              {/* Mobile Sort Dropdown */}
+              <Select onValueChange={(value) => updateFilter('sortBy', value)} value={filters.sortBy}>
+                <SelectTrigger className="w-32 sm:w-40 border-gold/30 hover:border-gold">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+                  <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                  <SelectItem value="price-asc">Price (Low to High)</SelectItem>
+                  <SelectItem value="price-desc">Price (High to Low)</SelectItem>
+                  <SelectItem value="brand">Brand</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Desktop Header Controls - Hidden on Mobile */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+              className="hidden lg:flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
             >
               <div className="flex flex-col gap-2">
-                
-                
-                
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy mb-2">Catalogue</h1>
+                <p className="text-gray-600 font-roboto">
+                  {isFiltering ? (
+                    <span className="animate-pulse">Filtering...</span>
+                  ) : (
+                    <>
+                      {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                      {activeFiltersCount > 0 && (
+                        <>
+                          {' '}with {activeFiltersCount} active filter{activeFiltersCount !== 1 ? 's' : ''}{' '}
+                          <button 
+                            onClick={clearAllFilters}
+                            className="text-navy hover:text-gold underline font-medium"
+                          >
+                            (clear all)
+                          </button>
+                        </>
+                      )}
+                    </>
+                  )}
+                </p>
               </div>
 
               <div className="flex items-center gap-4">
@@ -677,10 +863,33 @@ export default function Catalogue() {
                     <SelectItem value="brand">Brand</SelectItem>
                   </SelectContent>
                 </Select>
-
-                
               </div>
             </motion.div>
+
+            {/* Mobile Page Title */}
+            <div className="lg:hidden mb-6">
+              <h1 className="text-2xl font-bold text-navy mb-2">Catalogue</h1>
+              <p className="text-gray-600 font-roboto text-sm">
+                {isFiltering ? (
+                  <span className="animate-pulse">Filtering...</span>
+                ) : (
+                  <>
+                    {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                    {activeFiltersCount > 0 && (
+                      <>
+                        {' '}with {activeFiltersCount} active filter{activeFiltersCount !== 1 ? 's' : ''}{' '}
+                        <button 
+                          onClick={clearAllFilters}
+                          className="text-navy hover:text-gold underline font-medium"
+                        >
+                          (clear all)
+                        </button>
+                      </>
+                    )}
+                  </>
+                )}
+              </p>
+            </div>
 
             {/* Active Filters Display */}
             {activeFiltersCount > 0 && (
