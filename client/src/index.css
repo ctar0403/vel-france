@@ -69,7 +69,7 @@ body {
 }
 
 .carousel-item-padding {
-  @apply px-1 sm:px-2 lg:px-3;
+  @apply px-2 sm:px-3 lg:px-4;
 }
 
 /* Responsive arrow positioning */
@@ -85,22 +85,32 @@ body {
 }
 
 /* Mobile-specific improvements */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .carousel-item-padding {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
   
   .react-multi-carousel-arrow {
     min-width: 32px !important;
     min-height: 32px !important;
   }
+  
+  /* Smaller product cards on mobile */
+  .react-multi-carousel-item .max-w-xs {
+    max-width: 160px !important;
+  }
 }
 
-@media (min-width: 641px) and (max-width: 768px) {
+@media (min-width: 769px) {
   .carousel-item-padding {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Ensure proper spacing on desktop */
+  .react-multi-carousel-item .max-w-xs {
+    max-width: 280px !important;
   }
 }
 

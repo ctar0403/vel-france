@@ -106,7 +106,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="flex-shrink-0 w-full max-w-xs sm:max-w-sm lg:max-w-md xl:max-w-lg group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col mx-auto"
+        className="flex-shrink-0 w-full max-w-xs group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col mx-auto"
       >
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -514,33 +514,27 @@ export default function Home() {
               responsive={{
                 superLargeDesktop: {
                   breakpoint: { max: 4000, min: 1536 },
-                  items: 5,
+                  items: 4,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 20
+                  partialVisibilityGutter: 0
                 },
                 desktop: {
                   breakpoint: { max: 1536, min: 1024 },
                   items: 4,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 15
+                  partialVisibilityGutter: 0
                 },
                 tablet: {
                   breakpoint: { max: 1024, min: 768 },
                   items: 3,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 10
+                  partialVisibilityGutter: 0
                 },
                 mobile: {
-                  breakpoint: { max: 768, min: 640 },
+                  breakpoint: { max: 768, min: 0 },
                   items: 2,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 15
-                },
-                smallMobile: {
-                  breakpoint: { max: 640, min: 0 },
-                  items: 1,
-                  slidesToSlide: 1,
-                  partialVisibilityGutter: 30
+                  partialVisibilityGutter: 0
                 }
               }}
               infinite={true}
@@ -548,7 +542,7 @@ export default function Home() {
               customTransition="all 0.5s ease"
               transitionDuration={500}
               containerClass="carousel-container"
-              itemClass="carousel-item-padding px-2 sm:px-3"
+              itemClass="carousel-item-padding"
               centerMode={false}
               arrows={true}
               renderArrowsWhenDisabled={false}
@@ -662,21 +656,27 @@ export default function Home() {
           <div className="carousel-wrapper relative">
             <Carousel
               responsive={{
+                superLargeDesktop: {
+                  breakpoint: { max: 4000, min: 1536 },
+                  items: 4,
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 0
+                },
                 desktop: {
-                  breakpoint: { max: 3000, min: 1024 },
+                  breakpoint: { max: 1536, min: 1024 },
                   items: 4,
                   slidesToSlide: 1,
                   partialVisibilityGutter: 0
                 },
                 tablet: {
-                  breakpoint: { max: 1024, min: 464 },
-                  items: 2,
+                  breakpoint: { max: 1024, min: 768 },
+                  items: 3,
                   slidesToSlide: 1,
                   partialVisibilityGutter: 0
                 },
                 mobile: {
-                  breakpoint: { max: 464, min: 0 },
-                  items: 1,
+                  breakpoint: { max: 768, min: 0 },
+                  items: 2,
                   slidesToSlide: 1,
                   partialVisibilityGutter: 0
                 }
