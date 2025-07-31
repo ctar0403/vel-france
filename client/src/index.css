@@ -177,11 +177,13 @@ body {
 /* Mobile optimizations */
 @media (max-width: 767px) {
   .carousel-item-spacing {
-    padding: 0 10px !important;
+    padding: 0 8px !important;
   }
   
   .carousel-product-card {
     height: 380px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
   }
   
   .carousel-product-card .aspect-square {
@@ -201,6 +203,18 @@ body {
   /* Hide badges on mobile */
   .mobile-hide-badge {
     display: none !important;
+  }
+  
+  /* Ensure proper carousel item display */
+  .react-multi-carousel-item {
+    width: 50% !important;
+    min-width: 50% !important;
+    max-width: 50% !important;
+    display: block !important;
+  }
+  
+  .react-multi-carousel-list {
+    display: flex !important;
   }
 }
 
