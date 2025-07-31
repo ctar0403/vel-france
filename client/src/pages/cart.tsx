@@ -267,15 +267,15 @@ export default function CartPage() {
                         </div>
                       </div>
 
-                      {/* Desktop: Original Layout */}
+                      {/* Desktop: Exact Original Layout */}
                       <div className="hidden sm:flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                        {/* Product Image */}
+                        {/* Luxury Product Image */}
                         <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
                           {item.product.imageUrl ? (
                             <img 
                               src={item.product.imageUrl} 
                               alt={`${item.product.brand} ${item.product.name}`}
-                              className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shadow-sm"
+                              className="w-20 h-20 object-cover rounded-lg shadow-sm"
                             />
                           ) : (
                             <div className="text-center">
@@ -286,7 +286,7 @@ export default function CartPage() {
                           <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
                         </div>
 
-                        {/* Product Details */}
+                        {/* Enhanced Product Details */}
                         <div className="flex-1 min-w-0">
                           <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
                             {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
@@ -312,37 +312,38 @@ export default function CartPage() {
                           </div>
                         </div>
 
-                        {/* Desktop Controls */}
+                        {/* Mobile-responsive controls section */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 w-full">
+                          {/* Quantity and subtotal group */}
                           <div className="flex items-center justify-between sm:justify-start gap-4">
-                            {/* Quantity Controls */}
+                            {/* Sophisticated Quantity Controls */}
                             <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => updateQuantity(item.id, item.quantity - 1)}
                                 disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
-                                className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                                className="h-8 w-8 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
                               >
-                                <Minus className="h-4 w-4" />
+                                <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
                               </Button>
                               <div className="min-w-[2.5rem] text-center">
-                                <span className="font-roboto font-semibold text-navy text-lg">{item.quantity}</span>
+                                <span className="font-roboto font-semibold text-navy text-base sm:text-lg">{item.quantity}</span>
                               </div>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                 disabled={updateQuantityMutation.isPending}
-                                className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                                className="h-8 w-8 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
                               >
-                                <Plus className="h-4 w-4" />
+                                <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
                               </Button>
                             </div>
 
-                            {/* Subtotal */}
+                            {/* Elegant Subtotal */}
                             <div className="text-right">
-                              <p className="font-roboto text-lg lg:text-xl font-bold text-navy mb-1">
+                              <p className="font-roboto text-lg sm:text-xl font-bold text-navy mb-1">
                                 ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
                                   ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
                                   : parseFloat(item.product.price) * item.quantity
@@ -351,15 +352,15 @@ export default function CartPage() {
                             </div>
                           </div>
 
-                          {/* Remove Button */}
+                          {/* Refined Remove Button */}
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
                             disabled={removeItemMutation.isPending}
-                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 self-end sm:self-center"
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-8 w-8 sm:h-10 sm:w-10 p-0 rounded-lg transition-all duration-200 opacity-60 sm:opacity-0 sm:group-hover:opacity-100 self-end sm:self-center"
                           >
-                            <Trash2 className="h-5 w-5" />
+                            <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                           </Button>
                         </div>
                       </div>
