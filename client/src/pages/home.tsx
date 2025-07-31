@@ -455,6 +455,7 @@ export default function Home() {
                   src={banner.image}
                   alt={banner.alt}
                   className="w-full h-full object-cover"
+
                 />
               </div>
             ))}

@@ -8,6 +8,7 @@ import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect, Suspense, lazy } from "react";
 import { optimizeCriticalPath, analyzeBundleSize } from "@/utils/bundleOptimization";
 import { monitorPerformance } from "@/utils/performanceOptimizations";
+import { CriticalResourcePreloader } from "@/components/CriticalResourcePreloader";
 import { PageLoader } from "@/components/Suspense/PageLoader";
 import { PerformanceMetrics } from "@/components/PerformanceMetrics";
 
@@ -104,10 +105,23 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Initialize critical performance optimizations
+    optimizeCriticalPath();
+    analyzeBundleSize();
+    monitorPerformance();
+    
+    // Performance monitoring in development
+    if (process.env.NODE_ENV === "development") {
+      console.log("🚀 Ultra-fast performance mode active");
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
+          <CriticalResourcePreloader />
           <Toaster />
           <Router />
           <MobileBottomNav />
