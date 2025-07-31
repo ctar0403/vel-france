@@ -63,71 +63,72 @@ body {
   }
 }
 
-/* CAROUSEL IMPLEMENTATION - COMPLETE RESET WITH RESEARCH-BASED APPROACH */
+/* SWIPER.JS CAROUSEL IMPLEMENTATION - FULLY RESPONSIVE */
 
-/* Reset all carousel-related styling */
-.react-multi-carousel-list,
-.react-multi-carousel-track {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Base carousel container styling */
-.carousel-container {
+/* Swiper base styling */
+.product-carousel-container {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  padding: 0 60px; /* Space for navigation arrows */
 }
 
-/* Fixed spacing using padding method */
-.carousel-item-spacing {
-  padding: 0 12px !important;
+.product-swiper {
+  width: 100%;
+  padding: 20px 0 50px 0; /* Space for pagination */
 }
 
-/* Product card base styling - consistent dimensions */
-.carousel-product-card {
-  width: 100% !important;
-  height: 400px !important;
+/* Product card styling - consistent and responsive */
+.swiper-product-card {
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  box-sizing: border-box !important;
   overflow: hidden;
-  display: flex !important;
-  flex-direction: column !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Image container with fixed proportions */
-.carousel-product-card .aspect-square {
+.swiper-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image container */
+.swiper-product-card .product-image {
   width: 100%;
-  height: 240px;
+  aspect-ratio: 1;
   overflow: hidden;
   flex-shrink: 0;
 }
 
-.carousel-product-card .aspect-square img {
+.swiper-product-card .product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  transition: transform 0.3s ease;
 }
 
-/* Content container with fixed height */
-.carousel-product-card .mobile-content-height {
-  height: 160px;
+.swiper-product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Content container */
+.swiper-product-card .product-content {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex-grow: 1;
+  min-height: 140px;
 }
 
-/* Typography consistency */
-.carousel-product-card h3 {
+.swiper-product-card .product-title {
   font-size: 14px;
+  font-weight: 500;
+  color: #1a365d;
   line-height: 1.3;
-  margin: 0;
+  margin-bottom: 8px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -135,120 +136,183 @@ body {
   height: 36px;
 }
 
-/* Price styling */
-.carousel-product-card .price-container {
+.swiper-product-card .product-description {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  flex-grow: 1;
+}
+
+.swiper-product-card .product-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #d4af37;
   margin-top: auto;
 }
 
-/* Desktop optimizations */
-@media (min-width: 1024px) {
-  .carousel-item-spacing {
-    padding: 0 16px !important;
-  }
-  
-  .carousel-product-card {
-    height: 420px !important;
-  }
-  
-  .carousel-product-card .aspect-square {
-    height: 260px;
-  }
-  
-  .carousel-product-card h3 {
-    font-size: 15px;
-  }
+.swiper-product-card .product-price.discounted {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Tablet optimizations */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .carousel-item-spacing {
-    padding: 0 14px !important;
-  }
-  
-  .carousel-product-card {
-    height: 400px !important;
-  }
-  
-  .carousel-product-card .aspect-square {
-    height: 240px;
-  }
+.swiper-product-card .original-price {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: normal;
 }
 
-/* Mobile optimizations */
+.swiper-product-card .discount-badge {
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Swiper navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a365d;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #1a365d;
+  border-color: #1a365d;
+}
+
+.swiper-button-next:hover:after,
+.swiper-button-prev:hover:after {
+  color: white;
+}
+
+.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Swiper pagination */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #d1d5db;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #d4af37;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
 @media (max-width: 767px) {
-  .carousel-item-spacing {
-    padding: 0 8px !important;
+  .product-carousel-container {
+    padding: 0 20px;
   }
   
-  .carousel-product-card {
-    height: 380px !important;
-    margin: 0 !important;
-    flex-shrink: 0 !important;
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none; /* Hide arrows on mobile for cleaner look */
   }
   
-  .carousel-product-card .aspect-square {
-    height: 220px;
-  }
-  
-  .carousel-product-card .mobile-content-height {
-    height: 160px;
+  .swiper-product-card .product-content {
     padding: 14px;
+    min-height: 120px;
   }
   
-  .carousel-product-card h3 {
+  .swiper-product-card .product-title {
     font-size: 13px;
-    height: 34px;
+    height: 32px;
   }
   
-  /* Hide badges on mobile */
-  .mobile-hide-badge {
-    display: none !important;
+  .swiper-product-card .product-description {
+    font-size: 11px;
   }
   
-  /* Ensure proper carousel item display */
-  .react-multi-carousel-item {
-    width: 50% !important;
-    min-width: 50% !important;
-    max-width: 50% !important;
-    display: block !important;
-  }
-  
-  .react-multi-carousel-list {
-    display: flex !important;
+  .swiper-product-card .product-price {
+    font-size: 14px;
   }
 }
 
-/* Arrow customization for desktop only */
-@media (min-width: 768px) {
-  .react-multi-carousel-arrow {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-radius: 50% !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    color: #1a365d !important;
-    transition: all 0.2s ease !important;
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-carousel-container {
+    padding: 0 50px;
   }
   
-  .react-multi-carousel-arrow:hover {
-    background: white !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  }
-  
-  .react-multi-carousel-arrow--left {
-    left: -22px !important;
-  }
-  
-  .react-multi-carousel-arrow--right {
-    right: -22px !important;
+  .swiper-product-card .product-content {
+    padding: 15px;
   }
 }
 
-/* Ensure proper track alignment */
-.react-multi-carousel-item {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: stretch !important;
+@media (min-width: 1024px) {
+  .swiper-product-card .product-title {
+    font-size: 15px;
+    height: 38px;
+  }
+  
+  .swiper-product-card .product-description {
+    font-size: 13px;
+  }
+  
+  .swiper-product-card .product-price {
+    font-size: 17px;
+  }
+}
+
+/* Swiper slide spacing */
+.product-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+/* Add to cart button styling */
+.swiper-product-card .add-to-cart-btn {
+  background: #1a365d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 8px;
+}
+
+.swiper-product-card .add-to-cart-btn:hover {
+  background: #2d4a6b;
+}
+
+.swiper-product-card .add-to-cart-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
 }
 
 /* Admin panel responsive improvements */

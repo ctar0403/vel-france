@@ -11,46 +11,17 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 
-// Custom arrow components that filter out carousel-specific props
-const CustomLeftArrow = ({ onClick, ...rest }: any) => {
-  // Filter out carousel-specific props to avoid React warnings
-  const { carouselState, rtl, ...buttonProps } = rest;
-  return (
-    <button
-      {...buttonProps}
-      onClick={onClick}
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg border border-gray-200 transition-all duration-200 flex items-center justify-center"
-      aria-label="Previous products"
-    >
-      <ChevronLeft className="h-5 w-5 text-gray-600" />
-    </button>
-  );
-};
 
-const CustomRightArrow = ({ onClick, ...rest }: any) => {
-  // Filter out carousel-specific props to avoid React warnings
-  const { carouselState, rtl, ...buttonProps } = rest;
-  return (
-    <button
-      {...buttonProps}
-      onClick={onClick}
-      className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg border border-gray-200 transition-all duration-200 flex items-center justify-center"
-      aria-label="Next products"
-    >
-      <ChevronRight className="h-5 w-5 text-gray-600" />
-    </button>
-  );
-};
 
 import Header from "@/components/Header";
+import ProductCarousel from "../components/ProductCarousel";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import CartSidebar from "@/components/CartSidebar";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+
 import banner1 from "@assets/1_1753538704078.png";
 import banner2 from "@assets/2_1753538710752.png";
 import banner3 from "@assets/3_1753538715604.png";
@@ -528,60 +499,15 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
           </motion.div>
 
-          <div className="carousel-wrapper relative">
-            <Carousel
-              responsive={{
-                superLargeDesktop: {
-                  breakpoint: { max: 4000, min: 1536 },
-                  items: 4,
-                  slidesToSlide: 1,
-                  partialVisibilityGutter: 0
-                },
-                desktop: {
-                  breakpoint: { max: 1536, min: 1024 },
-                  items: 4,
-                  slidesToSlide: 1,
-                  partialVisibilityGutter: 0
-                },
-                tablet: {
-                  breakpoint: { max: 1023, min: 768 },
-                  items: 3,
-                  slidesToSlide: 1
-                },
-                mobile: {
-                  breakpoint: { max: 767, min: 0 },
-                  items: 2,
-                  slidesToSlide: 1
-                }
-              }}
-              removeArrowOnDeviceType={["mobile"]}
-              infinite={true}
-              keyBoardControl={true}
-              customTransition="transform 300ms ease-in-out"
-              transitionDuration={300}
-              containerClass="carousel-container"
-              itemClass="carousel-item-spacing"
-              swipeable={true}
-              draggable={false}
-              showDots={false}
-              partialVisible={false}
-              customLeftArrow={<CustomLeftArrow />}
-              customRightArrow={<CustomRightArrow />}
-            >
-              {mostSoldProducts.map((product, index) => (
-                <div key={product.id} className="flex justify-center items-center">
-                  <CarouselProductCard 
-                    product={product} 
-                    index={index} 
-                    badgeText={`#${index + 1} Bestseller`}
-                    badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </div>
+          <ProductCarousel
+            products={mostSoldProducts}
+            title="Most Sold"
+            showBadges={true}
+            badgeText={(index) => `#${index + 1} Bestseller`}
+            badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            isAddingToCart={addToCartMutation.isPending}
+          />
         </div>
       </section>
       {/* Brand Logos Auto-Moving Carousel */}
@@ -671,60 +597,15 @@ export default function Home() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
           </motion.div>
 
-          <div className="carousel-wrapper relative">
-            <Carousel
-              responsive={{
-                superLargeDesktop: {
-                  breakpoint: { max: 4000, min: 1536 },
-                  items: 4,
-                  slidesToSlide: 1,
-                  partialVisibilityGutter: 0
-                },
-                desktop: {
-                  breakpoint: { max: 1536, min: 1024 },
-                  items: 4,
-                  slidesToSlide: 1,
-                  partialVisibilityGutter: 0
-                },
-                tablet: {
-                  breakpoint: { max: 1023, min: 768 },
-                  items: 3,
-                  slidesToSlide: 1
-                },
-                mobile: {
-                  breakpoint: { max: 767, min: 0 },
-                  items: 2,
-                  slidesToSlide: 1
-                }
-              }}
-              removeArrowOnDeviceType={["mobile"]}
-              infinite={true}
-              keyBoardControl={true}
-              customTransition="transform 300ms ease-in-out"
-              transitionDuration={300}
-              containerClass="carousel-container"
-              itemClass="carousel-item-spacing"
-              swipeable={true}
-              draggable={false}
-              showDots={false}
-              partialVisible={false}
-              customLeftArrow={<CustomLeftArrow />}
-              customRightArrow={<CustomRightArrow />}
-            >
-              {newArrivalsProducts.slice(0, 12).map((product, index) => (
-                <div key={product.id} className="flex justify-center items-center">
-                  <CarouselProductCard 
-                    product={product} 
-                    index={index} 
-                    badgeText="New Arrival"
-                    badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-                    onAddToCart={() => addToCartMutation.mutate(product.id)}
-                    isPending={addToCartMutation.isPending}
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </div>
+          <ProductCarousel
+            products={newArrivalsProducts.slice(0, 12)}
+            title="New Arrivals"
+            showBadges={true}
+            badgeText={() => "New Arrival"}
+            badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            isAddingToCart={addToCartMutation.isPending}
+          />
         </div>
       </section>
       <Footer />
