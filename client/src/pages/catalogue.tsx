@@ -667,7 +667,7 @@ export default function Catalogue() {
                     )}
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-80 sm:w-96 overflow-y-auto">
+                <SheetContent side="left" className="w-80 sm:w-96 overflow-y-auto" onOpenAutoFocus={(e) => e.preventDefault()}>
                   <div className="space-y-6 pt-6">
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg font-bold text-navy">Filters</h3>
@@ -697,6 +697,7 @@ export default function Catalogue() {
                                 handleSearch();
                               }
                             }}
+                            autoFocus={false}
                             className="flex h-10 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-20"
                           />
                           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
