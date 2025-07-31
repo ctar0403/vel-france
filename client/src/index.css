@@ -90,8 +90,8 @@ body {
 /* Fixed size product cards */
 .carousel-product-card {
   width: 100% !important;
-  min-height: 400px !important;
-  max-height: 400px !important;
+  min-height: 350px !important;
+  max-height: 350px !important;
 }
 
 /* Mobile-specific improvements */
@@ -111,8 +111,16 @@ body {
   }
   
   .carousel-product-card {
-    min-height: 320px !important;
-    max-height: 320px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+  }
+}
+
+/* Medium mobile screens */
+@media (min-width: 480px) and (max-width: 768px) {
+  .carousel-product-card {
+    min-height: 300px !important;
+    max-height: 300px !important;
   }
 }
 

@@ -194,9 +194,9 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           </motion.div>
         </div>
         {/* Fixed Height Content Container */}
-        <div className="p-4 flex flex-col justify-between h-[120px]">
+        <div className="p-3 sm:p-4 flex flex-col justify-between h-[100px] sm:h-[120px]">
           <div className="flex-1 flex flex-col justify-center">
-            <h3 className="text-sm text-navy leading-tight line-clamp-2 mb-2 font-normal min-h-[32px] flex items-center">
+            <h3 className="text-xs sm:text-sm text-navy leading-tight line-clamp-2 mb-1 sm:mb-2 font-normal min-h-[24px] sm:min-h-[32px] flex items-center">
               {formatProductName(product.name, product.brand)}
             </h3>
           </div>
@@ -204,11 +204,11 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           <div className="flex flex-col gap-1 mt-auto">
             {product.discountPercentage && product.discountPercentage > 0 ? (
               <>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gold font-normal">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="text-xs sm:text-sm text-gold font-normal">
                     ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
                   </span>
-                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                  <span className="text-xs bg-red-500 text-white px-1 sm:px-2 py-0.5 sm:py-1 rounded-full font-medium">
                     -{product.discountPercentage}%
                   </span>
                 </div>
@@ -217,7 +217,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
                 </span>
               </>
             ) : (
-              <span className="text-sm text-gold font-normal">
+              <span className="text-xs sm:text-sm text-gold font-normal">
                 ₾{parseFloat(product.price.toString()).toFixed(2)}
               </span>
             )}
