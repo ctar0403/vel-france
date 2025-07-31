@@ -107,7 +107,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink pb-20 sm:pb-0">
+    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink sm:pb-0 pt-[0px] pb-[0px]">
       {/* Optimized Mobile Header */}
       <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
@@ -130,7 +130,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-
       <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-12">
         {cartItems.length === 0 ? (
           <motion.div
