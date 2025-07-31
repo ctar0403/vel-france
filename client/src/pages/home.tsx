@@ -212,17 +212,15 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
           </motion.div>
         </div>
         {/* Fixed Height Content Container */}
-        <div className="p-4 flex flex-col justify-between h-[120px] mobile-content-height">
-          <div className="flex-1 flex flex-col justify-center">
-            <h3 className="text-sm text-navy leading-tight line-clamp-2 mb-2 font-normal min-h-[32px] flex items-center">
-              {formatProductName(product.name, product.brand)}
-            </h3>
-          </div>
+        <div className="mobile-content-height">
+          <h3>
+            {formatProductName(product.name, product.brand)}
+          </h3>
 
-          <div className="flex flex-col gap-1 mt-auto">
+          <div className="price-container">
             {product.discountPercentage && product.discountPercentage > 0 ? (
               <>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mb-1">
                   <span className="text-sm text-gold font-normal">
                     ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
                   </span>
@@ -563,8 +561,8 @@ export default function Home() {
               keyBoardControl={true}
               customTransition="transform 300ms ease-in-out"
               transitionDuration={300}
-              containerClass="most-sold-carousel"
-              itemClass="most-sold-item"
+              containerClass="carousel-container"
+              itemClass="carousel-item-spacing"
               swipeable={true}
               draggable={false}
               showDots={false}
@@ -708,8 +706,8 @@ export default function Home() {
               keyBoardControl={true}
               customTransition="transform 300ms ease-in-out"
               transitionDuration={300}
-              containerClass="new-arrivals-carousel"
-              itemClass="new-arrivals-item"
+              containerClass="carousel-container"
+              itemClass="carousel-item-spacing"
               swipeable={true}
               draggable={false}
               showDots={false}

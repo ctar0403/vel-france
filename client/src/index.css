@@ -63,106 +63,178 @@ body {
   }
 }
 
-/* CAROUSEL STYLES - PROPERLY RESEARCHED IMPLEMENTATION */
+/* CAROUSEL IMPLEMENTATION - COMPLETE RESET WITH RESEARCH-BASED APPROACH */
 
-/* Base carousel containers with fixed gaps */
-.most-sold-carousel {
-  margin: 0 -10px;
+/* Reset all carousel-related styling */
+.react-multi-carousel-list,
+.react-multi-carousel-track {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.most-sold-item {
-  padding: 0 10px !important;
+/* Base carousel container styling */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-.new-arrivals-carousel {
-  margin: 0 -10px;
+/* Fixed spacing using padding method */
+.carousel-item-spacing {
+  padding: 0 12px !important;
 }
 
-.new-arrivals-item {
-  padding: 0 10px !important;
-}
-
-/* Product card consistent sizing */
+/* Product card base styling - consistent dimensions */
 .carousel-product-card {
   width: 100% !important;
   height: 400px !important;
+  background: white;
+  border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-sizing: border-box !important;
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-.carousel-product-card img {
+/* Image container with fixed proportions */
+.carousel-product-card .aspect-square {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 240px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
+.carousel-product-card .aspect-square img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content container with fixed height */
 .carousel-product-card .mobile-content-height {
-  height: 200px;
+  height: 160px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
-/* Desktop and large screens */
-@media (min-width: 1025px) {
-  .most-sold-carousel,
-  .new-arrivals-carousel {
-    margin: 0 -15px;
-  }
-  
-  .most-sold-item,
-  .new-arrivals-item {
-    padding: 0 15px !important;
+/* Typography consistency */
+.carousel-product-card h3 {
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 36px;
+}
+
+/* Price styling */
+.carousel-product-card .price-container {
+  margin-top: auto;
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+  .carousel-item-spacing {
+    padding: 0 16px !important;
   }
   
   .carousel-product-card {
     height: 420px !important;
   }
-}
-
-/* Tablet screens */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .most-sold-carousel,
-  .new-arrivals-carousel {
-    margin: 0 -12px;
+  
+  .carousel-product-card .aspect-square {
+    height: 260px;
   }
   
-  .most-sold-item,
-  .new-arrivals-item {
-    padding: 0 12px !important;
+  .carousel-product-card h3 {
+    font-size: 15px;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .carousel-item-spacing {
+    padding: 0 14px !important;
   }
   
   .carousel-product-card {
     height: 400px !important;
   }
+  
+  .carousel-product-card .aspect-square {
+    height: 240px;
+  }
 }
 
-/* Mobile screens - proper implementation */
-@media (max-width: 768px) {
-  .most-sold-carousel,
-  .new-arrivals-carousel {
-    margin: 0 -8px !important;
-  }
-  
-  .most-sold-item,
-  .new-arrivals-item {
-    padding: 0 8px !important;
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  .carousel-item-spacing {
+    padding: 0 10px !important;
   }
   
   .carousel-product-card {
-    height: 450px !important;
+    height: 380px !important;
+  }
+  
+  .carousel-product-card .aspect-square {
+    height: 220px;
   }
   
   .carousel-product-card .mobile-content-height {
-    height: 250px !important;
-    padding: 16px !important;
+    height: 160px;
+    padding: 14px;
   }
   
-  /* Hide badges on mobile properly */
+  .carousel-product-card h3 {
+    font-size: 13px;
+    height: 34px;
+  }
+  
+  /* Hide badges on mobile */
   .mobile-hide-badge {
     display: none !important;
   }
+}
+
+/* Arrow customization for desktop only */
+@media (min-width: 768px) {
+  .react-multi-carousel-arrow {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 50% !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    color: #1a365d !important;
+    transition: all 0.2s ease !important;
+  }
+  
+  .react-multi-carousel-arrow:hover {
+    background: white !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  .react-multi-carousel-arrow--left {
+    left: -22px !important;
+  }
+  
+  .react-multi-carousel-arrow--right {
+    right: -22px !important;
+  }
+}
+
+/* Ensure proper track alignment */
+.react-multi-carousel-item {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
 }
 
 /* Admin panel responsive improvements */
