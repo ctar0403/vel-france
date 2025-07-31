@@ -177,21 +177,12 @@ body {
   
   /* Mobile adjustments for content container */
   .swiper-product-card .p-6 {
-    padding: 10px !important;
-    min-height: 80px !important;
+    padding: 12px !important;
+    min-height: 100px !important;
   }
   
   .swiper-product-card .text-lg {
-    font-size: 12px !important;
-    line-height: 1.2 !important;
-  }
-  
-  .swiper-product-card .text-base {
-    font-size: 13px !important;
-  }
-  
-  .swiper-product-card .text-sm {
-    font-size: 11px !important;
+    font-size: 14px !important;
   }
 }
 
