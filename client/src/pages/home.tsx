@@ -106,7 +106,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="flex-shrink-0 w-80 group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+        className="flex-shrink-0 w-full max-w-xs sm:max-w-sm lg:max-w-md xl:max-w-lg group relative bg-white rounded-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col mx-auto"
       >
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -430,7 +430,7 @@ export default function Home() {
         isLoading={cartLoading}
       />
       {/* Welcome Section */}
-      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '1024/400' }}>
+      <section className="relative w-full overflow-hidden h-[40vh] sm:h-[50vh] lg:h-[60vh] xl:h-[70vh]">
         {/* Slideshow Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <div 
@@ -512,23 +512,35 @@ export default function Home() {
           <div className="carousel-wrapper relative">
             <Carousel
               responsive={{
+                superLargeDesktop: {
+                  breakpoint: { max: 4000, min: 1536 },
+                  items: 5,
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 20
+                },
                 desktop: {
-                  breakpoint: { max: 3000, min: 1024 },
+                  breakpoint: { max: 1536, min: 1024 },
                   items: 4,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 0
+                  partialVisibilityGutter: 15
                 },
                 tablet: {
-                  breakpoint: { max: 1024, min: 464 },
-                  items: 2,
+                  breakpoint: { max: 1024, min: 768 },
+                  items: 3,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 0
+                  partialVisibilityGutter: 10
                 },
                 mobile: {
-                  breakpoint: { max: 464, min: 0 },
+                  breakpoint: { max: 768, min: 640 },
+                  items: 2,
+                  slidesToSlide: 1,
+                  partialVisibilityGutter: 15
+                },
+                smallMobile: {
+                  breakpoint: { max: 640, min: 0 },
                   items: 1,
                   slidesToSlide: 1,
-                  partialVisibilityGutter: 0
+                  partialVisibilityGutter: 30
                 }
               }}
               infinite={true}
@@ -536,7 +548,7 @@ export default function Home() {
               customTransition="all 0.5s ease"
               transitionDuration={500}
               containerClass="carousel-container"
-              itemClass="carousel-item-padding"
+              itemClass="carousel-item-padding px-2 sm:px-3"
               centerMode={false}
               arrows={true}
               renderArrowsWhenDisabled={false}
@@ -565,10 +577,10 @@ export default function Home() {
         
         
         <div className="relative">
-          <div className="flex animate-marquee space-x-16 items-center">
+          <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
             {/* First set of brand logos */}
             <div className="flex-shrink-0">
-              <img src={chanelLogo} alt="Chanel" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0">
               <img src={versaceLogo} alt="Versace" className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />

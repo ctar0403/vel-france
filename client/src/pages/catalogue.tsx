@@ -73,7 +73,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
       <motion.div
         onHoverStart={() => setIsCardHovered(true)}
         onHoverEnd={() => setIsCardHovered(false)}
-        className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col"
+        className="group relative bg-white rounded-2xl border border-gold/10 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full flex flex-col w-full max-w-sm mx-auto"
       >
       {/* Fixed Height Image Container */}
       <div className="aspect-square relative overflow-hidden flex-shrink-0">
@@ -503,12 +503,12 @@ export default function Catalogue() {
         animate={{ opacity: 1, y: 0 }}
         className="container mx-auto px-4 py-8"
       >
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Sidebar Filters */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:w-80 flex-shrink-0"
+            className="lg:w-80 xl:w-96 flex-shrink-0"
           >
             <div className="space-y-6">
               {/* Search Section */}
@@ -517,7 +517,7 @@ export default function Catalogue() {
                   <h4 className="text-lg font-bold text-navy tracking-wide">Discover Perfumes</h4>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
-                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
+                <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 sm:p-6 border border-[#00000088] shadow-sm">
                   <div className="space-y-4">
                     <div className="relative">
                       <input
@@ -764,7 +764,7 @@ export default function Catalogue() {
               ) : (
                 <div
                   className={filters.viewMode === 'grid' 
-                    ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
+                    ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6" 
                     : "space-y-4"
                   }
                 >

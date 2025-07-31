@@ -45,7 +45,7 @@ function OrderDetailsDialog({ isOpen, onOpenChange, order }: OrderDetailsDialogP
 
         <div className="space-y-6">
           {/* Order Status and Basic Info */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <Card>
               <CardContent className="pt-4">
                 <div className="text-center">
@@ -97,7 +97,7 @@ function OrderDetailsDialog({ isOpen, onOpenChange, order }: OrderDetailsDialogP
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium text-gray-600">Customer Name</Label>
                   <p className="text-gray-900 font-medium">
@@ -741,7 +741,7 @@ export default function Admin() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="rounded-md border">
+                <div className="rounded-md border admin-table-container">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -923,7 +923,7 @@ export default function Admin() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="rounded-md border">
+                <div className="rounded-md border admin-table-container">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1010,7 +1010,7 @@ export default function Admin() {
 
           <TabsContent value="orders" className="space-y-6">
             {/* Order Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-center space-x-2">
@@ -1091,7 +1091,7 @@ export default function Admin() {
                     No orders found
                   </div>
                 ) : (
-                  <div className="rounded-md border">
+                  <div className="rounded-md border admin-table-container">
                     <Table>
                       <TableHeader>
                         <TableRow>

@@ -227,7 +227,7 @@ function ProductDetailPage() {
         </motion.div>
 
         {/* Product Layout */}
-        <div className="grid lg:grid-cols-2 gap-16 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
           {/* Product Images Gallery */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -260,7 +260,7 @@ function ProductDetailPage() {
               <div className="flex items-start justify-between">
                 <div>
                   
-                  <h1 className="text-4xl font-bold text-navy leading-tight">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy leading-tight">
                     {product.brand && !product.name.toLowerCase().includes(product.brand.toLowerCase()) 
                       ? `${product.brand} – ${product.name}` 
                       : product.name}
@@ -276,20 +276,20 @@ function ProductDetailPage() {
               <div className="space-y-2">
                 {product.discountPercentage && product.discountPercentage > 0 ? (
                   <>
-                    <div className="flex items-center gap-4">
-                      <div className="text-4xl font-bold text-navy">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy">
                         ₾{(parseFloat(product.price) * (1 - product.discountPercentage / 100)).toFixed(2)}
                       </div>
-                      <span className="text-lg bg-red-500 text-white px-3 py-1 rounded-full font-medium">
+                      <span className="text-sm sm:text-lg bg-red-500 text-white px-3 py-1 rounded-full font-medium self-start sm:self-center">
                         -{product.discountPercentage}% OFF
                       </span>
                     </div>
-                    <div className="text-2xl text-gray-500 line-through">
+                    <div className="text-lg sm:text-xl lg:text-2xl text-gray-500 line-through">
                       ₾{parseFloat(product.price).toFixed(2)}
                     </div>
                   </>
                 ) : (
-                  <div className="text-4xl font-bold text-navy">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy">
                     ₾{parseFloat(product.price).toFixed(2)}
                   </div>
                 )}

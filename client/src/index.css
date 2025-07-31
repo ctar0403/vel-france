@@ -63,6 +63,102 @@ body {
   }
 }
 
+/* Responsive carousel improvements */
+.carousel-container {
+  @apply px-2 sm:px-4 lg:px-6;
+}
+
+.carousel-item-padding {
+  @apply px-1 sm:px-2 lg:px-3;
+}
+
+/* Responsive arrow positioning */
+.react-multi-carousel-list {
+  position: relative;
+}
+
+.react-multi-carousel-item {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .carousel-item-padding {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+  
+  .react-multi-carousel-arrow {
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .carousel-item-padding {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Admin panel responsive improvements */
+.admin-table-container {
+  @apply overflow-x-auto;
+}
+
+.admin-table-container table {
+  @apply min-w-full;
+}
+
+@media (max-width: 768px) {
+  .admin-table-container table th,
+  .admin-table-container table td {
+    @apply px-2 py-3 text-sm;
+  }
+  
+  .admin-grid-responsive {
+    @apply grid-cols-1 gap-4;
+  }
+  
+  .admin-dialog-content {
+    @apply mx-4 max-w-none;
+  }
+}
+
+@media (min-width: 769px) {
+  .admin-grid-responsive {
+    @apply grid-cols-2 gap-6;
+  }
+}
+
+/* Cart responsive improvements */
+@media (max-width: 640px) {
+  .cart-item-container {
+    @apply flex-col space-y-4;
+  }
+  
+  .cart-controls-mobile {
+    @apply flex-row justify-between w-full;
+  }
+}
+
+/* Product detail responsive */
+@media (max-width: 1023px) {
+  .product-detail-grid {
+    @apply grid-cols-1 gap-8;
+  }
+}
+
+/* Filter sidebar responsive */
+@media (max-width: 1023px) {
+  .filter-sidebar {
+    @apply w-full mb-6;
+  }
+}
+
 :root {
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(217, 30%, 18%);

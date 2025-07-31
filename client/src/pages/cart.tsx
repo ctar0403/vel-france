@@ -155,10 +155,10 @@ export default function CartPage() {
             </Link>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-12">
             {/* Luxury Cart Items */}
             <div className="xl:col-span-2">
-              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-8">
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-6 lg:p-8">
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="font-roboto text-2xl font-light text-navy tracking-wide">Your Selection</h2>
                   <div className="bg-gradient-to-r from-navy/10 to-gold/10 px-4 py-2 rounded-full">
@@ -174,9 +174,9 @@ export default function CartPage() {
                       transition={{ delay: index * 0.1 }}
                       className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-2xl border border-gold/20 p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
                     >
-                      <div className="flex items-center gap-6">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                         {/* Luxury Product Image */}
-                        <div className="relative w-24 h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300">
+                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
                           {item.product.imageUrl ? (
                             <img 
                               src={item.product.imageUrl} 
@@ -218,51 +218,57 @@ export default function CartPage() {
                           </div>
                         </div>
 
-                        {/* Sophisticated Quantity Controls */}
-                        <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
-                            className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <div className="min-w-[3rem] text-center">
-                            <span className="font-roboto font-semibold text-navy text-lg">{item.quantity}</span>
+                        {/* Mobile-responsive controls section */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 w-full">
+                          {/* Quantity and subtotal group */}
+                          <div className="flex items-center justify-between sm:justify-start gap-4">
+                            {/* Sophisticated Quantity Controls */}
+                            <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
+                                className="h-8 w-8 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                              >
+                                <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              </Button>
+                              <div className="min-w-[2.5rem] text-center">
+                                <span className="font-roboto font-semibold text-navy text-base sm:text-lg">{item.quantity}</span>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                disabled={updateQuantityMutation.isPending}
+                                className="h-8 w-8 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                              >
+                                <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              </Button>
+                            </div>
+
+                            {/* Elegant Subtotal */}
+                            <div className="text-right">
+                              <p className="font-roboto text-lg sm:text-xl font-bold text-navy mb-1">
+                                ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                                  ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                                  : parseFloat(item.product.price) * item.quantity
+                                ).toFixed(2)}
+                              </p>
+                            </div>
                           </div>
+
+                          {/* Refined Remove Button */}
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            disabled={updateQuantityMutation.isPending}
-                            className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                            onClick={() => removeItem(item.id)}
+                            disabled={removeItemMutation.isPending}
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-8 w-8 sm:h-10 sm:w-10 p-0 rounded-lg transition-all duration-200 opacity-60 sm:opacity-0 sm:group-hover:opacity-100 self-end sm:self-center"
                           >
-                            <Plus className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                           </Button>
                         </div>
-
-                        {/* Elegant Subtotal */}
-                        <div className="text-right min-w-[100px]">
-                          <p className="font-roboto text-xl font-bold text-navy mb-1">
-                            ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
-                              ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
-                              : parseFloat(item.product.price) * item.quantity
-                            ).toFixed(2)}
-                          </p>
-                        </div>
-
-                        {/* Refined Remove Button */}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeItem(item.id)}
-                          disabled={removeItemMutation.isPending}
-                          className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
-                        >
-                          <Trash2 className="h-5 w-5" />
-                        </Button>
                       </div>
                       
                       {/* Subtle bottom accent */}
