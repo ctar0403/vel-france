@@ -96,31 +96,40 @@ body {
 
 /* Mobile-specific improvements */
 @media (max-width: 768px) {
+  .carousel-container {
+    @apply px-4 max-w-screen-sm mx-auto;
+  }
+  
   .react-multi-carousel-list {
-    margin-left: -8px;
-    margin-right: -8px;
+    margin-left: -12px;
+    margin-right: -12px;
   }
   
   .react-multi-carousel-item {
-    padding: 0 8px !important;
+    padding: 0 12px !important;
   }
   
+  /* Hide arrows on mobile */
   .react-multi-carousel-arrow {
-    min-width: 32px !important;
-    min-height: 32px !important;
+    display: none !important;
   }
   
   .carousel-product-card {
-    min-height: 280px !important;
-    max-height: 280px !important;
+    min-height: 340px !important;
+    max-height: 340px !important;
+  }
+  
+  /* Hide badges on mobile */
+  .mobile-hide-badge {
+    display: none !important;
   }
 }
 
 /* Medium mobile screens */
 @media (min-width: 480px) and (max-width: 768px) {
   .carousel-product-card {
-    min-height: 300px !important;
-    max-height: 300px !important;
+    min-height: 360px !important;
+    max-height: 360px !important;
   }
 }
 
