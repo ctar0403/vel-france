@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect, Suspense, lazy } from "react";
+import { optimizeCriticalPath, analyzeBundleSize } from "@/utils/bundleOptimization";
+import { monitorPerformance } from "@/utils/performanceOptimizations";
 import { PageLoader } from "@/components/Suspense/PageLoader";
 import { PerformanceMetrics } from "@/components/PerformanceMetrics";
 

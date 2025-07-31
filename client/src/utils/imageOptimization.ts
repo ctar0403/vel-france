@@ -1,103 +1,53 @@
-// Image optimization utilities
-
-interface ImageOptimizationOptions {
-  width?: number;
-  height?: number;
-  quality?: number;
-  format?: 'webp' | 'jpeg' | 'png';
-  blur?: boolean;
-}
-
-// Generate optimized image URLs (placeholder for actual CDN integration)
-export const getOptimizedImageUrl = (
-  originalUrl: string, 
-  options: ImageOptimizationOptions = {}
+// Image optimization utilities for performance
+export const getOptimizedImageSrc = (
+  src: string, 
+  width?: number, 
+  format: 'webp' | 'avif' | 'auto' = 'auto'
 ): string => {
-  if (!originalUrl || originalUrl.includes('/placeholder')) {
-    return originalUrl;
-  }
-
-  // For future CDN integration, you would build query parameters here
-  // Example: return `${originalUrl}?w=${width}&h=${height}&q=${quality}&f=${format}`;
+  if (!src) return src;
   
-  return originalUrl;
+  // For production, implement actual image optimization
+  // This would typically involve a CDN or image service
+  const baseUrl = src;
+  
+  // Add width parameter for responsive images
+  if (width) {
+    const url = new URL(baseUrl, window.location.origin);
+    url.searchParams.set('w', width.toString());
+    if (format !== 'auto') {
+      url.searchParams.set('f', format);
+    }
+    return url.toString();
+  }
+  
+  return baseUrl;
 };
 
-// Generate responsive image srcSet
-export const generateSrcSet = (originalUrl: string, widths: number[]): string => {
-  if (!originalUrl || originalUrl.includes('/placeholder')) {
-    return originalUrl;
-  }
-
-  return widths
-    .map(width => `${getOptimizedImageUrl(originalUrl, { width })} ${width}w`)
+export const generateImageSrcSet = (src: string, sizes: number[]): string => {
+  return sizes
+    .map(size => `${getOptimizedImageSrc(src, size)} ${size}w`)
     .join(', ');
 };
 
-// Convert image to WebP format if supported
-export const getWebPUrl = (originalUrl: string): string => {
-  if (!originalUrl || originalUrl.includes('/placeholder')) {
-    return originalUrl;
-  }
-
-  // Check if browser supports WebP
-  const supportsWebP = (() => {
-    const canvas = document.createElement('canvas');
-    return canvas.toDataURL('image/webp').indexOf('image/webp') === 5;
-  })();
-
-  if (supportsWebP) {
-    // In a real implementation, you'd convert or request WebP version
-    return originalUrl;
-  }
-
-  return originalUrl;
-};
-
-// Preload critical images
-export const preloadImage = (src: string, crossOrigin?: string): Promise<void> => {
+export const getImageDimensions = (src: string): Promise<{ width: number; height: number }> => {
   return new Promise((resolve, reject) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = src;
-    if (crossOrigin) link.crossOrigin = crossOrigin;
-
-    link.onload = () => resolve();
-    link.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
-
-    document.head.appendChild(link);
+    const img = new Image();
+    img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    img.onerror = reject;
+    img.src = src;
   });
 };
 
-// Lazy load images with Intersection Observer
-export const createImageObserver = (
-  callback: (entry: IntersectionObserverEntry) => void,
-  options: IntersectionObserverInit = {}
-): IntersectionObserver => {
-  const defaultOptions: IntersectionObserverInit = {
-    rootMargin: '50px 0px',
-    threshold: 0.01,
-    ...options,
-  };
-
-  return new IntersectionObserver((entries) => {
-    entries.forEach(callback);
-  }, defaultOptions);
-};
-
-// Get optimal image dimensions based on device
-export const getOptimalImageSize = (
-  originalWidth: number,
-  originalHeight: number,
-  maxWidth: number = 800
-): { width: number; height: number } => {
-  const devicePixelRatio = window.devicePixelRatio || 1;
-  const targetWidth = Math.min(maxWidth * devicePixelRatio, originalWidth);
-  const aspectRatio = originalHeight / originalWidth;
+// Preload critical images
+export const preloadImage = (src: string, priority: 'high' | 'low' = 'high') => {
+  if (typeof document === 'undefined') return;
   
-  return {
-    width: Math.round(targetWidth),
-    height: Math.round(targetWidth * aspectRatio),
-  };
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = src;
+  if (priority === 'high') {
+    link.setAttribute('fetchpriority', 'high');
+  }
+  document.head.appendChild(link);
 };

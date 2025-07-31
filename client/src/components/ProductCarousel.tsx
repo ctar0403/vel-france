@@ -79,8 +79,7 @@ const ProductCarousel = memo<ProductCarouselProps>(({
       768: { slidesPerView: 3, spaceBetween: 25 },
       1024: { slidesPerView: 4, spaceBetween: 30 },
     },
-    lazy: true,
-    preloadImages: false,
+    // Remove invalid props that cause React warnings
     watchSlidesProgress: true,
   }), [autoplay]);
 
