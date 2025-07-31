@@ -558,15 +558,16 @@ export default function Home() {
                   partialVisibilityGutter: 0
                 }
               }}
+              removeArrowOnDeviceType={["mobile"]}
               infinite={true}
               keyBoardControl={true}
-              customTransition="all 0.5s ease"
-              transitionDuration={500}
-              containerClass="carousel-container"
-              itemClass="carousel-item-padding"
-              centerMode={false}
-              arrows={true}
-              renderArrowsWhenDisabled={false}
+              customTransition="transform 300ms ease-in-out"
+              transitionDuration={300}
+              containerClass="most-sold-carousel"
+              itemClass="most-sold-item"
+              swipeable={true}
+              draggable={false}
+              showDots={false}
               partialVisible={false}
               customLeftArrow={<CustomLeftArrow />}
               customRightArrow={<CustomRightArrow />}
@@ -702,15 +703,16 @@ export default function Home() {
                   partialVisibilityGutter: 0
                 }
               }}
+              removeArrowOnDeviceType={["mobile"]}
               infinite={true}
               keyBoardControl={true}
-              customTransition="all 0.5s ease"
-              transitionDuration={500}
-              containerClass="carousel-container"
-              itemClass="carousel-item-padding"
-              centerMode={false}
-              arrows={true}
-              renderArrowsWhenDisabled={false}
+              customTransition="transform 300ms ease-in-out"
+              transitionDuration={300}
+              containerClass="new-arrivals-carousel"
+              itemClass="new-arrivals-item"
+              swipeable={true}
+              draggable={false}
+              showDots={false}
               partialVisible={false}
               customLeftArrow={<CustomLeftArrow />}
               customRightArrow={<CustomRightArrow />}
