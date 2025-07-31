@@ -175,109 +175,189 @@ export default function CartPage() {
                       transition={{ delay: index * 0.1 }}
                       className="group relative bg-gradient-to-r from-white via-cream/30 to-white rounded-lg sm:rounded-2xl border border-gold/20 p-2 sm:p-6 hover:shadow-lg hover:border-gold/40 transition-all duration-300"
                     >
-                      {/* Mobile: 2-Row Compact Layout */}
-                      <div className="space-y-2 sm:space-y-0">
-                        {/* Row 1: Image + Product Details (Mobile) */}
-                        <div className="flex items-start gap-2 sm:gap-6">
-                          {/* Ultra Compact Product Image */}
-                          <div className="relative w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-md sm:rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
+                      {/* Mobile: 2-Row Compact Layout, Desktop: Original Layout */}
+                      <div className="sm:hidden space-y-2">
+                        {/* Mobile Row 1: Image + Product Details + Remove */}
+                        <div className="flex items-start gap-2">
+                          <div className="relative w-12 h-12 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-md flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
                             {item.product.imageUrl ? (
                               <img 
                                 src={item.product.imageUrl} 
                                 alt={`${item.product.brand} ${item.product.name}`}
-                                className="w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-md sm:rounded-lg shadow-sm"
+                                className="w-12 h-12 object-cover rounded-md shadow-sm"
                               />
                             ) : (
                               <div className="text-center">
-                                <div className="text-lg sm:text-3xl">🌸</div>
-                                <div className="text-xs text-navy/60 font-roboto hidden sm:block">Fragrance</div>
+                                <div className="text-lg">🌸</div>
                               </div>
                             )}
-                            <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
+                            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
                           </div>
 
-                          {/* Ultra Compact Product Details */}
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-roboto text-sm sm:text-xl font-medium text-navy mb-1 tracking-wide truncate">
+                            <h3 className="font-roboto text-sm font-medium text-navy mb-1 tracking-wide truncate">
                               {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
                             </h3>
-                            <div className="flex flex-col gap-0.5 sm:gap-1">
+                            <div className="flex flex-col gap-0.5">
                               {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
                                 <>
-                                  <div className="flex items-center gap-1 sm:gap-2">
-                                    <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-gold font-roboto font-semibold text-xs">
                                       ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
                                     </span>
-                                    <span className="text-xs bg-red-500 text-white px-1 py-0.5 sm:px-2 rounded-full font-medium">
+                                    <span className="text-xs bg-red-500 text-white px-1 py-0.5 rounded-full font-medium">
                                       -{item.product.discountPercentage}%
                                     </span>
                                   </div>
-                                  <span className="text-xs sm:text-sm text-gray-500 line-through">
+                                  <span className="text-xs text-gray-500 line-through">
                                     ₾{parseFloat(item.product.price).toFixed(2)}
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-gold font-roboto font-semibold text-xs sm:text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                                <span className="text-gold font-roboto font-semibold text-xs">₾{parseFloat(item.product.price).toFixed(2)}</span>
                               )}
                             </div>
                           </div>
 
-                          {/* Remove Button (Mobile Only) */}
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
                             disabled={removeItemMutation.isPending}
-                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-6 w-6 p-0 rounded-md transition-all duration-200 sm:hidden"
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-6 w-6 p-0 rounded-md transition-all duration-200"
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>
                         </div>
 
-                        {/* Row 2: Quantity + Subtotal (Mobile), Full Controls (Desktop) */}
-                        <div className="flex items-center justify-between gap-2 sm:gap-4 pl-14 sm:pl-0">
-                          {/* Quantity Controls */}
-                          <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-lg border border-gold/20 p-0.5 sm:p-1">
+                        {/* Mobile Row 2: Quantity + Subtotal */}
+                        <div className="flex items-center justify-between gap-2 pl-14">
+                          <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-lg border border-gold/20 p-0.5">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
                               disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
-                              className="h-6 w-6 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-md sm:rounded-lg transition-all duration-200"
+                              className="h-6 w-6 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-md transition-all duration-200"
                             >
-                              <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Minus className="h-3 w-3" />
                             </Button>
-                            <div className="min-w-[1.5rem] sm:min-w-[2.5rem] text-center">
-                              <span className="font-roboto font-semibold text-navy text-xs sm:text-lg">{item.quantity}</span>
+                            <div className="min-w-[1.5rem] text-center">
+                              <span className="font-roboto font-semibold text-navy text-xs">{item.quantity}</span>
                             </div>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               disabled={updateQuantityMutation.isPending}
-                              className="h-6 w-6 sm:h-10 sm:w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-md sm:rounded-lg transition-all duration-200"
+                              className="h-6 w-6 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-md transition-all duration-200"
                             >
-                              <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Plus className="h-3 w-3" />
                             </Button>
                           </div>
 
-                          {/* Subtotal */}
                           <div className="text-right">
-                            <p className="font-roboto text-sm sm:text-lg lg:text-xl font-bold text-navy">
+                            <p className="font-roboto text-sm font-bold text-navy">
                               ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
                                 ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
                                 : parseFloat(item.product.price) * item.quantity
                               ).toFixed(2)}
                             </p>
                           </div>
+                        </div>
+                      </div>
 
-                          {/* Remove Button (Desktop Only) */}
+                      {/* Desktop: Original Layout */}
+                      <div className="hidden sm:flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                        {/* Product Image */}
+                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cream to-pastel-pink/30 rounded-xl flex items-center justify-center border border-gold/20 group-hover:border-gold/40 transition-colors duration-300 flex-shrink-0">
+                          {item.product.imageUrl ? (
+                            <img 
+                              src={item.product.imageUrl} 
+                              alt={`${item.product.brand} ${item.product.name}`}
+                              className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shadow-sm"
+                            />
+                          ) : (
+                            <div className="text-center">
+                              <div className="text-3xl mb-1">🌸</div>
+                              <div className="text-xs text-navy/60 font-roboto">Fragrance</div>
+                            </div>
+                          )}
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-roboto text-xl font-medium text-navy mb-1 tracking-wide truncate">
+                            {item.product.brand ? `${item.product.brand} - ${item.product.name}` : item.product.name}
+                          </h3>
+                          <div className="flex flex-col gap-1">
+                            {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                              <>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gold font-roboto font-semibold text-lg">
+                                    ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
+                                  </span>
+                                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                                    -{item.product.discountPercentage}%
+                                  </span>
+                                </div>
+                                <span className="text-sm text-gray-500 line-through">
+                                  ₾{parseFloat(item.product.price).toFixed(2)}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-gold font-roboto font-semibold text-lg">₾{parseFloat(item.product.price).toFixed(2)}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Desktop Controls */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 w-full">
+                          <div className="flex items-center justify-between sm:justify-start gap-4">
+                            {/* Quantity Controls */}
+                            <div className="flex items-center bg-gradient-to-r from-cream/50 to-white rounded-xl border border-gold/20 p-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1 || updateQuantityMutation.isPending}
+                                className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <div className="min-w-[2.5rem] text-center">
+                                <span className="font-roboto font-semibold text-navy text-lg">{item.quantity}</span>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                disabled={updateQuantityMutation.isPending}
+                                className="h-10 w-10 p-0 text-navy/70 hover:text-navy hover:bg-gold/20 rounded-lg transition-all duration-200"
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+
+                            {/* Subtotal */}
+                            <div className="text-right">
+                              <p className="font-roboto text-lg lg:text-xl font-bold text-navy mb-1">
+                                ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                                  ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                                  : parseFloat(item.product.price) * item.quantity
+                                ).toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Remove Button */}
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
                             disabled={removeItemMutation.isPending}
-                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 hidden sm:block"
+                            className="text-red-400 hover:text-red-600 hover:bg-red-50 h-10 w-10 p-0 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 self-end sm:self-center"
                           >
                             <Trash2 className="h-5 w-5" />
                           </Button>
