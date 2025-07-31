@@ -3,6 +3,8 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
+import { LazyImage } from '@/components/LazyImage';
+import { memo, useCallback } from 'react';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -31,7 +33,7 @@ interface ProductCarouselProps {
   badgeColor?: string;
 }
 
-const ProductCarousel: React.FC<ProductCarouselProps> = ({
+const ProductCarousel = memo<ProductCarouselProps>(({
   products,
   title,
   onAddToCart,
@@ -41,16 +43,16 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   badgeText,
   badgeColor = "bg-gradient-to-r from-red-500 to-pink-500"
 }) => {
-  const formatProductName = (name: string, brand: string | null) => {
+  const formatProductName = useCallback((name: string, brand: string | null) => {
     return brand ? `${brand} – ${name}` : name;
-  };
+  }, []);
 
-  const truncateDescription = (description: string, maxLength: number = 60) => {
+  const truncateDescription = useCallback((description: string, maxLength: number = 60) => {
     if (!description) return '';
     return description.length > maxLength 
       ? description.substring(0, maxLength) + '...'
       : description;
-  };
+  }, []);
 
   return (
     <div className="product-carousel-container">
@@ -106,10 +108,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
             >
               {/* Product Image */}
               <div className="product-image relative">
-                <img
+                <LazyImage
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
-                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
                 
                 {/* Badge - Hidden on mobile */}
@@ -163,6 +165,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ProductCarousel.displayName = 'ProductCarousel';
 
 export default ProductCarousel;

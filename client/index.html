@@ -2,15 +2,104 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Vel France - Luxury Perfumes</title>
-    <!-- BOG Calculator SDK -->
-    <script src="https://webstatic.bog.ge/bog-sdk/bog-sdk.js?version=2&client_id=10001216"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.bog.ge" />
+    <link rel="dns-prefetch" href="https://payment.bog.ge" />
+    
+    <!-- Critical CSS - Google Fonts -->
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" 
+      rel="stylesheet"
+    />
+    
+    <!-- SEO Meta Tags -->
+    <title>Vel France - Luxury Perfumes & Fragrances</title>
+    <meta name="description" content="Discover premium luxury perfumes and fragrances at Vel France. Shop authentic designer perfumes for men and women with fast delivery across Georgia." />
+    <meta name="keywords" content="luxury perfumes, designer fragrances, perfume store Georgia, Vel France, premium scents" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vel France - Luxury Perfumes & Fragrances" />
+    <meta property="og:description" content="Discover premium luxury perfumes and fragrances at Vel France. Shop authentic designer perfumes with fast delivery." />
+    <meta property="og:site_name" content="Vel France" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vel France - Luxury Perfumes" />
+    <meta name="twitter:description" content="Premium luxury perfumes and designer fragrances with fast delivery across Georgia." />
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme -->
+    <meta name="theme-color" content="#2D3748" />
+    <meta name="msapplication-TileColor" content="#2D3748" />
+    
+    <!-- Performance -->
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- BOG Payment Scripts -->
+    <script src="https://checkout.bog.ge/bog-calculator.js" defer></script>
+    
+    <!-- Critical inline styles for above-the-fold content -->
+    <style>
+      /* Critical CSS - Prevents layout shift */
+      body {
+        margin: 0;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading state */
+      .app-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #f7fafc 0%, #ffffff 50%, #fdf2f8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      
+      .loading-spinner {
+        width: 3rem;
+        height: 3rem;
+        border: 2px solid #d4af37;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="app-loading">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
 </html>

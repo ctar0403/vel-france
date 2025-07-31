@@ -8,17 +8,20 @@ Preferred communication style: Simple, everyday language.
 Order code format: 6-digit numbers only (no letters).
 Design requirements: Very modern and advanced design aesthetic with animations.
 Home page focus: Pure design focus without made-up stories, using product reels for categories like "Most Popular", "Most Sold", etc.
+Performance requirements: Lightning-fast loading on mobile and desktop, 90+ Google Lighthouse scores on all metrics.
 
 ## System Architecture
 
 ### Frontend
 - **Framework**: React 18 with TypeScript, Vite
-- **Routing**: Wouter
-- **State Management**: TanStack Query
+- **Routing**: Wouter with lazy loading for non-critical routes
+- **State Management**: TanStack Query with optimized caching (5min stale time, 10min GC time)
 - **UI/UX**: Radix UI primitives, Tailwind CSS, shadcn/ui components with custom theming
 - **Animation**: Framer Motion
+- **Performance**: Code splitting, lazy loading, image optimization, intersection observers, memoization
 - **Design Elements**: Gradient backgrounds, advanced shadow effects, hover animations, rounded product cards, quick add-to-cart buttons.
 - **Home Page**: Features a banner slideshow, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide.
+- **PWA Features**: Service worker caching, offline support, manifest file, performance monitoring
 
 ### Backend
 - **Runtime**: Node.js with Express.js
@@ -27,6 +30,7 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Authentication**: Replit's OpenID Connect
 - **Session Management**: Express sessions with PostgreSQL store
 - **API Design**: RESTful API with structured error handling
+- **Performance**: GZIP compression middleware, optimized query retry logic, connection pooling
 
 ### Core Features
 - **Catalogue System**: Advanced filtering (price, brand, category), real-time search, sorting options, grid/list view, responsive design, active filter management.
@@ -53,3 +57,14 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - `passport`: Authentication middleware
 - `express-session`: Session management
 - `connect-pg-simple`: PostgreSQL session store
+
+### Performance & Optimization
+- `vite-plugin-pwa`: Progressive Web App features
+- `workbox-window`: Service worker management
+- `compression`: GZIP compression middleware
+- `react-window`: Virtual scrolling for large lists
+- Custom LazyImage component with intersection observer
+- Optimized TanStack Query configuration
+- Code splitting with React.lazy and Suspense
+- Bundle analyzer for size optimization
+- Performance monitoring in development
