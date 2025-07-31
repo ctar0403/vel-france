@@ -72,8 +72,8 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
     <header className="bg-white shadow-lg border-b border-gold/20 sticky top-0 z-50 w-full">
       <nav className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-4 w-full">
         <div className="flex items-center justify-between min-w-0 gap-2 sm:gap-4">
-          {/* Logo */}
-          <div className="flex items-center flex-shrink-0">
+          {/* Logo - Hidden on mobile since we have bottom nav */}
+          <div className="hidden md:flex items-center flex-shrink-0">
             <Link href="/">
               <img 
                 src={logoImage}
@@ -152,8 +152,38 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             </Link>
           </div>
           
-          {/* Action Buttons */}
-          <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0">
+          {/* Mobile Search - Full Width */}
+          <div className="flex md:hidden items-center flex-1 justify-center px-4">
+            <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+              <SheetTrigger asChild>
+                <div className="flex items-center bg-gray-50 rounded-full px-4 py-2 w-full max-w-md cursor-pointer hover:bg-gray-100 transition-colors">
+                  <Search className="h-4 w-4 text-gray-500 mr-3" />
+                  <span className="text-gray-500 text-sm flex-1">Search for a perfume...</span>
+                </div>
+              </SheetTrigger>
+              <SheetContent side="top" className="h-auto border-gold/20">
+                <div className="container mx-auto px-4 py-8">
+                  <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+                    <div className="flex space-x-4">
+                      <Input
+                        type="text"
+                        placeholder="Search for a perfume..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="flex-1 text-lg py-3 border-gold/30 focus:border-gold"
+                      />
+                      <Button type="submit" className="bg-gold hover:bg-deep-gold text-navy px-8">
+                        Search
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          {/* Desktop Action Buttons */}
+          <div className="hidden md:flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0">
             {/* Search */}
             <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
