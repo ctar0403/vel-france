@@ -284,16 +284,30 @@ export default function Home() {
     setLocation('/catalogue');
   };
 
-  // Fetch products with error handling and optimized caching
-  const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery<Product[]>({
+  // Use default query behavior from queryClient
+  const { data: products = [], isLoading: productsLoading, error: productsError, refetch: refetchProducts } = useQuery<Product[]>({
     queryKey: ["/api/products"],
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes  
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
   });
+
+  // Simple debug logging
+  React.useEffect(() => {
+    if (products.length > 0) {
+      console.log('✅ Products loaded successfully:', products.length);
+    } else if (productsError) {
+      console.log('❌ Products error:', productsError.message);
+    }
+  }, [products, productsError]);
+
+  // Test direct fetch for debugging
+  const testDirectFetch = async () => {
+    try {
+      const response = await fetch('/api/products');
+      const data = await response.json();
+      console.log('Direct fetch success:', data.length, 'products');
+    } catch (error) {
+      console.error('Direct fetch error:', error);
+    }
+  };
 
   // Fetch cart items
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
@@ -550,11 +564,24 @@ export default function Home() {
 
           {/* Debug info for troubleshooting */}
           {process.env.NODE_ENV === 'development' && (
-            <div className="bg-yellow-100 p-4 mb-4 rounded">
-              <p>Debug: Total products: {products.length}</p>
-              <p>Debug: Products loading: {productsLoading ? 'YES' : 'NO'}</p>
-              <p>Debug: Most sold products: {mostSoldProducts.length}</p>
-              <p>Debug: New arrivals products: {newArrivalsProducts.length}</p>
+            <div className="bg-yellow-100 p-4 mb-4 rounded text-sm">
+              <p>Products: {products.length} | Loading: {productsLoading ? 'YES' : 'NO'}</p>
+              <p>Error: {productsError ? String(productsError.message) : 'NONE'}</p>
+              <p>Most sold: {mostSoldProducts.length} | New arrivals: {newArrivalsProducts.length}</p>
+              <div className="flex gap-2 mt-2">
+                <button 
+                  onClick={() => refetchProducts()} 
+                  className="px-3 py-1 bg-blue-500 text-white rounded text-xs"
+                >
+                  Refetch Products
+                </button>
+                <button 
+                  onClick={testDirectFetch} 
+                  className="px-3 py-1 bg-green-500 text-white rounded text-xs"
+                >
+                  Test Direct Fetch
+                </button>
+              </div>
             </div>
           )}
           
