@@ -1,10 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { LazyImage } from '@/components/LazyImage';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo, lazy, Suspense } from 'react';
+
+// Import motion directly (will be optimized later)
+import { motion } from "framer-motion";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -54,44 +56,37 @@ const ProductCarousel = memo<ProductCarouselProps>(({
       : description;
   }, []);
 
+  // Memoize swiper configuration for performance
+  const swiperConfig = useMemo(() => ({
+    modules: [Navigation, Pagination, Autoplay],
+    spaceBetween: 20,
+    slidesPerView: 2,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      clickable: true,
+      dynamicBullets: true,
+    },
+    autoplay: autoplay ? {
+      delay: 4000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+    } : false,
+    breakpoints: {
+      640: { slidesPerView: 2, spaceBetween: 20 },
+      768: { slidesPerView: 3, spaceBetween: 25 },
+      1024: { slidesPerView: 4, spaceBetween: 30 },
+    },
+    lazy: true,
+    preloadImages: false,
+    watchSlidesProgress: true,
+  }), [autoplay]);
+
   return (
     <div className="product-carousel-container">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={2}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        pagination={{
-          clickable: true,
-          dynamicBullets: true,
-        }}
-        autoplay={autoplay ? {
-          delay: 3000,
-          disableOnInteraction: false,
-        } : false}
-        breakpoints={{
-          320: {
-            slidesPerView: 2,
-            spaceBetween: 15,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 25,
-          },
-          1280: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-          },
-        }}
-        className="product-swiper"
-      >
+      <Swiper {...swiperConfig}>
         {products.map((product, index) => (
           <SwiperSlide key={product.id}>
             <Link 

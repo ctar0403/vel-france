@@ -8,6 +8,8 @@ interface LazyImageProps {
   placeholder?: string;
   onLoad?: () => void;
   onError?: () => void;
+  priority?: boolean;
+  sizes?: string;
 }
 
 const LazyImage = memo(({ 
@@ -16,14 +18,29 @@ const LazyImage = memo(({
   className, 
   placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3C/svg%3E",
   onLoad,
-  onError
+  onError,
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(priority); // Priority images load immediately
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  // Convert to WebP if supported
+  const getOptimizedSrc = (originalSrc: string) => {
+    // Check WebP support
+    const canvas = document.createElement('canvas');
+    const supportsWebP = canvas.toDataURL('image/webp').indexOf('image/webp') === 5;
+    
+    // For production, you'd convert images to WebP or use a CDN
+    // For now, return original src
+    return originalSrc;
+  };
+
   useEffect(() => {
+    if (priority) return; // Skip intersection observer for priority images
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -31,7 +48,7 @@ const LazyImage = memo(({
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: '100px' } // Increased rootMargin for faster loading
     );
 
     if (imgRef.current) {
@@ -39,7 +56,7 @@ const LazyImage = memo(({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [priority]);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -71,16 +88,17 @@ const LazyImage = memo(({
             />
           )}
           <img
-            src={hasError ? placeholder : src}
+            src={hasError ? placeholder : getOptimizedSrc(src)}
             alt={alt}
             className={cn(
-              "w-full h-full object-cover transition-opacity duration-300",
+              "w-full h-full object-cover transition-opacity duration-200", // Reduced transition time
               isLoaded || hasError ? "opacity-100" : "opacity-0"
             )}
             onLoad={handleLoad}
             onError={handleError}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
             decoding="async"
+            sizes={sizes}
           />
         </>
       )}

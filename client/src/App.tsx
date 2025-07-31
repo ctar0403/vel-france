@@ -9,12 +9,14 @@ import { useEffect, Suspense, lazy } from "react";
 import { PageLoader } from "@/components/Suspense/PageLoader";
 import { PerformanceMetrics } from "@/components/PerformanceMetrics";
 
-// Critical pages - loaded immediately
+// Critical pages - loaded immediately for above-the-fold content
 import Home from "@/pages/home";
-import Catalogue from "@/pages/catalogue";
-import ProductDetail from "@/pages/product-detail";
-import Cart from "@/pages/cart";
-import Checkout from "@/pages/checkout";
+
+// High-priority pages - lazy loaded with priority
+const Catalogue = lazy(() => import("@/pages/catalogue"));
+const ProductDetail = lazy(() => import("@/pages/product-detail"));
+const Cart = lazy(() => import("@/pages/cart"));
+const Checkout = lazy(() => import("@/pages/checkout"));
 
 // Non-critical pages - lazy loaded
 const Contact = lazy(() => import("@/pages/contact"));

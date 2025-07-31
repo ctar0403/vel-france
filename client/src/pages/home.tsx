@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, memo, useCallback, useMemo, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,13 +10,19 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 
+// Import motion directly for critical animations (will be optimized later)
+import { motion } from "framer-motion";
 
 
+
+// Critical components loaded immediately
 import Header from "@/components/Header";
-import ProductCarousel from "../components/ProductCarousel";
 import Footer from "@/components/Footer";
-import ProductCard from "@/components/ProductCard";
-import CartSidebar from "@/components/CartSidebar";
+
+// Non-critical components lazy loaded
+const ProductCarousel = lazy(() => import("../components/ProductCarousel"));
+const ProductCard = lazy(() => import("@/components/ProductCard"));
+const CartSidebar = lazy(() => import("@/components/CartSidebar"));
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
@@ -46,19 +51,29 @@ import yslLogo from "@assets/8_1753788502255.png";
 import pradaLogo from "@assets/9_1753788502255.png";
 import claireFontaineLogo from "@assets/10_1753788502256.png";
 
-// Hook to detect mobile screen size
+// Optimized hook to detect mobile screen size with debouncing
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
   
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsMobile(window.innerWidth <= 768);
+      }, 100); // Debounce resize events
     };
     
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
     
-    return () => window.removeEventListener('resize', checkIsMobile);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', checkIsMobile);
+    };
   }, []);
   
   return isMobile;
