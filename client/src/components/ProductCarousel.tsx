@@ -114,28 +114,29 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                 )}
               </div>
 
-              {/* Product Content */}
-              <div className="product-content">
-                <h3 className="product-title font-medium text-gray-900 mb-2">
+              {/* Product Content - Matching Catalogue Exactly */}
+              <div className="p-6 flex-grow flex flex-col min-h-[120px]">
+                <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
                   {formatProductName(product.name, product.brand)}
                 </h3>
 
-                {/* Price - matching catalogue design */}
-                <div className="mt-auto">
+                <div className="flex flex-col gap-1">
                   {product.discountPercentage && product.discountPercentage > 0 ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-semibold text-red-600">
-                        ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
-                      </span>
+                    <>
+                      <div className="flex items-center gap-2">
+                        <span className="text-base text-gold font-normal">
+                          ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                        </span>
+                        <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                          -{product.discountPercentage}%
+                        </span>
+                      </div>
                       <span className="text-sm text-gray-500 line-through">
                         ₾{parseFloat(product.price.toString()).toFixed(2)}
                       </span>
-                      <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                        -{product.discountPercentage}%
-                      </span>
-                    </div>
+                    </>
                   ) : (
-                    <span className="text-lg font-semibold text-gray-900">
+                    <span className="text-base text-gold font-normal">
                       ₾{parseFloat(product.price.toString()).toFixed(2)}
                     </span>
                   )}

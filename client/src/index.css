@@ -114,27 +114,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Content container - matching catalogue design */
-.swiper-product-card .product-content {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-height: 100px;
-}
-
-.swiper-product-card .product-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #111827;
-  line-height: 1.3;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  height: auto;
-  min-height: 36px;
-}
+/* Remove custom product content styling - using Tailwind classes directly */
 
 /* Swiper navigation arrows */
 .swiper-button-next,
@@ -201,14 +181,14 @@ body {
     display: none; /* Hide arrows on mobile for cleaner look */
   }
   
-  .swiper-product-card .product-content {
-    padding: 12px;
-    min-height: 80px;
+  /* Mobile adjustments for content container */
+  .swiper-product-card .p-6 {
+    padding: 12px !important;
+    min-height: 100px !important;
   }
   
-  .swiper-product-card .product-title {
-    font-size: 13px;
-    min-height: 32px;
+  .swiper-product-card .text-lg {
+    font-size: 14px !important;
   }
 }
 
@@ -217,15 +197,14 @@ body {
     padding: 0 50px;
   }
   
-  .swiper-product-card .product-content {
-    padding: 15px;
+  .swiper-product-card .p-6 {
+    padding: 16px !important;
   }
 }
 
 @media (min-width: 1024px) {
-  .swiper-product-card .product-title {
-    font-size: 15px;
-    min-height: 38px;
+  .swiper-product-card .text-lg {
+    font-size: 16px !important;
   }
 }
 
