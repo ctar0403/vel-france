@@ -175,6 +175,11 @@ body {
     display: none; /* Hide arrows on mobile for cleaner look */
   }
   
+  /* Add bottom padding to main content to avoid mobile nav overlap */
+  body {
+    padding-bottom: 70px;
+  }
+  
   /* Mobile adjustments for content container */
   .swiper-product-card .p-6 {
     padding: 12px !important;
