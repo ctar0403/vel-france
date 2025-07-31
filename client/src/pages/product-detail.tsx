@@ -407,28 +407,28 @@ function ProductDetailPage() {
                   <Button
                     type="button"
                     onClick={handleInstallmentPayment}
-                    className="w-full h-16 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-4 group relative overflow-hidden"
+                    className="w-full h-16 sm:h-18 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-4 group relative overflow-hidden"
                     disabled={addToCartMutation.isPending || !product.inStock}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="flex items-center relative z-10">
+                    <div className="flex items-center relative z-10 min-w-0 flex-1">
                       <img 
                         src={bogInstallmentLogo} 
                         alt="Bank of Georgia"
-                        className="w-10 h-10 object-contain mr-4"
+                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain mr-2 sm:mr-4 flex-shrink-0"
                       />
-                      <div className="text-left">
-                        <div className="font-semibold text-base tracking-wide">BOG Installments</div>
-                        <div className="text-sm opacity-90 text-orange-100">Flexible monthly payment plan</div>
+                      <div className="text-left min-w-0">
+                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">BOG Installments</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">Flexible monthly plan</div>
                       </div>
                     </div>
-                    <div className="text-right relative z-10">
-                      <div className="text-lg font-bold text-white">
+                    <div className="text-right relative z-10 flex-shrink-0 ml-2">
+                      <div className="text-sm sm:text-lg font-bold text-white whitespace-nowrap">
                         ₾{(product.discountPercentage && product.discountPercentage > 0 
                           ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 12
                           : (parseFloat(product.price) * quantity) / 12
                         ).toFixed(2)}/mo</div>
-                      <div className="text-sm opacity-90 text-orange-100">12 months available</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">12 months</div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
@@ -437,28 +437,28 @@ function ProductDetailPage() {
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
-                    className="w-full h-16 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-4 group relative overflow-hidden"
+                    className="w-full h-16 sm:h-18 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-4 group relative overflow-hidden"
                     disabled={addToCartMutation.isPending || !product.inStock}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-purple-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="flex items-center relative z-10">
+                    <div className="flex items-center relative z-10 min-w-0 flex-1">
                       <img 
                         src={partByPartLogo} 
                         alt="Part by Part"
-                        className="w-10 h-10 object-contain mr-4"
+                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain mr-2 sm:mr-4 flex-shrink-0"
                       />
-                      <div className="text-left">
-                        <div className="font-semibold text-base tracking-wide">Part-by-Part</div>
-                        <div className="text-sm opacity-90 text-purple-100">Buy now, pay in 4 interest-free parts</div>
+                      <div className="text-left min-w-0">
+                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">Part-by-Part</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">4 interest-free parts</div>
                       </div>
                     </div>
-                    <div className="text-right relative z-10">
-                      <div className="text-lg font-bold text-white">
+                    <div className="text-right relative z-10 flex-shrink-0 ml-2">
+                      <div className="text-sm sm:text-lg font-bold text-white whitespace-nowrap">
                         ₾{(product.discountPercentage && product.discountPercentage > 0 
                           ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 4
                           : (parseFloat(product.price) * quantity) / 4
                         ).toFixed(2)} × 4</div>
-                      <div className="text-sm opacity-90 text-purple-100">Zero interest payments</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">Zero interest</div>
                     </div>
                   </Button>
                 </div>
