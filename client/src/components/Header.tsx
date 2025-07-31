@@ -248,24 +248,29 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               </SheetTrigger>
               <SheetContent side="right" className="w-72 sm:w-80 border-gold/20">
                 <div className="flex flex-col space-y-6 mt-8">
-                  <div className="flex items-center space-x-2">
-                    <h1 className="font-vibes text-3xl text-navy">Vel France</h1>
-                    <span className="text-gold text-lg">✦</span>
+                  <div className="flex items-center justify-center">
+                    <button onClick={() => setLocation('/')}>
+                      <img 
+                        src={logoImage}
+                        alt="Vel France Logo"
+                        className="h-16 cursor-pointer"
+                      />
+                    </button>
                   </div>
                   
                   <nav className="flex flex-col space-y-4 font-roboto">
-                    <Link 
-                      href="/"
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block"
+                    <button 
+                      onClick={() => setLocation('/')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       Home
-                    </Link>
-                    <Link 
-                      href="/catalogue"
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block"
+                    </button>
+                    <button 
+                      onClick={() => setLocation('/catalogue')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       Catalogue
-                    </Link>
+                    </button>
                     <div>
                       <button 
                         onClick={() => setIsBrandsOpen(!isBrandsOpen)}
@@ -298,14 +303,16 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                                 </div>
                                 <div className="space-y-1 ml-7">
                                   {brandsByLetter[letter].map((brand) => (
-                                    <Link
+                                    <button
                                       key={brand}
-                                      href={`/catalogue?brand=${encodeURIComponent(brand)}`}
-                                      onClick={() => setIsBrandsOpen(false)}
+                                      onClick={() => {
+                                        setLocation(`/catalogue?brand=${encodeURIComponent(brand)}`);
+                                        setIsBrandsOpen(false);
+                                      }}
                                       className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1 font-roboto"
                                     >
                                       {brand}
-                                    </Link>
+                                    </button>
                                   ))}
                                 </div>
                               </div>
@@ -315,12 +322,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       )}
                     </div>
 
-                    <Link 
-                      href="/contact"
-                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
+                    <button 
+                      onClick={() => setLocation('/contact')}
+                      className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       Contact
-                    </Link>
+                    </button>
                   </nav>
 
                   {user && (
