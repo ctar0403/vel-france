@@ -131,6 +131,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
                 alt={slide.alt}
                 className="w-full h-auto object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : "auto"}
               />
             </div>
           </div>

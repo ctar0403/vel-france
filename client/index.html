@@ -22,6 +22,10 @@
     
     <!-- Preload BOG SDK (will be loaded asynchronously when needed) -->
     <link rel="preload" href="https://webstatic.bog.ge/bog-sdk/bog-sdk.js?version=2&client_id=10001216" as="script">
+    
+    <!-- Preload critical LCP images for immediate discovery -->
+    <link rel="preload" href="/src/assets/Desktop-1_1754051373226.webp" as="image" media="(min-width: 769px)">
+    <link rel="preload" href="/src/assets/Mobile-1_1754051370153.webp" as="image" media="(max-width: 768px)">
   </head>
   <body>
     <div id="root"></div>

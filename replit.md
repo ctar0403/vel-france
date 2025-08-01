@@ -76,6 +76,12 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Intersection Observer optimization**: Added threshold and performance optimizations to lazy loading
 - **Animation performance**: Optimized marquee and carousel animations with GPU-accelerated transforms
 
+### LCP (Largest Contentful Paint) Optimization
+- **Hero image prioritization**: First hero banner image loads with fetchpriority="high" and loading="eager"
+- **HTML preload links**: Critical LCP images preloaded in HTML head with responsive media queries
+- **Immediate discovery**: Hero images now discoverable from initial HTML document for faster LCP
+- **Lazy loading optimization**: Non-critical slides use loading="lazy" for better resource management
+
 ## External Dependencies
 
 ### Core
