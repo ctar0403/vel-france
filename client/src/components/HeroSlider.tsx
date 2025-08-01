@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 
 // Import desktop images
 import desktop1 from '@assets/Desktop-1_1754051373226.png';
@@ -24,6 +25,12 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [, setLocation] = useLocation();
+
+  // Handle banner click
+  const handleBannerClick = () => {
+    setLocation('/catalogue');
+  };
 
   // Slide data with desktop and mobile versions
   const slides = [
@@ -103,12 +110,21 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
       >
         {slides.map((slide, index) => (
           <div key={index} className="w-full flex-shrink-0">
-            <img
-              src={isMobile ? slide.mobile : slide.desktop}
-              alt={slide.alt}
-              className="w-full h-auto object-cover"
-              loading={index === 0 ? "eager" : "lazy"}
-            />
+            <div 
+              onClick={handleBannerClick}
+              className="cursor-pointer w-full h-full"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
+              aria-label="Go to catalogue"
+            >
+              <img
+                src={isMobile ? slide.mobile : slide.desktop}
+                alt={slide.alt}
+                className="w-full h-auto object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </div>
           </div>
         ))}
       </div>
