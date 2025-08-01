@@ -25,28 +25,10 @@ const ProductCard = lazy(() => import("@/components/ProductCard"));
 const CartSidebar = lazy(() => import("@/components/CartSidebar"));
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
-import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
 
-// Desktop banners
-import banner1 from "@assets/1_1753538704078.webp";
-import banner2 from "@assets/2_1753538710752.webp";
-import banner3 from "@assets/3_1753538715604.webp";
-import banner4 from "@assets/4_1753538720559.webp";
-import banner5 from "@assets/5_1753538726165.webp";
 
-// Mobile banners - direct file references
-const mobileBanner1 = "/mobile_1.webp";
-const mobileBanner2 = "/mobile_2.webp";
-const mobileBanner3 = "/mobile_3.webp";
-const mobileBanner4 = "/mobile_4.webp";
-const mobileBanner5 = "/mobile_5.webp";
-const mobileBanner6 = "/mobile_6.webp";
-import banner7 from "@assets/7_1753734195721.webp";
-import banner8 from "@assets/8_1753734262383.webp";
-import banner9 from "@assets/9_1753734226839.webp";
-import banner10 from "@assets/10_1753734237960.webp";
-import banner11 from "@assets/11_1753734243609.webp";
-import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.webp";
+
 
 // Import new brand logos
 import chanelLogo from "@assets/1_1753788502251_optimized.webp";
@@ -241,7 +223,7 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [currentSlide, setCurrentSlide] = useState(0);
+
   const [contactForm, setContactForm] = useState({
     firstName: "",
     lastName: "",
@@ -251,71 +233,13 @@ export default function Home() {
   });
   const isMobile = useIsMobile();
   
-  // Force re-render when screen size changes
-  const [, forceUpdate] = useState({});
+
   
-  useEffect(() => {
-    const handleResize = () => {
-      setBanners(getCurrentBanners());
-      forceUpdate({});
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
-  // Get current banner images based on screen width
-  const getCurrentBanners = () => {
-    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    if (isCurrentlyMobile) {
-      return [
-        { src: "/mobile_1.webp", alt: "Mobile banner 1" },
-        { src: "/mobile_2.webp", alt: "Mobile banner 2" },
-        { src: "/mobile_3.webp", alt: "Mobile banner 3" },
-        { src: "/mobile_4.webp", alt: "Mobile banner 4" },
-        { src: "/mobile_5.webp", alt: "Mobile banner 5" },
-        { src: "/mobile_6.webp", alt: "Mobile banner 6" }
-      ];
-    } else {
-      return [
-        { src: banner11, alt: "Desktop banner 1" },
-        { src: banner9, alt: "Desktop banner 2" },
-        { src: banner5, alt: "Desktop banner 3" },
-        { src: banner8, alt: "Desktop banner 4" },
-        { src: banner7, alt: "Desktop banner 5" },
-        { src: banner10, alt: "Desktop banner 6" }
-      ];
-    }
-  };
 
-  const [banners, setBanners] = useState(getCurrentBanners);
 
-  // Auto-advance slideshow with reduced frequency for better performance
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % banners.length);
-    }, 7000); // Increased to 7 seconds to reduce reflows and CPU usage
 
-    return () => clearInterval(interval);
-  }, [banners.length]);
 
-  // Navigation functions
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % banners.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  // Handle banner click to redirect to catalogue
-  const handleBannerClick = () => {
-    setLocation('/catalogue');
-  };
 
   // Fetch products
   const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
@@ -467,77 +391,7 @@ export default function Home() {
         cartItems={cartItems}
         isLoading={cartLoading}
       />
-      {/* Welcome Section - Exact ratio preservation */}
-      <section className={`relative w-full overflow-hidden ${
-        isMobile
-          ? 'aspect-[800/600]' // Mobile: exact 800:600 ratio from new mobile images (1.33:1)
-          : 'aspect-[1732/630]' // Desktop: exact ratio from desktop images (2.75:1)
-      }`}>
-        {/* Slideshow Background */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div 
-            className="flex h-full transition-transform duration-1000 ease-in-out"
-            style={{ 
-              transform: `translateX(-${currentSlide * (100 / banners.length)}%)`,
-              width: `${banners.length * 100}%`
-            }}
-          >
-            {banners.map((banner, index) => (
-              <div 
-                key={`banner-${index}-${banner.src}`}
-                className="h-full flex-shrink-0"
-                style={{ width: `${100 / banners.length}%` }}
-              >
-                <img 
-                  src={banner.src}
-                  alt={banner.alt}
-                  className="w-full h-full object-cover"
-                  width={isMobile ? 800 : 1732}
-                  height={isMobile ? 600 : 630}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
-                  decoding="async"
-                  sizes="100vw"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Navigation Controls */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-all duration-200 opacity-60 hover:opacity-100"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-5 w-5 text-white" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-all duration-200 opacity-60 hover:opacity-100"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-5 w-5 text-white" />
-        </button>
-        
-        {/* Slide Indicators */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-          {banners.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentSlide 
-                  ? 'bg-white' 
-                  : 'bg-white/40 hover:bg-white/60'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-        
 
-      </section>
       {/* Most Sold Products Section */}
       <section className="pt-20 bg-gradient-to-br from-cream to-white">
         <div className="container mx-auto px-4">
