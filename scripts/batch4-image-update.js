@@ -5,26 +5,26 @@ import { eq, like, and } from 'drizzle-orm';
 // All 20 image mappings from batch 4
 const batch4ImageMappings = [
   // Initio products (2 products)
-  { searchBrand: 'Initio', searchName: 'Oud For Happiness', imageFile: 'Initio – Oud For Happiness_1753551333688.png' },
-  { searchBrand: 'Initio', searchName: 'Side Effect', imageFile: 'Initio – Side Effect_1753551333689.png' },
+  { searchBrand: 'Initio', searchName: 'Oud For Happiness', imageFile: 'Initio – Oud For Happiness_1753551333688.webp' },
+  { searchBrand: 'Initio', searchName: 'Side Effect', imageFile: 'Initio – Side Effect_1753551333689.webp' },
   
   // Jean Paul Gaultier products (1 product)
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Divine', imageFile: 'Jean Paul Gaultier – Divine_1753551333689.png' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Divine', imageFile: 'Jean Paul Gaultier – Divine_1753551333689.webp' },
   
   // More Dior products (2 products)
-  { searchBrand: 'Dior', searchName: 'Sauvage Elixir', imageFile: 'Dior – Sauvage Elixir_1753551333690.png' },
-  { searchBrand: 'Dior', searchName: 'Sauvage', imageFile: 'Dior - Sauvage_1753551333690.png' },
+  { searchBrand: 'Dior', searchName: 'Sauvage Elixir', imageFile: 'Dior – Sauvage Elixir_1753551333690.webp' },
+  { searchBrand: 'Dior', searchName: 'Sauvage', imageFile: 'Dior - Sauvage_1753551333690.webp' },
   
   // Dolce & Gabbana products (8 products)
-  { searchBrand: 'Dolce & Gabbana', searchName: 'K', imageFile: 'Dolce & Gabbana – K_1753551333691.png' },
-  { searchBrand: 'Dolce & Gabbana', searchName: 'Q', imageFile: 'Dolce & Gabbana – Q_1753551333691.png' },
-  { searchBrand: 'Dolce & Gabbana', searchName: 'Light Blue', imageFile: 'Dolce&Gabbana – Light Blue_1753551333692.png' },
-  { searchBrand: 'Dolce & Gabbana', searchName: 'The One', imageFile: 'Dolce&Gabbana – The One_1753551333693.png' },
-  { searchBrand: 'Dolce & Gabbana', searchName: 'The Only One 2', imageFile: 'Dolce&Gabbana – The Only One 2_1753551333693.png' },
-  { searchBrand: 'Dolce & Gabbana', searchName: 'The Only One', imageFile: 'Dolce&Gabbana – The Only One_1753551333694.png' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'K', imageFile: 'Dolce & Gabbana – K_1753551333691.webp' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'Q', imageFile: 'Dolce & Gabbana – Q_1753551333691.webp' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'Light Blue', imageFile: 'Dolce&Gabbana – Light Blue_1753551333692.webp' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'The One', imageFile: 'Dolce&Gabbana – The One_1753551333693.webp' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'The Only One 2', imageFile: 'Dolce&Gabbana – The Only One 2_1753551333693.webp' },
+  { searchBrand: 'Dolce & Gabbana', searchName: 'The Only One', imageFile: 'Dolce&Gabbana – The Only One_1753551333694.webp' },
   
   // Givenchy products (1 product)
-  { searchBrand: 'Givenchy', searchName: 'Gentleman', imageFile: 'Givenchy – Gentleman_1753551333694.png' }
+  { searchBrand: 'Givenchy', searchName: 'Gentleman', imageFile: 'Givenchy – Gentleman_1753551333694.webp' }
 ];
 
 async function updateBatch4Images() {

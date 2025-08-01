@@ -19,7 +19,7 @@ async function fixBatch2Conflicts() {
   if (goodGirlProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.png' })
+      .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.webp' })
       .where(eq(products.id, goodGirlProducts[0].id));
     console.log('✅ Fixed Good Girl image');
   }
@@ -58,7 +58,7 @@ async function fixBatch2Conflicts() {
   if (allureHommeProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Chanel – Allure Homme_1753550361314.png' })
+      .set({ imageUrl: '/assets/Chanel – Allure Homme_1753550361314.webp' })
       .where(eq(products.id, allureHommeProducts[0].id));
     console.log('✅ Fixed Allure Homme image');
   }
@@ -77,7 +77,7 @@ async function fixBatch2Conflicts() {
   if (allureHommeSportProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Chanel – Allure Homme Sport_1753550361313.png' })
+      .set({ imageUrl: '/assets/Chanel – Allure Homme Sport_1753550361313.webp' })
       .where(eq(products.id, allureHommeSportProducts[0].id));
     console.log('✅ Confirmed Allure Homme Sport image');
   }

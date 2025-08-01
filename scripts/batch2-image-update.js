@@ -4,26 +4,26 @@ import { eq, like, and } from 'drizzle-orm';
 
 // All 20 image mappings from batch 2
 const batch2ImageMappings = [
-  { searchBrand: 'Calvin Klein', searchName: 'Euphoria', imageFile: 'Calvin Klein – Euphoria_1753550361311.png' },
-  { searchBrand: 'Carolina Herrera', searchName: '212 VIP Black', imageFile: 'Carolina Herrera – 212 VIP Black_1753550361312.png' },
-  { searchBrand: 'Carolina Herrera', searchName: 'Good Girl', imageFile: 'Carolina Herrera – Good Girl_1753550361313.png' },
-  { searchBrand: 'Carolina Herrera', searchName: 'Very Good Girl', imageFile: 'Carolina Herrera – Very Good Girl_1753550361313.png' },
-  { searchBrand: 'Chanel', searchName: 'Allure Homme Sport', imageFile: 'Chanel – Allure Homme Sport_1753550361313.png' },
-  { searchBrand: 'Chanel', searchName: 'Allure Homme', imageFile: 'Chanel – Allure Homme_1753550361314.png' },
-  { searchBrand: 'Chanel', searchName: 'Allure Sensuelle', imageFile: 'Chanel – Allure Sensuelle_1753550361314.png' },
-  { searchBrand: 'Chanel', searchName: 'Bleu de Chanel', imageFile: 'Chanel – Bleu de Chanel_1753550361314.png' },
-  { searchBrand: 'Burberry', searchName: 'Hero', imageFile: 'Burberry – Hero_1753550361314.png' },
-  { searchBrand: 'Burberry', searchName: 'My Burberry', imageFile: 'Burberry – My Burberry_1753550361315.png' },
-  { searchBrand: 'Burberry', searchName: 'Weekend', imageFile: 'Burberry – Weekend_1753550361315.png' },
-  { searchBrand: 'Bvlgari', searchName: 'BLV Pour Homme', imageFile: 'Bvlgari – BLV Pour Homme_1753550361315.png' },
-  { searchBrand: 'Bvlgari', searchName: 'Man In Black', imageFile: 'Bvlgari – Man In Black_1753550361316.png' },
-  { searchBrand: 'Bvlgari', searchName: 'Omnia Crystalline', imageFile: 'Bvlgari – Omnia Crystalline_1753550361316.png' },
-  { searchBrand: 'Bvlgari', searchName: 'Wood Essence', imageFile: 'Bvlgari – Wood Essence_1753550361316.png' },
-  { searchBrand: 'Byredo', searchName: 'Black Saffron', imageFile: 'Byredo – Black Saffron_1753550361317.png' },
-  { searchBrand: 'Byredo', searchName: 'Blanche', imageFile: 'Byredo – Blanche_1753550361317.png' },
-  { searchBrand: 'Byredo', searchName: 'Marijuana', imageFile: 'Byredo – Marijuana_1753550361317.png' },
-  { searchBrand: 'Byredo', searchName: 'Super Cedar', imageFile: 'Byredo - Super Cedar_1753550361317.png' },
-  { searchBrand: 'Byredo', searchName: 'Vanille Antique', imageFile: 'Byredo – Vanille Antique_1753550361318.png' }
+  { searchBrand: 'Calvin Klein', searchName: 'Euphoria', imageFile: 'Calvin Klein – Euphoria_1753550361311.webp' },
+  { searchBrand: 'Carolina Herrera', searchName: '212 VIP Black', imageFile: 'Carolina Herrera – 212 VIP Black_1753550361312.webp' },
+  { searchBrand: 'Carolina Herrera', searchName: 'Good Girl', imageFile: 'Carolina Herrera – Good Girl_1753550361313.webp' },
+  { searchBrand: 'Carolina Herrera', searchName: 'Very Good Girl', imageFile: 'Carolina Herrera – Very Good Girl_1753550361313.webp' },
+  { searchBrand: 'Chanel', searchName: 'Allure Homme Sport', imageFile: 'Chanel – Allure Homme Sport_1753550361313.webp' },
+  { searchBrand: 'Chanel', searchName: 'Allure Homme', imageFile: 'Chanel – Allure Homme_1753550361314.webp' },
+  { searchBrand: 'Chanel', searchName: 'Allure Sensuelle', imageFile: 'Chanel – Allure Sensuelle_1753550361314.webp' },
+  { searchBrand: 'Chanel', searchName: 'Bleu de Chanel', imageFile: 'Chanel – Bleu de Chanel_1753550361314.webp' },
+  { searchBrand: 'Burberry', searchName: 'Hero', imageFile: 'Burberry – Hero_1753550361314.webp' },
+  { searchBrand: 'Burberry', searchName: 'My Burberry', imageFile: 'Burberry – My Burberry_1753550361315.webp' },
+  { searchBrand: 'Burberry', searchName: 'Weekend', imageFile: 'Burberry – Weekend_1753550361315.webp' },
+  { searchBrand: 'Bvlgari', searchName: 'BLV Pour Homme', imageFile: 'Bvlgari – BLV Pour Homme_1753550361315.webp' },
+  { searchBrand: 'Bvlgari', searchName: 'Man In Black', imageFile: 'Bvlgari – Man In Black_1753550361316.webp' },
+  { searchBrand: 'Bvlgari', searchName: 'Omnia Crystalline', imageFile: 'Bvlgari – Omnia Crystalline_1753550361316.webp' },
+  { searchBrand: 'Bvlgari', searchName: 'Wood Essence', imageFile: 'Bvlgari – Wood Essence_1753550361316.webp' },
+  { searchBrand: 'Byredo', searchName: 'Black Saffron', imageFile: 'Byredo – Black Saffron_1753550361317.webp' },
+  { searchBrand: 'Byredo', searchName: 'Blanche', imageFile: 'Byredo – Blanche_1753550361317.webp' },
+  { searchBrand: 'Byredo', searchName: 'Marijuana', imageFile: 'Byredo – Marijuana_1753550361317.webp' },
+  { searchBrand: 'Byredo', searchName: 'Super Cedar', imageFile: 'Byredo - Super Cedar_1753550361317.webp' },
+  { searchBrand: 'Byredo', searchName: 'Vanille Antique', imageFile: 'Byredo – Vanille Antique_1753550361318.webp' }
 ];
 
 async function updateBatch2Images() {

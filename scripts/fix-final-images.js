@@ -20,7 +20,7 @@ async function fixImageAssignments() {
   if (siIntenseProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Armani – Si Intense_1753549689345.png' })
+      .set({ imageUrl: '/assets/Armani – Si Intense_1753549689345.webp' })
       .where(eq(products.id, siIntenseProducts[0].id));
     console.log('✅ Fixed Si Intense image');
   }
@@ -39,7 +39,7 @@ async function fixImageAssignments() {
   if (siProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Armani – Si_1753549689346.png' })
+      .set({ imageUrl: '/assets/Armani – Si_1753549689346.webp' })
       .where(eq(products.id, siProducts[0].id));
     console.log('✅ Fixed Si image');
   }
@@ -58,7 +58,7 @@ async function fixImageAssignments() {
   if (absolutelyProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Armani – Stronger With You Absolutely_1753549689346.png' })
+      .set({ imageUrl: '/assets/Armani – Stronger With You Absolutely_1753549689346.webp' })
       .where(eq(products.id, absolutelyProducts[0].id));
     console.log('✅ Fixed Stronger With You Absolutely image');
   }
@@ -77,7 +77,7 @@ async function fixImageAssignments() {
   if (regularProducts.length === 1) {
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Armani – Stronger With You_1753549689346.png' })
+      .set({ imageUrl: '/assets/Armani – Stronger With You_1753549689346.webp' })
       .where(eq(products.id, regularProducts[0].id));
     console.log('✅ Fixed Stronger With You image');
   }

@@ -5,7 +5,7 @@ import { eq, like, and } from 'drizzle-orm';
 // Final cleanup of remaining images from the current batch
 const finalCleanupMappings = [
   // Nasomatto (2 products)
-  { searchBrand: 'Nasomatto', searchName: 'Black Afgano', imageFile: 'Nasomatto – Black Afgano_1753552335219.png' },
+  { searchBrand: 'Nasomatto', searchName: 'Black Afgano', imageFile: 'Nasomatto – Black Afgano_1753552335219.webp' },
   { searchBrand: 'Nasomatto', searchName: 'Blamage', imageFile: 'Nasomatto – Blamage_1753552335219.png' },
   
   // Orto Parisi (9 products)
@@ -15,13 +15,13 @@ const finalCleanupMappings = [
   { searchBrand: 'Orto Parisi', searchName: 'Cuoium', imageFile: 'Orto Parisi – Cuoium_1753552335221.png' },
   { searchBrand: 'Orto Parisi', searchName: 'Megamare', imageFile: 'Orto Parisi – Megamare_1753552335222.png' },
   { searchBrand: 'Orto Parisi', searchName: 'Seminalis', imageFile: 'Orto Parisi – Seminalis_1753552335222.png' },
-  { searchBrand: 'Orto Parisi', searchName: 'Stercus', imageFile: 'Orto Parisi – Stercus_1753552335223.png' },
+  { searchBrand: 'Orto Parisi', searchName: 'Stercus', imageFile: 'Orto Parisi – Stercus_1753552335223.webp' },
   { searchBrand: 'Orto Parisi', searchName: 'Terroni', imageFile: 'Orto Parisi – Terroni_1753552335223.png' },
   { searchBrand: 'Orto Parisi', searchName: 'Viride', imageFile: 'Orto Parisi – Viride_1753552335224.png' },
   
   // Paco Rabanne (8 products) - handling both dash variations
   { searchBrand: 'Paco Rabanne', searchName: '1 Million', imageFile: 'Paco Rabanne – 1 Million_1753552335224.png' },
-  { searchBrand: 'Paco Rabanne', searchName: '1 Million Parfum', imageFile: 'Paco Rabanne - 1 Million_1753552335226.png' },
+  { searchBrand: 'Paco Rabanne', searchName: '1 Million Parfum', imageFile: 'Paco Rabanne - 1 Million_1753552335226.webp' },
   { searchBrand: 'Paco Rabanne', searchName: 'Fame', imageFile: 'Paco Rabanne – Fame_1753552335225.png' },
   { searchBrand: 'Paco Rabanne', searchName: 'Invictus', imageFile: 'Paco Rabanne – Invictus_1753552335225.png' },
   { searchBrand: 'Paco Rabanne', searchName: 'Olympea', imageFile: 'Paco Rabanne – Olympea_1753552335226.png' },

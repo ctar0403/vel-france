@@ -6,18 +6,18 @@ import { eq, or, and, like } from 'drizzle-orm';
 
 // Image mappings from the attached files
 const imageMapping = {
-  'Azzaro – Wanted By Night': 'Azzaro – Wanted By Night_1753549689340.png',
-  'Boss – Bottled Night': 'Boss – Bottled Night_1753549689341.png',
-  'Boss – Just Different': 'Boss – Just Different_1753549689341.png',
-  'Bottega Veneta – IX Violetta': 'Bottega Veneta – IX Violetta_1753549689342.png',
-  'Bottega Veneta – V Lauro': 'Bottega Veneta – V Lauro_1753549689342.png',
-  'Bottega Veneta – VII Lilla': 'Bottega Veneta – VII Lilla_1753549689342.png',
-  'Bottega Veneta – XV Salvia Blu': 'Bottega Veneta – XV Salvia Blu_1753549689343.png',
-  'Burberry – Goddess': 'Burberry – Goddess_1753549689343.png',
-  'Burberry – Her London Dream': 'Burberry – Her London Dream_1753549689344.png',
-  'Amouage - Honor Man': 'Amouage - Honor Man_1753549689344.png',
-  'Amouage - Interlude Woman': 'Amouage - Interlude Woman_1753549689344.png',
-  'Armani - Acqua Di Gio': 'Armani - Acqua Di Gio_1753549689344.png'
+  'Azzaro – Wanted By Night': 'Azzaro – Wanted By Night_1753549689340.webp',
+  'Boss – Bottled Night': 'Boss – Bottled Night_1753549689341.webp',
+  'Boss – Just Different': 'Boss – Just Different_1753549689341.webp',
+  'Bottega Veneta – IX Violetta': 'Bottega Veneta – IX Violetta_1753549689342.webp',
+  'Bottega Veneta – V Lauro': 'Bottega Veneta – V Lauro_1753549689342.webp',
+  'Bottega Veneta – VII Lilla': 'Bottega Veneta – VII Lilla_1753549689342.webp',
+  'Bottega Veneta – XV Salvia Blu': 'Bottega Veneta – XV Salvia Blu_1753549689343.webp',
+  'Burberry – Goddess': 'Burberry – Goddess_1753549689343.webp',
+  'Burberry – Her London Dream': 'Burberry – Her London Dream_1753549689344.webp',
+  'Amouage - Honor Man': 'Amouage - Honor Man_1753549689344.webp',
+  'Amouage - Interlude Woman': 'Amouage - Interlude Woman_1753549689344.webp',
+  'Armani - Acqua Di Gio': 'Armani - Acqua Di Gio_1753549689344.webp'
 };
 
 // Function to normalize product names for matching

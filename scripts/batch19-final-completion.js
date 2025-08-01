@@ -5,24 +5,24 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 19: Final completion - the last 8 luxury perfume products
 const batch19ImageMappings = [
   // Tom Ford luxury collection (3 products)
-  { searchBrand: 'Tom Ford', searchName: 'Noir', exactMatch: true, imageFile: 'Tom Ford – Noir_1753554890306.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Noir Extreme', imageFile: 'Tom Ford – Noir Extreme_1753554890307.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Ombre Leather', imageFile: 'Tom Ford – Ombre Leather_1753554897638.png' },
+  { searchBrand: 'Tom Ford', searchName: 'Noir', exactMatch: true, imageFile: 'Tom Ford – Noir_1753554890306.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Noir Extreme', imageFile: 'Tom Ford – Noir Extreme_1753554890307.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Ombre Leather', imageFile: 'Tom Ford – Ombre Leather_1753554897638.webp' },
   
   // Sospiro niche (1 product)
-  { searchBrand: 'Sospiro', searchName: 'Opera', imageFile: 'Sospiro – Opera_1753554911641.png' },
+  { searchBrand: 'Sospiro', searchName: 'Opera', imageFile: 'Sospiro – Opera_1753554911641.webp' },
   
   // Prada luxury (1 product)
-  { searchBrand: 'Prada', searchName: 'Paradoxe Intense', imageFile: 'Prada – Paradoxe Intense_1753554922131.png' },
+  { searchBrand: 'Prada', searchName: 'Paradoxe Intense', imageFile: 'Prada – Paradoxe Intense_1753554922131.webp' },
   
   // Parfums de Marly (1 product)
-  { searchBrand: 'Parfums de Marly', searchName: 'Pegasus', imageFile: 'Parfums de Marly – Pegasus_1753554933716.png' },
+  { searchBrand: 'Parfums de Marly', searchName: 'Pegasus', imageFile: 'Parfums de Marly – Pegasus_1753554933716.webp' },
   
   // Zadig & Voltaire (1 product)
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her! Undressed', imageFile: 'Zadig & Voltaire – This is Her! Undressed_1753554945220.png' },
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her! Undressed', imageFile: 'Zadig & Voltaire – This is Her! Undressed_1753554945220.webp' },
   
   // Yves Saint Laurent (1 product)
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Y', exactMatch: true, imageFile: 'Yves Saint Laurent – Y_1753554962130.png' }
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Y', exactMatch: true, imageFile: 'Yves Saint Laurent – Y_1753554962130.webp' }
 ];
 
 async function updateBatch19Images() {

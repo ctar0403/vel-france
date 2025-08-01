@@ -5,18 +5,18 @@ import { eq, like, and } from 'drizzle-orm';
 // The remaining images from the attached assets that were missed
 const missingImageMappings = [
   // Trussardi remaining (2 products)
-  { searchBrand: 'Trussardi', searchName: 'Passeggiata In Galleria', imageFile: 'Trussardi – Passeggiata In Galleria_1753552822891.png' },
-  { searchBrand: 'Trussardi', searchName: 'Via Fiori Chiari', imageFile: 'Trussardi – Via Fiari Chiori_1753552822892.png' },
+  { searchBrand: 'Trussardi', searchName: 'Passeggiata In Galleria', imageFile: 'Trussardi – Passeggiata In Galleria_1753552822891.webp' },
+  { searchBrand: 'Trussardi', searchName: 'Via Fiori Chiari', imageFile: 'Trussardi – Via Fiari Chiori_1753552822892.webp' },
   
   // Valentino (3 products)
-  { searchBrand: 'Valentino', searchName: 'Uomo Born In Roma Yellow Dream', imageFile: 'Valentino - Uomo Born In Roma Yellow Dream_1753552822893.png' },
-  { searchBrand: 'Valentino', searchName: 'Donna Coral Fantasy', imageFile: 'Valentino – Donna Coral Fantasy_1753552822892.png' },
-  { searchBrand: 'Valentino', searchName: 'Pink PP', imageFile: 'Valentino – Pink PP_1753552822893.png' },
+  { searchBrand: 'Valentino', searchName: 'Uomo Born In Roma Yellow Dream', imageFile: 'Valentino - Uomo Born In Roma Yellow Dream_1753552822893.webp' },
+  { searchBrand: 'Valentino', searchName: 'Donna Coral Fantasy', imageFile: 'Valentino – Donna Coral Fantasy_1753552822892.webp' },
+  { searchBrand: 'Valentino', searchName: 'Pink PP', imageFile: 'Valentino – Pink PP_1753552822893.webp' },
   
   // Versace remaining (3 products)
-  { searchBrand: 'Versace', searchName: 'Bright Crystal Absolu', imageFile: 'Versace – Bright Crystal Absolu_1753552822893.png' },
-  { searchBrand: 'Versace', searchName: 'Bright Crystal', imageFile: 'Versace – Bright Crystal_1753552822894.png' },
-  { searchBrand: 'Versace', searchName: 'Crystal Noir', imageFile: 'Versace – Crystal Noir_1753552822894.png' }
+  { searchBrand: 'Versace', searchName: 'Bright Crystal Absolu', imageFile: 'Versace – Bright Crystal Absolu_1753552822893.webp' },
+  { searchBrand: 'Versace', searchName: 'Bright Crystal', imageFile: 'Versace – Bright Crystal_1753552822894.webp' },
+  { searchBrand: 'Versace', searchName: 'Crystal Noir', imageFile: 'Versace – Crystal Noir_1753552822894.webp' }
 ];
 
 async function updateMissingImages() {

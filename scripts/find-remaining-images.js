@@ -51,7 +51,7 @@ async function findRemainingUpdates() {
     console.log(`\nFound 1 Million without image, updating...`);
     await db
       .update(products)
-      .set({ imageUrl: '/assets/Paco Rabanne – 1 Million_1753552335226.png' })
+      .set({ imageUrl: '/assets/Paco Rabanne – 1 Million_1753552335226.webp' })
       .where(eq(products.id, millionWithoutImage.id));
     console.log(`✅ Updated second 1 Million with different dash variant`);
   }

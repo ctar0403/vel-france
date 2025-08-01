@@ -5,18 +5,18 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 7: Missing images found
 const batch7ImageMappings = [
   // Mancera missing product
-  { searchBrand: 'Mancera', searchName: 'Coco Vanille', imageFile: 'Mancera – Coco Vanille_1753551815824.png' },
+  { searchBrand: 'Mancera', searchName: 'Coco Vanille', imageFile: 'Mancera – Coco Vanille_1753551815824.webp' },
   
   // Maison Francis Kurkdjian missing products
-  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Grand Soir', imageFile: 'Maison Francis Kurkdjian – Grand Soir_1753551815820.png' },
-  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Oud Satin Mood', imageFile: 'Maison Francis Kurkdjian – Oud Satin Mood_1753551815820.png' },
+  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Grand Soir', imageFile: 'Maison Francis Kurkdjian – Grand Soir_1753551815820.webp' },
+  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Oud Satin Mood', imageFile: 'Maison Francis Kurkdjian – Oud Satin Mood_1753551815820.webp' },
   
   // Maison Margiela products (5 products)
-  { searchBrand: 'Maison Margiela', searchName: 'Beach Walk', imageFile: 'Maison Margiela – Beach Walk_1753551815821.png' },
-  { searchBrand: 'Maison Margiela', searchName: 'Coffee Break', imageFile: 'Maison Margiela – Coffee Break_1753551815821.png' },
-  { searchBrand: 'Maison Margiela', searchName: 'Jazz Club', imageFile: 'Maison Margiela – Jazz Club_1753551815822.png' },
-  { searchBrand: 'Maison Margiela', searchName: 'Under The Lemon Trees', imageFile: 'Maison Margiela – Under The Lemon Trees_1753551815822.png' },
-  { searchBrand: 'Maison Margiela', searchName: 'When the Rain Stops', imageFile: 'Maison Margiela – When the Rain Stops_1753551815823.png' }
+  { searchBrand: 'Maison Margiela', searchName: 'Beach Walk', imageFile: 'Maison Margiela – Beach Walk_1753551815821.webp' },
+  { searchBrand: 'Maison Margiela', searchName: 'Coffee Break', imageFile: 'Maison Margiela – Coffee Break_1753551815821.webp' },
+  { searchBrand: 'Maison Margiela', searchName: 'Jazz Club', imageFile: 'Maison Margiela – Jazz Club_1753551815822.webp' },
+  { searchBrand: 'Maison Margiela', searchName: 'Under The Lemon Trees', imageFile: 'Maison Margiela – Under The Lemon Trees_1753551815822.webp' },
+  { searchBrand: 'Maison Margiela', searchName: 'When the Rain Stops', imageFile: 'Maison Margiela – When the Rain Stops_1753551815823.webp' }
 ];
 
 async function updateBatch7Images() {

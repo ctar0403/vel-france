@@ -5,16 +5,16 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 15: Final missing products with available images
 const batch15ImageMappings = [
   // Yves Saint Laurent (7 products)
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium', exactMatch: true, imageFile: 'Yves Saint Laurent – Black Opium_1753553187325.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium Extreme', imageFile: 'Yves Saint Laurent – Black Opium Extreme_1753553187324.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium Intense', imageFile: 'Yves Saint Laurent – Black Opium Intense_1753553187324.png' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium', exactMatch: true, imageFile: 'Yves Saint Laurent – Black Opium_1753553187325.webp' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium Extreme', imageFile: 'Yves Saint Laurent – Black Opium Extreme_1753553187324.webp' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Black Opium Intense', imageFile: 'Yves Saint Laurent – Black Opium Intense_1753553187324.webp' },
   { searchBrand: 'Yves Saint Laurent', searchName: 'La Nuit de l\'Homme', imageFile: 'Yves Saint Laurent – La Nuit de l\'Homme_1753553187325.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre', exactMatch: true, imageFile: 'Yves Saint Laurent – Libre_1753553187326.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre Intense', imageFile: 'Yves Saint Laurent – Libre Intense_1753553187326.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Y', exactMatch: true, imageFile: 'Yves Saint Laurent – Y_1753553187326.png' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre', exactMatch: true, imageFile: 'Yves Saint Laurent – Libre_1753553187326.webp' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre Intense', imageFile: 'Yves Saint Laurent – Libre Intense_1753553187326.webp' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Y', exactMatch: true, imageFile: 'Yves Saint Laurent – Y_1753553187326.webp' },
   
   // Zadig & Voltaire (1 product)
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her! Undressed', imageFile: 'Zadig & Voltaire – This is Her! Undressed_1753553187327.png' }
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her! Undressed', imageFile: 'Zadig & Voltaire – This is Her! Undressed_1753553187327.webp' }
 ];
 
 async function updateBatch15Images() {

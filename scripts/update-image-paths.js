@@ -7,62 +7,62 @@ const imageMappings = [
   {
     searchBrand: 'Azzaro',
     searchName: 'Wanted By Night',
-    imageFile: 'Azzaro – Wanted By Night_1753549689340.png'
+    imageFile: 'Azzaro – Wanted By Night_1753549689340.webp'
   },
   {
     searchBrand: 'Boss',
     searchName: 'Bottled Night',
-    imageFile: 'Boss – Bottled Night_1753549689341.png'
+    imageFile: 'Boss – Bottled Night_1753549689341.webp'
   },
   {
     searchBrand: 'Boss',
     searchName: 'Just Different',
-    imageFile: 'Boss – Just Different_1753549689341.png'
+    imageFile: 'Boss – Just Different_1753549689341.webp'
   },
   {
     searchBrand: 'Bottega Veneta',
     searchName: 'IX Violetta',
-    imageFile: 'Bottega Veneta – IX Violetta_1753549689342.png'
+    imageFile: 'Bottega Veneta – IX Violetta_1753549689342.webp'
   },
   {
     searchBrand: 'Bottega Veneta',
     searchName: 'V Lauro',
-    imageFile: 'Bottega Veneta – V Lauro_1753549689342.png'
+    imageFile: 'Bottega Veneta – V Lauro_1753549689342.webp'
   },
   {
     searchBrand: 'Bottega Veneta',
     searchName: 'VII Lilla',
-    imageFile: 'Bottega Veneta – VII Lilla_1753549689342.png'
+    imageFile: 'Bottega Veneta – VII Lilla_1753549689342.webp'
   },
   {
     searchBrand: 'Bottega Veneta',
     searchName: 'XV Salvia Blu',
-    imageFile: 'Bottega Veneta – XV Salvia Blu_1753549689343.png'
+    imageFile: 'Bottega Veneta – XV Salvia Blu_1753549689343.webp'
   },
   {
     searchBrand: 'Burberry',
     searchName: 'Goddess',
-    imageFile: 'Burberry – Goddess_1753549689343.png'
+    imageFile: 'Burberry – Goddess_1753549689343.webp'
   },
   {
     searchBrand: 'Burberry',
     searchName: 'Her London Dream',
-    imageFile: 'Burberry – Her London Dream_1753549689344.png'
+    imageFile: 'Burberry – Her London Dream_1753549689344.webp'
   },
   {
     searchBrand: 'Amouage',
     searchName: 'Honor Man',
-    imageFile: 'Amouage - Honor Man_1753549689344.png'
+    imageFile: 'Amouage - Honor Man_1753549689344.webp'
   },
   {
     searchBrand: 'Amouage',
     searchName: 'Interlude Woman',
-    imageFile: 'Amouage - Interlude Woman_1753549689344.png'
+    imageFile: 'Amouage - Interlude Woman_1753549689344.webp'
   },
   {
     searchBrand: 'Armani',
     searchName: 'Acqua di Gio',
-    imageFile: 'Armani - Acqua Di Gio_1753549689344.png'
+    imageFile: 'Armani - Acqua Di Gio_1753549689344.webp'
   }
 ];
 

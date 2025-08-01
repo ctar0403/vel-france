@@ -5,10 +5,10 @@ import { eq, like, and, isNull } from 'drizzle-orm';
 // Fix the 4 remaining images by targeting specific products that should have images
 const targetUpdates = [
   // Products that should definitely have images based on our available files
-  { searchBrand: 'Paco Rabanne', searchName: '1 Million Parfum', imageFile: 'Paco Rabanne – 1 Million_1753552335226.png' },
-  { searchBrand: 'Moschino', searchName: 'Toy 2 Bubble Gum', imageFile: 'Moschino - Bubblegum_1753552083125.png' },
-  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.png' },
-  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.png' }
+  { searchBrand: 'Paco Rabanne', searchName: '1 Million Parfum', imageFile: 'Paco Rabanne – 1 Million_1753552335226.webp' },
+  { searchBrand: 'Moschino', searchName: 'Toy 2 Bubble Gum', imageFile: 'Moschino - Bubblegum_1753552083125.webp' },
+  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.webp' },
+  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.webp' }
 ];
 
 async function fixMissing4Images() {

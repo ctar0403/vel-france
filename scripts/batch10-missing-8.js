@@ -5,18 +5,18 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 10: The 8 missing images
 const batch10ImageMappings = [
   // Montblanc (2 products)
-  { searchBrand: 'Montblanc', searchName: 'Legend', imageFile: 'Montblanc – Legend_1753552083125.png' },
-  { searchBrand: 'Montblanc', searchName: 'Legend Red', imageFile: 'Montblanc – Legend Red_1753552083125.png' },
+  { searchBrand: 'Montblanc', searchName: 'Legend', imageFile: 'Montblanc – Legend_1753552083125.webp' },
+  { searchBrand: 'Montblanc', searchName: 'Legend Red', imageFile: 'Montblanc – Legend Red_1753552083125.webp' },
   
   // Moschino (3 products)
-  { searchBrand: 'Moschino', searchName: 'Bubblegum', imageFile: 'Moschino - Bubblegum_1753552083125.png' },
-  { searchBrand: 'Moschino', searchName: 'Toy 2', imageFile: 'Moschino - Toy 2_1753552083126.png' },
-  { searchBrand: 'Moschino', searchName: 'Toy Boy', imageFile: 'Moschino - Toy Boy_1753552083126.png' },
+  { searchBrand: 'Moschino', searchName: 'Bubblegum', imageFile: 'Moschino - Bubblegum_1753552083125.webp' },
+  { searchBrand: 'Moschino', searchName: 'Toy 2', imageFile: 'Moschino - Toy 2_1753552083126.webp' },
+  { searchBrand: 'Moschino', searchName: 'Toy Boy', imageFile: 'Moschino - Toy Boy_1753552083126.webp' },
   
   // Mugler (3 products)
-  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.png' },
-  { searchBrand: 'Mugler', searchName: 'Aura', imageFile: 'Mugler – Aura_1753552083127.png' },
-  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.png' }
+  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.webp' },
+  { searchBrand: 'Mugler', searchName: 'Aura', imageFile: 'Mugler – Aura_1753552083127.webp' },
+  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.webp' }
 ];
 
 async function updateBatch10Images() {

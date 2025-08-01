@@ -5,14 +5,14 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 12 Fix: The remaining images that weren't processed due to script error
 const remainingImageMappings = [
   // Tom Ford remaining (2 products)
-  { searchBrand: 'Tom Ford', searchName: 'Vanilla Sex', imageFile: 'Tom Ford – Vanilla S_x_1753552822889.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Vanille Fatale', imageFile: 'Tom Ford – Vanille Fatale_1753552822889.png' },
+  { searchBrand: 'Tom Ford', searchName: 'Vanilla Sex', imageFile: 'Tom Ford – Vanilla S_x_1753552822889.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Vanille Fatale', imageFile: 'Tom Ford – Vanille Fatale_1753552822889.webp' },
   
   // Trussardi collection (4 products)
-  { searchBrand: 'Trussardi', searchName: 'Behind The Curtain', imageFile: 'Trussardi – Behind The Curtain_1753552822890.png' },
-  { searchBrand: 'Trussardi', searchName: 'Donna', imageFile: 'Trussardi – Donna_1753552822890.png' },
-  { searchBrand: 'Trussardi', searchName: 'Limitless Shopping', imageFile: 'Trussardi – Limitless Shopping_1753552822891.png' },
-  { searchBrand: 'Trussardi', searchName: 'Musc Noir', imageFile: 'Trussardi – Musc Noir_1753552822891.png' }
+  { searchBrand: 'Trussardi', searchName: 'Behind The Curtain', imageFile: 'Trussardi – Behind The Curtain_1753552822890.webp' },
+  { searchBrand: 'Trussardi', searchName: 'Donna', imageFile: 'Trussardi – Donna_1753552822890.webp' },
+  { searchBrand: 'Trussardi', searchName: 'Limitless Shopping', imageFile: 'Trussardi – Limitless Shopping_1753552822891.webp' },
+  { searchBrand: 'Trussardi', searchName: 'Musc Noir', imageFile: 'Trussardi – Musc Noir_1753552822891.webp' }
 ];
 
 async function updateRemainingBatch12Images() {

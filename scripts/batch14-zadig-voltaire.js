@@ -5,8 +5,8 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 14: Additional Zadig & Voltaire products
 const batch14ImageMappings = [
   // Zadig & Voltaire (2 products)
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Us!', imageFile: 'Zadig & Voltaire – This is Us!_1753553429566.png' },
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Him', imageFile: 'Zadig & Voltaire – This is Him_1753553429567.png' }
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Us!', imageFile: 'Zadig & Voltaire – This is Us!_1753553429566.webp' },
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Him', imageFile: 'Zadig & Voltaire – This is Him_1753553429567.webp' }
 ];
 
 async function updateBatch14Images() {

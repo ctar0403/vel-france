@@ -5,16 +5,16 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 16: Process remaining available images from attached_assets
 const batch16ImageMappings = [
   // Versace
-  { searchBrand: 'Versace', searchName: 'Bright Crystal', exactMatch: true, imageFile: 'Versace – Bright Crystal_1753552822894.png' },
+  { searchBrand: 'Versace', searchName: 'Bright Crystal', exactMatch: true, imageFile: 'Versace – Bright Crystal_1753552822894.webp' },
   
   // Tom Ford products available in assets
-  { searchBrand: 'Tom Ford', searchName: 'Oud Wood', imageFile: 'Tom Ford – Oud Wood_1753552822887.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Rose Prick', imageFile: 'Tom Ford – Rose Prick_1753552822888.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Santal Blush', imageFile: 'Tom Ford - Santal Blush_1753552822888.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Soleil Brulant', imageFile: 'Tom Ford – Soleil Brulant_1753552822888.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Tobacco Vanille', imageFile: 'Tom Ford – Tobacco Vanille_1753552822889.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Vanilla Sex', imageFile: 'Tom Ford – Vanilla S_x_1753552822889.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Vanille Fatale', imageFile: 'Tom Ford – Vanille Fatale_1753552822889.png' }
+  { searchBrand: 'Tom Ford', searchName: 'Oud Wood', imageFile: 'Tom Ford – Oud Wood_1753552822887.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Rose Prick', imageFile: 'Tom Ford – Rose Prick_1753552822888.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Santal Blush', imageFile: 'Tom Ford - Santal Blush_1753552822888.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Soleil Brulant', imageFile: 'Tom Ford – Soleil Brulant_1753552822888.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Tobacco Vanille', imageFile: 'Tom Ford – Tobacco Vanille_1753552822889.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Vanilla Sex', imageFile: 'Tom Ford – Vanilla S_x_1753552822889.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Vanille Fatale', imageFile: 'Tom Ford – Vanille Fatale_1753552822889.webp' }
 ];
 
 async function updateBatch16Images() {

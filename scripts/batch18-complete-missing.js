@@ -5,22 +5,22 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 18: Complete the missing products from your full list
 const batch18ImageMappings = [
   // Parfums de Marly (1 product)
-  { searchBrand: 'Parfums de Marly', searchName: 'Layton', imageFile: 'Parfums de Marly – Layton_1753554601478.png' },
+  { searchBrand: 'Parfums de Marly', searchName: 'Layton', imageFile: 'Parfums de Marly – Layton_1753554601478.webp' },
   
   // Sospiro niche (1 product)
-  { searchBrand: 'Sospiro', searchName: 'Erba Pura', imageFile: 'Sospiro – Erba Pura_1753554563492.png' },
+  { searchBrand: 'Sospiro', searchName: 'Erba Pura', imageFile: 'Sospiro – Erba Pura_1753554563492.webp' },
   
   // Tiziana Terenzi (1 product)
-  { searchBrand: 'Tiziana Terenzi', searchName: 'Kirke', imageFile: 'Tiziana Terenzi – Kirke_1753554583293.png' },
+  { searchBrand: 'Tiziana Terenzi', searchName: 'Kirke', imageFile: 'Tiziana Terenzi – Kirke_1753554583293.webp' },
   
   // Tom Ford (2 products)
-  { searchBrand: 'Tom Ford', searchName: 'F*cking Fabulous', imageFile: 'Tom Ford – F_cking Fabulous_1753554574949.png' },
-  { searchBrand: 'Tom Ford', searchName: 'Lost Cherry', imageFile: 'Tom Ford – Lost Cherry_1753554632306.png' },
+  { searchBrand: 'Tom Ford', searchName: 'F*cking Fabulous', imageFile: 'Tom Ford – F_cking Fabulous_1753554574949.webp' },
+  { searchBrand: 'Tom Ford', searchName: 'Lost Cherry', imageFile: 'Tom Ford – Lost Cherry_1753554632306.webp' },
   
   // YSL additional (3 products) - Updated versions
   { searchBrand: 'Yves Saint Laurent', searchName: 'La Nuit de l\'Homme', imageFile: 'Yves Saint Laurent – La Nuit de l\'Homme_1753554591160.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre', exactMatch: true, imageFile: 'Yves Saint Laurent – Libre_1753554613583.png' },
-  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre Intense', imageFile: 'Yves Saint Laurent – Libre Intense_1753554617007.png' }
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre', exactMatch: true, imageFile: 'Yves Saint Laurent – Libre_1753554613583.webp' },
+  { searchBrand: 'Yves Saint Laurent', searchName: 'Libre Intense', imageFile: 'Yves Saint Laurent – Libre Intense_1753554617007.webp' }
 ];
 
 async function updateBatch18Images() {

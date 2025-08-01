@@ -5,16 +5,16 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 8: Final 8 missing images
 const batch8ImageMappings = [
   // Jean Paul Gaultier missing products (7 products)
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'La Belle', imageFile: 'Jean Paul Gaultier – La Belle_1753551627392.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Beau EDP', imageFile: 'Jean Paul Gaultier – Le Beau EDP_1753551627393.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Beau EDT', imageFile: 'Jean Paul Gaultier – Le Beau EDT_1753551627393.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male', imageFile: 'Jean Paul Gaultier – Le Male_1753551627396.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male Elixir', imageFile: 'Jean Paul Gaultier – Le Male Elixir_1753551627394.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male Le Parfum', imageFile: 'Jean Paul Gaultier – Le Male Le Parfum_1753551627395.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal Gold', imageFile: 'Jean Paul Gaultier – Scandal Gold_1753551627396.png' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'La Belle', imageFile: 'Jean Paul Gaultier – La Belle_1753551627392.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Beau EDP', imageFile: 'Jean Paul Gaultier – Le Beau EDP_1753551627393.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Beau EDT', imageFile: 'Jean Paul Gaultier – Le Beau EDT_1753551627393.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male', imageFile: 'Jean Paul Gaultier – Le Male_1753551627396.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male Elixir', imageFile: 'Jean Paul Gaultier – Le Male Elixir_1753551627394.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Le Male Le Parfum', imageFile: 'Jean Paul Gaultier – Le Male Le Parfum_1753551627395.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal Gold', imageFile: 'Jean Paul Gaultier – Scandal Gold_1753551627396.webp' },
   
   // Le Labo missing product (1 product)
-  { searchBrand: 'Le Labo', searchName: 'Santal 33', imageFile: 'Le Labo – Santal 33_1753551627392.png' }
+  { searchBrand: 'Le Labo', searchName: 'Santal 33', imageFile: 'Le Labo – Santal 33_1753551627392.webp' }
 ];
 
 async function updateBatch8Images() {

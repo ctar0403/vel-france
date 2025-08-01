@@ -5,40 +5,40 @@ import { eq, like, and } from 'drizzle-orm';
 // Complete remaining images from the current batch
 const completeRemainingMappings = [
   // Marc Antoine Barrois (3 products)
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Encelade', imageFile: 'Marc Antoine Barrois – Encelade_1753552083120.png' },
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Ganymede', imageFile: 'Marc Antoine Barrois – Ganymede_1753552083121.png' },
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Tilia', imageFile: 'Marc Antoine Barrois – Tilia_1753552083121.png' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Encelade', imageFile: 'Marc Antoine Barrois – Encelade_1753552083120.webp' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Ganymede', imageFile: 'Marc Antoine Barrois – Ganymede_1753552083121.webp' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Tilia', imageFile: 'Marc Antoine Barrois – Tilia_1753552083121.webp' },
   
   // Marc Jacobs (3 products)
-  { searchBrand: 'Marc Jacobs', searchName: 'Daisy', imageFile: 'Marc Jacobs – Daisy_1753552083122.png' },
-  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.png' },
-  { searchBrand: 'Marc Jacobs', searchName: 'Decadence Rouge Noir', imageFile: 'Marc Jacobs – Decadence Rouge Noir Edition_1753552083122.png' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Daisy', imageFile: 'Marc Jacobs – Daisy_1753552083122.webp' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.webp' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Decadence Rouge Noir', imageFile: 'Marc Jacobs – Decadence Rouge Noir Edition_1753552083122.webp' },
   
   // Memo (2 products)
-  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.png' },
-  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.png' },
+  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.webp' },
+  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.webp' },
   
   // Molecule (3 products)
-  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.png' },
-  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.png' },
-  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.png' },
+  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.webp' },
+  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.webp' },
+  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.webp' },
   
   // Montblanc (2 products)
-  { searchBrand: 'Montblanc', searchName: 'Legend', imageFile: 'Montblanc – Legend_1753552083125.png' },
-  { searchBrand: 'Montblanc', searchName: 'Legend Red', imageFile: 'Montblanc – Legend Red_1753552083125.png' },
+  { searchBrand: 'Montblanc', searchName: 'Legend', imageFile: 'Montblanc – Legend_1753552083125.webp' },
+  { searchBrand: 'Montblanc', searchName: 'Legend Red', imageFile: 'Montblanc – Legend Red_1753552083125.webp' },
   
   // Moschino (3 products)
-  { searchBrand: 'Moschino', searchName: 'Toy 2 Bubble Gum', imageFile: 'Moschino - Bubblegum_1753552083125.png' },
-  { searchBrand: 'Moschino', searchName: 'Toy 2', imageFile: 'Moschino - Toy 2_1753552083126.png' },
-  { searchBrand: 'Moschino', searchName: 'Toy Boy', imageFile: 'Moschino - Toy Boy_1753552083126.png' },
+  { searchBrand: 'Moschino', searchName: 'Toy 2 Bubble Gum', imageFile: 'Moschino - Bubblegum_1753552083125.webp' },
+  { searchBrand: 'Moschino', searchName: 'Toy 2', imageFile: 'Moschino - Toy 2_1753552083126.webp' },
+  { searchBrand: 'Moschino', searchName: 'Toy Boy', imageFile: 'Moschino - Toy Boy_1753552083126.webp' },
   
   // Mugler (3 products)
-  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.png' },
-  { searchBrand: 'Mugler', searchName: 'Aura', imageFile: 'Mugler – Aura_1753552083127.png' },
-  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.png' },
+  { searchBrand: 'Mugler', searchName: 'Angel', imageFile: 'Mugler - Angel_1753552083126.webp' },
+  { searchBrand: 'Mugler', searchName: 'Aura', imageFile: 'Mugler – Aura_1753552083127.webp' },
+  { searchBrand: 'Mugler', searchName: 'Nova', imageFile: 'Mugler - Nova_1753552083127.webp' },
   
   // Narciso Rodriguez (1 product)
-  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her', imageFile: 'Narciso Rodriguez – For Her_1753552335218.png' }
+  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her', imageFile: 'Narciso Rodriguez – For Her_1753552335218.webp' }
 ];
 
 async function updateCompleteRemainingImages() {

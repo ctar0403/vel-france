@@ -5,30 +5,30 @@ import { eq, like, and } from 'drizzle-orm';
 // All 20 image mappings from batch 3
 const batch3ImageMappings = [
   // Chanel products (7 products)
-  { searchBrand: 'Chanel', searchName: 'Chance Eau Tendre', imageFile: 'Chanel – Chance Eau Tendre_1753551242321.png' },
-  { searchBrand: 'Chanel', searchName: 'Coco Eau de Parfum', imageFile: 'Chanel – Coco Eau de Parfum_1753551242322.png' },
-  { searchBrand: 'Chanel', searchName: 'Cristalle', imageFile: 'Chanel – Cristalle_1753551242323.png' },
-  { searchBrand: 'Chanel', searchName: 'Gabrielle', imageFile: 'Chanel – Gabrielle_1753551242323.png' },
-  { searchBrand: 'Chanel', searchName: 'N5', imageFile: 'Chanel – N5_1753551242324.png' },
-  { searchBrand: 'Chanel', searchName: 'Chance Eau de Parfum', imageFile: 'Chanel – Chance Eau de Parfum_1753551242330.png' },
-  { searchBrand: 'Chanel', searchName: 'Chance Eau Fraiche', imageFile: 'Chanel – Chance Eau Fraiche_1753551242331.png' },
+  { searchBrand: 'Chanel', searchName: 'Chance Eau Tendre', imageFile: 'Chanel – Chance Eau Tendre_1753551242321.webp' },
+  { searchBrand: 'Chanel', searchName: 'Coco Eau de Parfum', imageFile: 'Chanel – Coco Eau de Parfum_1753551242322.webp' },
+  { searchBrand: 'Chanel', searchName: 'Cristalle', imageFile: 'Chanel – Cristalle_1753551242323.webp' },
+  { searchBrand: 'Chanel', searchName: 'Gabrielle', imageFile: 'Chanel – Gabrielle_1753551242323.webp' },
+  { searchBrand: 'Chanel', searchName: 'N5', imageFile: 'Chanel – N5_1753551242324.webp' },
+  { searchBrand: 'Chanel', searchName: 'Chance Eau de Parfum', imageFile: 'Chanel – Chance Eau de Parfum_1753551242330.webp' },
+  { searchBrand: 'Chanel', searchName: 'Chance Eau Fraiche', imageFile: 'Chanel – Chance Eau Fraiche_1753551242331.webp' },
   
   // Creed products (4 products)
-  { searchBrand: 'Creed', searchName: 'Aventus', imageFile: 'Creed – Aventus_1753551242324.png' },
-  { searchBrand: 'Creed', searchName: 'Queen Of Silk', imageFile: 'Creed – Queen Of Silk_1753551242324.png' },
-  { searchBrand: 'Creed', searchName: 'Viking', imageFile: 'Creed - Viking_1753551242325.png' },
-  { searchBrand: 'Creed', searchName: 'Wind Flowers', imageFile: 'Creed – Wind Flowers_1753551242325.png' },
+  { searchBrand: 'Creed', searchName: 'Aventus', imageFile: 'Creed – Aventus_1753551242324.webp' },
+  { searchBrand: 'Creed', searchName: 'Queen Of Silk', imageFile: 'Creed – Queen Of Silk_1753551242324.webp' },
+  { searchBrand: 'Creed', searchName: 'Viking', imageFile: 'Creed - Viking_1753551242325.webp' },
+  { searchBrand: 'Creed', searchName: 'Wind Flowers', imageFile: 'Creed – Wind Flowers_1753551242325.webp' },
   
   // Dior products (9 products)  
-  { searchBrand: 'Dior', searchName: 'Addict Eau De Parfum', imageFile: 'Dior – Addict Eau De Parfum_1753551242326.png' },
-  { searchBrand: 'Dior', searchName: 'Addict Eau Fraiche', imageFile: 'Dior – Addict Eau Fraiche_1753551242326.png' },
-  { searchBrand: 'Dior', searchName: 'Fahrenheit', imageFile: 'Dior – Fahrenheit_1753551242327.png' },
-  { searchBrand: 'Dior', searchName: 'Homme Intense', imageFile: 'Dior – Homme Intense_1753551242327.png' },
+  { searchBrand: 'Dior', searchName: 'Addict Eau De Parfum', imageFile: 'Dior – Addict Eau De Parfum_1753551242326.webp' },
+  { searchBrand: 'Dior', searchName: 'Addict Eau Fraiche', imageFile: 'Dior – Addict Eau Fraiche_1753551242326.webp' },
+  { searchBrand: 'Dior', searchName: 'Fahrenheit', imageFile: 'Dior – Fahrenheit_1753551242327.webp' },
+  { searchBrand: 'Dior', searchName: 'Homme Intense', imageFile: 'Dior – Homme Intense_1753551242327.webp' },
   { searchBrand: 'Dior', searchName: "J'adore", imageFile: "Dior – J'adore_1753551242328.png" },
-  { searchBrand: 'Dior', searchName: 'Joy', imageFile: 'Dior – Joy_1753551242329.png' },
-  { searchBrand: 'Dior', searchName: 'Joy Intense', imageFile: 'Dior – Joy Intense_1753551242328.png' },
-  { searchBrand: 'Dior', searchName: 'Miss Dior Blooming Bouquet', imageFile: 'Dior – Miss Dior Blooming Bouquet_1753551242330.png' },
-  { searchBrand: 'Dior', searchName: 'Miss Dior', imageFile: 'Dior – Miss Dior (EDP)_1753551242329.png' }
+  { searchBrand: 'Dior', searchName: 'Joy', imageFile: 'Dior – Joy_1753551242329.webp' },
+  { searchBrand: 'Dior', searchName: 'Joy Intense', imageFile: 'Dior – Joy Intense_1753551242328.webp' },
+  { searchBrand: 'Dior', searchName: 'Miss Dior Blooming Bouquet', imageFile: 'Dior – Miss Dior Blooming Bouquet_1753551242330.webp' },
+  { searchBrand: 'Dior', searchName: 'Miss Dior', imageFile: 'Dior – Miss Dior (EDP)_1753551242329.webp' }
 ];
 
 async function updateBatch3Images() {

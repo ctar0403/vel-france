@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Shield, Lock } from "lucide-react";
-import logoImage from "@assets/1_1753538677596.png";
+import logoImage from "@assets/1_1753538677596.webp";
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();

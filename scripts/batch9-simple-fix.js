@@ -5,19 +5,19 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 9: Remaining images to process
 const remainingMappings = [
   // Narciso Rodriguez - match "For Her" instead of "For Her Black"
-  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her', imageFile: 'Narciso Rodriguez – For Her (Black)_1753552083120.png' },
+  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her', imageFile: 'Narciso Rodriguez – For Her (Black)_1753552083120.webp' },
   
   // Marc Jacobs regular Decadence (not Rouge Noir)
-  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.png' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.webp' },
   
   // Memo products
-  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.png' },
-  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.png' },
+  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.webp' },
+  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.webp' },
   
   // Molecule products
-  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.png' },
-  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.png' },
-  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.png' }
+  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.webp' },
+  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.webp' },
+  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.webp' }
 ];
 
 async function updateRemainingImages() {

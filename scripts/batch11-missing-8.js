@@ -5,15 +5,15 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 11 Missing: The 8 remaining images
 const missingImageMappings = [
   // Orto Parisi remaining (2 products)
-  { searchBrand: 'Orto Parisi', searchName: 'Terroni', imageFile: 'Orto Parisi – Terroni_1753552335224.png' },
-  { searchBrand: 'Orto Parisi', searchName: 'Viride', imageFile: 'Orto Parisi – Viride_1753552335225.png' },
+  { searchBrand: 'Orto Parisi', searchName: 'Terroni', imageFile: 'Orto Parisi – Terroni_1753552335224.webp' },
+  { searchBrand: 'Orto Parisi', searchName: 'Viride', imageFile: 'Orto Parisi – Viride_1753552335225.webp' },
   
   // Paco Rabanne collection (6 products) - handle duplicate 1 Million files
-  { searchBrand: 'Paco Rabanne', searchName: '1 Million', imageFile: 'Paco Rabanne - 1 Million_1753552335226.png' },
-  { searchBrand: 'Paco Rabanne', searchName: 'Fame', imageFile: 'Paco Rabanne - Fame_1753552335227.png' },
-  { searchBrand: 'Paco Rabanne', searchName: 'Invictus', imageFile: 'Paco Rabanne – Invictus_1753552335227.png' },
-  { searchBrand: 'Paco Rabanne', searchName: 'Olympea', imageFile: 'Paco Rabanne – Olympea_1753552335228.png' },
-  { searchBrand: 'Paco Rabanne', searchName: 'Phantom', imageFile: 'Paco Rabanne - Phantom_1753552335229.png' }
+  { searchBrand: 'Paco Rabanne', searchName: '1 Million', imageFile: 'Paco Rabanne - 1 Million_1753552335226.webp' },
+  { searchBrand: 'Paco Rabanne', searchName: 'Fame', imageFile: 'Paco Rabanne - Fame_1753552335227.webp' },
+  { searchBrand: 'Paco Rabanne', searchName: 'Invictus', imageFile: 'Paco Rabanne – Invictus_1753552335227.webp' },
+  { searchBrand: 'Paco Rabanne', searchName: 'Olympea', imageFile: 'Paco Rabanne – Olympea_1753552335228.webp' },
+  { searchBrand: 'Paco Rabanne', searchName: 'Phantom', imageFile: 'Paco Rabanne - Phantom_1753552335229.webp' }
 ];
 
 async function updateMissingImages() {

@@ -5,24 +5,24 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 13: Luxury finale - Zadig & Voltaire, Versace, Viktor & Rolf, Xerjoff collection
 const batch13ImageMappings = [
   // Zadig & Voltaire (2 products)
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her', imageFile: 'Zadig & Voltaire – This is Her_1753553187318.png' },
-  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Him! Vibes of Freedom', imageFile: 'Zadig & Voltaire – This is Him! Vibes of Freedom_1753553187319.png' },
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Her', imageFile: 'Zadig & Voltaire – This is Her_1753553187318.webp' },
+  { searchBrand: 'Zadig & Voltaire', searchName: 'This is Him! Vibes of Freedom', imageFile: 'Zadig & Voltaire – This is Him! Vibes of Freedom_1753553187319.webp' },
   
   // Versace (3 products)
-  { searchBrand: 'Versace', searchName: 'Eros Flame', imageFile: 'Versace – Eros Flame_1753553187319.png' },
-  { searchBrand: 'Versace', searchName: 'Eros', imageFile: 'Versace - Eros_1753553187320.png' },
-  { searchBrand: 'Versace', searchName: 'Pour Femme Dylan Purple', imageFile: 'Versace – Pour Femme Dylan Purple_1753553187320.png' },
+  { searchBrand: 'Versace', searchName: 'Eros Flame', imageFile: 'Versace – Eros Flame_1753553187319.webp' },
+  { searchBrand: 'Versace', searchName: 'Eros', imageFile: 'Versace - Eros_1753553187320.webp' },
+  { searchBrand: 'Versace', searchName: 'Pour Femme Dylan Purple', imageFile: 'Versace – Pour Femme Dylan Purple_1753553187320.webp' },
   
   // Viktor & Rolf (1 product)
-  { searchBrand: 'Viktor & Rolf', searchName: 'Spicebomb Extreme', imageFile: 'Viktor&Rolf – Spicebomb Extreme_1753553187321.png' },
+  { searchBrand: 'Viktor & Rolf', searchName: 'Spicebomb Extreme', imageFile: 'Viktor&Rolf – Spicebomb Extreme_1753553187321.webp' },
   
   // Xerjoff luxury collection (6 products)
-  { searchBrand: 'Xerjoff', searchName: 'Accento', imageFile: 'Xerjoff – Accento_1753553187321.png' },
-  { searchBrand: 'Xerjoff', searchName: 'Erba Pura', imageFile: 'Xerjoff – Erba Pura_1753553187322.png' },
-  { searchBrand: 'Xerjoff', searchName: 'More Than Words', imageFile: 'Xerjoff – More Than Words_1753553187322.png' },
-  { searchBrand: 'Xerjoff', searchName: 'Naxos 1861', imageFile: 'Xerjoff – Naxos 1861_1753553187323.png' },
-  { searchBrand: 'Xerjoff', searchName: 'Opera', imageFile: 'Xerjoff – Opera_1753553187323.png' },
-  { searchBrand: 'Xerjoff', searchName: 'Oud Stars Luxor', imageFile: 'Xerjoff – Oud Stars Luxor_1753553187324.png' }
+  { searchBrand: 'Xerjoff', searchName: 'Accento', imageFile: 'Xerjoff – Accento_1753553187321.webp' },
+  { searchBrand: 'Xerjoff', searchName: 'Erba Pura', imageFile: 'Xerjoff – Erba Pura_1753553187322.webp' },
+  { searchBrand: 'Xerjoff', searchName: 'More Than Words', imageFile: 'Xerjoff – More Than Words_1753553187322.webp' },
+  { searchBrand: 'Xerjoff', searchName: 'Naxos 1861', imageFile: 'Xerjoff – Naxos 1861_1753553187323.webp' },
+  { searchBrand: 'Xerjoff', searchName: 'Opera', imageFile: 'Xerjoff – Opera_1753553187323.webp' },
+  { searchBrand: 'Xerjoff', searchName: 'Oud Stars Luxor', imageFile: 'Xerjoff – Oud Stars Luxor_1753553187324.webp' }
 ];
 
 async function updateBatch13Images() {

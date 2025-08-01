@@ -28,14 +28,14 @@ async function fixGoodGirlImages() {
     if (product.name === 'Good Girl' && !product.imageUrl) {
       await db
         .update(products)
-        .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.png' })
+        .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.webp' })
         .where(eq(products.id, product.id));
       console.log('✅ Assigned Good Girl image to regular Good Girl');
     } else if (product.name === 'Good Girl Supreme' && !product.imageUrl) {
       // Use the same Good Girl image for Supreme since we don't have a specific Supreme image
       await db
         .update(products)
-        .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.png' })
+        .set({ imageUrl: '/assets/Carolina Herrera – Good Girl_1753550361313.webp' })
         .where(eq(products.id, product.id));
       console.log('✅ Assigned Good Girl image to Good Girl Supreme');
     }

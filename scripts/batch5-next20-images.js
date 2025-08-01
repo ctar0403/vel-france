@@ -5,22 +5,22 @@ import { eq, like, and } from 'drizzle-orm';
 // Next 20 images - batch 5
 const batch5ImageMappings = [
   // Jean Paul Gaultier (2 products)
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal Pour Homme', imageFile: 'Jean Paul Gaultier – Scandal Pour Homme_1753551627384.png' },
-  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal', imageFile: 'Jean Paul Gaultier – Scandal_1753551627385.png' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal Pour Homme', imageFile: 'Jean Paul Gaultier – Scandal Pour Homme_1753551627384.webp' },
+  { searchBrand: 'Jean Paul Gaultier', searchName: 'Scandal', imageFile: 'Jean Paul Gaultier – Scandal_1753551627385.webp' },
   
   // Kilian products (7 products)
   { searchBrand: 'Kilian', searchName: "Angels' Share", imageFile: 'Kilian – Angels\' Share_1753551627385.png' },
-  { searchBrand: 'Kilian', searchName: 'Bad Boys Are No Good But Good Boys Are No Fun', imageFile: 'Kilian – Bad Boys Are No Good But Good Boys Are No Fun_1753551627386.png' },
-  { searchBrand: 'Kilian', searchName: 'Black Phantom', imageFile: 'Kilian – Black Phantom_1753551627387.png' },
-  { searchBrand: 'Kilian', searchName: 'Good Girl Gone Bad Extreme', imageFile: 'Kilian – Good Girl Gone Bad Extreme_1753551627388.png' },
-  { searchBrand: 'Kilian', searchName: 'Good Girl Gone Bad', imageFile: 'Kilian – Good Girl Gone Bad_1753551627389.png' },
-  { searchBrand: 'Kilian', searchName: 'Rolling In Love', imageFile: 'Kilian – Rolling In Love_1753551627389.png' },
-  { searchBrand: 'Kilian', searchName: 'Roses On Ice', imageFile: 'Kilian – Roses On Ice_1753551627390.png' },
+  { searchBrand: 'Kilian', searchName: 'Bad Boys Are No Good But Good Boys Are No Fun', imageFile: 'Kilian – Bad Boys Are No Good But Good Boys Are No Fun_1753551627386.webp' },
+  { searchBrand: 'Kilian', searchName: 'Black Phantom', imageFile: 'Kilian – Black Phantom_1753551627387.webp' },
+  { searchBrand: 'Kilian', searchName: 'Good Girl Gone Bad Extreme', imageFile: 'Kilian – Good Girl Gone Bad Extreme_1753551627388.webp' },
+  { searchBrand: 'Kilian', searchName: 'Good Girl Gone Bad', imageFile: 'Kilian – Good Girl Gone Bad_1753551627389.webp' },
+  { searchBrand: 'Kilian', searchName: 'Rolling In Love', imageFile: 'Kilian – Rolling In Love_1753551627389.webp' },
+  { searchBrand: 'Kilian', searchName: 'Roses On Ice', imageFile: 'Kilian – Roses On Ice_1753551627390.webp' },
   
   // Lancome products (3 products)
-  { searchBrand: 'Lancome', searchName: 'Climat', imageFile: 'Lancome – Climat_1753551627390.png' },
-  { searchBrand: 'Lancome', searchName: 'Idole', imageFile: 'Lancome – Idole_1753551627391.png' },
-  { searchBrand: 'Lancome', searchName: 'Magie Noire', imageFile: 'Lancome – Magie Noire_1753551627391.png' }
+  { searchBrand: 'Lancome', searchName: 'Climat', imageFile: 'Lancome – Climat_1753551627390.webp' },
+  { searchBrand: 'Lancome', searchName: 'Idole', imageFile: 'Lancome – Idole_1753551627391.webp' },
+  { searchBrand: 'Lancome', searchName: 'Magie Noire', imageFile: 'Lancome – Magie Noire_1753551627391.webp' }
 ];
 
 async function updateBatch5Images() {

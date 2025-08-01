@@ -6,16 +6,16 @@ import { eq, like, and } from 'drizzle-orm';
 const finalImageMappings = [
   // Givenchy products (2 products)
   { searchBrand: 'Givenchy', searchName: "L'Interdit Eau de Parfum Rouge", imageFile: "Givenchy – L'Interdit Eau de Parfum Rouge_1753551333695.png" },
-  { searchBrand: 'Givenchy', searchName: 'Society', imageFile: 'Givenchy – Society_1753551333695.png' },
+  { searchBrand: 'Givenchy', searchName: 'Society', imageFile: 'Givenchy – Society_1753551333695.webp' },
   
   // Gucci products (4 products)
-  { searchBrand: 'Gucci', searchName: 'Bloom', imageFile: 'Gucci – Bloom_1753551333696.png' },
-  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Gardenia', imageFile: 'Gucci – Flora Gorgeous Gardenia_1753551333696.png' },
-  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Jasmine', imageFile: 'Gucci – Flora Gorgeous Jasmine_1753551333696.png' },
-  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Orchid', imageFile: 'Gucci – Flora Gorgeous Orchid_1753551333697.png' },
+  { searchBrand: 'Gucci', searchName: 'Bloom', imageFile: 'Gucci – Bloom_1753551333696.webp' },
+  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Gardenia', imageFile: 'Gucci – Flora Gorgeous Gardenia_1753551333696.webp' },
+  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Jasmine', imageFile: 'Gucci – Flora Gorgeous Jasmine_1753551333696.webp' },
+  { searchBrand: 'Gucci', searchName: 'Flora Gorgeous Orchid', imageFile: 'Gucci – Flora Gorgeous Orchid_1753551333697.webp' },
   
   // Hermes products (1 product)
-  { searchBrand: 'Hermes', searchName: 'Merveilles', imageFile: 'Hermes – Merveilles_1753551333697.png' }
+  { searchBrand: 'Hermes', searchName: 'Merveilles', imageFile: 'Hermes – Merveilles_1753551333697.webp' }
 ];
 
 async function updateFinal8Images() {
@@ -85,7 +85,7 @@ async function updateFinal8Images() {
   if (initioMuskProducts.length > 0) {
     const initioProduct = initioMuskProducts[0];
     // Check if we have this image file
-    const initioImageFile = 'Initio – Musk Therapy_1753551333697.png';
+    const initioImageFile = 'Initio – Musk Therapy_1753551333697.webp';
     
     if (!initioProduct.imageUrl) {
       await db

@@ -5,22 +5,22 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 6: Premium luxury brands - Mancera, Louis Vuitton, Maison Francis Kurkdjian
 const batch6ImageMappings = [
   // Mancera products (3 products)
-  { searchBrand: 'Mancera', searchName: 'Red Tobacco', imageFile: 'Mancera – Red Tobacco_1753551815812.png' },
-  { searchBrand: 'Mancera', searchName: 'Tonka Cola', imageFile: 'Mancera – Tonka Cola_1753551815813.png' },
-  { searchBrand: 'Mancera', searchName: 'Vanille Exclusive', imageFile: 'Mancera – Vanille Exclusive_1753551815814.png' },
+  { searchBrand: 'Mancera', searchName: 'Red Tobacco', imageFile: 'Mancera – Red Tobacco_1753551815812.webp' },
+  { searchBrand: 'Mancera', searchName: 'Tonka Cola', imageFile: 'Mancera – Tonka Cola_1753551815813.webp' },
+  { searchBrand: 'Mancera', searchName: 'Vanille Exclusive', imageFile: 'Mancera – Vanille Exclusive_1753551815814.webp' },
   
   // Louis Vuitton products (6 products)
-  { searchBrand: 'Louis Vuitton', searchName: 'Apogee', imageFile: 'Louis Vuitton – Apogee_1753551815814.png' },
-  { searchBrand: 'Louis Vuitton', searchName: 'Attrape-Reves', imageFile: 'Louis Vuitton – Attrape-Reves_1753551815815.png' },
-  { searchBrand: 'Louis Vuitton', searchName: 'Cactus Garden', imageFile: 'Louis Vuitton – Cactus Garden_1753551815815.png' },
-  { searchBrand: 'Louis Vuitton', searchName: 'Matiere Noire', imageFile: 'Louis Vuitton – Matiere Noire_1753551815816.png' },
-  { searchBrand: 'Louis Vuitton', searchName: 'Ombre Nomade', imageFile: 'Louis Vuitton – Ombre Nomade_1753551815817.png' },
-  { searchBrand: 'Louis Vuitton', searchName: 'Orage', imageFile: 'Louis Vuitton – Orage_1753551815818.png' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Apogee', imageFile: 'Louis Vuitton – Apogee_1753551815814.webp' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Attrape-Reves', imageFile: 'Louis Vuitton – Attrape-Reves_1753551815815.webp' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Cactus Garden', imageFile: 'Louis Vuitton – Cactus Garden_1753551815815.webp' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Matiere Noire', imageFile: 'Louis Vuitton – Matiere Noire_1753551815816.webp' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Ombre Nomade', imageFile: 'Louis Vuitton – Ombre Nomade_1753551815817.webp' },
+  { searchBrand: 'Louis Vuitton', searchName: 'Orage', imageFile: 'Louis Vuitton – Orage_1753551815818.webp' },
   
   // Maison Francis Kurkdjian products (3 products)
-  { searchBrand: 'Maison Francis Kurkdjian', searchName: '724', imageFile: 'Maison Francis Kurkdjian – 724_1753551815818.png' },
-  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Baccarat Rouge 540 Eau De Parfum', imageFile: 'Maison Francis Kurkdjian – Baccarat Rouge 540 Eau De Parfum_1753551815819.png' },
-  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Baccarat Rouge 540 Extrait De Parfum', imageFile: 'Maison Francis Kurkdjian – Baccarat Rouge 540 Extrait De Parfum_1753551815819.png' }
+  { searchBrand: 'Maison Francis Kurkdjian', searchName: '724', imageFile: 'Maison Francis Kurkdjian – 724_1753551815818.webp' },
+  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Baccarat Rouge 540 Eau De Parfum', imageFile: 'Maison Francis Kurkdjian – Baccarat Rouge 540 Eau De Parfum_1753551815819.webp' },
+  { searchBrand: 'Maison Francis Kurkdjian', searchName: 'Baccarat Rouge 540 Extrait De Parfum', imageFile: 'Maison Francis Kurkdjian – Baccarat Rouge 540 Extrait De Parfum_1753551815819.webp' }
 ];
 
 async function updateBatch6Images() {

@@ -5,26 +5,26 @@ import { eq, like, and } from 'drizzle-orm';
 // Batch 9: Additional luxury brands - Narciso Rodriguez, Marc Antoine Barrois, Marc Jacobs, Memo, Molecule
 const batch9ImageMappings = [
   // Narciso Rodriguez (1 product) - try different variations
-  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her Black', imageFile: 'Narciso Rodriguez – For Her (Black)_1753552083120.png' },
+  { searchBrand: 'Narciso Rodriguez', searchName: 'For Her Black', imageFile: 'Narciso Rodriguez – For Her (Black)_1753552083120.webp' },
   
   // Marc Antoine Barrois (3 products)
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Encelade', imageFile: 'Marc Antoine Barrois – Encelade_1753552083120.png' },
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Ganymede', imageFile: 'Marc Antoine Barrois – Ganymede_1753552083121.png' },
-  { searchBrand: 'Marc Antoine Barrois', searchName: 'Tilia', imageFile: 'Marc Antoine Barrois – Tilia_1753552083121.png' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Encelade', imageFile: 'Marc Antoine Barrois – Encelade_1753552083120.webp' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Ganymede', imageFile: 'Marc Antoine Barrois – Ganymede_1753552083121.webp' },
+  { searchBrand: 'Marc Antoine Barrois', searchName: 'Tilia', imageFile: 'Marc Antoine Barrois – Tilia_1753552083121.webp' },
   
   // Marc Jacobs (3 products)
-  { searchBrand: 'Marc Jacobs', searchName: 'Daisy', imageFile: 'Marc Jacobs – Daisy_1753552083122.png' },
-  { searchBrand: 'Marc Jacobs', searchName: 'Decadence Rouge Noir Edition', imageFile: 'Marc Jacobs – Decadence Rouge Noir Edition_1753552083122.png' },
-  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.png' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Daisy', imageFile: 'Marc Jacobs – Daisy_1753552083122.webp' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Decadence Rouge Noir Edition', imageFile: 'Marc Jacobs – Decadence Rouge Noir Edition_1753552083122.webp' },
+  { searchBrand: 'Marc Jacobs', searchName: 'Decadence', imageFile: 'Marc Jacobs – Decadence_1753552083122.webp' },
   
   // Memo (2 products)
-  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.png' },
-  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.png' },
+  { searchBrand: 'Memo', searchName: 'Italian Leather', imageFile: 'Memo – Italian Leather_1753552083123.webp' },
+  { searchBrand: 'Memo', searchName: 'Russian Leather', imageFile: 'Memo – Russian Leather_1753552083123.webp' },
   
   // Molecule (3 products)
-  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.png' },
-  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.png' },
-  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.png' }
+  { searchBrand: 'Molecule', searchName: '02', imageFile: 'Molecule – 02_1753552083123.webp' },
+  { searchBrand: 'Molecule', searchName: '04', imageFile: 'Molecule – 04_1753552083124.webp' },
+  { searchBrand: 'Molecule', searchName: '05', imageFile: 'Molecule – 05_1753552083124.webp' }
 ];
 
 async function updateBatch9Images() {

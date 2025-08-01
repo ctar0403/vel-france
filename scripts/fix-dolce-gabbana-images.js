@@ -5,13 +5,13 @@ import { eq, like, and } from 'drizzle-orm';
 // Manual fixes for Dolce & Gabbana products that weren't matched
 const fixMappings = [
   // Try different variations for Light Blue
-  { searchTerms: ['Light Blue'], imageFile: 'Dolce&Gabbana – Light Blue_1753551333692.png' },
+  { searchTerms: ['Light Blue'], imageFile: 'Dolce&Gabbana – Light Blue_1753551333692.webp' },
   // Try different variations for The One
-  { searchTerms: ['The One'], imageFile: 'Dolce&Gabbana – The One_1753551333693.png' },
+  { searchTerms: ['The One'], imageFile: 'Dolce&Gabbana – The One_1753551333693.webp' },
   // Try different variations for The Only One
-  { searchTerms: ['The Only One'], imageFile: 'Dolce&Gabbana – The Only One_1753551333694.png' },
+  { searchTerms: ['The Only One'], imageFile: 'Dolce&Gabbana – The Only One_1753551333694.webp' },
   // Try different variations for The Only One 2  
-  { searchTerms: ['The Only One 2'], imageFile: 'Dolce&Gabbana – The Only One 2_1753551333693.png' }
+  { searchTerms: ['The Only One 2'], imageFile: 'Dolce&Gabbana – The Only One 2_1753551333693.webp' }
 ];
 
 async function fixDolceGabbanaImages() {
