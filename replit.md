@@ -69,6 +69,13 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Image aspect ratios preserved**: Critical images maintain aspect ratios while loading
 - **Total CLS reduction**: Significant reduction from 0.117 baseline through systematic image and font optimization
 
+### Forced Reflow Prevention (January 2025)
+- **matchMedia optimization**: Replaced window.innerWidth queries with matchMedia API to prevent geometric property access
+- **requestAnimationFrame batching**: Wrapped DOM updates in requestAnimationFrame for smoother transitions
+- **GPU acceleration**: Added will-change properties and translate3d transforms for hardware acceleration
+- **Intersection Observer optimization**: Added threshold and performance optimizations to lazy loading
+- **Animation performance**: Optimized marquee and carousel animations with GPU-accelerated transforms
+
 ## External Dependencies
 
 ### Core

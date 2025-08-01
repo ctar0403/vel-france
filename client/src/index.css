@@ -114,6 +114,7 @@ img[width][height] {
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
+  will-change: transform; /* GPU acceleration for better performance */
 }
 
 /* Image container */
@@ -129,6 +130,7 @@ img[width][height] {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  will-change: transform; /* GPU acceleration for image scaling */
 }
 
 .swiper-product-card:hover .product-image img {
@@ -508,18 +510,19 @@ body {
   border-color: #000000 !important;
 }
 
-/* Auto-moving marquee animation for brand logos */
+/* Auto-moving marquee animation for brand logos - GPU optimized */
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0%, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .animate-marquee {
   animation: marquee 25s linear infinite;
+  will-change: transform; /* GPU acceleration for marquee animation */
 }
 
 /* Simple fade-in animation for product filtering */

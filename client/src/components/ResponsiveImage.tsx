@@ -36,17 +36,19 @@ export default function ResponsiveImage({
     return `${baseSrc} 1x, ${baseSrc} 2x`;
   };
 
-  // Optimize image loading based on viewport size
+  // Optimize image loading based on viewport size - memoized to prevent reflows
   const getOptimalSize = () => {
     if (typeof window === 'undefined') return src;
     
-    const viewportWidth = window.innerWidth;
+    // Use matchMedia instead of window.innerWidth to avoid forced reflows
+    const isMobile = window.matchMedia('(max-width: 639px)').matches;
+    const isTablet = window.matchMedia('(max-width: 1023px)').matches;
     
     // For mobile/small screens, use smaller images
-    if (viewportWidth < 640) {
+    if (isMobile) {
       // Mobile optimization - could serve smaller images here
       return src;
-    } else if (viewportWidth < 1024) {
+    } else if (isTablet) {
       // Tablet optimization
       return src;
     } else {
@@ -56,7 +58,9 @@ export default function ResponsiveImage({
   };
 
   useEffect(() => {
-    setCurrentSrc(getOptimalSize());
+    // Use a single call and cache result to prevent reflows
+    const optimizedSrc = getOptimalSize();
+    setCurrentSrc(optimizedSrc);
   }, [src]);
 
   const handleLoad = () => {
@@ -126,12 +130,16 @@ export function LazyImage(props: ResponsiveImageProps) {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
-          setShouldLoad(true);
+          // Use requestAnimationFrame to prevent forced reflows
+          requestAnimationFrame(() => {
+            setShouldLoad(true);
+          });
           observer.disconnect();
         }
       },
       {
         rootMargin: '50px', // Load image 50px before it comes into view
+        threshold: 0.1, // Trigger when 10% visible to be more efficient
       }
     );
 

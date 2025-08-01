@@ -43,15 +43,20 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     { desktop: desktop6, mobile: mobile6, alt: 'Coco Mademoiselle' }
   ];
 
-  // Check if mobile viewport
+  // Check if mobile viewport - using matchMedia to avoid forced reflows
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    
+    const checkMobile = (e: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(e.matches);
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    // Set initial value
+    checkMobile(mediaQuery);
+    
+    // Listen for changes
+    mediaQuery.addEventListener('change', checkMobile);
+    return () => mediaQuery.removeEventListener('change', checkMobile);
   }, []);
 
   // Preload all images
@@ -83,12 +88,14 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     });
   }, []);
 
-  // Auto-slide functionality
+  // Auto-slide functionality - use requestAnimationFrame for smoother transitions
   useEffect(() => {
     if (!imagesLoaded) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      requestAnimationFrame(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      });
     }, 7000); // 7 seconds
 
     return () => clearInterval(interval);
