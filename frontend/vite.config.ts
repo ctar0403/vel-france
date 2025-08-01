@@ -3,10 +3,10 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 import { readdirSync, statSync } from "fs";
-import cartographer from "@replit/vite-plugin-cartographer";
-import { runtimeErrorModal } from "@replit/vite-plugin-runtime-error-modal";
+import { cartographer } from "@replit/vite-plugin-cartographer";
+import runtimeErrorModal from "@replit/vite-plugin-runtime-error-modal";
 import { VitePWA } from "vite-plugin-pwa";
-import { BundleAnalyzerPlugin } from "vite-bundle-analyzer";
+import BundleAnalyzerPlugin from "vite-bundle-analyzer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,7 +34,7 @@ try {
 export default defineConfig({
   plugins: [
     react(),
-    cartographer(),
+    ...(process.env.NODE_ENV !== "production" ? [cartographer()] : []),
     runtimeErrorModal(),
     VitePWA({
       registerType: "autoUpdate",
