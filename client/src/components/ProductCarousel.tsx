@@ -56,7 +56,7 @@ const ProductCarousel = memo<ProductCarouselProps>(({
       : description;
   }, []);
 
-  // Memoize swiper configuration for performance
+  // Memoize swiper configuration for performance with reduced reflows
   const swiperConfig = useMemo(() => ({
     modules: [Navigation, Pagination, Autoplay],
     spaceBetween: 20,
@@ -67,7 +67,7 @@ const ProductCarousel = memo<ProductCarouselProps>(({
     },
     pagination: {
       clickable: true,
-      dynamicBullets: true,
+      dynamicBullets: false, // Disable dynamic bullets to reduce reflows
     },
     autoplay: autoplay ? {
       delay: 4000,
@@ -81,7 +81,11 @@ const ProductCarousel = memo<ProductCarouselProps>(({
     },
     lazy: true,
     preloadImages: false,
-    watchSlidesProgress: true,
+    watchSlidesProgress: false, // Disable to reduce reflows
+    observer: true,
+    observeParents: true,
+    resistance: true,
+    resistanceRatio: 0.85,
   }), [autoplay]);
 
   return (

@@ -51,26 +51,49 @@ import yslLogo from "@assets/8_1753788502255.webp";
 import pradaLogo from "@assets/9_1753788502255.webp";
 import claireFontaineLogo from "@assets/10_1753788502256_optimized.webp";
 
-// Optimized hook to detect mobile screen size with debouncing
+// Ultra-optimized mobile detection hook with minimal reflows
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(() => 
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
   
   useEffect(() => {
+    let rafId: number;
     let timeoutId: NodeJS.Timeout;
+    let lastWidth = window.innerWidth;
     
     const checkIsMobile = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setIsMobile(window.innerWidth <= 768);
-      }, 100); // Debounce resize events
+      // Cancel any pending RAF to prevent stacking
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      
+      rafId = requestAnimationFrame(() => {
+        const currentWidth = window.innerWidth;
+        
+        // Only proceed if width actually changed significantly
+        if (Math.abs(currentWidth - lastWidth) > 10) {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
+            const newIsMobile = currentWidth <= 768;
+            const prevIsMobile = lastWidth <= 768;
+            
+            if (newIsMobile !== prevIsMobile) {
+              setIsMobile(newIsMobile);
+            }
+            
+            lastWidth = currentWidth;
+          }, 100);
+        }
+      });
     };
     
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
+    window.addEventListener('resize', checkIsMobile, { passive: true });
     
     return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
       clearTimeout(timeoutId);
       window.removeEventListener('resize', checkIsMobile);
     };
@@ -262,11 +285,11 @@ export default function Home() {
     { image: banner10, alt: "Miss Dior Parfum with sophisticated brunette model" }
   ];
 
-  // Auto-advance slideshow
+  // Auto-advance slideshow with reduced frequency for better performance
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % banners.length);
-    }, 5000); // Change slide every 5 seconds
+    }, 7000); // Increased to 7 seconds to reduce reflows and CPU usage
 
     return () => clearInterval(interval);
   }, [banners.length]);
