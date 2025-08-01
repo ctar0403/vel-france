@@ -71,7 +71,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
   return (
     <header className="bg-white shadow-lg border-b border-gold/20 sticky top-0 z-50 w-full">
       <nav className="container mx-auto px-4 sm:px-4 lg:px-6 py-4 sm:py-4 w-full">
-        <div className="flex items-center justify-between min-w-0 gap-2 sm:gap-4">
+        <div className="flex items-center min-w-0 gap-2 sm:gap-4 relative">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
             <Link href="/">
@@ -83,8 +83,8 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             </Link>
           </div>
           
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center justify-center space-x-4 xl:space-x-6 font-roboto flex-1 min-w-0">
+          {/* Desktop Navigation - Absolutely Centered */}
+          <div className="hidden lg:flex items-center justify-center space-x-4 xl:space-x-6 font-roboto absolute left-1/2 transform -translate-x-1/2">
             <Link 
               href="/"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
@@ -153,7 +153,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           </div>
           
           {/* Action Buttons */}
-          <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0">
+          <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 ml-auto">
             {/* Search */}
             <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
