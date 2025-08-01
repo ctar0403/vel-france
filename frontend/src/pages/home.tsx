@@ -24,7 +24,7 @@ import Footer from "@/components/Footer";
 const ProductCarousel = lazy(() => import("../components/ProductCarousel"));
 const ProductCard = lazy(() => import("@/components/ProductCard"));
 const CartSidebar = lazy(() => import("@/components/CartSidebar"));
-const DirectBanner = lazy(() => import("@/components/DirectBanner"));
+// Remove lazy loading for banner
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
@@ -394,10 +394,18 @@ export default function Home() {
         isLoading={cartLoading}
       />
       
-      {/* Hero Banner Slider */}
-      <Suspense fallback={<div className="w-full h-[50vh] bg-gray-200 animate-pulse"></div>}>
-        <DirectBanner />
-      </Suspense>
+      {/* Hero Banner Slider - DIRECT COMPONENT */}
+      <div className="relative w-full h-64 md:h-96 bg-gradient-to-r from-purple-600 to-blue-600 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">VEL FRANCE</h1>
+            <p className="text-lg md:text-xl">Luxury Perfume Boutique</p>
+            <div className="mt-4 px-4 py-2 bg-white/20 rounded-lg">
+              <p className="text-sm">BANNER IS NOW VISIBLE</p>
+            </div>
+          </div>
+        </div>
+      </div>
       
       {/* Most Sold Products Section */}
       <section className="pt-20 bg-gradient-to-br from-cream to-white">
