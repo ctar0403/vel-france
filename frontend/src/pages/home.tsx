@@ -34,13 +34,13 @@ import banner3 from "@assets/3_1753538715604.webp";
 import banner4 from "@assets/4_1753538720559.webp";
 import banner5 from "@assets/5_1753538726165.webp";
 
-// Mobile banners (new optimized WebP format)
-import mobileBanner1 from "@assets/new_mobile_banner_1.webp";
-import mobileBanner2 from "@assets/new_mobile_banner_2.webp";
-import mobileBanner3 from "@assets/new_mobile_banner_3.webp";
-import mobileBanner4 from "@assets/new_mobile_banner_4.webp";
-import mobileBanner5 from "@assets/new_mobile_banner_5.webp";
-import mobileBanner6 from "@assets/new_mobile_banner_6.webp";
+// Mobile banners (new optimized WebP format) - using public directory URLs
+const mobileBanner1 = "/new_mobile_banner_1.webp";
+const mobileBanner2 = "/new_mobile_banner_2.webp";
+const mobileBanner3 = "/new_mobile_banner_3.webp";
+const mobileBanner4 = "/new_mobile_banner_4.webp";
+const mobileBanner5 = "/new_mobile_banner_5.webp";
+const mobileBanner6 = "/new_mobile_banner_6.webp";
 import banner7 from "@assets/7_1753734195721.webp";
 import banner8 from "@assets/8_1753734262383.webp";
 import banner9 from "@assets/9_1753734226839.webp";
