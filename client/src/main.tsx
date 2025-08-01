@@ -1,18 +1,15 @@
 import { createRoot } from "react-dom/client";
-import { preloadCriticalData } from "@/lib/batchRequests";
 import App from "./App";
 import "./index.css";
 
-// Preload critical data immediately to reduce network waterfall
-preloadCriticalData();
-
-// Initialize chunk preloading after the app is mounted to avoid hook issues
+// Render the app immediately without preloading to fix the infinite loop
 const root = createRoot(document.getElementById("root")!);
 root.render(<App />);
 
-// Initialize route-based chunk preloading after initial render
+// Initialize optimizations after the app is fully loaded
 setTimeout(() => {
+  // Only initialize chunk preloading, skip the problematic batch requests
   import("@/lib/chunkOptimization").then(({ initializeChunkPreloading }) => {
     initializeChunkPreloading();
   });
-}, 100);
+}, 1000);
