@@ -39,7 +39,7 @@ i18n
     contextSeparator: '_',
   });
 
-// Load translations from database on initialization
+// Load translations from database on initialization with priority over static files
 loadTranslations().catch(console.error);
 
 export default i18n;

@@ -83,9 +83,12 @@ export async function loadTranslations(force = false): Promise<void> {
       
       console.log('Nested structure sample:', Object.keys(nestedEn).slice(0, 5));
       
-      // Add translations to i18n, merging with existing translations
+      // Add translations to i18n, database translations override static ones
+      // The 'true' and 'true' parameters mean: deep merge and override existing keys
       i18n.addResourceBundle('en', 'translation', nestedEn, true, true);
       i18n.addResourceBundle('ka', 'translation', nestedKa, true, true);
+      
+      console.log('Testing home.mostsold translation after loading:', i18n.t('home.mostsold', { lng: 'ka' }));
       
       console.log('Translations loaded successfully into i18n');
       
