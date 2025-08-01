@@ -1,12 +1,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 interface Product {
@@ -55,13 +53,9 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   return (
     <div className="product-carousel-container">
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={2}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
         pagination={{
           clickable: true,
           dynamicBullets: true,
@@ -154,13 +148,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         ))}
       </Swiper>
 
-      {/* Custom Navigation Arrows */}
-      <div className="swiper-button-prev">
-        <ChevronLeft className="w-5 h-5" />
-      </div>
-      <div className="swiper-button-next">
-        <ChevronRight className="w-5 h-5" />
-      </div>
+
     </div>
   );
 };
