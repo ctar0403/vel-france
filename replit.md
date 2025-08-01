@@ -18,7 +18,7 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **UI/UX**: Radix UI primitives, Tailwind CSS, shadcn/ui components with custom theming
 - **Animation**: Framer Motion
 - **Design Elements**: Gradient backgrounds, advanced shadow effects, hover animations, rounded product cards, quick add-to-cart buttons.
-- **Home Page**: Features a banner slideshow, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide.
+- **Home Page**: Features a banner slideshow with full manual controls, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide.
 
 ### Backend
 - **Runtime**: Node.js with Express.js
@@ -89,6 +89,13 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Query client enhancement**: Added smart retry logic and offline-first caching strategy
 - **Mobile detection optimization**: Replaced window.innerWidth with matchMedia API to prevent forced reflows
 - **Critical resource hints**: Added content-visibility: auto and font-display: swap for better performance
+
+### Hero Banner Scrollability Enhancement (January 2025)
+- **Manual navigation**: Always-visible arrow controls for both desktop and mobile
+- **Touch/swipe support**: Full gesture support for mobile users with 50px swipe threshold
+- **Auto-pause functionality**: Slideshow pauses on hover (desktop) and during touch interactions (mobile)
+- **Enhanced indicators**: Larger touch targets on mobile (12px vs 8px) for better usability
+- **Responsive controls**: Smaller arrows on mobile (16px) vs desktop (24px) with proper positioning
 
 ## External Dependencies
 

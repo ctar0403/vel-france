@@ -88,9 +88,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     });
   }, []);
 
-  // Auto-slide functionality - use requestAnimationFrame for smoother transitions
+  // Auto-advance slides with pause on hover/touch
+  const [isPaused, setIsPaused] = useState(false);
+  
   useEffect(() => {
-    if (!imagesLoaded) return;
+    if (!imagesLoaded || isPaused) return;
 
     const interval = setInterval(() => {
       requestAnimationFrame(() => {
@@ -99,7 +101,35 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     }, 7000); // 7 seconds
 
     return () => clearInterval(interval);
-  }, [imagesLoaded, slides.length]);
+  }, [imagesLoaded, slides.length, isPaused]);
+
+  // Touch/swipe support for mobile
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }
+    if (isRightSwipe) {
+      setCurrentSlide((prev) => prev === 0 ? slides.length - 1 : prev - 1);
+    }
+  };
 
   if (!imagesLoaded) {
     return (
@@ -110,7 +140,14 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
   }
 
   return (
-    <div className={`relative w-full overflow-hidden ${className}`}>
+    <div 
+      className={`relative w-full overflow-hidden ${className}`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Slider container */}
       <div 
         className="flex transition-transform duration-1000 ease-in-out"
@@ -131,20 +168,20 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
                 alt={slide.alt}
                 className="w-full h-auto object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchpriority={index === 0 ? "high" : "auto"}
+                {...(index === 0 && { fetchPriority: "high" as const })}
               />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Slide indicators */}
+      {/* Enhanced slide indicators - larger on mobile for better touch targets */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
               index === currentSlide 
                 ? 'bg-white opacity-100 scale-125' 
                 : 'bg-white opacity-50 hover:opacity-75'
@@ -154,23 +191,23 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
         ))}
       </div>
 
-      {/* Optional navigation arrows */}
+      {/* Always visible navigation arrows for both desktop and mobile */}
       <button
         onClick={() => setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300 opacity-0 hover:opacity-100 z-10"
+        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
         aria-label="Previous slide"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={() => setCurrentSlide((currentSlide + 1) % slides.length)}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-20 hover:bg-opacity-40 text-white p-2 rounded-full transition-all duration-300 opacity-0 hover:opacity-100 z-10"
+        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
         aria-label="Next slide"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
