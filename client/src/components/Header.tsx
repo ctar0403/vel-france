@@ -79,6 +79,8 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 src={logoImage}
                 alt="Vel France Logo"
                 className="h-12 sm:h-10 lg:h-12 cursor-pointer"
+                width="120"
+                height="48"
               />
             </Link>
           </div>

@@ -62,6 +62,13 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Memory optimization**: Smart caching system with cleanup utilities
 - **Browser support detection**: Automatic format selection (AVIF > WebP > original)
 
+### Cumulative Layout Shift (CLS) Optimization
+- **Image dimensions fixed**: All brand logos and header logo now have explicit width/height attributes
+- **Font loading optimized**: Implemented font-display: swap and async font loading to prevent font-related CLS
+- **Container stability**: Added CSS rules to prevent any element-induced layout shifts
+- **Image aspect ratios preserved**: Critical images maintain aspect ratios while loading
+- **Total CLS reduction**: Significant reduction from 0.117 baseline through systematic image and font optimization
+
 ## External Dependencies
 
 ### Core

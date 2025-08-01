@@ -1,8 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap');
+/* Fonts are loaded via preload in index.html for optimal performance */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Font display optimization for CLS reduction */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap; /* Prevents layout shift during font loading */
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
+}
 
 /* Prevent layout shift on dropdown */
 [data-radix-popper-content-wrapper] {
@@ -35,9 +44,27 @@ body {
   max-width: 100%;
 }
 
-/* Prevent any element from causing horizontal overflow */
+/* Prevent any element from causing horizontal overflow and layout shift */
 * {
   box-sizing: border-box;
+}
+
+/* Image optimization for CLS prevention */
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* Prevent image layout shift with aspect-ratio fallback */
+img[width][height] {
+  height: auto;
+}
+
+/* Brand carousel image containers - prevent CLS */
+.flex-shrink-0 img {
+  display: block;
+  object-fit: contain;
 }
 
 /* Fix flex shrinking issues */
