@@ -27,29 +27,29 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 
-import banner1 from "@assets/1_1753538704078.png";
-import banner2 from "@assets/2_1753538710752.png";
-import banner3 from "@assets/3_1753538715604.png";
-import banner4 from "@assets/4_1753538720559.png";
-import banner5 from "@assets/5_1753538726165.png";
-import banner7 from "@assets/7_1753734195721.png";
-import banner8 from "@assets/8_1753734262383.png";
-import banner9 from "@assets/9_1753734226839.png";
-import banner10 from "@assets/10_1753734237960.png";
-import banner11 from "@assets/11_1753734243609.png";
-import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.png";
+import banner1 from "@assets/1_1753538704078.webp";
+import banner2 from "@assets/2_1753538710752.webp";
+import banner3 from "@assets/3_1753538715604.webp";
+import banner4 from "@assets/4_1753538720559.webp";
+import banner5 from "@assets/5_1753538726165.webp";
+import banner7 from "@assets/7_1753734195721.webp";
+import banner8 from "@assets/8_1753734262383.webp";
+import banner9 from "@assets/9_1753734226839.webp";
+import banner10 from "@assets/10_1753734237960.webp";
+import banner11 from "@assets/11_1753734243609.webp";
+import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.webp";
 
 // Import new brand logos
-import chanelLogo from "@assets/1_1753788502251.png";
-import versaceLogo from "@assets/2_1753788502252.png";
-import diorLogo from "@assets/3_1753788502252.png";
-import gucciLogo from "@assets/4_1753788502253.png";
-import armaneLogo from "@assets/5_1753788502254.png";
-import dgLogo from "@assets/6_1753788502254.png";
-import creedLogo from "@assets/7_1753788502255.png";
-import yslLogo from "@assets/8_1753788502255.png";
-import pradaLogo from "@assets/9_1753788502255.png";
-import claireFontaineLogo from "@assets/10_1753788502256.png";
+import chanelLogo from "@assets/1_1753788502251.webp";
+import versaceLogo from "@assets/2_1753788502252.webp";
+import diorLogo from "@assets/3_1753788502252.webp";
+import gucciLogo from "@assets/4_1753788502253.webp";
+import armaneLogo from "@assets/5_1753788502254.webp";
+import dgLogo from "@assets/6_1753788502254.webp";
+import creedLogo from "@assets/7_1753788502255.webp";
+import yslLogo from "@assets/8_1753788502255.webp";
+import pradaLogo from "@assets/9_1753788502255.webp";
+import claireFontaineLogo from "@assets/10_1753788502256.webp";
 
 // Optimized hook to detect mobile screen size with debouncing
 const useIsMobile = () => {
@@ -118,6 +118,11 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
             src={product.imageUrl || "/placeholder-perfume.jpg"}
             alt={product.name}
             className="w-full h-full object-cover"
+            width={400}
+            height={400}
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             animate={{ 
               scale: isCardHovered ? 1.1 : 1,
               filter: isCardHovered ? "brightness(0.8)" : "brightness(1)"
@@ -455,6 +460,12 @@ export default function Home() {
                   src={banner.image}
                   alt={banner.alt}
                   className="w-full h-full object-cover"
+                  width={1920}
+                  height={1080}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                  decoding="async"
+                  sizes="100vw"
                 />
               </div>
             ))}
@@ -533,66 +544,66 @@ export default function Home() {
           <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
             {/* First set of brand logos */}
             <div className="flex-shrink-0">
-              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={versaceLogo} alt="Versace" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={versaceLogo} alt="Versace" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={diorLogo} alt="Dior" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={diorLogo} alt="Dior" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={gucciLogo} alt="Gucci" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={gucciLogo} alt="Gucci" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={armaneLogo} alt="Armane" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={armaneLogo} alt="Armane" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={creedLogo} alt="Creed" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={creedLogo} alt="Creed" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={yslLogo} alt="YSL" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={yslLogo} alt="YSL" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={pradaLogo} alt="Prada" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={pradaLogo} alt="Prada" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             
             {/* Duplicate set for seamless loop */}
             <div className="flex-shrink-0">
-              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={versaceLogo} alt="Versace" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={versaceLogo} alt="Versace" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={diorLogo} alt="Dior" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={diorLogo} alt="Dior" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={gucciLogo} alt="Gucci" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={gucciLogo} alt="Gucci" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={armaneLogo} alt="Armane" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={armaneLogo} alt="Armane" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={dgLogo} alt="Dolce & Gabbana" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={creedLogo} alt="Creed" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={creedLogo} alt="Creed" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={yslLogo} alt="YSL" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={yslLogo} alt="YSL" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={pradaLogo} alt="Prada" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={pradaLogo} alt="Prada" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
             <div className="flex-shrink-0">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-12 sm:h-16 lg:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300" width={200} height={80} loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
