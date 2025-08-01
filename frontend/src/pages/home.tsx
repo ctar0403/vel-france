@@ -394,17 +394,20 @@ export default function Home() {
         isLoading={cartLoading}
       />
       
-      {/* Hero Banner Slider - DIRECT COMPONENT */}
-      <div className="relative w-full h-64 md:h-96 bg-gradient-to-r from-purple-600 to-blue-600 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">VEL FRANCE</h1>
-            <p className="text-lg md:text-xl">Luxury Perfume Boutique</p>
-            <div className="mt-4 px-4 py-2 bg-white/20 rounded-lg">
-              <p className="text-sm">BANNER IS NOW VISIBLE</p>
-            </div>
-          </div>
-        </div>
+      {/* SIMPLE TEST BANNER */}
+      <div style={{
+        width: '100%',
+        height: '300px',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        fontSize: '48px',
+        fontWeight: 'bold',
+        textAlign: 'center'
+      }}>
+        VEL FRANCE BANNER TEST
       </div>
       
       {/* Most Sold Products Section */}
