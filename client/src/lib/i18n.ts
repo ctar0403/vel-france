@@ -3,13 +3,16 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { loadTranslations } from './translations';
 
-// Start with empty resources - will be loaded from database
+import enTranslations from '../locales/en.json';
+import kaTranslations from '../locales/ka.json';
+
+// Start with static translations as fallbacks
 const resources = {
   en: {
-    translation: {},
+    translation: enTranslations,
   },
   ka: {
-    translation: {},
+    translation: kaTranslations,
   },
 };
 

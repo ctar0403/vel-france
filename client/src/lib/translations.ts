@@ -1,9 +1,32 @@
 import i18n from 'i18next';
+import { useState, useEffect } from 'react';
 
 // Create a cache for translations
 let translationsCache: Record<string, Record<string, string>> = {};
 let lastFetchTime = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Helper function to convert flat keys to nested objects
+function flatToNested(flat: Record<string, string>): Record<string, any> {
+  const nested: Record<string, any> = {};
+  
+  for (const [key, value] of Object.entries(flat)) {
+    const keys = key.split('.');
+    let current = nested;
+    
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i];
+      if (!(k in current)) {
+        current[k] = {};
+      }
+      current = current[k];
+    }
+    
+    current[keys[keys.length - 1]] = value;
+  }
+  
+  return nested;
+}
 
 // Function to fetch translations from the backend
 export async function fetchTranslationsFromAPI(): Promise<Record<string, Record<string, string>>> {
@@ -24,13 +47,15 @@ export async function fetchTranslationsFromAPI(): Promise<Record<string, Record<
       georgianTranslations[translation.key] = translation.georgianText || translation.englishText;
     });
     
+    console.log(`Loaded ${translations.length} translations from API`);
+    
     return {
       en: englishTranslations,
       ka: georgianTranslations
     };
   } catch (error) {
     console.warn('Failed to fetch translations from API, using fallback:', error);
-    return {};
+    return { en: {}, ka: {} };
   }
 }
 
@@ -50,9 +75,21 @@ export async function loadTranslations(force = false): Promise<void> {
       translationsCache = translations;
       lastFetchTime = now;
       
-      // Add translations to i18n
-      i18n.addResourceBundle('en', 'translation', translations.en, true, true);
-      i18n.addResourceBundle('ka', 'translation', translations.ka, true, true);
+      console.log('Sample English translations:', Object.keys(translations.en).slice(0, 5));
+      
+      // Convert flat keys to nested objects for i18n
+      const nestedEn = flatToNested(translations.en);
+      const nestedKa = flatToNested(translations.ka);
+      
+      console.log('Nested structure sample:', Object.keys(nestedEn).slice(0, 5));
+      
+      // Add translations to i18n, merging with existing translations
+      i18n.addResourceBundle('en', 'translation', nestedEn, true, true);
+      i18n.addResourceBundle('ka', 'translation', nestedKa, true, true);
+      
+      console.log('Translations loaded successfully into i18n');
+    } else {
+      console.warn('No translations received from API:', translations);
     }
   } catch (error) {
     console.error('Error loading translations:', error);
@@ -74,4 +111,17 @@ export function getTranslation(key: string, fallback?: string): string {
 // Function to force refresh translations
 export async function refreshTranslations(): Promise<void> {
   await loadTranslations(true);
+}
+
+// Hook to ensure translations are loaded
+export function useTranslationsReady(): boolean {
+  const [ready, setReady] = useState(false);
+  
+  useEffect(() => {
+    loadTranslations().then(() => {
+      setReady(true);
+    });
+  }, []);
+  
+  return ready;
 }
