@@ -23,6 +23,36 @@ import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
 
 function Home() {
+  // IMMEDIATE BANNER RENDER TEST
+  console.log("HOME COMPONENT IS RENDERING");
+
+  // Add banner directly to body
+  React.useEffect(() => {
+    const banner = document.createElement('div');
+    banner.innerHTML = 'EMERGENCY BANNER TEST - I AM VISIBLE';
+    banner.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      background: red;
+      color: white;
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 200px;
+      z-index: 99999;
+      border: 10px solid yellow;
+    `;
+    document.body.appendChild(banner);
+    
+    return () => {
+      if (document.body.contains(banner)) {
+        document.body.removeChild(banner);
+      }
+    };
+  }, []);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
@@ -72,8 +102,10 @@ function Home() {
 
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+  console.log("HOME RENDERING JSX");
+  
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream" style={{ marginTop: '220px' }}>
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
@@ -88,20 +120,22 @@ function Home() {
         />
       </Suspense>
       
-      {/* BANNER TEST */}
+      {/* BANNER TEST - ABSOLUTE POSITIONING */}
       <div style={{
+        position: 'relative',
+        zIndex: 9999,
         width: '100%',
-        height: '300px',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: '400px',
+        backgroundColor: 'red',
+        display: 'block',
         color: 'white',
-        fontSize: '48px',
+        fontSize: '72px',
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        lineHeight: '400px',
+        border: '10px solid yellow'
       }}>
-        VEL FRANCE BANNER IS VISIBLE!
+        BANNER TEST
       </div>
       
       {/* Most Sold Products Section */}
