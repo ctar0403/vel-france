@@ -88,6 +88,10 @@ export async function loadTranslations(force = false): Promise<void> {
       i18n.addResourceBundle('ka', 'translation', nestedKa, true, true);
       
       console.log('Translations loaded successfully into i18n');
+      
+      // Test a specific translation
+      console.log('Test translation for navigation.home:', i18n.t('navigation.home'));
+      console.log('Current i18n language:', i18n.language);
     } else {
       console.warn('No translations received from API:', translations);
     }
