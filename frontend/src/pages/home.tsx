@@ -60,52 +60,19 @@ import yslLogo from "@assets/8_1753788502255.webp";
 import pradaLogo from "@assets/9_1753788502255.webp";
 import claireFontaineLogo from "@assets/10_1753788502256_optimized.webp";
 
-// Ultra-optimized mobile detection hook with minimal reflows
+// Simple mobile detection hook
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(() => 
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
   
   useEffect(() => {
-    let rafId: number;
-    let timeoutId: NodeJS.Timeout;
-    let lastWidth = window.innerWidth;
-    
-    const checkIsMobile = () => {
-      // Cancel any pending RAF to prevent stacking
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      
-      rafId = requestAnimationFrame(() => {
-        const currentWidth = window.innerWidth;
-        
-        // Only proceed if width actually changed significantly
-        if (Math.abs(currentWidth - lastWidth) > 10) {
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(() => {
-            const newIsMobile = currentWidth <= 768;
-            const prevIsMobile = lastWidth <= 768;
-            
-            if (newIsMobile !== prevIsMobile) {
-              setIsMobile(newIsMobile);
-            }
-            
-            lastWidth = currentWidth;
-          }, 100);
-        }
-      });
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
     
-    window.addEventListener('resize', checkIsMobile, { passive: true });
-    
-    return () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      clearTimeout(timeoutId);
-      window.removeEventListener('resize', checkIsMobile);
-    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
   
   return isMobile;
@@ -283,6 +250,18 @@ export default function Home() {
     message: ""
   });
   const isMobile = useIsMobile();
+  
+  // Force re-render when screen size changes
+  const [, forceUpdate] = useState({});
+  
+  useEffect(() => {
+    const handleResize = () => {
+      forceUpdate({});
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Banner configuration: mobile uses 1-6.png converted to WebP, desktop uses current banners
   const banners = [
@@ -497,7 +476,7 @@ export default function Home() {
       />
       {/* Welcome Section - Exact ratio preservation */}
       <section className={`relative w-full overflow-hidden ${
-        isMobile 
+        isMobile
           ? 'aspect-[800/600]' // Mobile: exact 800:600 ratio from new mobile images (1.33:1)
           : 'aspect-[1732/630]' // Desktop: exact ratio from desktop images (2.75:1)
       }`}>
@@ -510,26 +489,29 @@ export default function Home() {
               width: `${banners.length * 100}%`
             }}
           >
-            {banners.map((banner, index) => (
-              <div 
-                key={index}
-                className="h-full flex-shrink-0"
-                style={{ width: `${100 / banners.length}%` }}
-              >
-                <img 
-                  src={isMobile ? banner.mobile : banner.desktop}
-                  alt={banner.alt}
-                  className="w-full h-full object-cover"
-                  width={isMobile ? 800 : 1732}
-                  height={isMobile ? 600 : 630}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
-                  decoding="async"
-                  sizes="100vw"
-
-                />
-              </div>
-            ))}
+            {banners.map((banner, index) => {
+              const isMobileView = window.innerWidth <= 768;
+              return (
+                <div 
+                  key={index}
+                  className="h-full flex-shrink-0"
+                  style={{ width: `${100 / banners.length}%` }}
+                >
+                  <img 
+                    src={isMobileView ? banner.mobile : banner.desktop}
+                    alt={banner.alt}
+                    className="w-full h-full object-cover"
+                    width={isMobileView ? 800 : 1732}
+                    height={isMobileView ? 600 : 630}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
+                    decoding="async"
+                    sizes="100vw"
+                    key={`${index}-${isMobileView ? 'mobile' : 'desktop'}`}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
         <div 
