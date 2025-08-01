@@ -9,28 +9,38 @@ Order code format: 6-digit numbers only (no letters).
 Design requirements: Very modern and advanced design aesthetic with animations.
 Home page focus: Pure design focus without made-up stories, using product reels for categories like "Most Popular", "Most Sold", etc.
 Performance requirements: Lightning-fast loading on mobile and desktop, 90+ Google Lighthouse scores on all metrics.
+Deployment requirements: Separate frontend (Vercel) and backend (Railway) hosting with no functional changes.
 
 ## System Architecture
 
-### Frontend
+### Project Structure (Updated January 2025)
+- **Frontend**: `/frontend/` - Vite + React application for Vercel deployment
+- **Backend**: `/backend/` - Express.js API server for Railway deployment
+- **Shared**: `/shared/` - Common TypeScript schemas and types
+- **Assets**: `/attached_assets/` - Optimized WebP images and static assets
+
+### Frontend (`/frontend/`)
 - **Framework**: React 18 with TypeScript, Vite
 - **Routing**: Wouter with lazy loading for non-critical routes
 - **State Management**: TanStack Query with optimized caching (5min stale time, 10min GC time)
 - **UI/UX**: Radix UI primitives, Tailwind CSS, shadcn/ui components with custom theming
 - **Animation**: Framer Motion
 - **Performance**: Code splitting, lazy loading, image optimization, intersection observers, memoization
-- **Design Elements**: Gradient backgrounds, advanced shadow effects, hover animations, rounded product cards, quick add-to-cart buttons.
-- **Home Page**: Features a banner slideshow, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide.
+- **Design Elements**: Gradient backgrounds, advanced shadow effects, hover animations, rounded product cards, quick add-to-cart buttons
+- **Home Page**: Features a banner slideshow, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide
 - **PWA Features**: Service worker caching, offline support, manifest file, performance monitoring
+- **Deployment**: Configured for Vercel with API proxy to backend
 
-### Backend
+### Backend (`/backend/`)
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript with ES modules
 - **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: Replit's OpenID Connect
 - **Session Management**: Express sessions with PostgreSQL store
 - **API Design**: RESTful API with structured error handling
-- **Performance**: GZIP compression middleware, optimized query retry logic, connection pooling
+- **Performance**: GZIP compression middleware, server-side caching, database optimization, connection pooling
+- **Deployment**: Configured for Railway with health endpoints
+- **Optimizations**: Memory caching (5min TTL), database indexes, query monitoring
 
 ### Core Features
 - **Catalogue System**: Advanced filtering (price, brand, category), real-time search, sorting options, grid/list view, responsive design, active filter management.

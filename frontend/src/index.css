@@ -1,0 +1,665 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent layout shift on dropdown */
+[data-radix-popper-content-wrapper] {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+/* Ensure header doesn't cause layout shift */
+header {
+  width: 100% !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+/* Fix dropdown positioning */
+[data-radix-dropdown-menu-content] {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+/* Prevent body overflow and maintain layout stability */
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure container stability */
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Prevent any element from causing horizontal overflow */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix flex shrinking issues */
+.flex-1 {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+/* Line clamp utilities for product names */
+@layer utilities {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+/* SWIPER.JS CAROUSEL IMPLEMENTATION - FULLY RESPONSIVE */
+
+/* Swiper base styling */
+.product-carousel-container {
+  position: relative;
+  width: 100%;
+  padding: 0 60px; /* Space for navigation arrows */
+}
+
+.product-swiper {
+  width: 100%;
+  padding: 20px 0 50px 0; /* Space for pagination */
+}
+
+/* Product card styling - matching catalogue without shadows */
+.swiper-product-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+/* Image container */
+.swiper-product-card .product-image {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.swiper-product-card .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.swiper-product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Remove custom product content styling - using Tailwind classes directly */
+
+/* Swiper navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a365d;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #1a365d;
+  border-color: #1a365d;
+}
+
+.swiper-button-next:hover:after,
+.swiper-button-prev:hover:after {
+  color: white;
+}
+
+.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Swiper pagination */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #d1d5db;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #d4af37;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .product-carousel-container {
+    padding: 0 20px;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none; /* Hide arrows on mobile for cleaner look */
+  }
+  
+  /* Add bottom padding to main content to avoid mobile nav overlap */
+  body {
+    padding-bottom: 70px;
+  }
+  
+  /* Mobile adjustments for content container */
+  .swiper-product-card .p-6 {
+    padding: 12px !important;
+    min-height: 100px !important;
+  }
+  
+  .swiper-product-card .text-lg {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-carousel-container {
+    padding: 0 50px;
+  }
+  
+  .swiper-product-card .p-6 {
+    padding: 16px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .swiper-product-card .text-lg {
+    font-size: 16px !important;
+  }
+}
+
+/* Swiper slide spacing */
+.product-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+
+
+/* Admin panel responsive improvements */
+.admin-table-container {
+  @apply overflow-x-auto;
+}
+
+.admin-table-container table {
+  @apply min-w-full;
+}
+
+@media (max-width: 768px) {
+  .admin-table-container table th,
+  .admin-table-container table td {
+    @apply px-2 py-3 text-sm;
+  }
+  
+  .admin-grid-responsive {
+    @apply grid-cols-1 gap-4;
+  }
+  
+  .admin-dialog-content {
+    @apply mx-4 max-w-none;
+  }
+}
+
+@media (min-width: 769px) {
+  .admin-grid-responsive {
+    @apply grid-cols-2 gap-6;
+  }
+}
+
+/* Cart responsive improvements */
+@media (max-width: 640px) {
+  .cart-item-container {
+    @apply flex-col space-y-4;
+  }
+  
+  .cart-controls-mobile {
+    @apply flex-row justify-between w-full;
+  }
+}
+
+/* Product detail responsive */
+@media (max-width: 1023px) {
+  .product-detail-grid {
+    @apply grid-cols-1 gap-8;
+  }
+}
+
+/* Filter sidebar responsive */
+@media (max-width: 1023px) {
+  .filter-sidebar {
+    @apply w-full mb-6;
+  }
+}
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(217, 30%, 18%);
+  --muted: hsl(39, 100%, 97%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(217, 30%, 18%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(217, 30%, 18%);
+  --border: hsl(39, 15%, 90%);
+  --input: hsl(39, 15%, 90%);
+  --primary: #000000;
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(39, 100%, 97%);
+  --secondary-foreground: hsl(217, 30%, 18%);
+  --accent: hsl(39, 100%, 97%);
+  --accent-foreground: hsl(217, 30%, 18%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: #00000088;
+  --radius: 0.5rem;
+  
+  /* Custom Vel France colors */
+  --cream: hsl(39, 100%, 97%);
+  --navy: hsl(217, 30%, 18%);
+  --gold: hsl(45, 87%, 55%);
+  --deep-gold: hsl(43, 74%, 49%);
+  --pastel-pink: hsl(355, 100%, 92%);
+}
+
+.dark {
+  --background: hsl(217, 30%, 4%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(217, 30%, 15%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(217, 30%, 4%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(217, 30%, 4%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(217, 30%, 15%);
+  --input: hsl(217, 30%, 15%);
+  --primary: #000000;
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(217, 30%, 15%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(217, 30%, 15%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: #00000088;
+}
+
+/* Ensure scrollbars are visible */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #d1d5db #f3f4f6;
+}
+
+/* Webkit scrollbar styling */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+  border: 2px solid #f3f4f6;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Override any hidden scrollbar styles */
+html {
+  overflow-y: scroll !important;
+}
+
+body {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Roboto', sans-serif;
+    background-color: hsl(var(--cream));
+    color: hsl(var(--navy));
+  }
+}
+
+/* Custom font classes */
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
+.font-roboto-slab {
+  font-family: 'Roboto Slab', serif;
+}
+
+/* Hide scrollbar but keep functionality - Only apply when explicitly using this class */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Force show scrollbars everywhere else */
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+  display: block !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.font-vibes {
+  font-family: 'Great Vibes', cursive;
+}
+
+/* Custom color classes */
+.text-cream { color: hsl(var(--cream)); }
+.bg-cream { background-color: hsl(var(--cream)); }
+.text-navy { color: hsl(var(--navy)); }
+.bg-navy { background-color: hsl(var(--navy)); }
+.text-gold { color: hsl(var(--gold)); }
+.bg-gold { background-color: hsl(var(--gold)); }
+.text-deep-gold { color: hsl(var(--deep-gold)); }
+.bg-deep-gold { background-color: hsl(var(--deep-gold)); }
+.text-pastel { color: hsl(var(--pastel-pink)); }
+.bg-pastel { background-color: hsl(var(--pastel-pink)); }
+
+/* Borders */
+.border-gold { border-color: hsl(var(--gold)); }
+
+/* Custom slider and checkbox styling */
+[data-radix-collection-item] {
+  border-color: #00000088 !important;
+}
+
+/* React Multi Carousel Custom Styles */
+.carousel-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.carousel-container {
+  padding: 0 60px;
+  margin: 0 auto;
+}
+
+.carousel-item-padding {
+  padding: 0 12px;
+}
+
+/* Ensure items are properly spaced */
+.react-multi-carousel-list {
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.react-multi-carousel-track {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.react-multi-carousel-item {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Hide default arrows and use custom ones */
+.react-multi-carousel-arrow::before {
+  display: none;
+}
+
+.react-multi-carousel-arrow {
+  background: transparent !important;
+  border: none !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  position: absolute !important;
+}
+
+/* Checkbox styling */
+[role="checkbox"] {
+  border-color: #00000088 !important;
+}
+
+[role="checkbox"][data-state="checked"] {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* Auto-moving marquee animation for brand logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+/* Simple fade-in animation for product filtering */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+.border-navy { border-color: hsl(var(--navy)); }
+.border-cream { border-color: hsl(var(--cream)); }
+
+/* Hover states */
+.hover\:text-gold:hover { color: hsl(var(--gold)); }
+.hover\:bg-gold:hover { background-color: hsl(var(--gold)); }
+.hover\:bg-deep-gold:hover { background-color: hsl(var(--deep-gold)); }
+.hover\:text-navy:hover { color: hsl(var(--navy)); }
+.hover\:bg-navy:hover { background-color: hsl(var(--navy)); }
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+    opacity: 0; 
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(-100vh) rotate(360deg); 
+    opacity: 0; 
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% -200%; }
+  50% { background-position: 200% 200%; }
+  100% { background-position: -200% -200%; }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.floating-particle {
+  position: absolute;
+  background: hsl(var(--gold) / 0.3);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gold-shimmer {
+  background: linear-gradient(45deg, transparent 30%, hsl(var(--gold) / 0.2) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--cream));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--deep-gold));
+}
+
+/* Custom transitions */
+.transition-luxury {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Thin scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-gold\/30::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--gold) / 0.3);
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-gold\/30::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--gold) / 0.5);
+}
+
+.scrollbar-track-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Custom range slider styles */
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: hsl(var(--gold));
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slider-thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.slider-thumb::-moz-range-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: hsl(var(--gold));
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.slider-thumb::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.slider-thumb::-webkit-slider-track {
+  background: transparent;
+}
+
+.slider-thumb::-moz-range-track {
+  background: transparent;
+  border: none;
+}
