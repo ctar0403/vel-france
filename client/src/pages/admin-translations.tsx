@@ -33,23 +33,10 @@ export default function AdminTranslations() {
     enabled: isAuthenticated,
   });
 
-  // Show login screen if not authenticated
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <AdminLogin />;
-  }
-
   // Update translation mutation
   const updateTranslationMutation = useMutation({
     mutationFn: async ({ key, georgianText }: { key: string; georgianText: string }) => {
-      return apiRequest(`/api/admin/translations/${encodeURIComponent(key)}`, "PUT", { georgianText });
+      return apiRequest("PUT", `/api/admin/translations/${encodeURIComponent(key)}`, { georgianText });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/translations"] });
@@ -70,7 +57,7 @@ export default function AdminTranslations() {
   // Bulk create translations mutation
   const bulkCreateMutation = useMutation({
     mutationFn: async (translationsData: { key: string; englishText: string }[]) => {
-      return apiRequest("/api/admin/translations/bulk", "POST", { translations: translationsData });
+      return apiRequest("POST", "/api/admin/translations/bulk", { translations: translationsData });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/translations"] });
@@ -123,6 +110,20 @@ export default function AdminTranslations() {
       [key]: value
     }));
   };
+
+  // Show loading screen during authentication check
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
 
   // Filter translations based on search term
   const filteredTranslations = translations.filter((translation: Translation) =>
