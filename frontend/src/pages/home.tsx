@@ -503,10 +503,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div 
-          className="absolute inset-0 bg-navy/40 cursor-pointer" 
-          onClick={handleBannerClick}
-        />
         
         {/* Navigation Controls */}
         <button
