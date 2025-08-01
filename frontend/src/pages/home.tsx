@@ -34,12 +34,13 @@ import banner3 from "@assets/3_1753538715604.webp";
 import banner4 from "@assets/4_1753538720559.webp";
 import banner5 from "@assets/5_1753538726165.webp";
 
-// Mobile banners (optimized WebP format)
-import mobileBanner1 from "@assets/mobile_banner_1.webp";
-import mobileBanner2 from "@assets/mobile_banner_2.webp";
-import mobileBanner3 from "@assets/mobile_banner_3.webp";
-import mobileBanner4 from "@assets/mobile_banner_4.webp";
-import mobileBanner5 from "@assets/mobile_banner_5.webp";
+// Mobile banners (new optimized WebP format)
+import mobileBanner1 from "@assets/new_mobile_banner_1.webp";
+import mobileBanner2 from "@assets/new_mobile_banner_2.webp";
+import mobileBanner3 from "@assets/new_mobile_banner_3.webp";
+import mobileBanner4 from "@assets/new_mobile_banner_4.webp";
+import mobileBanner5 from "@assets/new_mobile_banner_5.webp";
+import mobileBanner6 from "@assets/new_mobile_banner_6.webp";
 import banner7 from "@assets/7_1753734195721.webp";
 import banner8 from "@assets/8_1753734262383.webp";
 import banner9 from "@assets/9_1753734226839.webp";
@@ -283,7 +284,7 @@ export default function Home() {
   });
   const isMobile = useIsMobile();
 
-  // Responsive banner images - mobile optimized WebP for small screens, desktop banners for larger screens
+  // Responsive banner images - new mobile banners optimized for mobile screens, desktop banners for larger screens
   const banners = useMemo(() => [
     { 
       desktop: banner11, 
@@ -293,27 +294,27 @@ export default function Home() {
     { 
       desktop: banner9, 
       mobile: mobileBanner2, 
-      alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" 
+      alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" 
     },
     { 
       desktop: banner5, 
       mobile: mobileBanner3, 
-      alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" 
+      alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" 
     },
     { 
       desktop: banner8, 
       mobile: mobileBanner4, 
-      alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" 
+      alt: "Miss Dior Parfum with sophisticated brunette model" 
     },
     { 
       desktop: banner7, 
       mobile: mobileBanner5, 
-      alt: "Coco Mademoiselle by Chanel with elegant model" 
+      alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" 
     },
     { 
       desktop: banner10, 
-      mobile: mobileBanner1, 
-      alt: "Miss Dior Parfum with sophisticated brunette model" 
+      mobile: mobileBanner6, 
+      alt: "Coco Mademoiselle by Chanel with elegant model" 
     }
   ], []);
 
@@ -497,8 +498,8 @@ export default function Home() {
       {/* Welcome Section - Exact ratio preservation */}
       <section className={`relative w-full overflow-hidden ${
         isMobile 
-          ? 'aspect-[1732/630]' // Mobile: exact 1732:630 ratio from your images
-          : 'h-[40vh] sm:h-[50vh] lg:h-[60vh] xl:h-[70vh]' // Desktop: maintains original heights
+          ? 'aspect-[800/600]' // Mobile: exact 800:600 ratio from new mobile images (1.33:1)
+          : 'aspect-[1732/630]' // Desktop: exact ratio from desktop images (2.75:1)
       }`}>
         {/* Slideshow Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -518,9 +519,9 @@ export default function Home() {
                 <img 
                   src={isMobile ? banner.mobile : banner.desktop}
                   alt={banner.alt}
-                  className={`w-full h-full ${isMobile ? 'object-contain' : 'object-cover'}`}
-                  width={1732}
-                  height={630}
+                  className="w-full h-full object-cover"
+                  width={isMobile ? 800 : 1732}
+                  height={isMobile ? 600 : 630}
                   loading={index === 0 ? "eager" : "lazy"}
                   style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
                   decoding="async"
