@@ -119,15 +119,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
               onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
               aria-label="Go to catalogue"
             >
-              <ResponsiveImage
+              <img
                 src={isMobile ? slide.mobile : slide.desktop}
                 alt={slide.alt}
                 className="w-full h-auto object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                sizes="100vw"
-                width={1920}
-                height={index === 0 ? 600 : 800}
-                priority={index === 0}
               />
             </div>
           </div>
