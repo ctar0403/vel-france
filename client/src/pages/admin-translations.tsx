@@ -10,6 +10,7 @@ import { Search, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminLogin } from "@/components/AdminLogin";
+import { refreshTranslations } from "@/lib/translations";
 
 interface Translation {
   id: string;
@@ -38,8 +39,10 @@ export default function AdminTranslations() {
     mutationFn: async ({ key, georgianText }: { key: string; georgianText: string }) => {
       return apiRequest("PUT", `/api/admin/translations/${encodeURIComponent(key)}`, { georgianText });
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["/api/translations"] });
+      // Force refresh translations in i18n
+      await refreshTranslations();
       toast({
         title: "Success",
         description: "Translation updated successfully",
@@ -59,8 +62,10 @@ export default function AdminTranslations() {
     mutationFn: async (translationsData: { key: string; englishText: string }[]) => {
       return apiRequest("POST", "/api/admin/translations/bulk", { translations: translationsData });
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["/api/translations"] });
+      // Force refresh translations in i18n
+      await refreshTranslations();
       toast({
         title: "Success",
         description: "Translations imported successfully",

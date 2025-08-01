@@ -115,6 +115,8 @@ export function getTranslation(key: string, fallback?: string): string {
 // Function to force refresh translations
 export async function refreshTranslations(): Promise<void> {
   await loadTranslations(true);
+  // Force i18n to re-render components by triggering a language change event
+  i18n.emit('languageChanged', i18n.language);
 }
 
 // Hook to ensure translations are loaded

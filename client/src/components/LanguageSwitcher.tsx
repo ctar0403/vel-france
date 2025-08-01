@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
+import { refreshTranslations } from '@/lib/translations';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,10 @@ const languages = [
 const LanguageSwitcher: React.FC = () => {
   const { i18n, t } = useTranslation();
 
-  const changeLanguage = (languageCode: string) => {
+  const changeLanguage = async (languageCode: string) => {
+    // First refresh translations to get the latest from database
+    await refreshTranslations();
+    // Then change language
     i18n.changeLanguage(languageCode);
   };
 
