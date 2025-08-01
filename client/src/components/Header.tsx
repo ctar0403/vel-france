@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -8,6 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import LogoutButton from "@/components/LogoutButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoImage from "@assets/Your paragraph text (4)_1753542106373.webp";
 
 interface HeaderProps {
@@ -17,6 +19,7 @@ interface HeaderProps {
 
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -91,12 +94,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               href="/"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
-              Home
+              {t('navigation.home')}
             </Link>
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
-                  Brands
+                  {t('navigation.brands', 'Brands')}
                   <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
@@ -144,13 +147,13 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               href="/catalogue"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
-              Catalogue
+              {t('navigation.catalogue')}
             </Link>
             <Link 
               href="/contact"
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
-              Contact
+              {t('navigation.contact')}
             </Link>
           </div>
           
@@ -169,13 +172,13 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     <div className="flex space-x-4">
                       <Input
                         type="text"
-                        placeholder="Search for a perfume..."
+                        placeholder={t('header.searchPlaceholder')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="flex-1 text-lg py-3 border-gold/30 focus:border-gold"
                       />
                       <Button type="submit" className="bg-gold hover:bg-deep-gold text-navy px-8">
-                        Search
+                        {t('common.search')}
                       </Button>
                     </div>
                   </form>
@@ -183,6 +186,9 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               </SheetContent>
             </Sheet>
 
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {/* Desktop User Account & Cart - Hidden on Mobile */}
             <div className="hidden md:flex items-center space-x-3">
               {/* User Account */}
@@ -220,7 +226,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     className="text-navy hover:text-gold p-2"
                   >
                     <User className="h-5 w-5 mr-2" />
-                    <span>Sign In</span>
+                    <span>{t('navigation.login')}</span>
                   </Button>
                 </Link>
               )}
@@ -265,20 +271,20 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       onClick={() => setLocation('/')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
-                      Home
+                      {t('navigation.home')}
                     </button>
                     <button 
                       onClick={() => setLocation('/catalogue')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
-                      Catalogue
+                      {t('navigation.catalogue')}
                     </button>
                     <div>
                       <button 
                         onClick={() => setIsBrandsOpen(!isBrandsOpen)}
                         className="flex items-center justify-between w-full text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium"
                       >
-                        Brands
+                        {t('navigation.brands', 'Brands')}
                         <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isBrandsOpen ? 'rotate-180' : ''}`} />
                       </button>
                       {isBrandsOpen && (
@@ -328,7 +334,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       onClick={() => setLocation('/contact')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
-                      Contact
+                      {t('navigation.contact')}
                     </button>
                   </nav>
 

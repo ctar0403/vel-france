@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -70,6 +71,7 @@ interface CarouselProductCardProps {
 }
 
 function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCart, isPending }: CarouselProductCardProps) {
+  const { t } = useTranslation();
   const [isCardHovered, setIsCardHovered] = React.useState(false);
   const [isButtonHovered, setIsButtonHovered] = React.useState(false);
 
@@ -152,7 +154,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
                   transition={{ duration: 0.1 }}
                   className="absolute inset-0 flex items-center justify-center"
                 >
-                  Add to Cart
+{t('home.addToCart')}
                 </motion.span>
                 
                 <motion.div
@@ -214,6 +216,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
 export default function Home() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -254,15 +257,15 @@ export default function Home() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Product Added",
-        description: "The product has been added to your cart successfully.",
+        title: t('success.itemAdded'),
+        description: t('cart.itemAdded'),
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "You must be logged in. Redirecting...",
+          title: t('errors.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -271,8 +274,8 @@ export default function Home() {
         return;
       }
       toast({
-        title: "Error",
-        description: "Unable to add the product to cart.",
+        title: t('common.error'),
+        description: t('errors.general'),
         variant: "destructive",
       });
     },
@@ -285,15 +288,15 @@ export default function Home() {
     },
     onSuccess: () => {
       toast({
-        title: "Success",
-        description: "You are now subscribed to our newsletter!",
+        title: t('common.success'),
+        description: t('home.newsletter.subscribed'),
       });
       setNewsletterEmail("");
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "An error occurred during subscription.",
+        title: t('common.error'),
+        description: t('home.newsletter.error'),
         variant: "destructive",
       });
     },
@@ -306,8 +309,8 @@ export default function Home() {
     },
     onSuccess: () => {
       toast({
-        title: "Message Sent",
-        description: "We will respond to you as soon as possible.",
+        title: t('success.messageSent'),
+        description: t('home.contact.sent'),
       });
       setContactForm({
         firstName: "",
@@ -319,8 +322,8 @@ export default function Home() {
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "An error occurred while sending the message.",
+        title: t('common.error'),
+        description: t('home.contact.error'),
         variant: "destructive",
       });
     },
@@ -391,9 +394,9 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4 tracking-tight">Most Sold</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4 tracking-tight">{t('home.mostSold')}</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-6"></div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Discover the fragrances that captivate the world</p>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">{t('home.heroSubtitle')}</p>
           </motion.div>
 
           <ProductCarousel
@@ -487,16 +490,16 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4 tracking-tight">New Arrivals</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4 tracking-tight">{t('home.newArrivals')}</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-6"></div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Fresh fragrances from the world's most prestigious houses</p>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">{t('home.newArrivalsSubtitle')}</p>
           </motion.div>
 
           <ProductCarousel
             products={newArrivalsProducts.slice(0, 12)}
             title="New Arrivals"
             showBadges={true}
-            badgeText={() => "New Arrival"}
+            badgeText={() => t('product.newArrival')}
             badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
             onAddToCart={(productId) => addToCartMutation.mutate(productId)}
             isAddingToCart={addToCartMutation.isPending}
