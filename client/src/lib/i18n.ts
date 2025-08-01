@@ -1,16 +1,15 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { loadTranslations } from './translations';
 
-import enTranslations from '../locales/en.json';
-import kaTranslations from '../locales/ka.json';
-
+// Start with empty resources - will be loaded from database
 const resources = {
   en: {
-    translation: enTranslations,
+    translation: {},
   },
   ka: {
-    translation: kaTranslations,
+    translation: {},
   },
 };
 
@@ -36,5 +35,8 @@ i18n
     pluralSeparator: '_',
     contextSeparator: '_',
   });
+
+// Load translations from database on initialization
+loadTranslations().catch(console.error);
 
 export default i18n;

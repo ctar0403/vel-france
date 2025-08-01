@@ -1,0 +1,3026 @@
+[
+  {
+    "key": "accordion.accordionitem",
+    "englishText": "AccordionItem"
+  },
+  {
+    "key": "admin-login.accessadminpanel",
+    "englishText": "Access Admin Panel"
+  },
+  {
+    "key": "admin-login.adminaccess",
+    "englishText": "Admin Access"
+  },
+  {
+    "key": "admin-login.administratorlogin",
+    "englishText": "Administrator Login"
+  },
+  {
+    "key": "admin-login.adminloginsuccessful",
+    "englishText": "Admin login successful"
+  },
+  {
+    "key": "admin-login.anerroroccurred",
+    "englishText": "An error occurred during login"
+  },
+  {
+    "key": "admin-login.enteradminpassword",
+    "englishText": "Enter admin password"
+  },
+  {
+    "key": "admin-login.enteradminusername",
+    "englishText": "Enter admin username"
+  },
+  {
+    "key": "admin-login.enteryouradmin",
+    "englishText": "Enter your admin credentials to access the management panel"
+  },
+  {
+    "key": "admin-login.invalidcredentials",
+    "englishText": "Invalid credentials"
+  },
+  {
+    "key": "admin-login.loginfailed",
+    "englishText": "Login failed"
+  },
+  {
+    "key": "admin-login.password",
+    "englishText": "Password"
+  },
+  {
+    "key": "admin-login.pleasecheckyour",
+    "englishText": "Please check your username and password"
+  },
+  {
+    "key": "admin-login.secureloginfor",
+    "englishText": "Secure login for administrators"
+  },
+  {
+    "key": "admin-login.username",
+    "englishText": "Username"
+  },
+  {
+    "key": "admin-login.welcometothe",
+    "englishText": "Welcome to the admin panel"
+  },
+  {
+    "key": "admin.actions",
+    "englishText": "Actions"
+  },
+  {
+    "key": "admin.addnewproduct",
+    "englishText": "Add New Product"
+  },
+  {
+    "key": "admin.addproduct",
+    "englishText": "Add Product"
+  },
+  {
+    "key": "admin.address",
+    "englishText": "Address"
+  },
+  {
+    "key": "admin.adminpanel",
+    "englishText": "Admin Panel"
+  },
+  {
+    "key": "admin.alldiscountsreset",
+    "englishText": "All discounts reset successfully"
+  },
+  {
+    "key": "admin.analytics",
+    "englishText": "Analytics"
+  },
+  {
+    "key": "admin.bogpaymentgateway",
+    "englishText": "BOG Payment Gateway"
+  },
+  {
+    "key": "admin.brand",
+    "englishText": "Brand"
+  },
+  {
+    "key": "admin.bulkpricingmanagement",
+    "englishText": "Bulk Pricing Management"
+  },
+  {
+    "key": "admin.bulkpricingupdated",
+    "englishText": "Bulk pricing updated successfully"
+  },
+  {
+    "key": "admin.cancel",
+    "englishText": "Cancel"
+  },
+  {
+    "key": "admin.cancelled",
+    "englishText": "Cancelled"
+  },
+  {
+    "key": "admin.category",
+    "englishText": "Category"
+  },
+  {
+    "key": "admin.changeimage",
+    "englishText": "Change Image"
+  },
+  {
+    "key": "admin.city",
+    "englishText": "City"
+  },
+  {
+    "key": "admin.clearselection",
+    "englishText": "Clear selection"
+  },
+  {
+    "key": "admin.completeorderinformation",
+    "englishText": "Complete order information and customer details"
+  },
+  {
+    "key": "admin.confirmed",
+    "englishText": "Confirmed"
+  },
+  {
+    "key": "admin.country",
+    "englishText": "Country"
+  },
+  {
+    "key": "admin.createanew",
+    "englishText": "Create a new luxury perfume product for your catalog"
+  },
+  {
+    "key": "admin.createproduct",
+    "englishText": "Create Product"
+  },
+  {
+    "key": "admin.currentprice",
+    "englishText": "Current Price"
+  },
+  {
+    "key": "admin.currentproductinformation",
+    "englishText": "Current Product Information"
+  },
+  {
+    "key": "admin.customer",
+    "englishText": "Customer"
+  },
+  {
+    "key": "admin.customerinformation",
+    "englishText": "Customer Information"
+  },
+  {
+    "key": "admin.customername",
+    "englishText": "Customer Name"
+  },
+  {
+    "key": "admin.date",
+    "englishText": "Date"
+  },
+  {
+    "key": "admin.delivered",
+    "englishText": "Delivered"
+  },
+  {
+    "key": "admin.detailedproductdescription",
+    "englishText": "Detailed product description, story, and features..."
+  },
+  {
+    "key": "admin.discount",
+    "englishText": "Discount"
+  },
+  {
+    "key": "admin.discountpercentage",
+    "englishText": "Discount Percentage"
+  },
+  {
+    "key": "admin.editproduct",
+    "englishText": "Edit Product"
+  },
+  {
+    "key": "admin.egblackorchid",
+    "englishText": "e.g., Black Orchid"
+  },
+  {
+    "key": "admin.egtomford",
+    "englishText": "e.g., Tom Ford"
+  },
+  {
+    "key": "admin.emailaddress",
+    "englishText": "Email Address"
+  },
+  {
+    "key": "admin.enterdiscountpercentage",
+    "englishText": "Enter discount percentage (0-100)"
+  },
+  {
+    "key": "admin.failedtocreate",
+    "englishText": "Failed to create product"
+  },
+  {
+    "key": "admin.failedtodelete",
+    "englishText": "Failed to delete order"
+  },
+  {
+    "key": "admin.failedtoreset",
+    "englishText": "Failed to reset discounts"
+  },
+  {
+    "key": "admin.failedtoupdate",
+    "englishText": "Failed to update order status"
+  },
+  {
+    "key": "admin.finalprice",
+    "englishText": "Final Price"
+  },
+  {
+    "key": "admin.fullname",
+    "englishText": "Full Name"
+  },
+  {
+    "key": "admin.image",
+    "englishText": "Image"
+  },
+  {
+    "key": "admin.instock",
+    "englishText": "In Stock"
+  },
+  {
+    "key": "admin.invaliddiscount",
+    "englishText": "Invalid discount"
+  },
+  {
+    "key": "admin.items",
+    "englishText": "Items"
+  },
+  {
+    "key": "admin.managecustomerorders",
+    "englishText": "Manage customer orders, update statuses, and process shipments"
+  },
+  {
+    "key": "admin.manageuseraccounts",
+    "englishText": "Manage user accounts and permissions"
+  },
+  {
+    "key": "admin.manageyourluxury",
+    "englishText": "Manage your luxury perfume catalog"
+  },
+  {
+    "key": "admin.name",
+    "englishText": "Name"
+  },
+  {
+    "key": "admin.niche",
+    "englishText": "Niche"
+  },
+  {
+    "key": "admin.nodiscount",
+    "englishText": "No discount"
+  },
+  {
+    "key": "admin.noemail",
+    "englishText": "No email"
+  },
+  {
+    "key": "admin.noordersfound",
+    "englishText": "No orders found"
+  },
+  {
+    "key": "admin.noproductsselected",
+    "englishText": "No products selected"
+  },
+  {
+    "key": "admin.ordercode",
+    "englishText": "Order Code"
+  },
+  {
+    "key": "admin.orderdate",
+    "englishText": "Order Date"
+  },
+  {
+    "key": "admin.orderdeletedsuccessfully",
+    "englishText": "Order deleted successfully"
+  },
+  {
+    "key": "admin.orderitems",
+    "englishText": "Order Items"
+  },
+  {
+    "key": "admin.orders",
+    "englishText": "Orders"
+  },
+  {
+    "key": "admin.ordersmanagement",
+    "englishText": "Orders Management"
+  },
+  {
+    "key": "admin.orderstatus",
+    "englishText": "Order Status"
+  },
+  {
+    "key": "admin.orderstatusupdated",
+    "englishText": "Order status updated successfully"
+  },
+  {
+    "key": "admin.originalprice",
+    "englishText": "Original Price"
+  },
+  {
+    "key": "admin.outofstock",
+    "englishText": "Out of Stock"
+  },
+  {
+    "key": "admin.payment",
+    "englishText": "Payment"
+  },
+  {
+    "key": "admin.paymentdate",
+    "englishText": "Payment Date"
+  },
+  {
+    "key": "admin.paymentid",
+    "englishText": "Payment ID"
+  },
+  {
+    "key": "admin.paymentinformation",
+    "englishText": "Payment Information"
+  },
+  {
+    "key": "admin.paymentmethod",
+    "englishText": "Payment Method"
+  },
+  {
+    "key": "admin.paymentstatus",
+    "englishText": "Payment Status"
+  },
+  {
+    "key": "admin.pending",
+    "englishText": "Pending"
+  },
+  {
+    "key": "admin.pendingorders",
+    "englishText": "Pending Orders"
+  },
+  {
+    "key": "admin.phone",
+    "englishText": "Phone"
+  },
+  {
+    "key": "admin.phonenumber",
+    "englishText": "Phone Number"
+  },
+  {
+    "key": "admin.postalcode",
+    "englishText": "Postal Code"
+  },
+  {
+    "key": "admin.price",
+    "englishText": "Price"
+  },
+  {
+    "key": "admin.pricing",
+    "englishText": "Pricing"
+  },
+  {
+    "key": "admin.product",
+    "englishText": "Product"
+  },
+  {
+    "key": "admin.productcreatedsuccessfully",
+    "englishText": "Product created successfully"
+  },
+  {
+    "key": "admin.productdeletedsuccessfully",
+    "englishText": "Product deleted successfully"
+  },
+  {
+    "key": "admin.productimage",
+    "englishText": "Product Image"
+  },
+  {
+    "key": "admin.productpreview",
+    "englishText": "Product preview"
+  },
+  {
+    "key": "admin.products",
+    "englishText": "Products"
+  },
+  {
+    "key": "admin.productscatalog",
+    "englishText": "Products Catalog"
+  },
+  {
+    "key": "admin.productupdatedsuccessfully",
+    "englishText": "Product updated successfully"
+  },
+  {
+    "key": "admin.quickactions",
+    "englishText": "Quick Actions"
+  },
+  {
+    "key": "admin.resetalldiscounts",
+    "englishText": "Reset All Discounts"
+  },
+  {
+    "key": "admin.searchproductsbrands",
+    "englishText": "Search products, brands, descriptions..."
+  },
+  {
+    "key": "admin.selectproductsfor",
+    "englishText": "Select Products for Pricing Updates"
+  },
+  {
+    "key": "admin.setthecurrent",
+    "englishText": "Set the current retail price"
+  },
+  {
+    "key": "admin.shipped",
+    "englishText": "Shipped"
+  },
+  {
+    "key": "admin.shippingaddress",
+    "englishText": "Shipping Address"
+  },
+  {
+    "key": "admin.sortby",
+    "englishText": "Sort by"
+  },
+  {
+    "key": "admin.status",
+    "englishText": "Status"
+  },
+  {
+    "key": "admin.stockstatus",
+    "englishText": "Stock Status"
+  },
+  {
+    "key": "admin.todaysorders",
+    "englishText": "Today's Orders"
+  },
+  {
+    "key": "admin.togglestock",
+    "englishText": "Toggle Stock"
+  },
+  {
+    "key": "admin.total",
+    "englishText": "Total"
+  },
+  {
+    "key": "admin.totalamount",
+    "englishText": "Total Amount"
+  },
+  {
+    "key": "admin.totalorders",
+    "englishText": "Total Orders"
+  },
+  {
+    "key": "admin.totalrevenue",
+    "englishText": "Total Revenue"
+  },
+  {
+    "key": "admin.unisex",
+    "englishText": "Unisex"
+  },
+  {
+    "key": "admin.unknownuser",
+    "englishText": "Unknown User"
+  },
+  {
+    "key": "admin.updateproduct",
+    "englishText": "Update Product"
+  },
+  {
+    "key": "admin.updatetheproduct",
+    "englishText": "Update the product information"
+  },
+  {
+    "key": "admin.uploadimage",
+    "englishText": "Upload Image"
+  },
+  {
+    "key": "admin.usermanagement",
+    "englishText": "User Management"
+  },
+  {
+    "key": "admin.users",
+    "englishText": "Users"
+  },
+  {
+    "key": "admin.viewdetails",
+    "englishText": "View Details"
+  },
+  {
+    "key": "admin.viewsalesand",
+    "englishText": "View sales and performance metrics"
+  },
+  {
+    "key": "alert-dialog.alertdialogfooter",
+    "englishText": "AlertDialogFooter"
+  },
+  {
+    "key": "alert-dialog.alertdialogheader",
+    "englishText": "AlertDialogHeader"
+  },
+  {
+    "key": "alert.alert",
+    "englishText": "Alert"
+  },
+  {
+    "key": "alert.alertdescription",
+    "englishText": "AlertDescription"
+  },
+  {
+    "key": "alert.alerttitle",
+    "englishText": "AlertTitle"
+  },
+  {
+    "key": "auth.confirmpassword",
+    "englishText": "Confirm Password"
+  },
+  {
+    "key": "auth.confirmyourpassword",
+    "englishText": "Confirm your password"
+  },
+  {
+    "key": "auth.createaccount",
+    "englishText": "Create Account"
+  },
+  {
+    "key": "auth.createapassword",
+    "englishText": "Create a password"
+  },
+  {
+    "key": "auth.email",
+    "englishText": "Email"
+  },
+  {
+    "key": "auth.enteryouremail",
+    "englishText": "Enter your email"
+  },
+  {
+    "key": "auth.enteryourpassword",
+    "englishText": "Enter your password"
+  },
+  {
+    "key": "auth.firstname",
+    "englishText": "First name"
+  },
+  {
+    "key": "auth.joinvelfrance",
+    "englishText": "Join Vel France"
+  },
+  {
+    "key": "auth.lastname",
+    "englishText": "Last name"
+  },
+  {
+    "key": "auth.password",
+    "englishText": "Password"
+  },
+  {
+    "key": "auth.signin",
+    "englishText": "Sign In"
+  },
+  {
+    "key": "auth.signinto",
+    "englishText": "Sign in to your account or create a new one"
+  },
+  {
+    "key": "auth.signup",
+    "englishText": "Sign Up"
+  },
+  {
+    "key": "batchRequests.promise",
+    "englishText": "Promise"
+  },
+  {
+    "key": "bogSDK.failedtoload",
+    "englishText": "Failed to load BOG SDK"
+  },
+  {
+    "key": "breadcrumb.breadcrumb",
+    "englishText": "breadcrumb"
+  },
+  {
+    "key": "breadcrumb.breadcrumbelipssis",
+    "englishText": "BreadcrumbElipssis"
+  },
+  {
+    "key": "breadcrumb.breadcrumbitem",
+    "englishText": "BreadcrumbItem"
+  },
+  {
+    "key": "breadcrumb.breadcrumblink",
+    "englishText": "BreadcrumbLink"
+  },
+  {
+    "key": "breadcrumb.breadcrumblist",
+    "englishText": "BreadcrumbList"
+  },
+  {
+    "key": "breadcrumb.breadcrumbpage",
+    "englishText": "BreadcrumbPage"
+  },
+  {
+    "key": "breadcrumb.breadcrumbseparator",
+    "englishText": "BreadcrumbSeparator"
+  },
+  {
+    "key": "breadcrumb.more",
+    "englishText": "More"
+  },
+  {
+    "key": "button.button",
+    "englishText": "Button"
+  },
+  {
+    "key": "calendar.calendar",
+    "englishText": "Calendar"
+  },
+  {
+    "key": "card.card",
+    "englishText": "Card"
+  },
+  {
+    "key": "card.cardcontent",
+    "englishText": "CardContent"
+  },
+  {
+    "key": "card.carddescription",
+    "englishText": "CardDescription"
+  },
+  {
+    "key": "card.cardfooter",
+    "englishText": "CardFooter"
+  },
+  {
+    "key": "card.cardheader",
+    "englishText": "CardHeader"
+  },
+  {
+    "key": "card.cardtitle",
+    "englishText": "CardTitle"
+  },
+  {
+    "key": "carousel.arrowleft",
+    "englishText": "ArrowLeft"
+  },
+  {
+    "key": "carousel.arrowright",
+    "englishText": "ArrowRight"
+  },
+  {
+    "key": "carousel.carousel",
+    "englishText": "Carousel"
+  },
+  {
+    "key": "carousel.carouselcontent",
+    "englishText": "CarouselContent"
+  },
+  {
+    "key": "carousel.carouselitem",
+    "englishText": "CarouselItem"
+  },
+  {
+    "key": "carousel.carouselnext",
+    "englishText": "CarouselNext"
+  },
+  {
+    "key": "carousel.carouselprevious",
+    "englishText": "CarouselPrevious"
+  },
+  {
+    "key": "carousel.nextslide",
+    "englishText": "Next slide"
+  },
+  {
+    "key": "carousel.previousslide",
+    "englishText": "Previous slide"
+  },
+  {
+    "key": "cart.back",
+    "englishText": "Back"
+  },
+  {
+    "key": "cart.continueshopping",
+    "englishText": "Continue Shopping"
+  },
+  {
+    "key": "cart.discoverourcurated",
+    "englishText": "Discover our curated selection of luxury fragrances crafted for the discerning connoisseur"
+  },
+  {
+    "key": "cart.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "cart.explorefragrances",
+    "englishText": "Explore Fragrances"
+  },
+  {
+    "key": "cart.fragrance",
+    "englishText": "Fragrance"
+  },
+  {
+    "key": "cart.free",
+    "englishText": "Free"
+  },
+  {
+    "key": "cart.itemremoved",
+    "englishText": "Item Removed"
+  },
+  {
+    "key": "cart.ordersummary",
+    "englishText": "Order Summary"
+  },
+  {
+    "key": "cart.proceedtocheckout",
+    "englishText": "Proceed to Checkout"
+  },
+  {
+    "key": "cart.shipping",
+    "englishText": "Shipping"
+  },
+  {
+    "key": "cart.shoppingcart",
+    "englishText": "Shopping Cart"
+  },
+  {
+    "key": "cart.total",
+    "englishText": "Total"
+  },
+  {
+    "key": "cart.unauthorized",
+    "englishText": "Unauthorized"
+  },
+  {
+    "key": "cart.vatincluded",
+    "englishText": "VAT included"
+  },
+  {
+    "key": "cart.yourcollectionawaits",
+    "englishText": "Your collection awaits"
+  },
+  {
+    "key": "cart.yourselection",
+    "englishText": "Your Selection"
+  },
+  {
+    "key": "CartSidebar.discoverourcurated",
+    "englishText": "Discover our curated selection of luxury fragrances crafted for the discerning connoisseur"
+  },
+  {
+    "key": "CartSidebar.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "CartSidebar.itemremoved",
+    "englishText": "Item Removed"
+  },
+  {
+    "key": "CartSidebar.proceedtocheckout",
+    "englishText": "Proceed to Checkout"
+  },
+  {
+    "key": "CartSidebar.shoppingcart",
+    "englishText": "Shopping Cart"
+  },
+  {
+    "key": "CartSidebar.total",
+    "englishText": "Total"
+  },
+  {
+    "key": "CartSidebar.unauthorized",
+    "englishText": "Unauthorized"
+  },
+  {
+    "key": "CartSidebar.viewfullcart",
+    "englishText": "View Full Cart"
+  },
+  {
+    "key": "CartSidebar.yourcollectionawaits",
+    "englishText": "Your collection awaits"
+  },
+  {
+    "key": "catalogue-backup.addedtocart",
+    "englishText": "Added to cart"
+  },
+  {
+    "key": "catalogue-backup.addtocart",
+    "englishText": "Add to Cart"
+  },
+  {
+    "key": "catalogue-backup.bolddistinguished",
+    "englishText": "Bold & Distinguished"
+  },
+  {
+    "key": "catalogue-backup.brand",
+    "englishText": "Brand"
+  },
+  {
+    "key": "catalogue-backup.clearall",
+    "englishText": "Clear All"
+  },
+  {
+    "key": "catalogue-backup.clearallfilters",
+    "englishText": "Clear All Filters"
+  },
+  {
+    "key": "catalogue-backup.collections",
+    "englishText": "Collections"
+  },
+  {
+    "key": "catalogue-backup.discoverperfumes",
+    "englishText": "Discover Perfumes"
+  },
+  {
+    "key": "catalogue-backup.elegantsophisticated",
+    "englishText": "Elegant & Sophisticated"
+  },
+  {
+    "key": "catalogue-backup.enter",
+    "englishText": "Enter"
+  },
+  {
+    "key": "catalogue-backup.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "catalogue-backup.filter",
+    "englishText": "Filter"
+  },
+  {
+    "key": "catalogue-backup.filters",
+    "englishText": "Filters"
+  },
+  {
+    "key": "catalogue-backup.luxurybrands",
+    "englishText": "Luxury Brands"
+  },
+  {
+    "key": "catalogue-backup.noproductsfound",
+    "englishText": "No products found"
+  },
+  {
+    "key": "catalogue-backup.pricerange",
+    "englishText": "Price Range"
+  },
+  {
+    "key": "catalogue-backup.searchfragrances",
+    "englishText": "Search Fragrances"
+  },
+  {
+    "key": "catalogue-backup.searchluxuryfragrances",
+    "englishText": "Search luxury fragrances, brands, or scent notes..."
+  },
+  {
+    "key": "catalogue-backup.sortby",
+    "englishText": "Sort by..."
+  },
+  {
+    "key": "catalogue-backup.tryadjustingyour",
+    "englishText": "Try adjusting your filters to see more products"
+  },
+  {
+    "key": "catalogue-broken.addedtocart",
+    "englishText": "Added to cart"
+  },
+  {
+    "key": "catalogue-broken.addtocart",
+    "englishText": "Add to Cart"
+  },
+  {
+    "key": "catalogue-broken.bolddistinguished",
+    "englishText": "Bold & Distinguished"
+  },
+  {
+    "key": "catalogue-broken.brand",
+    "englishText": "Brand"
+  },
+  {
+    "key": "catalogue-broken.clearall",
+    "englishText": "Clear All"
+  },
+  {
+    "key": "catalogue-broken.clearallfilters",
+    "englishText": "Clear All Filters"
+  },
+  {
+    "key": "catalogue-broken.collections",
+    "englishText": "Collections"
+  },
+  {
+    "key": "catalogue-broken.discoverperfumes",
+    "englishText": "Discover Perfumes"
+  },
+  {
+    "key": "catalogue-broken.elegantsophisticated",
+    "englishText": "Elegant & Sophisticated"
+  },
+  {
+    "key": "catalogue-broken.enter",
+    "englishText": "Enter"
+  },
+  {
+    "key": "catalogue-broken.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "catalogue-broken.filter",
+    "englishText": "Filter"
+  },
+  {
+    "key": "catalogue-broken.filters",
+    "englishText": "Filters"
+  },
+  {
+    "key": "catalogue-broken.luxurybrands",
+    "englishText": "Luxury Brands"
+  },
+  {
+    "key": "catalogue-broken.noproductsfound",
+    "englishText": "No products found"
+  },
+  {
+    "key": "catalogue-broken.pricerange",
+    "englishText": "Price Range"
+  },
+  {
+    "key": "catalogue-broken.searchfragrances",
+    "englishText": "Search Fragrances"
+  },
+  {
+    "key": "catalogue-broken.searchluxuryfragrances",
+    "englishText": "Search luxury fragrances, brands, or scent notes..."
+  },
+  {
+    "key": "catalogue-broken.sortby",
+    "englishText": "Sort by..."
+  },
+  {
+    "key": "catalogue-broken.tryadjustingyour",
+    "englishText": "Try adjusting your filters to see more products"
+  },
+  {
+    "key": "catalogue.addedtocart",
+    "englishText": "Added to Cart"
+  },
+  {
+    "key": "catalogue.addtocart",
+    "englishText": "Add to Cart"
+  },
+  {
+    "key": "catalogue.brand",
+    "englishText": "Brand"
+  },
+  {
+    "key": "catalogue.brands",
+    "englishText": "Brands"
+  },
+  {
+    "key": "catalogue.catalogue",
+    "englishText": "Catalogue"
+  },
+  {
+    "key": "catalogue.categories",
+    "englishText": "Categories"
+  },
+  {
+    "key": "catalogue.clearall",
+    "englishText": "Clear All"
+  },
+  {
+    "key": "catalogue.clearallfilters",
+    "englishText": "Clear all filters"
+  },
+  {
+    "key": "catalogue.discoverperfumes",
+    "englishText": "Discover Perfumes"
+  },
+  {
+    "key": "catalogue.enter",
+    "englishText": "Enter"
+  },
+  {
+    "key": "catalogue.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "catalogue.filters",
+    "englishText": "Filters"
+  },
+  {
+    "key": "catalogue.noproductsfound",
+    "englishText": "No products found"
+  },
+  {
+    "key": "catalogue.pricerange",
+    "englishText": "Price Range"
+  },
+  {
+    "key": "catalogue.search",
+    "englishText": "Search"
+  },
+  {
+    "key": "catalogue.searchfragrances",
+    "englishText": "Search fragrances..."
+  },
+  {
+    "key": "catalogue.searchluxuryfragrances",
+    "englishText": "Search luxury fragrances, brands, or scent notes..."
+  },
+  {
+    "key": "catalogue.sort",
+    "englishText": "Sort"
+  },
+  {
+    "key": "catalogue.sortby",
+    "englishText": "Sort by..."
+  },
+  {
+    "key": "catalogue.tryadjustingyour",
+    "englishText": "Try adjusting your filters to see more results"
+  },
+  {
+    "key": "chart.chart",
+    "englishText": "Chart"
+  },
+  {
+    "key": "chart.chartlegend",
+    "englishText": "ChartLegend"
+  },
+  {
+    "key": "chart.charttooltip",
+    "englishText": "ChartTooltip"
+  },
+  {
+    "key": "checkout.additionaladdressinformation",
+    "englishText": "Additional Address Information"
+  },
+  {
+    "key": "checkout.additionalinformation",
+    "englishText": "Additional Information"
+  },
+  {
+    "key": "checkout.addsomeluxury",
+    "englishText": "Add some luxury fragrances to proceed with checkout"
+  },
+  {
+    "key": "checkout.americanexpress",
+    "englishText": "American Express"
+  },
+  {
+    "key": "checkout.anyspecialdelivery",
+    "englishText": "Any special delivery instructions or notes (optional)"
+  },
+  {
+    "key": "checkout.apartmentsuiteunit",
+    "englishText": "Apartment, suite, unit, building, floor, etc. (optional)"
+  },
+  {
+    "key": "checkout.applepay",
+    "englishText": "Apple Pay"
+  },
+  {
+    "key": "checkout.back",
+    "englishText": "Back"
+  },
+  {
+    "key": "checkout.backtocart",
+    "englishText": "Back to Cart"
+  },
+  {
+    "key": "checkout.bankofgeorgia",
+    "englishText": "Bank of Georgia"
+  },
+  {
+    "key": "checkout.banktransfer",
+    "englishText": "Bank Transfer"
+  },
+  {
+    "key": "checkout.bogcalculatorclosed",
+    "englishText": "BOG Calculator closed by user"
+  },
+  {
+    "key": "checkout.boginstallments",
+    "englishText": "BOG Installments"
+  },
+  {
+    "key": "checkout.bogsdkfailed",
+    "englishText": "BOG SDK failed to load"
+  },
+  {
+    "key": "checkout.choosepaymentmethod",
+    "englishText": "Choose Payment Method"
+  },
+  {
+    "key": "checkout.email",
+    "englishText": "Email"
+  },
+  {
+    "key": "checkout.enteryourcomplete",
+    "englishText": "Enter your complete street address"
+  },
+  {
+    "key": "checkout.enteryourlast",
+    "englishText": "Enter your last name"
+  },
+  {
+    "key": "checkout.enteryourname",
+    "englishText": "Enter your name"
+  },
+  {
+    "key": "checkout.explorefragrances",
+    "englishText": "Explore Fragrances"
+  },
+  {
+    "key": "checkout.flexiblemonthlyplan",
+    "englishText": "Flexible monthly plan"
+  },
+  {
+    "key": "checkout.free",
+    "englishText": "Free"
+  },
+  {
+    "key": "checkout.georgia",
+    "englishText": "Georgia"
+  },
+  {
+    "key": "checkout.googlepay",
+    "englishText": "Google Pay"
+  },
+  {
+    "key": "checkout.instant",
+    "englishText": "Instant"
+  },
+  {
+    "key": "checkout.instantcardpayment",
+    "englishText": "Instant Card Payment"
+  },
+  {
+    "key": "checkout.mastercard",
+    "englishText": "Mastercard"
+  },
+  {
+    "key": "checkout.missinginformation",
+    "englishText": "Missing Information"
+  },
+  {
+    "key": "checkout.ordersummary",
+    "englishText": "Order Summary"
+  },
+  {
+    "key": "checkout.partbypart",
+    "englishText": "Part by Part"
+  },
+  {
+    "key": "checkout.paymenterror",
+    "englishText": "Payment Error"
+  },
+  {
+    "key": "checkout.paymentfailed",
+    "englishText": "Payment Failed"
+  },
+  {
+    "key": "checkout.processingpaymentrequest",
+    "englishText": "Processing Payment Request"
+  },
+  {
+    "key": "checkout.securecheckout",
+    "englishText": "Secure Checkout"
+  },
+  {
+    "key": "checkout.shipping",
+    "englishText": "Shipping"
+  },
+  {
+    "key": "checkout.shippinginformation",
+    "englishText": "Shipping Information"
+  },
+  {
+    "key": "checkout.tbilisibatumietc",
+    "englishText": "Tbilisi, Batumi, etc."
+  },
+  {
+    "key": "checkout.totalamount",
+    "englishText": "Total Amount"
+  },
+  {
+    "key": "checkout.unauthorized",
+    "englishText": "Unauthorized"
+  },
+  {
+    "key": "checkout.vatincluded",
+    "englishText": "VAT included"
+  },
+  {
+    "key": "checkout.visa",
+    "englishText": "Visa"
+  },
+  {
+    "key": "checkout.yourcartis",
+    "englishText": "Your cart is empty"
+  },
+  {
+    "key": "checkout.youremailexamplecomoptional",
+    "englishText": "your.email@example.com (optional)"
+  },
+  {
+    "key": "checkout.zerointerest",
+    "englishText": "Zero interest"
+  },
+  {
+    "key": "command.commandshortcut",
+    "englishText": "CommandShortcut"
+  },
+  {
+    "key": "contact.businesshours",
+    "englishText": "Business Hours"
+  },
+  {
+    "key": "contact.callus",
+    "englishText": "Call Us"
+  },
+  {
+    "key": "contact.contenttype",
+    "englishText": "Content-Type"
+  },
+  {
+    "key": "contact.emailus",
+    "englishText": "Email Us"
+  },
+  {
+    "key": "contact.entermessagesubject",
+    "englishText": "Enter message subject"
+  },
+  {
+    "key": "contact.enteryouremail",
+    "englishText": "Enter your email"
+  },
+  {
+    "key": "contact.enteryourfull",
+    "englishText": "Enter your full name"
+  },
+  {
+    "key": "contact.enteryourphone",
+    "englishText": "Enter your phone number"
+  },
+  {
+    "key": "contact.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "contact.failedtosend",
+    "englishText": "Failed to send message"
+  },
+  {
+    "key": "contact.fastresponse",
+    "englishText": "Fast Response"
+  },
+  {
+    "key": "contact.generalinquiry",
+    "englishText": "General Inquiry"
+  },
+  {
+    "key": "contact.getintouch",
+    "englishText": "Get In Touch"
+  },
+  {
+    "key": "contact.messagemustbe",
+    "englishText": "Message must be at least 10 characters"
+  },
+  {
+    "key": "contact.messagesentsuccessfully",
+    "englishText": "Message Sent Successfully"
+  },
+  {
+    "key": "contact.mondaysunday10am",
+    "englishText": "Monday - Sunday: 10AM - 7PM"
+  },
+  {
+    "key": "contact.multiplechannels",
+    "englishText": "Multiple Channels"
+  },
+  {
+    "key": "contact.namemustbe",
+    "englishText": "Name must be at least 2 characters"
+  },
+  {
+    "key": "contact.ordersupport",
+    "englishText": "Order Support"
+  },
+  {
+    "key": "contact.other",
+    "englishText": "Other"
+  },
+  {
+    "key": "contact.partnership",
+    "englishText": "Partnership"
+  },
+  {
+    "key": "contact.phonenumber",
+    "englishText": "Phone Number"
+  },
+  {
+    "key": "contact.pleaseentera",
+    "englishText": "Please enter a valid email address"
+  },
+  {
+    "key": "contact.pleaseselecta",
+    "englishText": "Please select a category"
+  },
+  {
+    "key": "contact.productquestion",
+    "englishText": "Product Question"
+  },
+  {
+    "key": "contact.selectcategory",
+    "englishText": "Select category"
+  },
+  {
+    "key": "contact.sendmessage",
+    "englishText": "Send Message"
+  },
+  {
+    "key": "contact.sendusa",
+    "englishText": "Send Us a Message"
+  },
+  {
+    "key": "contact.shippingreturns",
+    "englishText": "Shipping & Returns"
+  },
+  {
+    "key": "contact.subjectmustbe",
+    "englishText": "Subject must be at least 5 characters"
+  },
+  {
+    "key": "contact.tellushow",
+    "englishText": "Tell us how we can help you..."
+  },
+  {
+    "key": "context-menu.contextmenushortcut",
+    "englishText": "ContextMenuShortcut"
+  },
+  {
+    "key": "delivery.contactfordelivery",
+    "englishText": "Contact for Delivery"
+  },
+  {
+    "key": "delivery.deliverydetails",
+    "englishText": "Delivery Details"
+  },
+  {
+    "key": "delivery.deliveryhours",
+    "englishText": "Delivery Hours"
+  },
+  {
+    "key": "delivery.deliveryinformation",
+    "englishText": "Delivery Information"
+  },
+  {
+    "key": "delivery.fastdeliverywithin",
+    "englishText": "Fast delivery within Tbilisi city limits"
+  },
+  {
+    "key": "delivery.freedelivery",
+    "englishText": "Free Delivery"
+  },
+  {
+    "key": "delivery.orderprocessing",
+    "englishText": "Order Processing"
+  },
+  {
+    "key": "delivery.regions",
+    "englishText": "Regions"
+  },
+  {
+    "key": "delivery.reliabledeliveryto",
+    "englishText": "Reliable delivery to all regions of Georgia"
+  },
+  {
+    "key": "delivery.tbilisi",
+    "englishText": "Tbilisi"
+  },
+  {
+    "key": "dialog.close",
+    "englishText": "Close"
+  },
+  {
+    "key": "dialog.dialogfooter",
+    "englishText": "DialogFooter"
+  },
+  {
+    "key": "dialog.dialogheader",
+    "englishText": "DialogHeader"
+  },
+  {
+    "key": "drawer.drawer",
+    "englishText": "Drawer"
+  },
+  {
+    "key": "drawer.drawercontent",
+    "englishText": "DrawerContent"
+  },
+  {
+    "key": "drawer.drawerfooter",
+    "englishText": "DrawerFooter"
+  },
+  {
+    "key": "drawer.drawerheader",
+    "englishText": "DrawerHeader"
+  },
+  {
+    "key": "dropdown-menu.dropdownmenushortcut",
+    "englishText": "DropdownMenuShortcut"
+  },
+  {
+    "key": "Footer.catalogue",
+    "englishText": "Catalogue"
+  },
+  {
+    "key": "Footer.contact",
+    "englishText": "Contact"
+  },
+  {
+    "key": "Footer.delivery",
+    "englishText": "Delivery"
+  },
+  {
+    "key": "Footer.facebook",
+    "englishText": "Facebook"
+  },
+  {
+    "key": "Footer.home",
+    "englishText": "Home"
+  },
+  {
+    "key": "Footer.information",
+    "englishText": "Information"
+  },
+  {
+    "key": "Footer.instagram",
+    "englishText": "Instagram"
+  },
+  {
+    "key": "Footer.navigation",
+    "englishText": "Navigation"
+  },
+  {
+    "key": "Footer.privacypolicy",
+    "englishText": "Privacy Policy"
+  },
+  {
+    "key": "Footer.returns",
+    "englishText": "Returns"
+  },
+  {
+    "key": "Footer.services",
+    "englishText": "Services"
+  },
+  {
+    "key": "Footer.termsconditions",
+    "englishText": "Terms & Conditions"
+  },
+  {
+    "key": "Footer.twitter",
+    "englishText": "Twitter"
+  },
+  {
+    "key": "Footer.velfrancelogo",
+    "englishText": "Vel France Logo"
+  },
+  {
+    "key": "Footer.youtube",
+    "englishText": "YouTube"
+  },
+  {
+    "key": "form.formcontrol",
+    "englishText": "FormControl"
+  },
+  {
+    "key": "form.formdescription",
+    "englishText": "FormDescription"
+  },
+  {
+    "key": "form.formitem",
+    "englishText": "FormItem"
+  },
+  {
+    "key": "form.formlabel",
+    "englishText": "FormLabel"
+  },
+  {
+    "key": "form.formmessage",
+    "englishText": "FormMessage"
+  },
+  {
+    "key": "Header.armani",
+    "englishText": "Armani"
+  },
+  {
+    "key": "Header.azzaro",
+    "englishText": "Azzaro"
+  },
+  {
+    "key": "Header.boss",
+    "englishText": "Boss"
+  },
+  {
+    "key": "Header.bottegaveneta",
+    "englishText": "Bottega Veneta"
+  },
+  {
+    "key": "Header.brands",
+    "englishText": "Brands"
+  },
+  {
+    "key": "Header.burberry",
+    "englishText": "Burberry"
+  },
+  {
+    "key": "Header.bvlgari",
+    "englishText": "Bvlgari"
+  },
+  {
+    "key": "Header.byredo",
+    "englishText": "Byredo"
+  },
+  {
+    "key": "Header.calvinklein",
+    "englishText": "Calvin Klein"
+  },
+  {
+    "key": "Header.carolinaherrera",
+    "englishText": "Carolina Herrera"
+  },
+  {
+    "key": "Header.chanel",
+    "englishText": "Chanel"
+  },
+  {
+    "key": "Header.creed",
+    "englishText": "Creed"
+  },
+  {
+    "key": "Header.davidoff",
+    "englishText": "Davidoff"
+  },
+  {
+    "key": "Header.dior",
+    "englishText": "Dior"
+  },
+  {
+    "key": "Header.dolcegabbana",
+    "englishText": "Dolce & Gabbana"
+  },
+  {
+    "key": "Header.givenchy",
+    "englishText": "Givenchy"
+  },
+  {
+    "key": "Header.gucci",
+    "englishText": "Gucci"
+  },
+  {
+    "key": "Header.hermes",
+    "englishText": "Hermes"
+  },
+  {
+    "key": "Header.initio",
+    "englishText": "Initio"
+  },
+  {
+    "key": "Header.jeanpaulgaultier",
+    "englishText": "Jean Paul Gaultier"
+  },
+  {
+    "key": "Header.kilian",
+    "englishText": "Kilian"
+  },
+  {
+    "key": "Header.lancome",
+    "englishText": "Lancome"
+  },
+  {
+    "key": "Header.lelabo",
+    "englishText": "Le Labo"
+  },
+  {
+    "key": "Header.louisvuitton",
+    "englishText": "Louis Vuitton"
+  },
+  {
+    "key": "Header.maisonfranciskurkdjian",
+    "englishText": "Maison Francis Kurkdjian"
+  },
+  {
+    "key": "Header.maisonmargiela",
+    "englishText": "Maison Margiela"
+  },
+  {
+    "key": "Header.mancera",
+    "englishText": "Mancera"
+  },
+  {
+    "key": "Header.marcantoinebarrois",
+    "englishText": "Marc Antoine Barrois"
+  },
+  {
+    "key": "Header.marcjacobs",
+    "englishText": "Marc Jacobs"
+  },
+  {
+    "key": "Header.memo",
+    "englishText": "Memo"
+  },
+  {
+    "key": "Header.molecule",
+    "englishText": "Molecule"
+  },
+  {
+    "key": "Header.montblanc",
+    "englishText": "Montblanc"
+  },
+  {
+    "key": "Header.moschino",
+    "englishText": "Moschino"
+  },
+  {
+    "key": "Header.mugler",
+    "englishText": "Mugler"
+  },
+  {
+    "key": "Header.narciso",
+    "englishText": "Narciso"
+  },
+  {
+    "key": "Header.nasomatto",
+    "englishText": "Nasomatto"
+  },
+  {
+    "key": "Header.ortoparisi",
+    "englishText": "Orto Parisi"
+  },
+  {
+    "key": "Header.pacorabanne",
+    "englishText": "Paco Rabanne"
+  },
+  {
+    "key": "Header.parfumsdemarly",
+    "englishText": "Parfums de Marly"
+  },
+  {
+    "key": "Header.prada",
+    "englishText": "Prada"
+  },
+  {
+    "key": "Header.profile",
+    "englishText": "Profile"
+  },
+  {
+    "key": "Header.roja",
+    "englishText": "Roja"
+  },
+  {
+    "key": "Header.sospiro",
+    "englishText": "Sospiro"
+  },
+  {
+    "key": "Header.tizianaterenzi",
+    "englishText": "Tiziana Terenzi"
+  },
+  {
+    "key": "Header.tomford",
+    "englishText": "Tom Ford"
+  },
+  {
+    "key": "Header.trussardi",
+    "englishText": "Trussardi"
+  },
+  {
+    "key": "Header.user",
+    "englishText": "User"
+  },
+  {
+    "key": "Header.valentino",
+    "englishText": "Valentino"
+  },
+  {
+    "key": "Header.velfrancelogo",
+    "englishText": "Vel France Logo"
+  },
+  {
+    "key": "Header.versace",
+    "englishText": "Versace"
+  },
+  {
+    "key": "Header.viktorrolf",
+    "englishText": "Viktor&Rolf"
+  },
+  {
+    "key": "Header.xerjoff",
+    "englishText": "Xerjoff"
+  },
+  {
+    "key": "Header.yvessaintlaurent",
+    "englishText": "Yves Saint Laurent"
+  },
+  {
+    "key": "Header.zadigvoltaire",
+    "englishText": "Zadig & Voltaire"
+  },
+  {
+    "key": "HeroSlider.chanelno5",
+    "englishText": "Chanel No. 5 - Shop Now"
+  },
+  {
+    "key": "HeroSlider.cocomademoiselle",
+    "englishText": "Coco Mademoiselle"
+  },
+  {
+    "key": "HeroSlider.enter",
+    "englishText": "Enter"
+  },
+  {
+    "key": "HeroSlider.gotocatalogue",
+    "englishText": "Go to catalogue"
+  },
+  {
+    "key": "HeroSlider.jeanpaulgaultier",
+    "englishText": "Jean Paul Gaultier - Gaultier Divine"
+  },
+  {
+    "key": "HeroSlider.missdiorabsolutely",
+    "englishText": "Miss Dior - Absolutely Blooming"
+  },
+  {
+    "key": "HeroSlider.nextslide",
+    "englishText": "Next slide"
+  },
+  {
+    "key": "HeroSlider.previousslide",
+    "englishText": "Previous slide"
+  },
+  {
+    "key": "HeroSlider.sauvagethenew",
+    "englishText": "Sauvage - The New Elixir"
+  },
+  {
+    "key": "HeroSlider.velfranceupto",
+    "englishText": "VelFrance - Up to 60% Discount"
+  },
+  {
+    "key": "home.addtocart",
+    "englishText": "Add to Cart"
+  },
+  {
+    "key": "home.armane",
+    "englishText": "Armane"
+  },
+  {
+    "key": "home.bleudechanel",
+    "englishText": "Bleu de Chanel"
+  },
+  {
+    "key": "home.chanceeautendre",
+    "englishText": "Chance Eau Tendre"
+  },
+  {
+    "key": "home.chanel",
+    "englishText": "Chanel"
+  },
+  {
+    "key": "home.clairefontaine",
+    "englishText": "Claire Fontaine"
+  },
+  {
+    "key": "home.creed",
+    "englishText": "Creed"
+  },
+  {
+    "key": "home.delina",
+    "englishText": "Delina"
+  },
+  {
+    "key": "home.dior",
+    "englishText": "Dior"
+  },
+  {
+    "key": "home.divine",
+    "englishText": "Divine"
+  },
+  {
+    "key": "home.dolcegabbana",
+    "englishText": "Dolce & Gabbana"
+  },
+  {
+    "key": "home.encelade",
+    "englishText": "Encelade"
+  },
+  {
+    "key": "home.erbapura",
+    "englishText": "Erba Pura"
+  },
+  {
+    "key": "home.ganymede",
+    "englishText": "Ganymede"
+  },
+  {
+    "key": "home.goddess",
+    "englishText": "Goddess"
+  },
+  {
+    "key": "home.gucci",
+    "englishText": "Gucci"
+  },
+  {
+    "key": "home.hommeintense",
+    "englishText": "Homme Intense"
+  },
+  {
+    "key": "home.italianleather",
+    "englishText": "Italian Leather"
+  },
+  {
+    "key": "home.kirke",
+    "englishText": "Kirke"
+  },
+  {
+    "key": "home.lemaleelixir",
+    "englishText": "Le Male Elixir"
+  },
+  {
+    "key": "home.libre",
+    "englishText": "Libre"
+  },
+  {
+    "key": "home.libreintense",
+    "englishText": "Libre Intense"
+  },
+  {
+    "key": "home.mostsold",
+    "englishText": "Most Sold"
+  },
+  {
+    "key": "home.newarrivals",
+    "englishText": "New Arrivals"
+  },
+  {
+    "key": "home.ombrenomade",
+    "englishText": "Ombre Nomade"
+  },
+  {
+    "key": "home.oudsatinmood",
+    "englishText": "Oud Satin Mood"
+  },
+  {
+    "key": "home.paradoxeintense",
+    "englishText": "Paradoxe Intense"
+  },
+  {
+    "key": "home.personalconsultation",
+    "englishText": "Personal consultation"
+  },
+  {
+    "key": "home.prada",
+    "englishText": "Prada"
+  },
+  {
+    "key": "home.queenofsilk",
+    "englishText": "Queen Of Silk"
+  },
+  {
+    "key": "home.russianleather",
+    "englishText": "Russian Leather"
+  },
+  {
+    "key": "home.sauvageelixir",
+    "englishText": "Sauvage Elixir"
+  },
+  {
+    "key": "home.strongerwithyou",
+    "englishText": "Stronger With You Intensely"
+  },
+  {
+    "key": "home.tilia",
+    "englishText": "Tilia"
+  },
+  {
+    "key": "home.versace",
+    "englishText": "Versace"
+  },
+  {
+    "key": "input-otp.inputotp",
+    "englishText": "InputOTP"
+  },
+  {
+    "key": "input-otp.inputotpgroup",
+    "englishText": "InputOTPGroup"
+  },
+  {
+    "key": "input-otp.inputotpseparator",
+    "englishText": "InputOTPSeparator"
+  },
+  {
+    "key": "input-otp.inputotpslot",
+    "englishText": "InputOTPSlot"
+  },
+  {
+    "key": "input.input",
+    "englishText": "Input"
+  },
+  {
+    "key": "landing.address",
+    "englishText": "Address"
+  },
+  {
+    "key": "landing.anexclusiveselection",
+    "englishText": "An exclusive selection of artisanal perfumes created with the most precious ingredients"
+  },
+  {
+    "key": "landing.artisanal",
+    "englishText": "Artisanal"
+  },
+  {
+    "key": "landing.completecollection",
+    "englishText": "Complete Collection"
+  },
+  {
+    "key": "landing.contactus",
+    "englishText": "Contact Us"
+  },
+  {
+    "key": "landing.customerservice",
+    "englishText": "Customer service"
+  },
+  {
+    "key": "landing.discoverournew",
+    "englishText": "Discover our new creations exclusively and benefit from special offers"
+  },
+  {
+    "key": "landing.discoverourperfumes",
+    "englishText": "Discover our Perfumes"
+  },
+  {
+    "key": "landing.email",
+    "englishText": "Email"
+  },
+  {
+    "key": "landing.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "landing.exploreourcomplete",
+    "englishText": "Explore our complete range of exceptional perfumes"
+  },
+  {
+    "key": "landing.firstname",
+    "englishText": "First Name"
+  },
+  {
+    "key": "landing.handcrafted",
+    "englishText": "Handcrafted"
+  },
+  {
+    "key": "landing.hours",
+    "englishText": "Hours"
+  },
+  {
+    "key": "landing.joinournewsletter",
+    "englishText": "Join Our Newsletter"
+  },
+  {
+    "key": "landing.lastname",
+    "englishText": "Last Name"
+  },
+  {
+    "key": "landing.masterperfumercrafting",
+    "englishText": "Master perfumer crafting fragrance in French atelier"
+  },
+  {
+    "key": "landing.message",
+    "englishText": "Message"
+  },
+  {
+    "key": "landing.messagesent",
+    "englishText": "Message Sent"
+  },
+  {
+    "key": "landing.monsat10am7pm",
+    "englishText": "Mon-Sat: 10am-7pm"
+  },
+  {
+    "key": "landing.noproductsavailable",
+    "englishText": "No products available at the moment"
+  },
+  {
+    "key": "landing.other",
+    "englishText": "Other"
+  },
+  {
+    "key": "landing.ourcontactdetails",
+    "englishText": "Our Contact Details"
+  },
+  {
+    "key": "landing.ourcreations",
+    "englishText": "Our Creations"
+  },
+  {
+    "key": "landing.ourstory",
+    "englishText": "Our Story"
+  },
+  {
+    "key": "landing.parisfrance",
+    "englishText": "Paris, France"
+  },
+  {
+    "key": "landing.personalconsultation",
+    "englishText": "Personal consultation"
+  },
+  {
+    "key": "landing.phone",
+    "englishText": "Phone"
+  },
+  {
+    "key": "landing.productinformation",
+    "englishText": "Product information"
+  },
+  {
+    "key": "landing.sendmessage",
+    "englishText": "Send Message"
+  },
+  {
+    "key": "landing.signin",
+    "englishText": "Sign In"
+  },
+  {
+    "key": "landing.subject",
+    "englishText": "Subject"
+  },
+  {
+    "key": "landing.subscribe",
+    "englishText": "Subscribe"
+  },
+  {
+    "key": "landing.success",
+    "englishText": "Success"
+  },
+  {
+    "key": "landing.theartof",
+    "englishText": "The Art of French Perfumery"
+  },
+  {
+    "key": "landing.uniquecreations",
+    "englishText": "Unique Creations"
+  },
+  {
+    "key": "landing.velfrance",
+    "englishText": "Vel France"
+  },
+  {
+    "key": "landing.velfrancelocation",
+    "englishText": "Vel France Location"
+  },
+  {
+    "key": "landing.welcometo",
+    "englishText": "Welcome to"
+  },
+  {
+    "key": "landing.wewouldbe",
+    "englishText": "We would be delighted to accompany you in your quest for the perfect perfume"
+  },
+  {
+    "key": "landing.yearsofexcellence",
+    "englishText": "Years of Excellence"
+  },
+  {
+    "key": "landing.youremailaddress",
+    "englishText": "Your email address"
+  },
+  {
+    "key": "LanguageSwitcher.english",
+    "englishText": "English"
+  },
+  {
+    "key": "LogoutButton.logout",
+    "englishText": "Logout"
+  },
+  {
+    "key": "menubar.menubarshortcut",
+    "englishText": "MenubarShortcut"
+  },
+  {
+    "key": "MobileBottomNav.account",
+    "englishText": "Account"
+  },
+  {
+    "key": "MobileBottomNav.cart",
+    "englishText": "Cart"
+  },
+  {
+    "key": "MobileBottomNav.home",
+    "englishText": "Home"
+  },
+  {
+    "key": "MobileBottomNav.store",
+    "englishText": "Store"
+  },
+  {
+    "key": "order-details.backtoprofile",
+    "englishText": "Back to Profile"
+  },
+  {
+    "key": "order-details.gotologin",
+    "englishText": "Go to Login"
+  },
+  {
+    "key": "order-details.notyetdelivered",
+    "englishText": "Not yet delivered"
+  },
+  {
+    "key": "order-details.notyetshipped",
+    "englishText": "Not yet shipped"
+  },
+  {
+    "key": "order-details.orderconfirmed",
+    "englishText": "Order Confirmed"
+  },
+  {
+    "key": "order-details.orderdelivered",
+    "englishText": "Order Delivered"
+  },
+  {
+    "key": "order-details.ordernotfound",
+    "englishText": "Order Not Found"
+  },
+  {
+    "key": "order-details.orderplaced",
+    "englishText": "Order Placed"
+  },
+  {
+    "key": "order-details.ordershipped",
+    "englishText": "Order Shipped"
+  },
+  {
+    "key": "order-details.ordersummary",
+    "englishText": "Order Summary"
+  },
+  {
+    "key": "order-details.ordertimeline",
+    "englishText": "Order Timeline"
+  },
+  {
+    "key": "order-details.paymentdetails",
+    "englishText": "Payment Details"
+  },
+  {
+    "key": "order-details.pendingconfirmation",
+    "englishText": "Pending confirmation"
+  },
+  {
+    "key": "order-details.pleaselogin",
+    "englishText": "Please log in to view order details"
+  },
+  {
+    "key": "order-details.shippingaddress",
+    "englishText": "Shipping Address"
+  },
+  {
+    "key": "order-details.successfullydelivered",
+    "englishText": "Successfully delivered"
+  },
+  {
+    "key": "order-details.total",
+    "englishText": "Total"
+  },
+  {
+    "key": "order-details.yourorderhas",
+    "englishText": "Your order has been confirmed"
+  },
+  {
+    "key": "order-details.yourorderis",
+    "englishText": "Your order is on its way"
+  },
+  {
+    "key": "order.backtohome",
+    "englishText": "Back to Home"
+  },
+  {
+    "key": "order.bankofgeorgia",
+    "englishText": "Bank of Georgia"
+  },
+  {
+    "key": "order.intransit",
+    "englishText": "In transit"
+  },
+  {
+    "key": "order.invalidorder",
+    "englishText": "Invalid Order"
+  },
+  {
+    "key": "order.mmmdyyyy",
+    "englishText": "MMM d, yyyy"
+  },
+  {
+    "key": "order.mmmmdyyyy",
+    "englishText": "MMMM d, yyyy 'at' h:mm a"
+  },
+  {
+    "key": "order.orderconfirmed",
+    "englishText": "Order Confirmed"
+  },
+  {
+    "key": "order.orderitems",
+    "englishText": "Order Items"
+  },
+  {
+    "key": "order.ordernotfound",
+    "englishText": "Order Not Found"
+  },
+  {
+    "key": "order.orderstatus",
+    "englishText": "Order Status"
+  },
+  {
+    "key": "order.paymentinformation",
+    "englishText": "Payment Information"
+  },
+  {
+    "key": "order.shipped",
+    "englishText": "Shipped"
+  },
+  {
+    "key": "order.shippingaddress",
+    "englishText": "Shipping Address"
+  },
+  {
+    "key": "order.totalamount",
+    "englishText": "Total Amount"
+  },
+  {
+    "key": "pagination.gotonext",
+    "englishText": "Go to next page"
+  },
+  {
+    "key": "pagination.gotoprevious",
+    "englishText": "Go to previous page"
+  },
+  {
+    "key": "pagination.morepages",
+    "englishText": "More pages"
+  },
+  {
+    "key": "pagination.next",
+    "englishText": "Next"
+  },
+  {
+    "key": "pagination.pagination",
+    "englishText": "pagination"
+  },
+  {
+    "key": "pagination.paginationcontent",
+    "englishText": "PaginationContent"
+  },
+  {
+    "key": "pagination.paginationellipsis",
+    "englishText": "PaginationEllipsis"
+  },
+  {
+    "key": "pagination.paginationitem",
+    "englishText": "PaginationItem"
+  },
+  {
+    "key": "pagination.paginationlink",
+    "englishText": "PaginationLink"
+  },
+  {
+    "key": "pagination.paginationnext",
+    "englishText": "PaginationNext"
+  },
+  {
+    "key": "pagination.paginationprevious",
+    "englishText": "PaginationPrevious"
+  },
+  {
+    "key": "pagination.previous",
+    "englishText": "Previous"
+  },
+  {
+    "key": "payment-cancel.cancelledorder",
+    "englishText": "Cancelled Order"
+  },
+  {
+    "key": "payment-cancel.continueshopping",
+    "englishText": "Continue Shopping"
+  },
+  {
+    "key": "payment-cancel.paymentcancelled",
+    "englishText": "Payment Cancelled"
+  },
+  {
+    "key": "payment-cancel.returntocart",
+    "englishText": "Return to Cart"
+  },
+  {
+    "key": "payment-success.carefulpackagingwith",
+    "englishText": "Careful packaging with love"
+  },
+  {
+    "key": "payment-success.continueshopping",
+    "englishText": "Continue Shopping"
+  },
+  {
+    "key": "payment-success.orderconfirmationemail",
+    "englishText": "Order confirmation email sent"
+  },
+  {
+    "key": "payment-success.orderhistory",
+    "englishText": "Order History"
+  },
+  {
+    "key": "payment-success.shipswithin12",
+    "englishText": "Ships within 1-2 business days"
+  },
+  {
+    "key": "payment-success.trackyourorder",
+    "englishText": "Track your order with this 6-digit code"
+  },
+  {
+    "key": "payment-success.trackyourprecious",
+    "englishText": "Track your precious delivery"
+  },
+  {
+    "key": "payment-success.viewcompleteorder",
+    "englishText": "View Complete Order Details"
+  },
+  {
+    "key": "payment-success.yourexquisitefragrance",
+    "englishText": "Your exquisite fragrance selection has been"
+  },
+  {
+    "key": "payment-success.youruniqueorder",
+    "englishText": "Your Unique Order ID"
+  },
+  {
+    "key": "PaymentModal.billinginformation",
+    "englishText": "Billing Information"
+  },
+  {
+    "key": "PaymentModal.cancel",
+    "englishText": "Cancel"
+  },
+  {
+    "key": "PaymentModal.georgia",
+    "englishText": "Georgia"
+  },
+  {
+    "key": "PaymentModal.missinginformation",
+    "englishText": "Missing Information"
+  },
+  {
+    "key": "PaymentModal.ordersummary",
+    "englishText": "Order Summary"
+  },
+  {
+    "key": "PaymentModal.paymenterror",
+    "englishText": "Payment Error"
+  },
+  {
+    "key": "PaymentModal.paymentfailed",
+    "englishText": "Payment Failed"
+  },
+  {
+    "key": "PaymentModal.sameasshipping",
+    "englishText": "Same as shipping"
+  },
+  {
+    "key": "PaymentModal.securecheckout",
+    "englishText": "Secure Checkout"
+  },
+  {
+    "key": "PaymentModal.securepayment",
+    "englishText": "Secure Payment"
+  },
+  {
+    "key": "PaymentModal.shippinginformation",
+    "englishText": "Shipping Information"
+  },
+  {
+    "key": "PaymentModal.total",
+    "englishText": "Total"
+  },
+  {
+    "key": "privacy.accessandcorrection",
+    "englishText": "Access and Correction"
+  },
+  {
+    "key": "privacy.automaticallycollectedinformation",
+    "englishText": "Automatically Collected Information"
+  },
+  {
+    "key": "privacy.browsertypeand",
+    "englishText": "Browser type and version"
+  },
+  {
+    "key": "privacy.communication",
+    "englishText": "Communication"
+  },
+  {
+    "key": "privacy.contactus",
+    "englishText": "Contact Us"
+  },
+  {
+    "key": "privacy.datadeletion",
+    "englishText": "Data Deletion"
+  },
+  {
+    "key": "privacy.dataprotection",
+    "englishText": "Data Protection"
+  },
+  {
+    "key": "privacy.dataretention",
+    "englishText": "Data Retention"
+  },
+  {
+    "key": "privacy.deliveryandbilling",
+    "englishText": "Delivery and billing addresses"
+  },
+  {
+    "key": "privacy.howweuse",
+    "englishText": "How We Use Your Information"
+  },
+  {
+    "key": "privacy.ifyouhave",
+    "englishText": "If you have any questions about this Privacy Policy or how we handle your personal information, please contact us"
+  },
+  {
+    "key": "privacy.informationwecollect",
+    "englishText": "Information We Collect"
+  },
+  {
+    "key": "privacy.ipaddressand",
+    "englishText": "IP address and device information"
+  },
+  {
+    "key": "privacy.marketingcommunications",
+    "englishText": "Marketing Communications"
+  },
+  {
+    "key": "privacy.nameemailaddress",
+    "englishText": "Name, email address, and phone number"
+  },
+  {
+    "key": "privacy.orderhistoryand",
+    "englishText": "Order history and preferences"
+  },
+  {
+    "key": "privacy.orderprocessing",
+    "englishText": "Order Processing"
+  },
+  {
+    "key": "privacy.pagesvisitedand",
+    "englishText": "Pages visited and time spent on our website"
+  },
+  {
+    "key": "privacy.personalinformation",
+    "englishText": "Personal Information"
+  },
+  {
+    "key": "privacy.privacypolicy",
+    "englishText": "Privacy Policy"
+  },
+  {
+    "key": "privacy.referralsource",
+    "englishText": "Referral source"
+  },
+  {
+    "key": "privacy.securitymeasures",
+    "englishText": "Security Measures"
+  },
+  {
+    "key": "privacy.thirdpartyservices",
+    "englishText": "Third-Party Services"
+  },
+  {
+    "key": "privacy.websiteimprovement",
+    "englishText": "Website Improvement"
+  },
+  {
+    "key": "privacy.yourprivacymatters",
+    "englishText": "Your Privacy Matters"
+  },
+  {
+    "key": "privacy.yourrights",
+    "englishText": "Your Rights"
+  },
+  {
+    "key": "product-detail.addedtocart",
+    "englishText": "Added to cart"
+  },
+  {
+    "key": "product-detail.addedtowishlist",
+    "englishText": "Added to wishlist"
+  },
+  {
+    "key": "product-detail.americanexpress",
+    "englishText": "American Express"
+  },
+  {
+    "key": "product-detail.applepay",
+    "englishText": "Apple Pay"
+  },
+  {
+    "key": "product-detail.authenticguarantee",
+    "englishText": "Authentic Guarantee"
+  },
+  {
+    "key": "product-detail.backtocatalogue",
+    "englishText": "Back to Catalogue"
+  },
+  {
+    "key": "product-detail.bankofgeorgia",
+    "englishText": "Bank of Georgia"
+  },
+  {
+    "key": "product-detail.banktransfer",
+    "englishText": "Bank Transfer"
+  },
+  {
+    "key": "product-detail.boginstallments",
+    "englishText": "BOG Installments"
+  },
+  {
+    "key": "product-detail.currentlyoutof",
+    "englishText": "Currently out of stock"
+  },
+  {
+    "key": "product-detail.description",
+    "englishText": "Description"
+  },
+  {
+    "key": "product-detail.error",
+    "englishText": "Error"
+  },
+  {
+    "key": "product-detail.flexiblemonthlyplan",
+    "englishText": "Flexible monthly plan"
+  },
+  {
+    "key": "product-detail.freeshipping",
+    "englishText": "Free Shipping"
+  },
+  {
+    "key": "product-detail.goback",
+    "englishText": "Go Back"
+  },
+  {
+    "key": "product-detail.googlepay",
+    "englishText": "Google Pay"
+  },
+  {
+    "key": "product-detail.instant",
+    "englishText": "Instant"
+  },
+  {
+    "key": "product-detail.instantcardpayment",
+    "englishText": "Instant Card Payment"
+  },
+  {
+    "key": "product-detail.mastercard",
+    "englishText": "Mastercard"
+  },
+  {
+    "key": "product-detail.partbypart",
+    "englishText": "Part by Part"
+  },
+  {
+    "key": "product-detail.productnotfound",
+    "englishText": "Product not found"
+  },
+  {
+    "key": "product-detail.removedfromwishlist",
+    "englishText": "Removed from wishlist"
+  },
+  {
+    "key": "product-detail.visa",
+    "englishText": "Visa"
+  },
+  {
+    "key": "product-detail.zerointerest",
+    "englishText": "Zero interest"
+  },
+  {
+    "key": "ProductCard.addtocart",
+    "englishText": "Add to Cart"
+  },
+  {
+    "key": "ProductCard.imagecomingsoon",
+    "englishText": "Image Coming Soon"
+  },
+  {
+    "key": "ProductCard.outofstock",
+    "englishText": "Out of Stock"
+  },
+  {
+    "key": "ProductCard.signin",
+    "englishText": "Sign In"
+  },
+  {
+    "key": "profile.accountinformation",
+    "englishText": "Account Information"
+  },
+  {
+    "key": "profile.accountsettings",
+    "englishText": "Account Settings"
+  },
+  {
+    "key": "profile.browseproducts",
+    "englishText": "Browse Products"
+  },
+  {
+    "key": "profile.cancel",
+    "englishText": "Cancel"
+  },
+  {
+    "key": "profile.editprofile",
+    "englishText": "Edit Profile"
+  },
+  {
+    "key": "profile.email",
+    "englishText": "Email"
+  },
+  {
+    "key": "profile.emailaddress",
+    "englishText": "Email Address"
+  },
+  {
+    "key": "profile.firstname",
+    "englishText": "First Name"
+  },
+  {
+    "key": "profile.gotologin",
+    "englishText": "Go to Login"
+  },
+  {
+    "key": "profile.itemsincart",
+    "englishText": "Items in Cart"
+  },
+  {
+    "key": "profile.lastname",
+    "englishText": "Last Name"
+  },
+  {
+    "key": "profile.membersince",
+    "englishText": "Member Since"
+  },
+  {
+    "key": "profile.noordersyet",
+    "englishText": "No orders yet"
+  },
+  {
+    "key": "profile.orderhistory",
+    "englishText": "Order History"
+  },
+  {
+    "key": "profile.pleaselogin",
+    "englishText": "Please log in to view your profile"
+  },
+  {
+    "key": "profile.preferences",
+    "englishText": "Preferences"
+  },
+  {
+    "key": "profile.profileupdated",
+    "englishText": "Profile updated"
+  },
+  {
+    "key": "profile.sessionexpired",
+    "englishText": "Session expired"
+  },
+  {
+    "key": "profile.startshoppingto",
+    "englishText": "Start shopping to see your orders here"
+  },
+  {
+    "key": "profile.totalorders",
+    "englishText": "Total Orders"
+  },
+  {
+    "key": "profile.totalspent",
+    "englishText": "Total Spent"
+  },
+  {
+    "key": "profile.updatefailed",
+    "englishText": "Update failed"
+  },
+  {
+    "key": "profile.updateprofile",
+    "englishText": "Update Profile"
+  },
+  {
+    "key": "profile.viewdetails",
+    "englishText": "View Details"
+  },
+  {
+    "key": "queryClient.contenttype",
+    "englishText": "Content-Type"
+  },
+  {
+    "key": "queryClient.queryfunction",
+    "englishText": "QueryFunction"
+  },
+  {
+    "key": "ResponsiveImage.imageunavailable",
+    "englishText": "Image unavailable"
+  },
+  {
+    "key": "returns.hygieneandsafety",
+    "englishText": "Hygiene and Safety"
+  },
+  {
+    "key": "returns.noreturnsaccepted",
+    "englishText": "No Returns Accepted"
+  },
+  {
+    "key": "returns.productintegrity",
+    "englishText": "Product Integrity"
+  },
+  {
+    "key": "returns.qualityassurance",
+    "englishText": "Quality Assurance"
+  },
+  {
+    "key": "returns.returnspolicy",
+    "englishText": "Returns Policy"
+  },
+  {
+    "key": "returns.whywedont",
+    "englishText": "Why We Don't Accept Returns"
+  },
+  {
+    "key": "sheet.close",
+    "englishText": "Close"
+  },
+  {
+    "key": "sheet.sheetfooter",
+    "englishText": "SheetFooter"
+  },
+  {
+    "key": "sheet.sheetheader",
+    "englishText": "SheetHeader"
+  },
+  {
+    "key": "sidebar.sidebar",
+    "englishText": "Sidebar"
+  },
+  {
+    "key": "sidebar.sidebarcontent",
+    "englishText": "SidebarContent"
+  },
+  {
+    "key": "sidebar.sidebarfooter",
+    "englishText": "SidebarFooter"
+  },
+  {
+    "key": "sidebar.sidebargroup",
+    "englishText": "SidebarGroup"
+  },
+  {
+    "key": "sidebar.sidebargroupaction",
+    "englishText": "SidebarGroupAction"
+  },
+  {
+    "key": "sidebar.sidebargroupcontent",
+    "englishText": "SidebarGroupContent"
+  },
+  {
+    "key": "sidebar.sidebargrouplabel",
+    "englishText": "SidebarGroupLabel"
+  },
+  {
+    "key": "sidebar.sidebarheader",
+    "englishText": "SidebarHeader"
+  },
+  {
+    "key": "sidebar.sidebarinput",
+    "englishText": "SidebarInput"
+  },
+  {
+    "key": "sidebar.sidebarinset",
+    "englishText": "SidebarInset"
+  },
+  {
+    "key": "sidebar.sidebarmenu",
+    "englishText": "SidebarMenu"
+  },
+  {
+    "key": "sidebar.sidebarmenuaction",
+    "englishText": "SidebarMenuAction"
+  },
+  {
+    "key": "sidebar.sidebarmenubadge",
+    "englishText": "SidebarMenuBadge"
+  },
+  {
+    "key": "sidebar.sidebarmenubutton",
+    "englishText": "SidebarMenuButton"
+  },
+  {
+    "key": "sidebar.sidebarmenuitem",
+    "englishText": "SidebarMenuItem"
+  },
+  {
+    "key": "sidebar.sidebarmenuskeleton",
+    "englishText": "SidebarMenuSkeleton"
+  },
+  {
+    "key": "sidebar.sidebarmenusub",
+    "englishText": "SidebarMenuSub"
+  },
+  {
+    "key": "sidebar.sidebarmenusubbutton",
+    "englishText": "SidebarMenuSubButton"
+  },
+  {
+    "key": "sidebar.sidebarmenusubitem",
+    "englishText": "SidebarMenuSubItem"
+  },
+  {
+    "key": "sidebar.sidebarprovider",
+    "englishText": "SidebarProvider"
+  },
+  {
+    "key": "sidebar.sidebarrail",
+    "englishText": "SidebarRail"
+  },
+  {
+    "key": "sidebar.sidebarseparator",
+    "englishText": "SidebarSeparator"
+  },
+  {
+    "key": "sidebar.sidebartrigger",
+    "englishText": "SidebarTrigger"
+  },
+  {
+    "key": "sidebar.togglesidebar",
+    "englishText": "Toggle Sidebar"
+  },
+  {
+    "key": "table.table",
+    "englishText": "Table"
+  },
+  {
+    "key": "table.tablebody",
+    "englishText": "TableBody"
+  },
+  {
+    "key": "table.tablecaption",
+    "englishText": "TableCaption"
+  },
+  {
+    "key": "table.tablecell",
+    "englishText": "TableCell"
+  },
+  {
+    "key": "table.tablefooter",
+    "englishText": "TableFooter"
+  },
+  {
+    "key": "table.tablehead",
+    "englishText": "TableHead"
+  },
+  {
+    "key": "table.tableheader",
+    "englishText": "TableHeader"
+  },
+  {
+    "key": "table.tablerow",
+    "englishText": "TableRow"
+  },
+  {
+    "key": "terms.aboutvelfrance",
+    "englishText": "About Vel France"
+  },
+  {
+    "key": "terms.acceptableuse",
+    "englishText": "Acceptable Use"
+  },
+  {
+    "key": "terms.accountresponsibility",
+    "englishText": "Account Responsibility"
+  },
+  {
+    "key": "terms.addresstbilisivaja",
+    "englishText": "Address: Tbilisi, Vaja Pshavela 70g"
+  },
+  {
+    "key": "terms.attemptingtogain",
+    "englishText": "Attempting to gain unauthorized access to our systems"
+  },
+  {
+    "key": "terms.companyinformation",
+    "englishText": "Company Information"
+  },
+  {
+    "key": "terms.contactinformation",
+    "englishText": "Contact Information"
+  },
+  {
+    "key": "terms.damages",
+    "englishText": "Damages"
+  },
+  {
+    "key": "terms.emailinfovelfrancege",
+    "englishText": "Email: info@velfrance.ge"
+  },
+  {
+    "key": "terms.georgia",
+    "englishText": "Georgia"
+  },
+  {
+    "key": "terms.interferingwiththe",
+    "englishText": "Interfering with the website's operation"
+  },
+  {
+    "key": "terms.limitationofliability",
+    "englishText": "Limitation of Liability"
+  },
+  {
+    "key": "terms.operatingasvel",
+    "englishText": "Operating as: Vel France"
+  },
+  {
+    "key": "terms.orderacceptance",
+    "englishText": "Order Acceptance"
+  },
+  {
+    "key": "terms.ordersandpayments",
+    "englishText": "Orders and Payments"
+  },
+  {
+    "key": "terms.payment",
+    "englishText": "Payment"
+  },
+  {
+    "key": "terms.pricing",
+    "englishText": "Pricing"
+  },
+  {
+    "key": "terms.productdescriptions",
+    "englishText": "Product Descriptions"
+  },
+  {
+    "key": "terms.productinformation",
+    "englishText": "Product Information"
+  },
+  {
+    "key": "terms.prohibitedactivities",
+    "englishText": "Prohibited Activities"
+  },
+  {
+    "key": "terms.returnspolicy",
+    "englishText": "Returns Policy"
+  },
+  {
+    "key": "terms.serviceavailability",
+    "englishText": "Service Availability"
+  },
+  {
+    "key": "terms.tbilisivajapshavela",
+    "englishText": "Tbilisi, Vaja Pshavela 70g"
+  },
+  {
+    "key": "terms.termsconditions",
+    "englishText": "Terms & Conditions"
+  },
+  {
+    "key": "terms.termsofservice",
+    "englishText": "Terms of Service"
+  },
+  {
+    "key": "terms.useofwebsite",
+    "englishText": "Use of Website"
+  },
+  {
+    "key": "terms.usingthewebsite",
+    "englishText": "Using the website for fraudulent purposes"
+  },
+  {
+    "key": "terms.violatingintellectualproperty",
+    "englishText": "Violating intellectual property rights"
+  },
+  {
+    "key": "textarea.textarea",
+    "englishText": "Textarea"
+  },
+  {
+    "key": "useAuth.loginfailed",
+    "englishText": "Login failed"
+  },
+  {
+    "key": "useAuth.logoutfailed",
+    "englishText": "Logout failed"
+  },
+  {
+    "key": "useAuth.registrationfailed",
+    "englishText": "Registration failed"
+  }
+]

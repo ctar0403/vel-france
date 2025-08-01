@@ -657,11 +657,12 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="pricing">Pricing</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="translations">Translations</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
@@ -1212,6 +1213,26 @@ export default function Admin() {
               </CardHeader>
               <CardContent>
                 <p className="text-center text-gray-500 py-8">User management coming soon...</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="translations">
+            <Card>
+              <CardHeader>
+                <CardTitle>Translation Management</CardTitle>
+                <CardDescription>Manage Georgian translations for all UI text elements</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-8">
+                  <p className="text-gray-600 mb-4">Translation management is available in a dedicated interface.</p>
+                  <Button
+                    onClick={() => window.open('/admin-translations', '_blank')}
+                    className="bg-navy hover:bg-navy/90 text-white"
+                  >
+                    Open Translation Manager
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

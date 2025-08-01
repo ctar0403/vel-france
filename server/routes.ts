@@ -945,7 +945,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Translation routes
+  app.get("/api/translations", async (req, res) => {
+    try {
+      const translations = await storage.getAllTranslations();
+      res.json(translations);
+    } catch (error) {
+      console.error("Error fetching translations:", error);
+      res.status(500).json({ message: "Failed to fetch translations" });
+    }
+  });
 
+  app.get("/api/translations/:key", async (req, res) => {
+    try {
+      const translation = await storage.getTranslation(req.params.key);
+      if (!translation) {
+        return res.status(404).json({ message: "Translation not found" });
+      }
+      res.json(translation);
+    } catch (error) {
+      console.error("Error fetching translation:", error);
+      res.status(500).json({ message: "Failed to fetch translation" });
+    }
+  });
+
+  // Admin translation management routes
+  app.post("/api/admin/translations/bulk", requireAdmin, async (req: any, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { translations } = req.body;
+      if (!Array.isArray(translations)) {
+        return res.status(400).json({ message: "Translations must be an array" });
+      }
+
+      const results = await storage.bulkCreateTranslations(translations);
+      res.json({ message: `Successfully processed ${results.length} translations`, results });
+    } catch (error) {
+      console.error("Error bulk creating translations:", error);
+      res.status(500).json({ message: "Failed to bulk create translations" });
+    }
+  });
+
+  app.put("/api/admin/translations/:key", requireAdmin, async (req: any, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { georgianText } = req.body;
+      const translation = await storage.updateTranslation(req.params.key, georgianText || "");
+      
+      if (!translation) {
+        return res.status(404).json({ message: "Translation not found" });
+      }
+      
+      res.json(translation);
+    } catch (error) {
+      console.error("Error updating translation:", error);
+      res.status(500).json({ message: "Failed to update translation" });
+    }
+  });
+
+  app.post("/api/admin/translations", requireAdmin, async (req: any, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const translationData = req.body;
+      const translation = await storage.createTranslation(translationData);
+      res.json(translation);
+    } catch (error) {
+      console.error("Error creating translation:", error);
+      res.status(500).json({ message: "Failed to create translation" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

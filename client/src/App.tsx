@@ -18,6 +18,7 @@ import OrderDetails from "@/pages/order-details";
 import OrderPage from "@/pages/order";
 import Admin from "@/pages/admin";
 import AdminLogin from "@/pages/admin-login";
+import AdminTranslations from "@/pages/admin-translations";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
 import Delivery from "@/pages/delivery";
@@ -70,6 +71,7 @@ function Router() {
         <Route path="/auth" component={AuthPage} />
         <Route path="/admin" component={AdminLogin} />
         <Route path="/admin-panel" component={Admin} />
+        <Route path="/admin-translations" component={AdminTranslations} />
         <Route path="/delivery" component={Delivery} />
         <Route path="/returns" component={Returns} />
         <Route path="/privacy" component={Privacy} />

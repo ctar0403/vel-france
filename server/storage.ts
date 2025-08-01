@@ -6,6 +6,7 @@ import {
   orderItems,
   newsletters,
   contactMessages,
+  translations,
   type User,
   type InsertUser,
   type Product,
@@ -20,6 +21,8 @@ import {
   type InsertNewsletter,
   type ContactMessage,
   type InsertContactMessage,
+  type Translation,
+  type InsertTranslation,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
@@ -72,6 +75,13 @@ export interface IStorage {
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
   markMessageAsRead(id: string): Promise<ContactMessage>;
+  
+  // Translation operations
+  getAllTranslations(): Promise<Translation[]>;
+  getTranslation(key: string): Promise<Translation | undefined>;
+  createTranslation(translation: InsertTranslation): Promise<Translation>;
+  updateTranslation(key: string, georgianText: string): Promise<Translation | undefined>;
+  bulkCreateTranslations(translations: InsertTranslation[]): Promise<Translation[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -424,6 +434,63 @@ export class DatabaseStorage implements IStorage {
       .where(eq(contactMessages.id, id))
       .returning();
     return updatedMessage;
+  }
+
+  // Translation operations
+  async getAllTranslations(): Promise<Translation[]> {
+    return await db.select().from(translations).orderBy(translations.key);
+  }
+
+  async getTranslation(key: string): Promise<Translation | undefined> {
+    const [translation] = await db.select().from(translations).where(eq(translations.key, key));
+    return translation;
+  }
+
+  async createTranslation(translation: InsertTranslation): Promise<Translation> {
+    const [newTranslation] = await db.insert(translations).values(translation).returning();
+    return newTranslation;
+  }
+
+  async updateTranslation(key: string, georgianText: string): Promise<Translation | undefined> {
+    const [updatedTranslation] = await db
+      .update(translations)
+      .set({ 
+        georgianText, 
+        updatedAt: new Date() 
+      })
+      .where(eq(translations.key, key))
+      .returning();
+    return updatedTranslation;
+  }
+
+  async bulkCreateTranslations(translationList: InsertTranslation[]): Promise<Translation[]> {
+    const results: Translation[] = [];
+    
+    for (const translation of translationList) {
+      try {
+        // Try to insert, if key exists, update
+        const [newTranslation] = await db
+          .insert(translations)
+          .values(translation)
+          .returning();
+        results.push(newTranslation);
+      } catch (error) {
+        // If key exists, update instead
+        const [updatedTranslation] = await db
+          .update(translations)
+          .set({ 
+            englishText: translation.englishText,
+            updatedAt: new Date() 
+          })
+          .where(eq(translations.key, translation.key))
+          .returning();
+        if (updatedTranslation) {
+          results.push(updatedTranslation);
+        }
+      }
+    }
+    
+    return results;
   }
 }
 
