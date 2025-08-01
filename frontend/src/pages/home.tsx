@@ -494,8 +494,12 @@ export default function Home() {
         cartItems={cartItems}
         isLoading={cartLoading}
       />
-      {/* Welcome Section */}
-      <section className="relative w-full overflow-hidden h-[40vh] sm:h-[50vh] lg:h-[60vh] xl:h-[70vh]">
+      {/* Welcome Section - Exact ratio preservation */}
+      <section className={`relative w-full overflow-hidden ${
+        isMobile 
+          ? 'aspect-[1732/630]' // Mobile: exact 1732:630 ratio from your images
+          : 'h-[40vh] sm:h-[50vh] lg:h-[60vh] xl:h-[70vh]' // Desktop: maintains original heights
+      }`}>
         {/* Slideshow Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <div 
@@ -514,9 +518,9 @@ export default function Home() {
                 <img 
                   src={isMobile ? banner.mobile : banner.desktop}
                   alt={banner.alt}
-                  className="w-full h-full object-cover"
-                  width={isMobile ? 1732 : 1920}
-                  height={isMobile ? 630 : 1080}
+                  className={`w-full h-full ${isMobile ? 'object-contain' : 'object-cover'}`}
+                  width={1732}
+                  height={630}
                   loading={index === 0 ? "eager" : "lazy"}
                   style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
                   decoding="async"
