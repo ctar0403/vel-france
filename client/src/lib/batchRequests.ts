@@ -26,9 +26,7 @@ export class BatchRequestManager {
     // Start multiple requests in parallel without waiting
     urls.forEach(url => {
       if (!this.requestQueue.has(url)) {
-        this.batchRequest(url, () => requestFn(url)).catch(() => {
-          // Silently handle preload failures to avoid blocking the app
-        });
+        this.batchRequest(url, () => requestFn(url));
       }
     });
   }
@@ -36,19 +34,13 @@ export class BatchRequestManager {
 
 export const batchManager = new BatchRequestManager();
 
-// Preload critical API endpoints - only products, skip auth-dependent endpoints  
+// Preload critical API endpoints
 export function preloadCriticalData() {
-  // Only preload non-auth endpoints to avoid authentication loops
-  const criticalEndpoints = ['/api/products'];
+  const criticalEndpoints = ['/api/products', '/api/cart'];
   
   batchManager.preloadRequests(criticalEndpoints, async (url) => {
-    try {
-      const response = await fetch(url, { credentials: 'include' });
-      if (!response.ok) return null;
-      return response.json();
-    } catch (error) {
-      console.log('Preload failed for:', url);
-      return null;
-    }
+    const response = await fetch(url, { credentials: 'include' });
+    if (!response.ok) return null;
+    return response.json();
   });
 }

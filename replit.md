@@ -90,14 +90,6 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Mobile detection optimization**: Replaced window.innerWidth with matchMedia API to prevent forced reflows
 - **Critical resource hints**: Added content-visibility: auto and font-display: swap for better performance
 
-### Bundle Size Optimization (January 2025)
-- **Code splitting implementation**: Reduced unused JavaScript by ~585 KiB through strategic lazy loading
-- **Route-based chunking**: Critical pages (Home, Catalogue, Product Detail) load immediately, others load on-demand
-- **Component-based chunking**: Admin, payment, and profile features in separate chunks
-- **Tree-shaking optimization**: Implemented optimized imports for heavy libraries (Framer Motion, Radix UI)
-- **Lazy loading system**: Custom loading spinner and Suspense boundaries for smooth user experience
-- **Route-aware preloading**: Intelligent chunk preloading based on user navigation patterns
-
 ## External Dependencies
 
 ### Core
