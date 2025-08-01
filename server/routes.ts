@@ -12,6 +12,7 @@ import {
   insertContactMessageSchema
 } from "@shared/schema";
 import { sendOrderNotificationEmail, sendOrderConfirmationToCustomer } from './email';
+import { productCache, cartCache, createCacheMiddleware, clearCacheByPattern } from './middleware/caching';
 
 // Helper function to configure BOG payment options
 function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): { 
@@ -61,21 +62,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup custom authentication
   setupAuth(app);
 
-  // Product routes
-  app.get("/api/products", async (req, res) => {
-    try {
-      const products = await storage.getProducts();
-      res.json(products);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      res.status(500).json({ message: "Failed to fetch products" });
+  // Product routes with server-side caching and HTTP headers
+  app.get("/api/products", 
+    createCacheMiddleware(productCache, () => 'all-products'),
+    async (req, res) => {
+      try {
+        // Set aggressive caching headers for products (5 minutes)
+        res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=60');
+        res.setHeader('ETag', `products-${Date.now()}`);
+        
+        const products = await storage.getProducts();
+        res.json(products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ message: "Failed to fetch products" });
+      }
     }
-  });
+  );
 
-  // Get individual product by ID
-  app.get("/api/products/:id", async (req, res) => {
+  // Get individual product by ID with caching
+  app.get("/api/products/:id", 
+    createCacheMiddleware(productCache, (req) => `product-${req.params.id}`),
+    async (req, res) => {
     try {
-      const product = await storage.getProductById(req.params.id);
+      const product = await storage.getProduct(req.params.id);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }

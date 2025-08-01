@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { compressionMiddleware } from "./middleware/compression";
+import { optimizeDatabase, createPerformanceIndexes } from "./middleware/dbOptimization";
 
 const app = express();
 
@@ -42,6 +43,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize database optimizations
+  await optimizeDatabase();
+  await createPerformanceIndexes();
+  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
