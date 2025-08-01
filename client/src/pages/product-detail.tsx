@@ -387,16 +387,16 @@ function ProductDetailPage() {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <img src={visaLogo} alt="Visa" className="h-4 object-contain opacity-80 hover:opacity-100" />
-                          <img src={mastercardLogo} alt="Mastercard" className="h-4 object-contain opacity-80 hover:opacity-100" />
-                          <img src={amexLogo} alt="American Express" className="h-4 object-contain opacity-80 hover:opacity-100" />
+                        <div className="flex items-center space-x-2 overflow-x-auto">
+                          <img src={visaLogo} alt="Visa" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={mastercardLogo} alt="Mastercard" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={amexLogo} alt="American Express" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <div className="w-px h-3 bg-gray-300"></div>
-                          <img src={googlePayLogo} alt="Google Pay" className="h-3 object-contain opacity-80 hover:opacity-100" />
-                          <img src={applePayLogo} alt="Apple Pay" className="h-3 object-contain opacity-80 hover:opacity-100" />
+                          <img src={googlePayLogo} alt="Google Pay" className="h-3 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={applePayLogo} alt="Apple Pay" className="h-3 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <div className="w-px h-3 bg-gray-300"></div>
-                          <img src={bankLogo} alt="Bank Transfer" className="h-4 object-contain opacity-80 hover:opacity-100" />
-                          <img src={bogLogo2} alt="Bank of Georgia" className="h-4 object-contain opacity-80 hover:opacity-100" />
+                          <img src={bankLogo} alt="Bank Transfer" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={bogLogo2} alt="Bank of Georgia" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
                         <span className="text-xs text-slate-500">Instant</span>
                       </div>
