@@ -18,6 +18,7 @@ import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.webp";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
 import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -407,6 +408,7 @@ function ProductDetailPage() {
                   <Button
                     type="button"
                     onClick={handleInstallmentPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
                     className="w-full h-16 sm:h-18 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-4 group relative overflow-hidden"
                     disabled={addToCartMutation.isPending || !product.inStock}
                   >
@@ -437,6 +439,7 @@ function ProductDetailPage() {
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
                     className="w-full h-16 sm:h-18 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-4 group relative overflow-hidden"
                     disabled={addToCartMutation.isPending || !product.inStock}
                   >

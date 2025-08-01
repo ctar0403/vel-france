@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest } from "@/lib/queryClient";
+import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
 import type { CartItem, Product } from "@shared/schema";
 
@@ -179,32 +180,25 @@ export default function CheckoutPage() {
 
 
 
-  const handleInstallmentPayment = () => {
+  const handleInstallmentPayment = async () => {
     if (!validateForm()) return;
     
     console.log("Attempting installment payment with total:", total);
     
-    if (typeof window.BOG === 'undefined') {
-      console.error("BOG SDK not loaded");
-      toast({
-        title: "Payment Error",
-        description: "BOG payment system is not available. Please try again later.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (typeof window.BOG.Calculator === 'undefined') {
-      console.error("BOG Calculator not available");
-      toast({
-        title: "Payment Error", 
-        description: "BOG Calculator is not available. Please try again later.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
+      // Load BOG SDK dynamically
+      await loadBOGSDK();
+      
+      if (!isBOGSDKAvailable()) {
+        console.error("BOG SDK failed to load");
+        toast({
+          title: "Payment Error",
+          description: "Payment system is loading. Please try again in a moment.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       console.log("Opening BOG Calculator for installments with amount:", total);
       window.BOG.Calculator.open({
         amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
@@ -230,41 +224,34 @@ export default function CheckoutPage() {
         }
       });
     } catch (error) {
-      console.error("Error opening BOG Calculator:", error);
+      console.error("Error loading BOG SDK or opening Calculator:", error);
       toast({
         title: "Payment Error",
-        description: "Unable to open payment calculator. Please try again.",
+        description: "Unable to load payment system. Please check your connection and try again.",
         variant: "destructive",
       });
     }
   };
 
-  const handleBnplPayment = () => {
+  const handleBnplPayment = async () => {
     if (!validateForm()) return;
     
     console.log("Attempting BNPL payment with total:", total);
   
-    if (typeof window.BOG === 'undefined') {
-      console.error("BOG SDK not loaded");
-      toast({
-        title: "Payment Error",
-        description: "BOG payment system is not available. Please try again later.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (typeof window.BOG.Calculator === 'undefined') {
-      console.error("BOG Calculator not available");
-      toast({
-        title: "Payment Error",
-        description: "BOG Calculator is not available. Please try again later.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
+      // Load BOG SDK dynamically
+      await loadBOGSDK();
+      
+      if (!isBOGSDKAvailable()) {
+        console.error("BOG SDK failed to load");
+        toast({
+          title: "Payment Error",
+          description: "Payment system is loading. Please try again in a moment.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       console.log("Opening BOG Calculator for BNPL with amount:", total);
       window.BOG.Calculator.open({
         amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
@@ -290,10 +277,10 @@ export default function CheckoutPage() {
         }
       });
     } catch (error) {
-      console.error("Error opening BOG Calculator:", error);
+      console.error("Error loading BOG SDK or opening Calculator:", error);
       toast({
         title: "Payment Error",
-        description: "Unable to open payment calculator. Please try again.",
+        description: "Unable to load payment system. Please check your connection and try again.",
         variant: "destructive",
       });
     }
@@ -524,6 +511,7 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     onClick={handleInstallmentPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
                     className="w-full h-16 sm:h-20 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
@@ -550,6 +538,7 @@ export default function CheckoutPage() {
                   <Button
                     type="button"
                     onClick={handleBnplPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
                     className="w-full h-16 sm:h-20 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-6 group relative overflow-hidden"
                     disabled={paymentMutation.isPending}
                   >
