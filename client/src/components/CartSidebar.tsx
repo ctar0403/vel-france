@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem } from "@shared/schema";
@@ -17,6 +18,7 @@ interface CartSidebarProps {
 
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -29,16 +31,16 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "Session expired. Reconnecting...",
+          title: t('cart.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",  
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Error",
-        description: "Unable to update quantity.",
+        title: t('cart.error'),
+        description: t('cart.updateError'),
         variant: "destructive",
       });
     },
@@ -52,23 +54,23 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Item Removed",
-        description: "The item has been removed from your cart.",
+        title: t('cart.itemremoved'),
+        description: t('cart.itemRemovedDescription'),
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "Session expired. Reconnecting...",
+          title: t('cart.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Error",
-        description: "Unable to remove item.",
+        title: t('cart.error'),
+        description: t('cart.removeError'),
         variant: "destructive",
       });
     },
@@ -118,7 +120,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                 <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-cream/40"></div>
                 <div className="relative flex items-center justify-between">
                   <div>
-                    <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">Shopping Cart</h3>
+                    <h3 className="font-roboto text-2xl font-light text-navy tracking-wide">{t('cart.shoppingcart')}</h3>
                   </div>
                   <Button
                     variant="ghost"
@@ -152,10 +154,10 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                       <ShoppingCart className="h-12 w-12 text-navy/40" />
                     </div>
                     <h4 className="text-navy font-roboto text-xl mb-3 font-light">
-                      Your collection awaits
+                      {t('cart.yourcollectionawaits')}
                     </h4>
                     <p className="text-navy/60 text-sm leading-relaxed max-w-xs mx-auto">
-                      Discover our curated selection of luxury fragrances crafted for the discerning connoisseur
+                      {t('cart.discoverourcurated')}
                     </p>
                   </div>
                 ) : (
@@ -259,11 +261,11 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   {/* Total Section */}
                   <div className="bg-gradient-to-br from-white to-cream/40 rounded-2xl p-5 border border-gold/20">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-roboto text-sm text-navy/70">Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
+                      <span className="font-roboto text-sm text-navy/70">{t('cart.subtotal')} ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} {t('cart.items')})</span>
                     </div>
                     <div className="h-px bg-gradient-to-r from-gold/20 via-gold/40 to-gold/20 my-3"></div>
                     <div className="flex items-center justify-between">
-                      <span className="font-roboto text-lg font-medium text-navy">Total</span>
+                      <span className="font-roboto text-lg font-medium text-navy">{t('cart.total')}</span>
                       <span className="font-roboto text-xl font-bold text-gold">
                         ₾{total.toFixed(2)}
                       </span>
@@ -280,7 +282,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                         <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative flex items-center justify-center">
                           <Eye className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-                          <span className="text-base">View Full Cart</span>
+                          <span className="text-base">{t('cart.viewfullcart')}</span>
                         </div>
                       </Button>
                     </Link>
@@ -292,7 +294,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                         <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative flex items-center justify-center">
                           <CreditCard className="mr-3 h-6 w-6 group-hover:rotate-3 transition-transform duration-300" />
-                          <span className="text-lg">Proceed to Checkout</span>
+                          <span className="text-lg">{t('cart.proceedtocheckout')}</span>
                         </div>
                         <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                       </Button>

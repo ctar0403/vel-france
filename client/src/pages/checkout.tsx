@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest } from "@/lib/queryClient";
@@ -45,6 +46,7 @@ declare global {
 
 export default function CheckoutPage() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   
@@ -62,7 +64,7 @@ export default function CheckoutPage() {
     additionalAddress: "",
     city: "",
     additionalInfo: "",
-    country: "Georgia"
+    country: t('checkout.georgia')
   });
   
   
@@ -109,8 +111,8 @@ export default function CheckoutPage() {
       } else {
         console.error("No paymentUrl in response:", data);
         toast({
-          title: "Payment Error",
-          description: "Unable to redirect to payment page. Please try again.",
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentRedirectError'),
           variant: "destructive",
         });
       }
@@ -119,8 +121,8 @@ export default function CheckoutPage() {
       console.error("Payment error:", error);
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
+          title: t('checkout.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -129,8 +131,8 @@ export default function CheckoutPage() {
         return;
       }
       toast({
-        title: "Payment Failed",
-        description: "Unable to initiate payment. Please try again.",
+        title: t('checkout.paymentFailed'),
+        description: t('checkout.paymentFailedDescription'),
         variant: "destructive",
       });
     },
@@ -146,8 +148,8 @@ export default function CheckoutPage() {
     
     if (!isShippingValid) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required shipping information fields (Name, Last Name, Phone, Address, City).",
+        title: t('checkout.missingInformation'),
+        description: t('checkout.missingInformationDescription'),
         variant: "destructive",
       });
       return false;
@@ -192,8 +194,8 @@ export default function CheckoutPage() {
       if (!isBOGSDKAvailable()) {
         console.error("BOG SDK failed to load");
         toast({
-          title: "Payment Error",
-          description: "Payment system is loading. Please try again in a moment.",
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentSystemLoading'),
           variant: "destructive",
         });
         return;
@@ -226,8 +228,8 @@ export default function CheckoutPage() {
     } catch (error) {
       console.error("Error loading BOG SDK or opening Calculator:", error);
       toast({
-        title: "Payment Error",
-        description: "Unable to load payment system. Please check your connection and try again.",
+        title: t('checkout.paymentError'),
+        description: t('checkout.paymentLoadError'),
         variant: "destructive",
       });
     }
@@ -245,8 +247,8 @@ export default function CheckoutPage() {
       if (!isBOGSDKAvailable()) {
         console.error("BOG SDK failed to load");
         toast({
-          title: "Payment Error",
-          description: "Payment system is loading. Please try again in a moment.",
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentSystemLoading'),
           variant: "destructive",
         });
         return;
@@ -279,8 +281,8 @@ export default function CheckoutPage() {
     } catch (error) {
       console.error("Error loading BOG SDK or opening Calculator:", error);
       toast({
-        title: "Payment Error",
-        description: "Unable to load payment system. Please check your connection and try again.",
+        title: t('checkout.paymentError'),
+        description: t('checkout.paymentLoadError'),
         variant: "destructive",
       });
     }
@@ -293,7 +295,7 @@ export default function CheckoutPage() {
           <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center animate-pulse">
             <CreditCard className="h-8 w-8 text-navy/40" />
           </div>
-          <p className="font-roboto text-lg text-navy/70 tracking-wide">Preparing secure checkout...</p>
+          <p className="font-roboto text-lg text-navy/70 tracking-wide">{t('checkout.preparingSecure')}</p>
         </div>
       </div>
     );
@@ -306,11 +308,11 @@ export default function CheckoutPage() {
           <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center">
             <CreditCard className="h-16 w-16 text-navy/40" />
           </div>
-          <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">Your cart is empty</h2>
-          <p className="text-navy/60 text-lg mb-8">Add some luxury fragrances to proceed with checkout</p>
+          <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">{t('cart.empty')}</h2>
+          <p className="text-navy/60 text-lg mb-8">{t('cart.emptyDescription')}</p>
           <Link href="/catalogue">
             <Button className="bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
-              Explore Fragrances
+              {t('navigation.catalogue')}
             </Button>
           </Link>
         </div>
@@ -331,12 +333,12 @@ export default function CheckoutPage() {
                 className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-3 sm:px-6 py-2 sm:py-3 group"
               >
                 <ArrowLeft className="mr-1 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                <span className="hidden sm:inline">Back to Cart</span>
-                <span className="sm:hidden">Back</span>
+                <span className="hidden sm:inline">{t('checkout.backToCart')}</span>
+                <span className="sm:hidden">{t('checkout.back')}</span>
               </Button>
             </Link>
             <div className="text-center flex-1 mx-2 sm:mx-0">
-              <h1 className="font-roboto text-xl sm:text-4xl font-light text-navy tracking-wide">Secure Checkout</h1>
+              <h1 className="font-roboto text-xl sm:text-4xl font-light text-navy tracking-wide">{t('checkout.secureCheckout')}</h1>
             </div>
             <div className="w-[70px] sm:w-[160px]"></div> {/* Responsive spacer for centering */}
           </div>
@@ -355,93 +357,93 @@ export default function CheckoutPage() {
                       <span className="text-white text-xs font-bold">1</span>
                     </div>
                   </div>
-                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Shipping Information</h3>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">{t('checkout.shippingInformation')}</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Name *</Label>
+                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.name')} *</Label>
                     <Input
                       id="shipping-firstName"
                       value={shippingForm.firstName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, firstName: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="Enter your name"
+                      placeholder={t('checkout.enterName')}
                       required
                     />
                   </div>
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Last Name *</Label>
+                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.lastName')} *</Label>
                     <Input
                       id="shipping-lastName"
                       value={shippingForm.lastName}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, lastName: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="Enter your last name"
+                      placeholder={t('checkout.enterLastName')}
                       required
                     />
                   </div>
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">City/Region *</Label>
+                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.cityRegion')} *</Label>
                     <Input
                       id="shipping-city"
                       value={shippingForm.city}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="Tbilisi, Batumi, etc."
+                      placeholder={t('checkout.cityPlaceholder')}
                       required
                     />
                   </div>
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Phone *</Label>
+                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.phone')} *</Label>
                     <Input
                       id="shipping-phone"
                       value={shippingForm.phone}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, phone: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="+995 XXX XXX XXX"
+                      placeholder={t('checkout.phonePlaceholder')}
                       required
                     />
                   </div>
                   <div className="sm:col-span-2 space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Street Address *</Label>
+                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.streetAddress')} *</Label>
                     <Textarea
                       id="shipping-address"
                       value={shippingForm.address}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, address: e.target.value }))}
                       className="min-h-[70px] sm:min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none text-sm sm:text-base"
-                      placeholder="Enter your complete street address"
+                      placeholder={t('checkout.enterAddress')}
                       required
                     />
                   </div>
                   <div className="sm:col-span-2 space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Additional Address Information</Label>
+                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.additionalAddressInfo')}</Label>
                     <Input
                       id="shipping-additionalAddress"
                       value={shippingForm.additionalAddress}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, additionalAddress: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="Apartment, suite, unit, building, floor, etc. (optional)"
+                      placeholder={t('checkout.additionalAddress')}
                     />
                   </div>
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Email</Label>
+                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.email')}</Label>
                     <Input
                       id="shipping-email"
                       type="email"
                       value={shippingForm.email}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="your.email@example.com (optional)"
+                      placeholder={t('checkout.emailPlaceholder')}
                     />
                   </div>
                   <div className="space-y-1 sm:space-y-2">
-                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">Additional Information</Label>
+                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.additionalInfo')}</Label>
                     <Input
                       id="shipping-additionalInfo"
                       value={shippingForm.additionalInfo}
                       onChange={(e) => setShippingForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
                       className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
-                      placeholder="Any special delivery instructions or notes (optional)"
+                      placeholder={t('checkout.deliveryNotes')}
                     />
                   </div>
                 </div>
@@ -459,7 +461,7 @@ export default function CheckoutPage() {
                       <span className="text-white text-xs font-bold">2</span>
                     </div>
                   </div>
-                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Choose Payment Method</h3>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">{t('checkout.choosePaymentMethod')}</h3>
                 </div>
                 
                 <div className="space-y-3 sm:space-y-6">

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem } from "@shared/schema";
@@ -11,6 +12,7 @@ import { Plus, Minus, Trash2, ShoppingBag, CreditCard, ArrowLeft } from "lucide-
 
 export default function CartPage() {
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Fetch cart items
   const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({
@@ -28,16 +30,16 @@ export default function CartPage() {
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "Session expired. Reconnecting...",
+          title: t('cart.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",  
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Error",
-        description: "Unable to update quantity.",
+        title: t('cart.error'),
+        description: t('cart.updateError'),
         variant: "destructive",
       });
     },
@@ -51,23 +53,23 @@ export default function CartPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Item Removed",
-        description: "The item has been removed from your cart.",
+        title: t('cart.itemremoved'),
+        description: t('cart.itemRemovedDescription'),
       });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "Session expired. Reconnecting...",
+          title: t('cart.unauthorized'),
+          description: t('auth.loginError'),
           variant: "destructive",
         });
         setTimeout(() => window.location.href = "/api/login", 500);
         return;
       }
       toast({
-        title: "Error",
-        description: "Unable to remove item.",
+        title: t('cart.error'),
+        description: t('cart.removeError'),
         variant: "destructive",
       });
     },

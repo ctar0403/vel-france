@@ -174,7 +174,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
                   >
                     <ShoppingBag className={`h-4 w-4 ${isButtonHovered ? 'text-white' : 'text-black'}`} />
                   </motion.div>
-                  <span>Add to Cart</span>
+                  <span>{t('home.addToCart')}</span>
                 </motion.div>
               </motion.div>
             </motion.button>
@@ -225,7 +225,7 @@ export default function Home() {
     firstName: "",
     lastName: "",
     email: "",
-    subject: "Personal consultation",
+    subject: t('home.personalconsultation'),
     message: ""
   });
   const isMobile = useIsMobile();
@@ -316,7 +316,7 @@ export default function Home() {
         firstName: "",
         lastName: "",
         email: "",
-        subject: "Personal consultation",
+        subject: t('home.personalconsultation'),
         message: ""
       });
     },
@@ -401,9 +401,9 @@ export default function Home() {
 
           <ProductCarousel
             products={mostSoldProducts}
-            title="Most Sold"
+            title={t('home.mostsold')}
             showBadges={true}
-            badgeText={(index) => `#${index + 1} Bestseller`}
+            badgeText={(index) => `#${index + 1} ${t('home.bestseller')}`}
             badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
             onAddToCart={(productId) => addToCartMutation.mutate(productId)}
             isAddingToCart={addToCartMutation.isPending}
@@ -497,7 +497,7 @@ export default function Home() {
 
           <ProductCarousel
             products={newArrivalsProducts.slice(0, 12)}
-            title="New Arrivals"
+            title={t('home.newArrivals')}
             showBadges={true}
             badgeText={() => t('product.newArrival')}
             badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
