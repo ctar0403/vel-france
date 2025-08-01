@@ -511,9 +511,9 @@ export default function CheckoutPage() {
                           <div className="w-px h-4 sm:h-5 bg-gray-300"></div>
                           <img src={googlePayLogo} alt="Google Pay" className="h-3 sm:h-5 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <img src={applePayLogo} alt="Apple Pay" className="h-3 sm:h-5 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
-                          <div className="w-px h-4 sm:h-5 bg-gray-300 hidden sm:block"></div>
-                          <img src={bankLogo} alt="Bank Transfer" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0 hidden sm:block" loading="eager" />
-                          <img src={bogLogo2} alt="Bank of Georgia" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0 hidden sm:block" loading="eager" />
+                          <div className="w-px h-4 sm:h-5 bg-gray-300"></div>
+                          <img src={bankLogo} alt="Bank Transfer" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={bogLogo2} alt="Bank of Georgia" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
                         <span className="text-xs text-slate-500 ml-2">Instant</span>
                       </div>
