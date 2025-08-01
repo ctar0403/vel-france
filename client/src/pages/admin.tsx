@@ -15,7 +15,9 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Product, InsertProduct } from "@shared/schema";
-import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard, Eye, Phone, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, Package, Search, Upload, X, ArrowUpDown, ShoppingCart, Calendar, DollarSign, User, Mail, MapPin, CreditCard, Eye, Phone, Loader2, LogOut } from "lucide-react";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { AdminLogin } from "@/components/AdminLogin";
 
 interface OrderDetailsDialogProps {
   isOpen: boolean;
@@ -304,25 +306,32 @@ export default function Admin() {
   const [bulkDiscountPercentage, setBulkDiscountPercentage] = useState<number>(0);
   const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
   const { toast } = useToast();
-
-  // Check if user is authenticated as admin
-  useEffect(() => {
-    const isAdminAuthenticated = sessionStorage.getItem("adminAuthenticated");
-    if (!isAdminAuthenticated) {
-      setLocation("/admin");
-      return;
-    }
-  }, [setLocation]);
+  const { isAuthenticated, isLoading: authLoading, logout } = useAdminAuth();
 
   // Fetch products
-  const { data: products = [], isLoading } = useQuery<Product[]>({
+  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/admin/products"],
+    enabled: isAuthenticated,
   });
 
   // Fetch orders for admin
   const { data: orders = [], isLoading: ordersLoading } = useQuery({
     queryKey: ["/api/admin/orders"],
+    enabled: isAuthenticated,
   });
+
+  // Show login screen if not authenticated
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
 
   // Filter and sort products
   const filteredAndSortedProducts = React.useMemo(() => {

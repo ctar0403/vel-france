@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { AdminLogin } from "@/components/AdminLogin";
 
 interface Translation {
   id: string;
@@ -23,11 +25,26 @@ export default function AdminTranslations() {
   const [editingTranslations, setEditingTranslations] = useState<Record<string, string>>({});
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { isAuthenticated, isLoading: authLoading } = useAdminAuth();
 
   // Fetch all translations
   const { data: translations = [], isLoading } = useQuery<Translation[]>({
     queryKey: ["/api/translations"],
+    enabled: isAuthenticated,
   });
+
+  // Show login screen if not authenticated
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
 
   // Update translation mutation
   const updateTranslationMutation = useMutation({

@@ -193,6 +193,36 @@ export function setupAuth(app: Express) {
       res.status(500).json({ message: "Failed to update profile" });
     }
   });
+
+  // Admin authentication routes (separate from user authentication)
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      // Check admin credentials (hardcoded for security - only giorgi/random12)
+      if (username === "giorgi" && password === "random12") {
+        (req.session as any).isAdminAuthenticated = true;
+        res.json({ success: true, message: "Admin authenticated successfully" });
+      } else {
+        res.status(401).json({ message: "Invalid admin credentials" });
+      }
+    } catch (error) {
+      console.error("Admin login error:", error);
+      res.status(500).json({ message: "Failed to authenticate admin" });
+    }
+  });
+
+  // Admin logout route
+  app.post("/api/admin/logout", (req, res) => {
+    (req.session as any).isAdminAuthenticated = false;
+    res.json({ success: true, message: "Admin logged out successfully" });
+  });
+
+  // Check admin authentication status
+  app.get("/api/admin/auth", (req, res) => {
+    const isAdminAuthenticated = (req.session as any)?.isAdminAuthenticated || false;
+    res.json({ isAuthenticated: isAdminAuthenticated });
+  });
 }
 
 // Middleware functions
@@ -204,23 +234,13 @@ export function requireAuth(req: any, res: any, next: any) {
   next();
 }
 
-export async function requireAdmin(req: any, res: any, next: any) {
-  const userId = (req.session as any)?.userId;
+// Separate admin authentication middleware
+export function requireAdmin(req: any, res: any, next: any) {
+  const isAdminAuthenticated = (req.session as any)?.isAdminAuthenticated;
   
-  if (!userId) {
+  if (!isAdminAuthenticated) {
     return res.status(401).json({ message: "Authentication required" });
   }
   
-  try {
-    const user = await storage.getUser(userId);
-    if (!user || !user.isAdmin) {
-      return res.status(403).json({ message: "Admin access required" });
-    }
-    
-    req.user = user;
-    next();
-  } catch (error) {
-    console.error("Admin check error:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
+  next();
 }

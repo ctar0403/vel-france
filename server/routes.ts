@@ -972,13 +972,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin translation management routes
   app.post("/api/admin/translations/bulk", requireAdmin, async (req: any, res) => {
     try {
-      const userId = (req.session as any).userId;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       const { translations } = req.body;
       if (!Array.isArray(translations)) {
         return res.status(400).json({ message: "Translations must be an array" });
@@ -994,13 +987,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/admin/translations/:key", requireAdmin, async (req: any, res) => {
     try {
-      const userId = (req.session as any).userId;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       const { georgianText } = req.body;
       const translation = await storage.updateTranslation(req.params.key, georgianText || "");
       
@@ -1017,13 +1003,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/translations", requireAdmin, async (req: any, res) => {
     try {
-      const userId = (req.session as any).userId;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
       const translationData = req.body;
       const translation = await storage.createTranslation(translationData);
       res.json(translation);
