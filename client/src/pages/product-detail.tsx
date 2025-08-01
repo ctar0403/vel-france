@@ -6,15 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Minus, Plus, Shield, Truck, RotateCcw, Loader2 } from "lucide-react";
 
 // Payment method logos
-import bogInstallmentLogo from "@assets/Untitled design (30)_1753640190162.webp";
-import partByPartLogo from "@assets/Untitled (500 x 200 px)_1753642797466.webp";
-import visaLogo from "@assets/Visa_2021.svg_1753638560432.webp";
-import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.webp";
-import amexLogo from "@assets/American-Express-Color_1753638617821.webp";
-import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.webp";
-import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.webp";
-import bankLogo from "@assets/Untitled design (29)_1753639145761.webp";
-import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.webp";
+import bogInstallmentLogo from "@assets/Untitled design (30)_1753640190162.png";
+import partByPartLogo from "@assets/Untitled (500 x 200 px)_1753642797466.png";
+import visaLogo from "@assets/Visa_2021.svg_1753638560432.png";
+import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.png";
+import amexLogo from "@assets/American-Express-Color_1753638617821.png";
+import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.png";
+import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.png";
+import bankLogo from "@assets/Untitled design (29)_1753639145761.png";
+import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -192,7 +192,7 @@ function ProductDetailPage() {
   }
 
   // Single product image
-  const productImage = product.imageUrl || "/placeholder-perfume.webp";
+  const productImage = product.imageUrl || "/placeholder-perfume.jpg";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-cream/50">

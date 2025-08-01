@@ -8,7 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import LogoutButton from "@/components/LogoutButton";
-import logoImage from "@assets/Your paragraph text (4)_1753542106373.webp";
+import logoImage from "@assets/Your paragraph text (4)_1753542106373.png";
 
 interface HeaderProps {
   cartItemCount?: number;

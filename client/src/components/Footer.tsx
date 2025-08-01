@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import footerLogoImage from "@assets/Your paragraph text (5)_1753895494203.webp";
+import footerLogoImage from "@assets/Your paragraph text (5)_1753895494203.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
