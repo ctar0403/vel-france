@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -51,11 +52,15 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   };
 
   return (
-    <div className="product-carousel-container">
+    <div className="product-carousel-container relative group">
       <Swiper
-        modules={[Pagination, Autoplay]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={2}
+        navigation={{
+          nextEl: '.carousel-button-next',
+          prevEl: '.carousel-button-prev',
+        }}
         pagination={{
           clickable: true,
           dynamicBullets: true,
@@ -148,7 +153,13 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         ))}
       </Swiper>
 
-
+      {/* Minimalistic Professional Navigation Arrows */}
+      <div className="carousel-button-prev absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white shadow-md hover:shadow-lg rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 opacity-0 group-hover:opacity-100">
+        <ChevronLeft className="w-5 h-5 text-gray-700" />
+      </div>
+      <div className="carousel-button-next absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 hover:bg-white shadow-md hover:shadow-lg rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 opacity-0 group-hover:opacity-100">
+        <ChevronRight className="w-5 h-5 text-gray-700" />
+      </div>
     </div>
   );
 };
