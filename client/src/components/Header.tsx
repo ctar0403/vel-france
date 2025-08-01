@@ -204,6 +204,17 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       </span>
                     </div>
                   </Link>
+                  {user.isAdmin && (
+                    <Link to="/admin-panel">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-navy hover:text-gold font-roboto text-xs px-2"
+                      >
+                        Admin
+                      </Button>
+                    </Link>
+                  )}
                   <LogoutButton 
                     variant="ghost" 
                     size="sm" 
