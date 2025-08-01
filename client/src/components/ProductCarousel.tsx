@@ -1,12 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'wouter';
-import { LazyImage } from '@/components/LazyImage';
-import { memo, useCallback, useMemo, lazy, Suspense } from 'react';
-
-// Import motion directly (will be optimized later)
-import { motion } from "framer-motion";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -35,7 +31,7 @@ interface ProductCarouselProps {
   badgeColor?: string;
 }
 
-const ProductCarousel = memo<ProductCarouselProps>(({
+const ProductCarousel: React.FC<ProductCarouselProps> = ({
   products,
   title,
   onAddToCart,
@@ -45,52 +41,55 @@ const ProductCarousel = memo<ProductCarouselProps>(({
   badgeText,
   badgeColor = "bg-gradient-to-r from-red-500 to-pink-500"
 }) => {
-  const formatProductName = useCallback((name: string, brand: string | null) => {
+  const formatProductName = (name: string, brand: string | null) => {
     return brand ? `${brand} – ${name}` : name;
-  }, []);
+  };
 
-  const truncateDescription = useCallback((description: string, maxLength: number = 60) => {
+  const truncateDescription = (description: string, maxLength: number = 60) => {
     if (!description) return '';
     return description.length > maxLength 
       ? description.substring(0, maxLength) + '...'
       : description;
-  }, []);
-
-  // Memoize swiper configuration for performance with reduced reflows
-  const swiperConfig = useMemo(() => ({
-    modules: [Navigation, Pagination, Autoplay],
-    spaceBetween: 20,
-    slidesPerView: 2,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-      clickable: true,
-      dynamicBullets: false, // Disable dynamic bullets to reduce reflows
-    },
-    autoplay: autoplay ? {
-      delay: 4000,
-      disableOnInteraction: false,
-      pauseOnMouseEnter: true,
-    } : false,
-    breakpoints: {
-      640: { slidesPerView: 2, spaceBetween: 20 },
-      768: { slidesPerView: 3, spaceBetween: 25 },
-      1024: { slidesPerView: 4, spaceBetween: 30 },
-    },
-    lazy: true,
-    preloadImages: false,
-    watchSlidesProgress: false, // Disable to reduce reflows
-    observer: true,
-    observeParents: true,
-    resistance: true,
-    resistanceRatio: 0.85,
-  }), [autoplay]);
+  };
 
   return (
     <div className="product-carousel-container">
-      <Swiper {...swiperConfig}>
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        spaceBetween={20}
+        slidesPerView={2}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        autoplay={autoplay ? {
+          delay: 3000,
+          disableOnInteraction: false,
+        } : false}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 25,
+          },
+          1280: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+        }}
+        className="product-swiper"
+      >
         {products.map((product, index) => (
           <SwiperSlide key={product.id}>
             <Link 
@@ -107,10 +106,10 @@ const ProductCarousel = memo<ProductCarouselProps>(({
             >
               {/* Product Image */}
               <div className="product-image relative">
-                <LazyImage
+                <img
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
-                  className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 
                 {/* Badge - Hidden on mobile */}
@@ -164,8 +163,6 @@ const ProductCarousel = memo<ProductCarouselProps>(({
       </div>
     </div>
   );
-});
-
-ProductCarousel.displayName = 'ProductCarousel';
+};
 
 export default ProductCarousel;
