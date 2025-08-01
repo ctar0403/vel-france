@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   const allowedOrigins = [
     'http://localhost:5173', // Vite dev server
     'http://localhost:3000', // Local testing
-    'https://your-frontend-url.vercel.app', // Production frontend - update with actual URL
+    'https://your-frontend-url.vercel.app', // Production frontend - REPLACE with actual Vercel URL
     process.env.FRONTEND_URL // Environment variable for production
   ];
   
