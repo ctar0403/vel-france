@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { useTranslationsReady } from "@/lib/translations";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect } from "react";
 import Home from "@/pages/home";
@@ -41,8 +42,9 @@ function ScrollToTop() {
 
 function Router() {
   const { user, isLoading } = useAuth();
+  const translationsReady = useTranslationsReady();
 
-  if (isLoading) {
+  if (isLoading || !translationsReady) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-navy font-roboto">Loading...</div>
