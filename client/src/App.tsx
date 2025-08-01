@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-import TranslationProvider from "@/components/TranslationProvider";
 import { useEffect } from "react";
 import Home from "@/pages/home";
 import Catalogue from "@/pages/catalogue";
@@ -96,13 +95,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TranslationProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Router />
-            <MobileBottomNav />
-          </TooltipProvider>
-        </TranslationProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+          <MobileBottomNav />
+        </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

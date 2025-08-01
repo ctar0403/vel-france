@@ -39,10 +39,7 @@ i18n
     contextSeparator: '_',
   });
 
-// Load translations from database on initialization and force re-render when ready
-loadTranslations().then(() => {
-  // Force i18n to emit a language change event to trigger re-renders
-  i18n.emit('languageChanged', i18n.language);
-}).catch(console.error);
+// Load translations from database on initialization
+loadTranslations().catch(console.error);
 
 export default i18n;
