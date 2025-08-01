@@ -1,0 +1,220 @@
+
+Improve image delivery Est savings of 12,858 KiB
+Reducing the download time of images can improve the perceived load time of the page and LCP. Learn more about optimizing image sizeLCPFCP
+URL
+Resource Size
+Est Savings
+replit.app 1st party
+13,036.2 KiB	12,857.6 KiB
+/assets/Prada%20%E2%80%93%20Paradoxe%20Intense_175….png(vel-france-lux-leafygeo123.replit.app)
+958.8 KiB
+954.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+796.0 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+934.1 KiB
+/assets/Chanel%20%E2%80%93%20N5_175….png(vel-france-lux-leafygeo123.replit.app)
+875.8 KiB
+871.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+713.0 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+853.2 KiB
+/assets/Jean%20Paul%20Gaultier%20%E2%80%93%20Divine_175….png(vel-france-lux-leafygeo123.replit.app)
+835.7 KiB
+831.5 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+672.9 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+814.2 KiB
+/assets/Sospiro%20%E2%80%93%20Erba%20Pura_175….png(vel-france-lux-leafygeo123.replit.app)
+834.8 KiB
+830.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+672.0 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+813.3 KiB
+/assets/Armani%20%E2%80%93%20Stronger%20With%20You%20Intens….png(vel-france-lux-leafygeo123.replit.app)
+776.6 KiB
+772.4 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+613.8 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+756.6 KiB
+/assets/Burberry%20%E2%80%93%20Goddess_175….png(vel-france-lux-leafygeo123.replit.app)
+699.8 KiB
+695.6 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+537.0 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+681.8 KiB
+/assets/Creed%20%E2%80%93%20Queen%20Of%20Silk_175….png(vel-france-lux-leafygeo123.replit.app)
+692.6 KiB
+688.4 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+529.9 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+674.8 KiB
+/assets/Dolce%20&%20Gabbana%20%E2%80%93%20K_175….png(vel-france-lux-leafygeo123.replit.app)
+662.9 KiB
+658.7 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+500.1 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+645.8 KiB
+/assets/Xerjoff%20%E2%80%93%20Erba%20Pura_175….png(vel-france-lux-leafygeo123.replit.app)
+654.7 KiB
+650.5 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+491.9 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+637.8 KiB
+/assets/Memo%20%E2%80%93%20Russian%20Leather_175….png(vel-france-lux-leafygeo123.replit.app)
+645.2 KiB
+641.0 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+482.5 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+628.6 KiB
+/assets/Memo%20%E2%80%93%20Italian%20Leather_175….png(vel-france-lux-leafygeo123.replit.app)
+633.9 KiB
+629.7 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+471.1 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+617.5 KiB
+/assets/Dior%20%E2%80%93%20Homme%20Intense_175….png(vel-france-lux-leafygeo123.replit.app)
+605.1 KiB
+600.9 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+442.3 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+589.5 KiB
+/assets/Chanel%20%E2%80%93%20Chance%20Eau%20Tendre_175….png(vel-france-lux-leafygeo123.replit.app)
+580.5 KiB
+576.3 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+417.8 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+565.6 KiB
+/assets/Yves%20Saint%20Laurent%20%E2%80%93%20Libre%20Intens….png(vel-france-lux-leafygeo123.replit.app)
+553.0 KiB
+548.8 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+390.3 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+538.8 KiB
+/assets/Marc%20Antoine%20Barrois%20%E2%80%93%20Encelade_175….png(vel-france-lux-leafygeo123.replit.app)
+527.9 KiB
+523.7 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+365.1 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+514.3 KiB
+/assets/Louis%20Vuitton%20%E2%80%93%20Ombre%20Nomade_175….png(vel-france-lux-leafygeo123.replit.app)
+525.7 KiB
+521.5 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+362.9 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+512.2 KiB
+/assets/Tiziana%20Terenzi%20%E2%80%93%20Kirke_175….png(vel-france-lux-leafygeo123.replit.app)
+516.5 KiB
+512.3 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+353.7 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+503.2 KiB
+/assets/Marc%20Antoine%20Barrois%20%E2%80%93%20Tilia_175….png(vel-france-lux-leafygeo123.replit.app)
+506.6 KiB
+502.4 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+343.9 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+493.6 KiB
+/assets/Dior%20%E2%80%93%20Sauvage%20Elixir_175….png(vel-france-lux-leafygeo123.replit.app)
+505.4 KiB
+501.2 KiB
+Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.
+342.6 KiB
+This image file is larger than it needs to be (1000x1000) for its displayed dimensions (161x161). Use responsive images to reduce the image download size.
+492.3 KiB
+/assets/Mobile-2_….webp(vel-france-lux-leafygeo123.replit.app)
+83.8 KiB
+63.0 KiB
+Increasing the image compression factor could improve this image's download size.
+5.6 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+61.5 KiB
+/assets/Mobile-5_….webp(vel-france-lux-leafygeo123.replit.app)
+68.7 KiB
+50.5 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+50.5 KiB
+/assets/Mobile-6_….webp(vel-france-lux-leafygeo123.replit.app)
+65.5 KiB
+48.2 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+48.2 KiB
+/assets/Mobile-3_….webp(vel-france-lux-leafygeo123.replit.app)
+56.3 KiB
+41.4 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+41.4 KiB
+/assets/Mobile-4_….webp(vel-france-lux-leafygeo123.replit.app)
+54.2 KiB
+39.8 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+39.8 KiB
+/assets/Mobile-1_….webp(vel-france-lux-leafygeo123.replit.app)
+31.8 KiB
+23.4 KiB
+This image file is larger than it needs to be (800x600) for its displayed dimensions (412x309). Use responsive images to reduce the image download size.
+23.4 KiB
+/assets/7_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+15.0 KiB
+14.4 KiB
+Increasing the image compression factor could improve this image's download size.
+5.2 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+14.1 KiB
+/assets/Your%20paragraph%20text%20(4)_17535421….webp(vel-france-lux-leafygeo123.replit.app)
+14.2 KiB
+12.7 KiB
+This image file is larger than it needs to be (500x200) for its displayed dimensions (160x64). Use responsive images to reduce the image download size.
+12.7 KiB
+/assets/10_175378….webp(vel-france-lux-leafygeo123.replit.app)
+12.4 KiB
+11.9 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+11.7 KiB
+/assets/5_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+11.6 KiB
+11.0 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+10.9 KiB
+/assets/4_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+8.4 KiB
+7.9 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+7.9 KiB
+/assets/6_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+7.0 KiB
+6.6 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+6.6 KiB
+/assets/3_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+5.8 KiB
+5.5 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+5.5 KiB
+/assets/2_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+5.3 KiB
+5.0 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+5.0 KiB
+/assets/1_1753788….webp(vel-france-lux-leafygeo123.replit.app)
+4.8 KiB
+4.5 KiB
+This image file is larger than it needs to be (300x200) for its displayed dimensions (72x48). Use responsive images to reduce the image download size.
+4.5 KiB

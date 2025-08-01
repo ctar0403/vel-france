@@ -23,6 +23,7 @@ import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 // Declare BOG global for TypeScript
 declare global {
@@ -238,14 +239,22 @@ function ProductDetailPage() {
           >
             {/* Main Image */}
             <div className="aspect-square bg-white rounded-3xl border border-gold/20 shadow-2xl overflow-hidden">
-              <motion.img
-                src={productImage}
-                alt={product.name}
-                className="w-full h-full object-cover"
+              <motion.div
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
-              />
+                className="w-full h-full"
+              >
+                <ResponsiveImage
+                  src={productImage}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 768px) 90vw, (max-width: 1024px) 50vw, 600px"
+                  width={600}
+                  height={600}
+                  priority
+                />
+              </motion.div>
             </div>
           </motion.div>
 

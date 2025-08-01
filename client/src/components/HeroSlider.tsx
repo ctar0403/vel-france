@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 // Import desktop images
 import desktop1 from '@assets/Desktop-1_1754051373226.webp';
@@ -118,11 +119,15 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
               onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
               aria-label="Go to catalogue"
             >
-              <img
+              <ResponsiveImage
                 src={isMobile ? slide.mobile : slide.desktop}
                 alt={slide.alt}
                 className="w-full h-auto object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
+                sizes="100vw"
+                width={1920}
+                height={index === 0 ? 600 : 800}
+                priority={index === 0}
               />
             </div>
           </div>

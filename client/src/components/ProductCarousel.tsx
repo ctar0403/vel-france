@@ -3,6 +3,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { LazyImage } from '@/components/ResponsiveImage';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -105,10 +106,13 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
             >
               {/* Product Image */}
               <div className="product-image relative">
-                <img
+                <LazyImage
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
-                  loading="lazy"
+                  className="w-full h-full"
+                  sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
+                  width={300}
+                  height={300}
                 />
                 
                 {/* Badge - Hidden on mobile */}

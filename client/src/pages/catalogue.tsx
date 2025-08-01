@@ -16,6 +16,7 @@ import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
+import { LazyImage } from "@/components/ResponsiveImage";
 import { Link, useLocation } from "wouter";
 
 interface CatalogueFilters {
@@ -78,16 +79,23 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
       >
       {/* Fixed Height Image Container */}
       <div className="aspect-square relative overflow-hidden flex-shrink-0">
-        <motion.img
-          src={product.imageUrl || "/placeholder-perfume.jpg"}
-          alt={product.name}
-          className="w-full h-full object-cover"
+        <motion.div
           animate={{ 
             scale: isCardHovered ? 1.1 : 1,
             filter: isCardHovered ? "brightness(0.8)" : "brightness(1)"
           }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-        />
+          className="w-full h-full"
+        >
+          <LazyImage
+            src={product.imageUrl || "/placeholder-perfume.jpg"}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            sizes="(max-width: 640px) 300px, (max-width: 1024px) 350px, 400px"
+            width={400}
+            height={400}
+          />
+        </motion.div>
         
         {/* Elegant overlay gradient */}
         <motion.div

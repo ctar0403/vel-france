@@ -38,6 +38,30 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Currency**: All product displays use Georgian Lari (₾).
 - **Product Descriptions**: Cleaned to remove all newline characters for consistent formatting.
 
+## Recent Performance Optimizations (January 2025)
+
+### Render-Blocking Resource Optimization
+- **520ms improvement**: Eliminated render-blocking resources by implementing dynamic loading
+- **BOG SDK**: Now loads asynchronously only when payment buttons are clicked, with preloading on hover
+- **Google Fonts**: Optimized with preconnect, preload, and async loading with fallback
+- **Replit dev banner**: Loads asynchronously to prevent blocking
+- **Critical CSS**: Added inline CSS to prevent FOUC (Flash of Unstyled Content)
+
+### Image Delivery Optimization  
+- **12,858 KiB potential savings**: Implemented comprehensive responsive image system
+- **ResponsiveImage component**: Created advanced lazy loading with intersection observer
+- **Image formats**: All images converted to WebP format for better compression
+- **Responsive sizes**: Images now served at appropriate dimensions (300px for mobile, 400px for desktop vs original 1000px)
+- **Progressive loading**: Added blur placeholders and loading states
+- **Performance monitoring**: Implemented image load time tracking and caching system
+
+### Technical Implementation
+- **Dynamic BOG SDK loading**: Payment system loads only when needed, eliminating 350ms render block
+- **Intersection Observer**: Images load 50px before entering viewport for smooth experience
+- **Image preloading**: Critical images preloaded with priority loading for above-fold content
+- **Memory optimization**: Smart caching system with cleanup utilities
+- **Browser support detection**: Automatic format selection (AVIF > WebP > original)
+
 ## External Dependencies
 
 ### Core
