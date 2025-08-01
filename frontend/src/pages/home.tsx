@@ -12,6 +12,7 @@ import { isUnauthorizedError } from "@/lib/authUtils";
 
 // Import motion directly for critical animations (will be optimized later)
 import { motion } from "framer-motion";
+import { Suspense } from "react";
 
 
 
@@ -23,6 +24,7 @@ import Footer from "@/components/Footer";
 const ProductCarousel = lazy(() => import("../components/ProductCarousel"));
 const ProductCard = lazy(() => import("@/components/ProductCard"));
 const CartSidebar = lazy(() => import("@/components/CartSidebar"));
+const HeroSlider = lazy(() => import("@/components/HeroSlider"));
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
@@ -391,7 +393,12 @@ export default function Home() {
         cartItems={cartItems}
         isLoading={cartLoading}
       />
-
+      
+      {/* Hero Banner Slider */}
+      <Suspense fallback={<div className="w-full h-[50vh] bg-gray-200 animate-pulse"></div>}>
+        <HeroSlider />
+      </Suspense>
+      
       {/* Most Sold Products Section */}
       <section className="pt-20 bg-gradient-to-br from-cream to-white">
         <div className="container mx-auto px-4">
