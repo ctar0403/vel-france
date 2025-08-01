@@ -24,7 +24,7 @@ import Footer from "@/components/Footer";
 const ProductCarousel = lazy(() => import("../components/ProductCarousel"));
 const ProductCard = lazy(() => import("@/components/ProductCard"));
 const CartSidebar = lazy(() => import("@/components/CartSidebar"));
-const SimpleBanner = lazy(() => import("@/components/SimpleBanner"));
+const DirectBanner = lazy(() => import("@/components/DirectBanner"));
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package } from "lucide-react";
@@ -396,7 +396,7 @@ export default function Home() {
       
       {/* Hero Banner Slider */}
       <Suspense fallback={<div className="w-full h-[50vh] bg-gray-200 animate-pulse"></div>}>
-        <SimpleBanner />
+        <DirectBanner />
       </Suspense>
       
       {/* Most Sold Products Section */}
