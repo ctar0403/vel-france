@@ -34,13 +34,13 @@ import banner3 from "@assets/3_1753538715604.webp";
 import banner4 from "@assets/4_1753538720559.webp";
 import banner5 from "@assets/5_1753538726165.webp";
 
-// Mobile banners (new optimized WebP format) - using public directory URLs
-const mobileBanner1 = "/new_mobile_banner_1.webp";
-const mobileBanner2 = "/new_mobile_banner_2.webp";
-const mobileBanner3 = "/new_mobile_banner_3.webp";
-const mobileBanner4 = "/new_mobile_banner_4.webp";
-const mobileBanner5 = "/new_mobile_banner_5.webp";
-const mobileBanner6 = "/new_mobile_banner_6.webp";
+// Mobile banners - direct file references
+const mobileBanner1 = "/mobile_1.webp";
+const mobileBanner2 = "/mobile_2.webp";
+const mobileBanner3 = "/mobile_3.webp";
+const mobileBanner4 = "/mobile_4.webp";
+const mobileBanner5 = "/mobile_5.webp";
+const mobileBanner6 = "/mobile_6.webp";
 import banner7 from "@assets/7_1753734195721.webp";
 import banner8 from "@assets/8_1753734262383.webp";
 import banner9 from "@assets/9_1753734226839.webp";
@@ -283,49 +283,40 @@ export default function Home() {
     message: ""
   });
   const isMobile = useIsMobile();
-  
-  // Debug mobile detection
-  useEffect(() => {
-    console.log(`Mobile detection: ${isMobile}, Window width: ${window.innerWidth}`);
-  }, [isMobile]);
 
-  // Responsive banner images - new mobile banners optimized for mobile screens, desktop banners for larger screens
-  const banners = useMemo(() => {
-    const bannerArray = [
-      { 
-        desktop: banner11, 
-        mobile: mobileBanner1, 
-        alt: "Vel France luxury perfume collection with up to 60% discount" 
-      },
-      { 
-        desktop: banner9, 
-        mobile: mobileBanner2, 
-        alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" 
-      },
-      { 
-        desktop: banner5, 
-        mobile: mobileBanner3, 
-        alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" 
-      },
-      { 
-        desktop: banner8, 
-        mobile: mobileBanner4, 
-        alt: "Miss Dior Parfum with sophisticated brunette model" 
-      },
-      { 
-        desktop: banner7, 
-        mobile: mobileBanner5, 
-        alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" 
-      },
-      { 
-        desktop: banner10, 
-        mobile: mobileBanner6, 
-        alt: "Coco Mademoiselle by Chanel with elegant model" 
-      }
-    ];
-    console.log('Banners array created:', bannerArray[0]);
-    return bannerArray;
-  }, []);
+  // Banner configuration: mobile uses 1-6.png converted to WebP, desktop uses current banners
+  const banners = [
+    { 
+      desktop: banner11, 
+      mobile: mobileBanner1, 
+      alt: "Luxury perfume banner 1" 
+    },
+    { 
+      desktop: banner9, 
+      mobile: mobileBanner2, 
+      alt: "Luxury perfume banner 2" 
+    },
+    { 
+      desktop: banner5, 
+      mobile: mobileBanner3, 
+      alt: "Luxury perfume banner 3" 
+    },
+    { 
+      desktop: banner8, 
+      mobile: mobileBanner4, 
+      alt: "Luxury perfume banner 4" 
+    },
+    { 
+      desktop: banner7, 
+      mobile: mobileBanner5, 
+      alt: "Luxury perfume banner 5" 
+    },
+    { 
+      desktop: banner10, 
+      mobile: mobileBanner6, 
+      alt: "Luxury perfume banner 6" 
+    }
+  ];
 
   // Auto-advance slideshow with reduced frequency for better performance
   useEffect(() => {
@@ -535,11 +526,7 @@ export default function Home() {
                   style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
                   decoding="async"
                   sizes="100vw"
-                  onLoad={() => {
-                    if (index === 0) {
-                      console.log(`Banner loaded - Mobile: ${isMobile}, Source: ${isMobile ? banner.mobile : banner.desktop}, Window width: ${window.innerWidth}`);
-                    }
-                  }}
+
                 />
               </div>
             ))}
