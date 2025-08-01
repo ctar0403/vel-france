@@ -83,10 +83,12 @@ export async function loadTranslations(force = false): Promise<void> {
       
       console.log('Nested structure sample:', Object.keys(nestedEn).slice(0, 5));
       
+      // Remove existing Georgian translations first, then add database ones
+      i18n.removeResourceBundle('ka', 'translation');
+      
       // Add translations to i18n, database translations override static ones
-      // The 'true' and 'true' parameters mean: deep merge and override existing keys
       i18n.addResourceBundle('en', 'translation', nestedEn, true, true);
-      i18n.addResourceBundle('ka', 'translation', nestedKa, true, true);
+      i18n.addResourceBundle('ka', 'translation', nestedKa, true, false);
       
       console.log('Testing home.mostsold translation after loading:', i18n.t('home.mostsold', { lng: 'ka' }));
       
@@ -120,6 +122,9 @@ export async function refreshTranslations(): Promise<void> {
   await loadTranslations(true);
   // Force i18n to re-render components by triggering a language change event
   i18n.emit('languageChanged', i18n.language);
+  // Force reload the current language
+  const currentLang = i18n.language;
+  await i18n.changeLanguage(currentLang);
 }
 
 // Hook to ensure translations are loaded
