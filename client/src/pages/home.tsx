@@ -40,16 +40,16 @@ import banner11 from "@assets/11_1753734243609.webp";
 import bannerDuplicate from "@assets/786357ce-da6e-4e20-8116-d7c79ef6e062_1753734276964.webp";
 
 // Import new brand logos
-import chanelLogo from "@assets/1_1753788502251.webp";
-import versaceLogo from "@assets/2_1753788502252.webp";
-import diorLogo from "@assets/3_1753788502252.webp";
-import gucciLogo from "@assets/4_1753788502253.webp";
-import armaneLogo from "@assets/5_1753788502254.webp";
-import dgLogo from "@assets/6_1753788502254.webp";
-import creedLogo from "@assets/7_1753788502255.webp";
+import chanelLogo from "@assets/1_1753788502251_optimized.webp";
+import versaceLogo from "@assets/2_1753788502252_optimized.webp";
+import diorLogo from "@assets/3_1753788502252_optimized.webp";
+import gucciLogo from "@assets/4_1753788502253_optimized.webp";
+import armaneLogo from "@assets/5_1753788502254_optimized.webp";
+import dgLogo from "@assets/6_1753788502254_optimized.webp";
+import creedLogo from "@assets/7_1753788502255_optimized.webp";
 import yslLogo from "@assets/8_1753788502255.webp";
 import pradaLogo from "@assets/9_1753788502255.webp";
-import claireFontaineLogo from "@assets/10_1753788502256.webp";
+import claireFontaineLogo from "@assets/10_1753788502256_optimized.webp";
 
 // Optimized hook to detect mobile screen size with debouncing
 const useIsMobile = () => {
@@ -463,7 +463,7 @@ export default function Home() {
                   width={1920}
                   height={1080}
                   loading={index === 0 ? "eager" : "lazy"}
-                  fetchpriority={index === 0 ? "high" : "auto"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                   sizes="100vw"
                 />
