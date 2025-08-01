@@ -109,7 +109,6 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
-          <MobileBottomNav />
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>

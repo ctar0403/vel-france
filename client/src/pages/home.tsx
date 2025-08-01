@@ -234,15 +234,16 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  // Fetch cart items
+  // Fetch cart items (anonymous carts are supported)
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
   });
 
-  // Fetch user orders
+  // Only fetch user orders if user is authenticated
   const { data: orders = [], isLoading: ordersLoading } = useQuery<(Order & { orderItems: any[] })[]>({
     queryKey: ["/api/orders"],
+    enabled: !!user, // Only run this query if user is authenticated
     retry: false,
   });
 
