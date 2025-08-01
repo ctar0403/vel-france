@@ -256,6 +256,7 @@ export default function Home() {
   
   useEffect(() => {
     const handleResize = () => {
+      setBanners(getCurrentBanners());
       forceUpdate({});
     };
     
@@ -263,39 +264,31 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Banner configuration: mobile uses 1-6.png converted to WebP, desktop uses current banners
-  const banners = [
-    { 
-      desktop: banner11, 
-      mobile: mobileBanner1, 
-      alt: "Luxury perfume banner 1" 
-    },
-    { 
-      desktop: banner9, 
-      mobile: mobileBanner2, 
-      alt: "Luxury perfume banner 2" 
-    },
-    { 
-      desktop: banner5, 
-      mobile: mobileBanner3, 
-      alt: "Luxury perfume banner 3" 
-    },
-    { 
-      desktop: banner8, 
-      mobile: mobileBanner4, 
-      alt: "Luxury perfume banner 4" 
-    },
-    { 
-      desktop: banner7, 
-      mobile: mobileBanner5, 
-      alt: "Luxury perfume banner 5" 
-    },
-    { 
-      desktop: banner10, 
-      mobile: mobileBanner6, 
-      alt: "Luxury perfume banner 6" 
+  // Get current banner images based on screen width
+  const getCurrentBanners = () => {
+    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    if (isCurrentlyMobile) {
+      return [
+        { src: "/mobile_1.webp", alt: "Mobile banner 1" },
+        { src: "/mobile_2.webp", alt: "Mobile banner 2" },
+        { src: "/mobile_3.webp", alt: "Mobile banner 3" },
+        { src: "/mobile_4.webp", alt: "Mobile banner 4" },
+        { src: "/mobile_5.webp", alt: "Mobile banner 5" },
+        { src: "/mobile_6.webp", alt: "Mobile banner 6" }
+      ];
+    } else {
+      return [
+        { src: banner11, alt: "Desktop banner 1" },
+        { src: banner9, alt: "Desktop banner 2" },
+        { src: banner5, alt: "Desktop banner 3" },
+        { src: banner8, alt: "Desktop banner 4" },
+        { src: banner7, alt: "Desktop banner 5" },
+        { src: banner10, alt: "Desktop banner 6" }
+      ];
     }
-  ];
+  };
+
+  const [banners, setBanners] = useState(getCurrentBanners);
 
   // Auto-advance slideshow with reduced frequency for better performance
   useEffect(() => {
@@ -489,29 +482,25 @@ export default function Home() {
               width: `${banners.length * 100}%`
             }}
           >
-            {banners.map((banner, index) => {
-              const isMobileView = window.innerWidth <= 768;
-              return (
-                <div 
-                  key={index}
-                  className="h-full flex-shrink-0"
-                  style={{ width: `${100 / banners.length}%` }}
-                >
-                  <img 
-                    src={isMobileView ? banner.mobile : banner.desktop}
-                    alt={banner.alt}
-                    className="w-full h-full object-cover"
-                    width={isMobileView ? 800 : 1732}
-                    height={isMobileView ? 600 : 630}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
-                    decoding="async"
-                    sizes="100vw"
-                    key={`${index}-${isMobileView ? 'mobile' : 'desktop'}`}
-                  />
-                </div>
-              );
-            })}
+            {banners.map((banner, index) => (
+              <div 
+                key={`banner-${index}-${banner.src}`}
+                className="h-full flex-shrink-0"
+                style={{ width: `${100 / banners.length}%` }}
+              >
+                <img 
+                  src={banner.src}
+                  alt={banner.alt}
+                  className="w-full h-full object-cover"
+                  width={isMobile ? 800 : 1732}
+                  height={isMobile ? 600 : 630}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
+                  decoding="async"
+                  sizes="100vw"
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div 
