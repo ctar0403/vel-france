@@ -27,11 +27,19 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem, Order, User } from "@shared/schema";
 import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 
+// Desktop banners
 import banner1 from "@assets/1_1753538704078.webp";
 import banner2 from "@assets/2_1753538710752.webp";
 import banner3 from "@assets/3_1753538715604.webp";
 import banner4 from "@assets/4_1753538720559.webp";
 import banner5 from "@assets/5_1753538726165.webp";
+
+// Mobile banners (optimized WebP format)
+import mobileBanner1 from "@assets/mobile_banner_1.webp";
+import mobileBanner2 from "@assets/mobile_banner_2.webp";
+import mobileBanner3 from "@assets/mobile_banner_3.webp";
+import mobileBanner4 from "@assets/mobile_banner_4.webp";
+import mobileBanner5 from "@assets/mobile_banner_5.webp";
 import banner7 from "@assets/7_1753734195721.webp";
 import banner8 from "@assets/8_1753734262383.webp";
 import banner9 from "@assets/9_1753734226839.webp";
@@ -275,15 +283,39 @@ export default function Home() {
   });
   const isMobile = useIsMobile();
 
-  // Banner images for slideshow in requested order
-  const banners = [
-    { image: banner11, alt: "Vel France luxury perfume collection with up to 60% discount" },
-    { image: banner9, alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" },
-    { image: banner5, alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" },
-    { image: banner8, alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" },
-    { image: banner7, alt: "Coco Mademoiselle by Chanel with elegant model" },
-    { image: banner10, alt: "Miss Dior Parfum with sophisticated brunette model" }
-  ];
+  // Responsive banner images - mobile optimized WebP for small screens, desktop banners for larger screens
+  const banners = useMemo(() => [
+    { 
+      desktop: banner11, 
+      mobile: mobileBanner1, 
+      alt: "Vel France luxury perfume collection with up to 60% discount" 
+    },
+    { 
+      desktop: banner9, 
+      mobile: mobileBanner2, 
+      alt: "Chanel No. 5 perfume with blonde model in red Chanel outfit" 
+    },
+    { 
+      desktop: banner5, 
+      mobile: mobileBanner3, 
+      alt: "Jean Paul Gaultier Divine perfume with golden luxury styling" 
+    },
+    { 
+      desktop: banner8, 
+      mobile: mobileBanner4, 
+      alt: "Dior Sauvage Elixir - The New Elixir with dramatic sunset backdrop" 
+    },
+    { 
+      desktop: banner7, 
+      mobile: mobileBanner5, 
+      alt: "Coco Mademoiselle by Chanel with elegant model" 
+    },
+    { 
+      desktop: banner10, 
+      mobile: mobileBanner1, 
+      alt: "Miss Dior Parfum with sophisticated brunette model" 
+    }
+  ], []);
 
   // Auto-advance slideshow with reduced frequency for better performance
   useEffect(() => {
@@ -480,13 +512,13 @@ export default function Home() {
                 style={{ width: `${100 / banners.length}%` }}
               >
                 <img 
-                  src={banner.image}
+                  src={isMobile ? banner.mobile : banner.desktop}
                   alt={banner.alt}
                   className="w-full h-full object-cover"
-                  width={1920}
-                  height={1080}
+                  width={isMobile ? 1732 : 1920}
+                  height={isMobile ? 630 : 1080}
                   loading={index === 0 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : "auto"}
+                  style={{ fetchPriority: index === 0 ? "high" : "auto" } as any}
                   decoding="async"
                   sizes="100vw"
                 />
