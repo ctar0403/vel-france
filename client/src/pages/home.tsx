@@ -37,19 +37,24 @@ import yslLogo from "@assets/8_1753788502255.webp";
 import pradaLogo from "@assets/9_1753788502255.webp";
 import claireFontaineLogo from "@assets/10_1753788502256.webp";
 
-// Hook to detect mobile screen size
+// Hook to detect mobile screen size - optimized to prevent forced reflows
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(e.matches);
     };
     
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
+    // Set initial value
+    handleChange(mediaQuery);
     
-    return () => window.removeEventListener('resize', checkIsMobile);
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
   
   return isMobile;

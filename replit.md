@@ -82,6 +82,14 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Immediate discovery**: Hero images now discoverable from initial HTML document for faster LCP
 - **Lazy loading optimization**: Non-critical slides use loading="lazy" for better resource management
 
+### Network Dependency Chain Optimization (January 2025)
+- **Font optimization**: Reduced font weight variations from 9 to 4 weights, added proper preconnect hints
+- **BOG SDK optimization**: Removed blocking preload, added preconnect for faster dynamic loading
+- **API request batching**: Implemented parallel API loading to reduce waterfall effects
+- **Query client enhancement**: Added smart retry logic and offline-first caching strategy
+- **Mobile detection optimization**: Replaced window.innerWidth with matchMedia API to prevent forced reflows
+- **Critical resource hints**: Added content-visibility: auto and font-display: swap for better performance
+
 ## External Dependencies
 
 ### Core
