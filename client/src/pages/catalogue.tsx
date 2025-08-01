@@ -79,7 +79,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
       {/* Fixed Height Image Container */}
       <div className="aspect-square relative overflow-hidden flex-shrink-0">
         <motion.img
-          src={product.imageUrl || "/placeholder-perfume.jpg"}
+          src={product.imageUrl || "/placeholder-perfume.webp"}
           alt={product.name}
           className="w-full h-full object-cover"
           animate={{ 

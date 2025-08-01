@@ -19,6 +19,7 @@ Home page focus: Pure design focus without made-up stories, using product reels 
 - **Animation**: Framer Motion
 - **Design Elements**: Gradient backgrounds, advanced shadow effects, hover animations, rounded product cards, quick add-to-cart buttons.
 - **Home Page**: Features a banner slideshow, "Most Sold" product carousel, auto-moving brand logos carousel, and "New Arrivals" carousel. Carousels utilize proper navigation, smooth motion animations, and display 4 products per slide.
+- **Image Optimization**: All images converted to WebP format with intelligent resizing (hero/banners: 1920px desktop, 768px mobile; products: 500px; icons: 100-300px). Maintains aspect ratios and fast loading.
 
 ### Backend
 - **Runtime**: Node.js with Express.js

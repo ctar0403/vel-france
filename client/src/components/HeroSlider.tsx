@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 
 // Import desktop images
-import desktop1 from '@assets/Desktop-1_1754051373226.png';
-import desktop2 from '@assets/Desktop-2_1754051373227.png';
-import desktop3 from '@assets/Desktop-3_1754051373227.png';
-import desktop4 from '@assets/Desktop-4_1754051373228.png';
-import desktop5 from '@assets/Desktop-5_1754051373228.png';
-import desktop6 from '@assets/Desktop-6_1754051373224.png';
+import desktop1 from '@assets/Desktop-1_1754051373226.webp';
+import desktop2 from '@assets/Desktop-2_1754051373227.webp';
+import desktop3 from '@assets/Desktop-3_1754051373227.webp';
+import desktop4 from '@assets/Desktop-4_1754051373228.webp';
+import desktop5 from '@assets/Desktop-5_1754051373228.webp';
+import desktop6 from '@assets/Desktop-6_1754051373224.webp';
 
 // Import mobile images
-import mobile1 from '@assets/Mobile-1_1754051370153.png';
-import mobile2 from '@assets/Mobile-2_1754051370154.png';
-import mobile3 from '@assets/Mobile-3_1754051370154.png';
-import mobile4 from '@assets/Mobile-4_1754051370154.png';
-import mobile5 from '@assets/Mobile-5_1754051370155.png';
-import mobile6 from '@assets/Mobile-6_1754051370152.png';
+import mobile1 from '@assets/Mobile-1_1754051370153.webp';
+import mobile2 from '@assets/Mobile-2_1754051370154.webp';
+import mobile3 from '@assets/Mobile-3_1754051370154.webp';
+import mobile4 from '@assets/Mobile-4_1754051370154.webp';
+import mobile5 from '@assets/Mobile-5_1754051370155.webp';
+import mobile6 from '@assets/Mobile-6_1754051370152.webp';
 
 interface HeroSliderProps {
   className?: string;

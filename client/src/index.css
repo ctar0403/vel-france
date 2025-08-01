@@ -663,3 +663,32 @@ body {
   background: transparent;
   border: none;
 }
+
+/* WebP Image Optimization - Responsive Handling */
+img[src$=".webp"] {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Product images specific handling */
+.product-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Hero banner images */
+.hero-slider img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ensure no image distortion */
+img {
+  max-width: 100%;
+  height: auto;
+}

@@ -106,7 +106,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
               {/* Product Image */}
               <div className="product-image relative">
                 <img
-                  src={product.imageUrl || '/placeholder-perfume.jpg'}
+                  src={product.imageUrl || '/placeholder-perfume.webp'}
                   alt={formatProductName(product.name, product.brand)}
                   loading="lazy"
                 />

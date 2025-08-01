@@ -26,16 +26,16 @@ import { ShoppingBag, User as UserIcon, Package, ChevronLeft, ChevronRight } fro
 
 
 // Import new brand logos
-import chanelLogo from "@assets/1_1753788502251.png";
-import versaceLogo from "@assets/2_1753788502252.png";
-import diorLogo from "@assets/3_1753788502252.png";
-import gucciLogo from "@assets/4_1753788502253.png";
-import armaneLogo from "@assets/5_1753788502254.png";
-import dgLogo from "@assets/6_1753788502254.png";
-import creedLogo from "@assets/7_1753788502255.png";
-import yslLogo from "@assets/8_1753788502255.png";
-import pradaLogo from "@assets/9_1753788502255.png";
-import claireFontaineLogo from "@assets/10_1753788502256.png";
+import chanelLogo from "@assets/1_1753788502251.webp";
+import versaceLogo from "@assets/2_1753788502252.webp";
+import diorLogo from "@assets/3_1753788502252.webp";
+import gucciLogo from "@assets/4_1753788502253.webp";
+import armaneLogo from "@assets/5_1753788502254.webp";
+import dgLogo from "@assets/6_1753788502254.webp";
+import creedLogo from "@assets/7_1753788502255.webp";
+import yslLogo from "@assets/8_1753788502255.webp";
+import pradaLogo from "@assets/9_1753788502255.webp";
+import claireFontaineLogo from "@assets/10_1753788502256.webp";
 
 // Hook to detect mobile screen size
 const useIsMobile = () => {
@@ -91,7 +91,7 @@ function CarouselProductCard({ product, index, badgeText, badgeColor, onAddToCar
         {/* Fixed Height Image Container */}
         <div className="aspect-square relative overflow-hidden flex-shrink-0">
           <motion.img
-            src={product.imageUrl || "/placeholder-perfume.jpg"}
+            src={product.imageUrl || "/placeholder-perfume.webp"}
             alt={product.name}
             className="w-full h-full object-cover"
             animate={{ 
