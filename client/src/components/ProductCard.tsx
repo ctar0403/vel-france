@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,7 @@ export default function ProductCard({
   isAddingToCart = false,
   showAddToCart = true 
 }: ProductCardProps) {
+  const { t } = useTranslation();
   const getCategoryLabel = (category: string) => {
     switch (category.toLowerCase()) {
       case 'women': 
@@ -59,14 +61,14 @@ export default function ProductCard({
             <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-cream to-gray-100">
               <div className="text-center p-4">
                 <div className="text-6xl mb-2">🍃</div>
-                <div className="text-navy font-roboto text-sm">Image Coming Soon</div>
+                <div className="text-navy font-roboto text-sm">{t('ProductCard.imagecomingsoon', 'Image Coming Soon')}</div>
               </div>
             </div>
           )}
           {!product.inStock && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="destructive" className="text-lg px-4 py-2">
-                Out of Stock
+                {t('ProductCard.outofstock', 'Out of Stock')}
               </Badge>
             </div>
           )}
@@ -86,14 +88,8 @@ export default function ProductCard({
           </div>
           
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {product.shortDescription || product.description}
+            {product.description}
           </p>
-          
-          {product.notes && (
-            <div className="text-xs text-gray-500 mb-4 line-clamp-2">
-              {product.notes}
-            </div>
-          )}
           
           <div className="flex items-center justify-between">
             <span className="text-2xl font-roboto font-bold text-gold">
@@ -114,7 +110,7 @@ export default function ProductCard({
                 ) : (
                   <div className="flex items-center space-x-1">
                     <Plus className="h-4 w-4" />
-                    <span>Add to Cart</span>
+                    <span>{t('ProductCard.addtocart', 'Add to Cart')}</span>
                   </div>
                 )}
               </Button>
@@ -126,7 +122,7 @@ export default function ProductCard({
                 className="border-gold text-navy hover:bg-gold hover:text-navy px-4 py-2 rounded-full text-sm"
                 onClick={() => window.location.href = '/api/login'}
               >
-                Sign In
+                {t('ProductCard.signin', 'Sign In')}
               </Button>
             )}
           </div>

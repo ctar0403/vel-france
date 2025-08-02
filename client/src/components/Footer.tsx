@@ -1,7 +1,9 @@
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import footerLogoImage from "@assets/Your paragraph text (5)_1753895494203.webp";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,7 +15,7 @@ export default function Footer() {
             <Link href="/">
               <img 
                 src={footerLogoImage}
-                alt="Vel France Logo"
+                alt={t('Footer.velfrancelogo', 'Vel France Logo')}
                 className="h-16 mb-4 cursor-pointer hover:opacity-80 transition-opacity"
               />
             </Link>
@@ -22,28 +24,28 @@ export default function Footer() {
               <a 
                 href="#" 
                 className="text-navy hover:text-gold transition-colors"
-                aria-label="Facebook"
+                aria-label={t('Footer.facebook', 'Facebook')}
               >
                 <i className="fab fa-facebook-f text-lg"></i>
               </a>
               <a 
                 href="#" 
                 className="text-navy hover:text-gold transition-colors"
-                aria-label="Instagram"
+                aria-label={t('Footer.instagram', 'Instagram')}
               >
                 <i className="fab fa-instagram text-lg"></i>
               </a>
               <a 
                 href="#" 
                 className="text-navy hover:text-gold transition-colors"
-                aria-label="Twitter"
+                aria-label={t('Footer.twitter', 'Twitter')}
               >
                 <i className="fab fa-twitter text-lg"></i>
               </a>
               <a 
                 href="#" 
                 className="text-navy hover:text-gold transition-colors"
-                aria-label="YouTube"
+                aria-label={t('Footer.youtube', 'YouTube')}
               >
                 <i className="fab fa-youtube text-lg"></i>
               </a>
@@ -52,26 +54,26 @@ export default function Footer() {
           
           {/* Navigation */}
           <div>
-            <h4 className="font-roboto text-lg text-navy mb-4">Navigation</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">{t('Footer.navigation', 'Navigation')}</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Home
+                    {t('Footer.home', 'Home')}
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/catalogue">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Catalogue
+                    {t('Footer.catalogue', 'Catalogue')}
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Contact
+                    {t('Footer.contact', 'Contact')}
                   </span>
                 </Link>
               </li>
@@ -80,19 +82,19 @@ export default function Footer() {
           
           {/* Services */}
           <div>
-            <h4 className="font-roboto text-lg text-navy mb-4">Services</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">{t('Footer.services', 'Services')}</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/delivery">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Delivery
+                    {t('Footer.delivery', 'Delivery')}
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/returns">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Returns
+                    {t('Footer.returns', 'Returns')}
                   </span>
                 </Link>
               </li>
@@ -101,19 +103,19 @@ export default function Footer() {
           
           {/* Legal */}
           <div>
-            <h4 className="font-roboto text-lg text-navy mb-4">Information</h4>
+            <h4 className="font-roboto text-lg text-navy mb-4">{t('Footer.information', 'Information')}</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/privacy">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Privacy Policy
+                    {t('Footer.privacypolicy', 'Privacy Policy')}
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/terms">
                   <span className="text-gray-600 hover:text-gold transition-colors cursor-pointer">
-                    Terms & Conditions
+                    {t('Footer.termsconditions', 'Terms & Conditions')}
                   </span>
                 </Link>
               </li>

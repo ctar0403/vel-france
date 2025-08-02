@@ -199,7 +199,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       {user.profileImageUrl ? (
                         <img 
                           src={user.profileImageUrl} 
-                          alt="Profile" 
+                          alt={t('Header.profile', 'Profile')} 
                           className="w-8 h-8 rounded-full object-cover"
                         />
                       ) : (
@@ -344,7 +344,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         {user.profileImageUrl ? (
                           <img 
                             src={user.profileImageUrl} 
-                            alt="Profile" 
+                            alt={t('Header.profile', 'Profile')} 
                             className="w-10 h-10 rounded-full object-cover"
                           />
                         ) : (
@@ -354,7 +354,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         )}
                         <div>
                           <p className="font-roboto text-navy">
-                            {user.firstName || 'User'}
+                            {user.firstName || t('Header.user', 'User')}
                           </p>
                           <p className="text-sm text-gray-600">{user.email}</p>
                         </div>

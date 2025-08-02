@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -19,6 +20,7 @@ export default function LogoutButton({
   children 
 }: LogoutButtonProps) {
   const { logoutMutation } = useAuth();
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
 
   const handleLogout = async () => {
@@ -42,7 +44,7 @@ export default function LogoutButton({
       disabled={logoutMutation.isPending}
     >
       {showIcon && <LogOut className="h-4 w-4 mr-2" />}
-      {children || (logoutMutation.isPending ? "Logging out..." : "Logout")}
+      {children || (logoutMutation.isPending ? t('LogoutButton.loggingout', 'Logging out...') : t('LogoutButton.logout', 'Logout'))}
     </Button>
   );
 }
