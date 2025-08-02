@@ -80,7 +80,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             <Link href="/">
               <img 
                 src={logoImage}
-                alt="Vel France Logo"
+                alt={t('Header.velfrancelogo', 'Vel France Logo')}
                 className="h-12 sm:h-10 lg:h-12 cursor-pointer"
                 width="120"
                 height="48"
@@ -260,7 +260,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     <button onClick={() => setLocation('/')}>
                       <img 
                         src={logoImage}
-                        alt="Vel France Logo"
+                        alt={t('Header.velfrancelogo', 'Vel France Logo')}
                         className="h-16 cursor-pointer"
                       />
                     </button>

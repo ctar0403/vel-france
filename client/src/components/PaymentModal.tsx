@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,6 +21,7 @@ interface PaymentModalProps {
 
 export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }: PaymentModalProps) {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [shippingForm, setShippingForm] = useState({
     firstName: "",
     lastName: "",
@@ -72,8 +74,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       } else {
         console.error("No paymentUrl in response:", data);
         toast({
-          title: "Payment Error",
-          description: "Unable to redirect to payment page. Please try again.",
+          title: t('PaymentModal.paymenterror', 'Payment Error'),
+          description: t('PaymentModal.unabletoredirect', 'Unable to redirect to payment page. Please try again.'),
           variant: "destructive",
         });
       }
@@ -81,8 +83,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
     onError: (error) => {
       console.error("Payment error:", error);
       toast({
-        title: "Payment Failed",
-        description: "Unable to initiate payment. Please try again.",
+        title: t('PaymentModal.paymentfailed', 'Payment Failed'),
+        description: t('PaymentModal.unabletoinitiate', 'Unable to initiate payment. Please try again.'),
         variant: "destructive",
       });
     },
@@ -97,8 +99,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
     
     if (!isShippingValid) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all shipping information fields.",
+        title: t('PaymentModal.missinginformation', 'Missing Information'),
+        description: t('PaymentModal.fillshipping', 'Please fill in all shipping information fields.'),
         variant: "destructive",
       });
       return;
@@ -108,8 +110,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       const isBillingValid = requiredFields.every(field => billingForm[field as keyof typeof billingForm]);
       if (!isBillingValid) {
         toast({
-          title: "Missing Information", 
-          description: "Please fill in all billing information fields.",
+          title: t('PaymentModal.missinginformation', 'Missing Information'), 
+          description: t('PaymentModal.fillbilling', 'Please fill in all billing information fields.'),
           variant: "destructive",
         });
         return;

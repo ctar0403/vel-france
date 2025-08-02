@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import Header from "@/components/Header";
@@ -34,6 +35,7 @@ import {
 export default function Profile() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -49,8 +51,8 @@ export default function Profile() {
     retry: (failureCount, error) => {
       if (isUnauthorizedError(error as Error)) {
         toast({
-          title: "Session expired",
-          description: "Please log in again to continue.",
+          title: t('auth.sessionexpired', 'Session expired'),
+          description: t('auth.pleaseloginagain', 'Please log in again to continue.'),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -69,8 +71,8 @@ export default function Profile() {
     retry: (failureCount, error) => {
       if (isUnauthorizedError(error as Error)) {
         toast({
-          title: "Session expired",
-          description: "Please log in again to continue.",
+          title: t('auth.sessionexpired', 'Session expired'),
+          description: t('auth.pleaseloginagain', 'Please log in again to continue.'),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -91,13 +93,13 @@ export default function Profile() {
       queryClient.setQueryData(["/api/user"], updatedUser);
       setIsEditing(false);
       toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
+        title: t('profile.profileupdated', 'Profile updated'),
+        description: t('profile.profileupdatedsuccessfully', 'Your profile has been updated successfully.'),
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Update failed",
+        title: t('profile.updatefailed', 'Update failed'),
         description: error.message,
         variant: "destructive",
       });

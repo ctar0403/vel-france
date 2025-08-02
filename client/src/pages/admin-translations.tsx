@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ export default function AdminTranslations() {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingTranslations, setEditingTranslations] = useState<Record<string, string>>({});
   const { toast } = useToast();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { isAuthenticated, isLoading: authLoading } = useAdminAuth();
 
@@ -44,14 +46,14 @@ export default function AdminTranslations() {
       // Force refresh translations in i18n
       await refreshTranslations();
       toast({
-        title: "Success",
-        description: "Translation updated successfully",
+        title: t('AdminTranslations.success', 'Success'),
+        description: t('AdminTranslations.translationupdated', 'Translation updated successfully'),
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
-        description: error.message || "Failed to update translation",
+        title: t('AdminTranslations.error', 'Error'),
+        description: error.message || t('AdminTranslations.failedtoupdate', 'Failed to update translation'),
         variant: "destructive",
       });
     },
@@ -67,14 +69,14 @@ export default function AdminTranslations() {
       // Force refresh translations in i18n
       await refreshTranslations();
       toast({
-        title: "Success",
-        description: "Translations imported successfully",
+        title: t('AdminTranslations.success', 'Success'),
+        description: t('AdminTranslations.translationsimported', 'Translations imported successfully'),
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
-        description: error.message || "Failed to import translations",
+        title: t('AdminTranslations.error', 'Error'),
+        description: error.message || t('AdminTranslations.failedtoimport', 'Failed to import translations'),
         variant: "destructive",
       });
     },
@@ -88,8 +90,8 @@ export default function AdminTranslations() {
       bulkCreateMutation.mutate(scannedTranslations);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load scanned translations",
+        title: t('AdminTranslations.error', 'Error'),
+        description: t('AdminTranslations.failedtoload', 'Failed to load scanned translations'),
         variant: "destructive",
       });
     }
@@ -144,7 +146,7 @@ export default function AdminTranslations() {
     return (
       <div className="container mx-auto p-6">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-lg">Loading translations...</div>
+          <div className="text-lg">{t('AdminTranslations.loading', 'Loading...')}</div>
         </div>
       </div>
     );
@@ -154,16 +156,16 @@ export default function AdminTranslations() {
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Translation Management</h1>
+          <h1 className="text-3xl font-bold">{t('AdminTranslations.managetranslations', 'Manage Translations')}</h1>
           <p className="text-gray-600 mt-2">
-            Manage Georgian translations for all UI text elements
+            {t('AdminTranslations.managegeorgian', 'Manage Georgian translations for all UI text elements')}
           </p>
         </div>
         <Button 
           onClick={handleImportScannedTranslations}
           disabled={bulkCreateMutation.isPending}
         >
-          {bulkCreateMutation.isPending ? "Importing..." : "Import Scanned Translations"}
+          {bulkCreateMutation.isPending ? t('AdminTranslations.importing', 'Importing...') : t('AdminTranslations.importscanned', 'Import Scanned Translations')}
         </Button>
       </div>
 
@@ -173,7 +175,7 @@ export default function AdminTranslations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Keys</p>
+                <p className="text-sm font-medium text-gray-600">{t('AdminTranslations.totalkeys', 'Total Keys')}</p>
                 <p className="text-2xl font-bold">{filteredTranslations.length}</p>
               </div>
               <Badge variant="secondary">{filteredTranslations.length}</Badge>
@@ -184,7 +186,7 @@ export default function AdminTranslations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending</p>
+                <p className="text-sm font-medium text-gray-600">{t('AdminTranslations.pending', 'Pending')}</p>
                 <p className="text-2xl font-bold text-red-600">{pendingTranslations.length}</p>
               </div>
               <Badge variant="destructive">{pendingTranslations.length}</Badge>
@@ -195,7 +197,7 @@ export default function AdminTranslations() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Completed</p>
+                <p className="text-sm font-medium text-gray-600">{t('AdminTranslations.completed', 'Completed')}</p>
                 <p className="text-2xl font-bold text-green-600">{completedTranslations.length}</p>
               </div>
               <Badge variant="default" className="bg-green-600">{completedTranslations.length}</Badge>
@@ -208,7 +210,7 @@ export default function AdminTranslations() {
       <div className="relative">
         <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
         <Input
-          placeholder="Search translations by key, English text, or Georgian text..."
+          placeholder={t('AdminTranslations.searchtranslations', 'Search translations...')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10"
@@ -218,13 +220,13 @@ export default function AdminTranslations() {
       {/* Translation List */}
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">
-          Translations ({filteredTranslations.length})
+          {t('AdminTranslations.translations', 'Translations')} ({filteredTranslations.length})
         </h2>
         
         {filteredTranslations.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
-              <p className="text-gray-500">No translations found. Import scanned translations to get started.</p>
+              <p className="text-gray-500">{t('AdminTranslations.notranslations', 'No translations found')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -237,9 +239,9 @@ export default function AdminTranslations() {
                   </CardTitle>
                   <div className="flex items-center gap-2">
                     {translation.georgianText ? (
-                      <Badge variant="default" className="bg-green-600">Completed</Badge>
+                      <Badge variant="default" className="bg-green-600">{t('AdminTranslations.completed', 'Completed')}</Badge>
                     ) : (
-                      <Badge variant="destructive">Pending</Badge>
+                      <Badge variant="destructive">{t('AdminTranslations.pending', 'Pending')}</Badge>
                     )}
                   </div>
                 </div>
@@ -248,7 +250,7 @@ export default function AdminTranslations() {
                 {/* English Text (Read-only) */}
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-2">
-                    English Text
+{t('AdminTranslations.englishtext', 'English Text')}
                   </label>
                   <div className="p-3 bg-gray-50 rounded-md border">
                     <p className="text-sm">{translation.englishText}</p>
@@ -258,13 +260,13 @@ export default function AdminTranslations() {
                 {/* Georgian Text (Editable) */}
                 <div>
                   <label className="text-sm font-medium text-gray-700 block mb-2">
-                    Georgian Translation
+{t('AdminTranslations.georgiantext', 'Georgian Text')}
                   </label>
                   <div className="flex gap-2">
                     <Textarea
                       value={editingTranslations[translation.key] ?? translation.georgianText}
                       onChange={(e) => handleInputChange(translation.key, e.target.value)}
-                      placeholder="Enter Georgian translation..."
+                      placeholder={t('AdminTranslations.entergeorgian', 'Enter Georgian translation...')}
                       className="flex-1 min-h-[80px]"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                     />
@@ -274,7 +276,7 @@ export default function AdminTranslations() {
                       size="sm"
                       className="self-end"
                     >
-                      {updateTranslationMutation.isPending ? "Saving..." : "Save"}
+                      {updateTranslationMutation.isPending ? t('AdminTranslations.saving', 'Saving...') : t('AdminTranslations.save', 'Save')}
                     </Button>
                   </div>
                 </div>

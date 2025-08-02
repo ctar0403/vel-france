@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import Header from "@/components/Header";
@@ -32,6 +33,7 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function Contact() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Fetch cart items for header
@@ -70,15 +72,15 @@ export default function Contact() {
     },
     onSuccess: () => {
       toast({
-        title: "Message Sent Successfully",
-        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+        title: t('contact.messagesentsuccesfully', 'Message Sent Successfully'),
+        description: t('contact.thankyouforcontacting', 'Thank you for contacting us. We will get back to you within 24 hours.'),
       });
       form.reset();
     },
     onError: (error: any) => {
       toast({
-        title: "Error",
-        description: error.message || "Failed to send message. Please try again.",
+        title: t('common.error', 'Error'),
+        description: error.message || t('contact.failedtosendmessage', 'Failed to send message. Please try again.'),
         variant: "destructive",
       });
     },
@@ -91,20 +93,20 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Phone,
-      title: "Call Us",
+      title: t('contact.callus', 'Call Us'),
       details: ["+995 557 91 51 46"],
       color: "text-green-600",
     },
     {
       icon: Mail,
-      title: "Email Us",
+      title: t('contact.emailus', 'Email Us'),
       details: ["info@velfrance.ge"],
       color: "text-purple-600",
     },
     {
       icon: Clock,
-      title: "Business Hours",
-      details: ["Monday - Sunday: 10AM - 7PM"],
+      title: t('contact.businesshours', 'Business Hours'),
+      details: [t('contact.mondaysunday', 'Monday - Sunday: 10AM - 7PM')],
       color: "text-orange-600",
     },
   ];

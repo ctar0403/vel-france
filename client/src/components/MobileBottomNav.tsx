@@ -1,9 +1,11 @@
 import { Home, Store, ShoppingCart, User, LogIn } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 export function MobileBottomNav() {
   const [location] = useLocation();
+  const { t } = useTranslation();
   
   // Get cart items count
   const { data: cartItems = [] } = useQuery<any[]>({
@@ -21,26 +23,26 @@ export function MobileBottomNav() {
   const navItems = [
     {
       icon: Home,
-      label: 'Home',
+      label: t('MobileBottomNav.home', 'Home'),
       path: '/',
       isActive: location === '/'
     },
     {
       icon: Store,
-      label: 'Store',
+      label: t('MobileBottomNav.store', 'Store'),
       path: '/catalogue',
       isActive: location === '/catalogue' || location.startsWith('/product/')
     },
     {
       icon: ShoppingCart,
-      label: 'Cart',
+      label: t('MobileBottomNav.cart', 'Cart'),
       path: '/cart',
       isActive: location === '/cart',
       badge: cartCount > 0 ? cartCount : null
     },
     {
       icon: isLoggedIn ? User : LogIn,
-      label: 'Account',
+      label: t('MobileBottomNav.account', 'Account'),
       path: isLoggedIn ? '/profile' : '/auth',
       isActive: location === '/profile' || location === '/admin' || location.startsWith('/order/') || location === '/auth'
     }
