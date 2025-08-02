@@ -374,7 +374,7 @@ export class DatabaseStorage implements IStorage {
       
       // Then delete the order
       const result = await db.delete(orders).where(eq(orders.id, orderId));
-      return result.rowCount > 0;
+      return (result.rowCount ?? 0) > 0;
     } catch (error) {
       console.error('Error deleting order:', error);
       return false;
