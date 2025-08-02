@@ -396,7 +396,6 @@ export default function Home() {
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy mb-4 tracking-tight">{t('home.mostSold')}</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-gold to-deep-gold mx-auto mb-6"></div>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">{t('home.heroSubtitle')}</p>
           </motion.div>
 
           <ProductCarousel
