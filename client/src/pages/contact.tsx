@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
 import type { CartItem, Product } from "@shared/schema";
 import { Phone, Mail, Clock, Send, MessageSquare, User } from "lucide-react";
+import { SiFacebook, SiInstagram } from "react-icons/si";
 import { useState } from "react";
 import { usePageMeta } from "@/hooks/usePageTitle";
 
@@ -115,6 +116,27 @@ export default function Contact() {
     },
   ];
 
+  const socialMediaInfo = [
+    {
+      icon: SiFacebook,
+      title: t('contact.facebook', 'Facebook'),
+      details: [t('contact.followonfacebook', 'Follow us for updates')],
+      color: "text-blue-600",
+      link: "https://www.facebook.com/velfrance",
+      bgColor: "bg-blue-50",
+      hoverColor: "hover:bg-blue-100",
+    },
+    {
+      icon: SiInstagram,
+      title: t('contact.instagram', 'Instagram'),
+      details: [t('contact.followoninstagram', 'See our latest collections')],
+      color: "text-pink-600",
+      link: "https://www.instagram.com/velfrance.ge/",
+      bgColor: "bg-pink-50",
+      hoverColor: "hover:bg-pink-100",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream to-white">
       <Header 
@@ -171,6 +193,50 @@ export default function Contact() {
               </motion.div>
             ))}
           </div>
+
+          {/* Social Media Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-16"
+          >
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-navy mb-2">{t('contact.followus', 'Follow Us')}</h3>
+              <p className="text-gray-600">{t('contact.stayconnected', 'Stay connected on social media')}</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-lg mx-auto">
+              {socialMediaInfo.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  className={`block transform transition-all duration-300 hover:scale-105 ${social.hoverColor}`}
+                  data-testid={`link-${social.title.toLowerCase()}`}
+                >
+                  <Card className={`h-full border-0 shadow-lg ${social.bgColor} hover:shadow-xl transition-shadow duration-300`}>
+                    <CardContent className="p-6 text-center">
+                      <div className={`${social.color} mb-4 flex justify-center`}>
+                        <social.icon className="h-10 w-10" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-navy mb-2">{social.title}</h4>
+                      {social.details.map((detail, idx) => (
+                        <p key={idx} className="text-gray-600 text-sm">
+                          {detail}
+                        </p>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
