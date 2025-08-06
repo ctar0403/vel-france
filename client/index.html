@@ -34,7 +34,106 @@
       
       /* Critical resource loading indicators */
       img { content-visibility: auto; }
+      
+      /* Critical CSS for immediate render - prevent layout shifts */
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+      header { position: sticky; top: 0; z-index: 50; background: white; }
+      .grid { display: grid; }
+      .flex { display: flex; }
+      .items-center { align-items: center; }
+      .justify-center { justify-content: center; }
+      .space-x-4 > * + * { margin-left: 1rem; }
+      .space-y-4 > * + * { margin-top: 1rem; }
+      .text-center { text-align: center; }
+      .bg-white { background-color: white; }
+      .rounded { border-radius: 0.25rem; }
+      .shadow { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+      .transition-all { transition: all 0.3s; }
     </style>
+    
+    <!-- Advanced CSS Preload Optimization Script -->
+    <script>
+      // Comprehensive CSS optimization for Lighthouse performance
+      (function() {
+        // Detect and optimize any existing CSS links
+        function optimizeExistingCSS() {
+          var existingLinks = document.querySelectorAll('link[rel="stylesheet"][href*=".css"]');
+          existingLinks.forEach(function(link) {
+            var href = link.href;
+            var newLink = document.createElement('link');
+            newLink.rel = 'preload';
+            newLink.as = 'style';
+            newLink.href = href;
+            newLink.onload = function() { 
+              this.onload = null; 
+              this.rel = 'stylesheet'; 
+            };
+            
+            // Replace original link
+            link.parentNode.insertBefore(newLink, link);
+            link.remove();
+            
+            // Add noscript fallback
+            var noscript = document.createElement('noscript');
+            var fallback = document.createElement('link');
+            fallback.rel = 'stylesheet';
+            fallback.href = href;
+            noscript.appendChild(fallback);
+            document.head.appendChild(noscript);
+          });
+        }
+        
+        // Run immediately for existing links
+        optimizeExistingCSS();
+        
+        // Watch for dynamically added CSS (Vite development)
+        var observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.nodeName === 'LINK' && 
+                  node.rel === 'stylesheet' && 
+                  node.href && 
+                  node.href.includes('.css')) {
+                var href = node.href;
+                var preloadLink = document.createElement('link');
+                preloadLink.rel = 'preload';
+                preloadLink.as = 'style';
+                preloadLink.href = href;
+                preloadLink.onload = function() { 
+                  this.onload = null; 
+                  this.rel = 'stylesheet'; 
+                };
+                
+                // Replace with preload version
+                node.parentNode.insertBefore(preloadLink, node);
+                node.remove();
+                
+                // Add noscript fallback
+                var noscript = document.createElement('noscript');
+                var fallback = document.createElement('link');
+                fallback.rel = 'stylesheet';
+                fallback.href = href;
+                noscript.appendChild(fallback);
+                document.head.appendChild(noscript);
+              }
+            });
+          });
+        });
+        
+        // Start observing
+        observer.observe(document.head, { 
+          childList: true, 
+          subtree: true 
+        });
+        
+        // Cleanup observer after page load
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            observer.disconnect();
+          }, 1000);
+        });
+      })();
+    </script>
     
     <!-- Preconnect to BOG SDK origin for faster loading when needed -->
     <link rel="preconnect" href="https://webstatic.bog.ge" crossorigin>
