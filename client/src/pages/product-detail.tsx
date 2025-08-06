@@ -44,7 +44,7 @@ declare global {
 }
 
 function ProductDetailPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [, params] = useRoute("/product/:id");
   const productId = params?.id;
   const [quantity, setQuantity] = useState(1);
@@ -316,7 +316,6 @@ function ProductDetailPage() {
               <h3 className="text-xl font-semibold text-navy">{t('product.description', 'Description')}</h3>
               <p className="text-navy/80 leading-relaxed">
                 {(() => {
-                  const { i18n } = useTranslation();
                   const currentLang = i18n.language || 'en';
                   const isGeorgian = currentLang === 'ka' || currentLang.startsWith('ka');
                   
