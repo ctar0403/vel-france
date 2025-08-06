@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <Link href="/">
               <img 
                 src={footerLogoImage}
@@ -21,7 +21,7 @@ export default function Footer() {
               />
             </Link>
             
-            <div className="flex space-x-3 mt-4">
+            <div className="flex space-x-3 justify-center">
               <a 
                 href="https://www.facebook.com/velfrance" 
                 target="_blank"
