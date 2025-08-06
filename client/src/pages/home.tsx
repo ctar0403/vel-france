@@ -259,7 +259,17 @@ export default function Home() {
       await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      // Force immediate refetch of cart data for real-time updates
+      queryClient.invalidateQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true,
+        refetchType: 'active'
+      });
+      // Also refetch to ensure immediate UI updates
+      queryClient.refetchQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true
+      });
       toast({
         title: t('success.itemAdded'),
         description: t('cart.itemAdded'),

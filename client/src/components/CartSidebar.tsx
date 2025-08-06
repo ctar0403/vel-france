@@ -26,7 +26,16 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("PUT", `/api/cart/${itemId}`, { quantity });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      // Force immediate refetch for real-time updates
+      queryClient.invalidateQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true,
+        refetchType: 'active'
+      });
+      queryClient.refetchQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true
+      });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
@@ -52,7 +61,16 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("DELETE", `/api/cart/${itemId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      // Force immediate refetch for real-time updates
+      queryClient.invalidateQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true,
+        refetchType: 'active'
+      });
+      queryClient.refetchQueries({ 
+        queryKey: ["/api/cart"],
+        exact: true
+      });
       toast({
         title: t('cart.itemremoved'),
         description: t('cart.itemRemovedDescription'),

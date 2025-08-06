@@ -131,25 +131,49 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   {formatProductName(product.name, product.brand)}
                 </h3>
 
-                <div className="flex flex-col gap-1">
-                  {product.discountPercentage && product.discountPercentage > 0 ? (
-                    <>
-                      <div className="flex items-center gap-2">
-                        <span className="text-base text-gold font-normal">
-                          ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-1">
+                    {product.discountPercentage && product.discountPercentage > 0 ? (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="text-base text-gold font-normal">
+                            ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                          </span>
+                          <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                            -{product.discountPercentage}%
+                          </span>
+                        </div>
+                        <span className="text-sm text-gray-500 line-through">
+                          ₾{parseFloat(product.price.toString()).toFixed(2)}
                         </span>
-                        <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
-                          -{product.discountPercentage}%
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-500 line-through">
+                      </>
+                    ) : (
+                      <span className="text-base text-gold font-normal">
                         ₾{parseFloat(product.price.toString()).toFixed(2)}
                       </span>
-                    </>
-                  ) : (
-                    <span className="text-base text-gold font-normal">
-                      ₾{parseFloat(product.price.toString()).toFixed(2)}
-                    </span>
+                    )}
+                  </div>
+                  
+                  {/* Add to Cart Button */}
+                  {onAddToCart && (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onAddToCart(product.id);
+                      }}
+                      disabled={isAddingToCart}
+                      className="ml-2 bg-navy hover:bg-navy/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105 flex items-center justify-center min-w-[36px] h-9"
+                      title="Add to Cart"
+                    >
+                      {isAddingToCart ? (
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                      )}
+                    </button>
                   )}
                 </div>
               </div>
