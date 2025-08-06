@@ -594,18 +594,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Clear cart after successful payment and send emails
         if (orderStatus === 'completed') {
           const order = await storage.getOrder(externalOrderId);
-          if (order && order.userId) {
-            await storage.clearCart(order.userId);
+          if (order) {
+            // Clear cart for authenticated users
+            if (order.userId) {
+              await storage.clearCart(order.userId);
+            }
             
-            // Send email notifications
+            // Send email notifications for both authenticated and guest orders
             try {
-              const user = await storage.getUser(order.userId);
               const orderWithItems = await storage.getOrderByCode(order.orderCode);
-              if (user && orderWithItems?.orderItems) {
+              if (orderWithItems?.orderItems) {
+                let customerName = 'Guest Customer';
+                let customerEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@velfrance.ge'; // For guest orders, send customer email to admin
+                
+                // For authenticated users, get their info
+                if (order.userId) {
+                  const user = await storage.getUser(order.userId);
+                  if (user) {
+                    customerName = user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email;
+                    customerEmail = user.email;
+                  }
+                }
+                
                 const emailData = {
                   orderId: order.orderCode,
-                  customerName: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email,
-                  customerEmail: user.email,
+                  customerName,
+                  customerEmail,
                   totalAmount: parseFloat(order.total),
                   items: orderWithItems.orderItems.map((item: any) => ({
                     productName: item.product?.name || `Product ${item.productId}`,
@@ -616,11 +630,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   paymentMethod: 'BOG Payment Gateway'
                 };
                 
-                // Send notification to admin and confirmation to customer
-                await Promise.all([
-                  sendOrderNotificationEmail(emailData),
-                  sendOrderConfirmationToCustomer(emailData)
-                ]);
+                // Always send notification to admin
+                console.log('Sending order notification emails for order:', order.orderCode, '(User ID:', order.userId || 'Guest', ')');
+                const adminEmailResult = await sendOrderNotificationEmail(emailData);
+                console.log('Admin email sent:', adminEmailResult);
+                
+                // Send confirmation to customer only for authenticated users
+                if (order.userId && customerEmail !== (process.env.ADMIN_EMAIL || process.env.EMAIL_USER)) {
+                  const customerEmailResult = await sendOrderConfirmationToCustomer(emailData);
+                  console.log('Customer email sent:', customerEmailResult);
+                } else {
+                  console.log('Guest order - customer confirmation email skipped');
+                }
               }
             } catch (emailError) {
               console.error('Failed to send order emails:', emailError);
@@ -657,18 +678,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Clear user's cart after successful payment and send emails
       const order = await storage.getOrder(orderId as string);
-      if (order && order.userId) {
-        await storage.clearCart(order.userId);
+      if (order) {
+        // Clear cart for authenticated users
+        if (order.userId) {
+          await storage.clearCart(order.userId);
+        }
         
-        // Send email notifications
+        // Send email notifications for both authenticated and guest orders
         try {
-          const user = await storage.getUser(order.userId);
           const orderWithItems = await storage.getOrderByCode(order.orderCode);
-          if (user && orderWithItems?.orderItems) {
+          if (orderWithItems?.orderItems) {
+            let customerName = 'Guest Customer';
+            let customerEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@velfrance.ge'; // For guest orders, send customer email to admin
+            
+            // For authenticated users, get their info
+            if (order.userId) {
+              const user = await storage.getUser(order.userId);
+              if (user) {
+                customerName = user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email;
+                customerEmail = user.email;
+              }
+            }
+            
             const emailData = {
               orderId: order.orderCode,
-              customerName: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : user.email,
-              customerEmail: user.email,
+              customerName,
+              customerEmail,
               totalAmount: parseFloat(order.total),
               items: orderWithItems.orderItems.map((item: any) => ({
                 productName: item.product?.name || `Product ${item.productId}`,
@@ -679,11 +714,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
               paymentMethod: 'BOG Payment Gateway'
             };
             
-            // Send notification to admin and confirmation to customer
-            await Promise.all([
-              sendOrderNotificationEmail(emailData),
-              sendOrderConfirmationToCustomer(emailData)
-            ]);
+            // Always send notification to admin
+            console.log('Sending order notification emails for order:', order.orderCode, '(User ID:', order.userId || 'Guest', ')');
+            const adminEmailResult = await sendOrderNotificationEmail(emailData);
+            console.log('Admin email sent:', adminEmailResult);
+            
+            // Send confirmation to customer only for authenticated users
+            if (order.userId && customerEmail !== (process.env.ADMIN_EMAIL || process.env.EMAIL_USER)) {
+              const customerEmailResult = await sendOrderConfirmationToCustomer(emailData);
+              console.log('Customer email sent:', customerEmailResult);
+            } else {
+              console.log('Guest order - customer confirmation email skipped');
+            }
           }
         } catch (emailError) {
           console.error('Failed to send order emails:', emailError);

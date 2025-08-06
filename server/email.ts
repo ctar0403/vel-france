@@ -42,6 +42,8 @@ interface OrderEmailData {
 
 export async function sendOrderNotificationEmail(orderData: OrderEmailData): Promise<boolean> {
   try {
+    console.log('sendOrderNotificationEmail called for order:', orderData.orderId);
+    
     // Skip email sending if credentials are not configured
     const emailProvider = process.env.EMAIL_PROVIDER || 'gmail';
     const passwordField = emailProvider === 'outlook' || emailProvider === 'hotmail' ? 'EMAIL_PASSWORD' : 'EMAIL_APP_PASSWORD';
@@ -51,6 +53,8 @@ export async function sendOrderNotificationEmail(orderData: OrderEmailData): Pro
       console.log(`Email credentials not configured for ${emailProvider}, skipping email notification`);
       return true; // Return true to not break the order flow
     }
+    
+    console.log('Email credentials verified, proceeding with sending...');
 
     const transporter = createTransporter();
     
@@ -105,6 +109,8 @@ export async function sendOrderNotificationEmail(orderData: OrderEmailData): Pro
 
 export async function sendOrderConfirmationToCustomer(orderData: OrderEmailData): Promise<boolean> {
   try {
+    console.log('sendOrderConfirmationToCustomer called for order:', orderData.orderId);
+    
     const emailProvider = process.env.EMAIL_PROVIDER || 'gmail';
     const requiredPassword = emailProvider === 'outlook' || emailProvider === 'hotmail' ? process.env.EMAIL_PASSWORD : process.env.EMAIL_APP_PASSWORD;
     
@@ -112,6 +118,8 @@ export async function sendOrderConfirmationToCustomer(orderData: OrderEmailData)
       console.log(`Email credentials not configured for ${emailProvider}, skipping customer confirmation email`);
       return true;
     }
+    
+    console.log('Customer email credentials verified, proceeding with sending...');
 
     const transporter = createTransporter();
     
