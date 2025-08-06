@@ -160,6 +160,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        console.log('ProductCarousel: Add to cart clicked for product:', product.id);
                         onAddToCart(product.id);
                       }}
                       disabled={isAddingToCart}

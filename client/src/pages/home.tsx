@@ -438,7 +438,10 @@ export default function Home() {
             showBadges={true}
             badgeText={(index) => `#${index + 1} ${t('home.bestseller')}`}
             badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            onAddToCart={(productId) => {
+              console.log('Home: onAddToCart callback called with:', productId);
+              addToCartMutation.mutate(productId);
+            }}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>
@@ -533,7 +536,10 @@ export default function Home() {
             showBadges={true}
             badgeText={() => t('product.newArrival')}
             badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            onAddToCart={(productId) => {
+              console.log('Home: onAddToCart callback called with:', productId);
+              addToCartMutation.mutate(productId);
+            }}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>
