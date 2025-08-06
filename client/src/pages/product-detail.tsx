@@ -425,7 +425,7 @@ function ProductDetailPage() {
                           <img src={bankLogo} alt="Bank Transfer" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <img src={bogLogo2} alt="Bank of Georgia" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
-                        <span className="text-xs text-slate-500">{t('product.instant', 'Instant')}</span>
+                        
                       </div>
                     </div>
                   </div>

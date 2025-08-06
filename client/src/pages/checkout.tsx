@@ -486,10 +486,7 @@ export default function CheckoutPage() {
                     <div className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
                       <div className="flex items-center justify-between mb-2 sm:mb-3">
                         <span className="text-xs font-medium text-slate-600">{t('checkout.acceptedmethods', 'ACCEPTED METHODS')}</span>
-                        <div className="flex items-center space-x-1">
-                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-xs text-green-600 font-medium">{t('checkout.secure', 'SECURE')}</span>
-                        </div>
+                        
                       </div>
                       
                       <div className="flex items-center justify-between">
@@ -504,7 +501,7 @@ export default function CheckoutPage() {
                           <img src={bankLogo} alt="Bank Transfer" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <img src={bogLogo2} alt="Bank of Georgia" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
-                        <span className="text-xs text-slate-500 ml-2">{t('checkout.instant', 'Instant')}</span>
+                        
                       </div>
                     </div>
                   </div>

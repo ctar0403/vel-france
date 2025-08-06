@@ -8,6 +8,7 @@ Preferred communication style: Simple, everyday language.
 Order code format: 6-digit numbers only (no letters).
 Design requirements: Very modern and advanced design aesthetic with animations.
 Home page focus: Pure design focus without made-up stories, using product reels for categories like "Most Popular", "Most Sold", etc.
+Font preference: AlkSanet Georgian font applied site-wide to all text elements (both Georgian and English).
 
 ## System Architecture
 

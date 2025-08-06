@@ -702,22 +702,17 @@ body {
   border: none;
 }
 
-/* Georgian Font Application - Only for Georgian Language */
-:root[data-language="ka"] *,
-:root[data-language="ka-GE"] *,
-html[lang="ka"] *,
-html[lang="ka-GE"] *,
-body[data-language="ka"] *,
-body[data-language="ka-GE"] * {
+/* AlkSanet Font Application - Entire Website */
+* {
   font-family: 'AlkSanet', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
 }
 
-/* Ensure English text keeps original fonts */
-:root[data-language="en"] *,
-:root[data-language="en-US"] *,
-html[lang="en"] *,
-html[lang="en-US"] *,
-body[data-language="en"] *,
-body[data-language="en-US"] * {
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+/* Apply to all common elements */
+body,
+html,
+h1, h2, h3, h4, h5, h6,
+p, span, div, a, button,
+input, textarea, select,
+label, li, td, th {
+  font-family: 'AlkSanet', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
 }
