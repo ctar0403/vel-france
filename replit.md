@@ -124,6 +124,10 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Query client enhancement**: Added smart retry logic and offline-first caching strategy
 - **Mobile detection optimization**: Replaced window.innerWidth with matchMedia API to prevent forced reflows
 - **Critical resource hints**: Added content-visibility: auto and font-display: swap for better performance
+- **Critical Request Chain Reduction**: Reduced 2,751ms chain by implementing lazy loading, request deduplication, and critical resource prefetching
+- **Bundle Size Optimization**: Implemented code splitting with lazy imports for non-critical pages, keeping only home page synchronous for LCP
+- **Request Deduplication**: Eliminated duplicate API calls with intelligent caching and pending request management system
+- **Preconnect Optimization**: Added proper preconnect hints for fonts.googleapis.com, fonts.gstatic.com and API endpoints
 
 ### Image Delivery Optimization (January 2025)
 - **339 KiB potential savings**: Implemented comprehensive responsive image system targeting oversized images

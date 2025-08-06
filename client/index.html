@@ -31,9 +31,14 @@
     <link rel="preload" href="/src/assets/197380_1754501720841.png" as="image">
     <link rel="preload" href="/src/assets/United-kingdom_flag_icon_round.svg_1754501741206.png" as="image">
     
-    <!-- DNS prefetch for external resources -->
+    <!-- Preconnect for critical third-party resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Preconnect for API requests to reduce latency -->
+    <link rel="preconnect" href="/" crossorigin>
     
     <!-- Critical CSS inline optimization with resource hints -->
     <style>
@@ -210,15 +215,30 @@
           img.decoding = 'sync';
         }
 
+        // Aggressive resource prefetching for critical API endpoints
+        function prefetchCriticalAPI() {
+          const criticalEndpoints = ['/api/translations', '/api/products'];
+          criticalEndpoints.forEach(function(endpoint) {
+            var link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = endpoint;
+            link.as = 'fetch';
+            link.crossOrigin = 'same-origin';
+            document.head.appendChild(link);
+          });
+        }
+
         // Initialize optimizations
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', function() {
             optimizeFonts();
             preloadCritical();
+            prefetchCriticalAPI();
           });
         } else {
           optimizeFonts();
           preloadCritical();
+          prefetchCriticalAPI();
         }
 
         // Load Replit dev banner asynchronously
