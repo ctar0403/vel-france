@@ -136,9 +136,9 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-navy mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-navy mb-4">{t('contact.getintouch', 'Get In Touch')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Multiple ways to reach us. Choose what works best for you.
+              {t('contact.multipleways', 'Multiple ways to reach us. Choose what works best for you.')}
             </p>
           </motion.div>
 
@@ -185,7 +185,7 @@ export default function Contact() {
                 <CardHeader className="bg-gradient-to-r from-navy to-deep-navy text-white rounded-t-lg">
                   <CardTitle className="tracking-tight text-2xl font-bold flex items-center gap-3 text-[#000000]">
                     <MessageSquare className="h-6 w-6" />
-                    Send Us a Message
+                    {t('contact.sendusamessage', 'Send Us a Message')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-8">
@@ -197,11 +197,11 @@ export default function Contact() {
                           name="name"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-navy font-semibold">Full Name *</FormLabel>
+                              <FormLabel className="text-navy font-semibold">{t('contact.fullname', 'Full Name')} *</FormLabel>
                               <FormControl>
                                 <Input
                                   {...field}
-                                  placeholder="Enter your full name"
+                                  placeholder={t('contact.enteryourfullname', 'Enter your full name')}
                                   className="border-gray-300 focus:border-gold focus:ring-gold"
                                 />
                               </FormControl>
@@ -214,12 +214,12 @@ export default function Contact() {
                           name="email"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-navy font-semibold">Email Address *</FormLabel>
+                              <FormLabel className="text-navy font-semibold">{t('contact.emailaddress', 'Email Address')} *</FormLabel>
                               <FormControl>
                                 <Input
                                   {...field}
                                   type="email"
-                                  placeholder="Enter your email"
+                                  placeholder={t('contact.enteryouremail', 'Enter your email')}
                                   className="border-gray-300 focus:border-gold focus:ring-gold"
                                 />
                               </FormControl>
@@ -235,11 +235,11 @@ export default function Contact() {
                           name="phone"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-navy font-semibold">Phone Number</FormLabel>
+                              <FormLabel className="text-navy font-semibold">{t('contact.phonenumber', 'Phone Number')}</FormLabel>
                               <FormControl>
                                 <Input
                                   {...field}
-                                  placeholder="Enter your phone number"
+                                  placeholder={t('contact.enteryourphonenumber', 'Enter your phone number')}
                                   className="border-gray-300 focus:border-gold focus:ring-gold"
                                 />
                               </FormControl>
@@ -252,20 +252,20 @@ export default function Contact() {
                           name="category"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-navy font-semibold">Category *</FormLabel>
+                              <FormLabel className="text-navy font-semibold">{t('contact.category', 'Category')} *</FormLabel>
                               <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                   <SelectTrigger className="border-gray-300 focus:border-gold focus:ring-gold">
-                                    <SelectValue placeholder="Select category" />
+                                    <SelectValue placeholder={t('contact.selectcategory', 'Select category')} />
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  <SelectItem value="general">General Inquiry</SelectItem>
-                                  <SelectItem value="product">Product Question</SelectItem>
-                                  <SelectItem value="order">Order Support</SelectItem>
-                                  <SelectItem value="shipping">Shipping & Returns</SelectItem>
-                                  <SelectItem value="partnership">Partnership</SelectItem>
-                                  <SelectItem value="other">Other</SelectItem>
+                                  <SelectItem value="general">{t('contact.generalinquiry', 'General Inquiry')}</SelectItem>
+                                  <SelectItem value="product">{t('contact.productquestion', 'Product Question')}</SelectItem>
+                                  <SelectItem value="order">{t('contact.ordersupport', 'Order Support')}</SelectItem>
+                                  <SelectItem value="shipping">{t('contact.shippingreturns', 'Shipping & Returns')}</SelectItem>
+                                  <SelectItem value="partnership">{t('contact.partnership', 'Partnership')}</SelectItem>
+                                  <SelectItem value="other">{t('contact.other', 'Other')}</SelectItem>
                                 </SelectContent>
                               </Select>
                               <FormMessage />
@@ -279,11 +279,11 @@ export default function Contact() {
                         name="subject"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-navy font-semibold">Subject *</FormLabel>
+                            <FormLabel className="text-navy font-semibold">{t('contact.subject', 'Subject')} *</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
-                                placeholder="Enter message subject"
+                                placeholder={t('contact.entermessagesubject', 'Enter message subject')}
                                 className="border-gray-300 focus:border-gold focus:ring-gold"
                               />
                             </FormControl>
@@ -297,11 +297,11 @@ export default function Contact() {
                         name="message"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-navy font-semibold">Message *</FormLabel>
+                            <FormLabel className="text-navy font-semibold">{t('contact.message', 'Message')} *</FormLabel>
                             <FormControl>
                               <Textarea
                                 {...field}
-                                placeholder="Tell us how we can help you..."
+                                placeholder={t('contact.tellushowwecanhelp', 'Tell us how we can help you...')}
                                 rows={5}
                                 className="border-gray-300 focus:border-gold focus:ring-gold resize-none"
                               />
@@ -317,7 +317,7 @@ export default function Contact() {
                         className="w-full bg-gradient-to-r from-gold to-deep-gold hover:from-deep-gold hover:to-gold font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 text-[#000000]"
                       >
                         <Send className="w-5 h-5 mr-2" />
-                        {contactMutation.isPending ? "Sending..." : "Send Message"}
+                        {contactMutation.isPending ? t('contact.sending', 'Sending...') : t('contact.sendmessage', 'Send Message')}
                       </Button>
                     </form>
                   </Form>
@@ -334,7 +334,7 @@ export default function Contact() {
               className="space-y-8"
             >
               <div>
-                <h3 className="text-3xl font-bold text-navy mb-6">Why Choose Vel France?</h3>
+                <h3 className="text-3xl font-bold text-navy mb-6">{t('contact.whychoosevelfrance', 'Why Choose Vel France?')}</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="bg-gold/20 p-2 rounded-lg">
@@ -347,9 +347,9 @@ export default function Contact() {
                       <Mail className="h-5 w-5 text-gold" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-navy mb-1">Fast Response</h4>
+                      <h4 className="font-semibold text-navy mb-1">{t('contact.fastresponse', 'Fast Response')}</h4>
                       <p className="text-gray-600 text-sm">
-                        We respond to all inquiries within 24 hours, usually much faster.
+                        {t('contact.respondwithin24hours', 'We respond to all inquiries within 24 hours, usually much faster.')}
                       </p>
                     </div>
                   </div>
@@ -358,9 +358,9 @@ export default function Contact() {
                       <Phone className="h-5 w-5 text-gold" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-navy mb-1">Multiple Channels</h4>
+                      <h4 className="font-semibold text-navy mb-1">{t('contact.multiplechannels', 'Multiple Channels')}</h4>
                       <p className="text-gray-600 text-sm">
-                        Reach us via phone, email.
+                        {t('contact.reachusviaphoneemail', 'Reach us via phone, email.')}
                       </p>
                     </div>
                   </div>
