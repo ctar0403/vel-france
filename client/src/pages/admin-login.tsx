@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,45 +7,50 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { Shield, Lock } from "lucide-react";
 import logoImage from "@assets/1_1753538677596.webp";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const [credentials, setCredentials] = useState({ username: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { isAuthenticated, login, isLoginPending, loginError } = useAdminAuth();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      setLocation("/admin-panel");
+    }
+  }, [isAuthenticated, setLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
+    
     try {
-      // Check hardcoded admin credentials
-      if (credentials.username === "giorgi" && credentials.password === "random12") {
-        // Set admin session flag
-        sessionStorage.setItem("adminAuthenticated", "true");
-        
-        toast({
-          title: "Admin login successful",
-          description: "Welcome to the admin panel",
-        });
-        
-        // Redirect to admin panel
-        setLocation("/admin-panel");
-      } else {
-        toast({
-          title: "Invalid credentials",
-          description: "Please check your username and password",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Login failed",
-        description: "An error occurred during login",
-        variant: "destructive",
+      await new Promise<void>((resolve, reject) => {
+        login(
+          { username: credentials.username, password: credentials.password },
+          {
+            onSuccess: () => {
+              toast({
+                title: "Admin login successful",
+                description: "Welcome to the admin panel",
+              });
+              setLocation("/admin-panel");
+              resolve();
+            },
+            onError: (error: any) => {
+              toast({
+                title: "Invalid credentials",
+                description: error?.message || "Please check your username and password",
+                variant: "destructive",
+              });
+              reject(error);
+            }
+          }
+        );
       });
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error("Login error:", error);
     }
   };
 
@@ -114,9 +119,9 @@ export default function AdminLogin() {
               <Button
                 type="submit"
                 className="w-full bg-gold hover:bg-gold/90 text-navy font-medium"
-                disabled={isLoading}
+                disabled={isLoginPending}
               >
-                {isLoading ? "Authenticating..." : "Access Admin Panel"}
+                {isLoginPending ? "Authenticating..." : "Access Admin Panel"}
               </Button>
             </form>
 
