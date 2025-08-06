@@ -24,7 +24,7 @@
 /* Prevent layout shift on dropdown */
 [data-radix-popper-content-wrapper] {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 9998 !important;
 }
 
 /* Ensure header doesn't cause layout shift */
@@ -37,7 +37,7 @@ header {
 /* Fix dropdown positioning */
 [data-radix-dropdown-menu-content] {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 9998 !important;
 }
 
 /* Prevent body overflow and maintain layout stability */
