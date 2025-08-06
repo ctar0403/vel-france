@@ -315,7 +315,7 @@ export default function Admin() {
   });
 
   // Fetch orders for admin
-  const { data: orders = [], isLoading: ordersLoading } = useQuery({
+  const { data: orders = [], isLoading: ordersLoading } = useQuery<any[]>({
     queryKey: ["/api/admin/orders"],
     enabled: isAuthenticated,
   });
@@ -649,7 +649,7 @@ export default function Admin() {
     }
   };
 
-  if (isLoading) {
+  if (productsLoading || ordersLoading) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-navy font-roboto">Loading admin panel...</div>
