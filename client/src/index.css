@@ -1,27 +1,164 @@
-/* Performance-optimized CSS - non-critical styles loaded after render */
-
-/* Import Tailwind with layer optimizations */
 @import 'tailwindcss/base';
-@import 'tailwindcss/components';
+@import 'tailwindcss/components'; 
 @import 'tailwindcss/utilities';
 
-/* Critical styles already inlined in HTML, this contains non-critical enhancements */
+/* AlkSanet font for the whole website */
+@font-face {
+  font-family: 'AlkSanet';
+  src: url('/assets/alk-sanet_1754502110450.ttf') format('truetype');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
 
-/* Non-critical animations and effects */
-.performance-optimized .floating-particle {
+* {
+  font-family: 'AlkSanet', 'Roboto', sans-serif !important;
+}
+
+/* Global styles */
+body {
+  background: linear-gradient(135deg, #faf7f0 0%, #ffffff 50%, #f5e6e8 100%);
+  font-family: 'AlkSanet', 'Roboto', sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Header styles */
+.header {
+  position: relative;
+  z-index: 50;
+  background: white;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Logo text */
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  text-decoration: none;
+  font-family: 'AlkSanet', 'Roboto', sans-serif !important;
+  letter-spacing: -0.025em;
+}
+
+/* Button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Flex utilities */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-4 { gap: 1rem; }
+
+/* Loading states */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: 1.125rem;
+  color: #6b7280;
+}
+
+/* Hero section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+/* Carousel styles */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+.carousel-slide {
   will-change: transform;
   transform: translateZ(0);
 }
 
-.performance-optimized .brand-logo {
+.hero-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Brand logo styles */
+.brand-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.performance-optimized .brand-logo:hover {
+.brand-logo:hover {
   transform: scale(1.1);
 }
 
-/* Non-critical skeleton loading */
+/* Performance optimizations */
+.performance-critical {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Aspect ratios */
+.aspect-video { aspect-ratio: 16/9; }
+.aspect-square { aspect-ratio: 1/1; }
+
+/* Product card styles */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading skeleton */
 .skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
@@ -33,69 +170,7 @@
   100% { background-position: -200% 0; }
 }
 
-/* Enhanced hero section styles - non-critical */
-.hero-section {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: #f8f9fa;
-}
-
-.hero-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Enhanced carousel animations */
-.carousel-slide {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Logo text enhancements */
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
-  text-decoration: none;
-  font-family: 'AlkSanet', 'Roboto', sans-serif !important;
-  font-display: swap;
-  letter-spacing: -0.025em;
-}
-
-/* Optimize all text rendering */
-* {
-  text-rendering: optimizeSpeed;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Performance optimizations for scrolling */
-.scroll-smooth {
-  scroll-behavior: smooth;
-}
-
-/* Enhanced button hover effects */
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-}
-
-/* Product card enhancements */
-.product-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* Enhanced loading states */
+/* Loading spinner */
 .loading-spinner {
   animation: spin 1s linear infinite;
 }
@@ -110,8 +185,62 @@
   contain: layout style paint;
 }
 
-/* Intersection observer optimizations */
 .lazy-content {
   content-visibility: auto;
   contain-intrinsic-size: 0 400px;
+}
+
+/* Floating particles optimization */
+.floating-particle {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Text rendering optimization */
+* {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .nav { 
+    padding: 0.75rem 1rem; 
+  }
+  .container { 
+    padding: 0 0.75rem; 
+  }
+}
+
+/* Image optimization */
+img {
+  content-visibility: auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Scroll behavior */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Performance optimization class */
+.performance-optimized .floating-particle {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.performance-optimized .brand-logo {
+  transition: transform 0.3s ease;
+}
+
+.performance-optimized .brand-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Focus on keeping the render blocking optimization in HTML while restoring full CSS */
+.critical-path-optimized {
+  contain: layout style paint;
 }

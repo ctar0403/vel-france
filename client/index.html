@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Async load Google Fonts with improved performance -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" media="print">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"></noscript>
     
     <!-- Preload critical font file -->
@@ -184,39 +184,36 @@
       }
     </style>
     
-    <!-- CSS Loading Optimization Script -->
+    <!-- CSS Optimization for Render Blocking -->
+    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" media="print">
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
+    
+    <!-- Performance optimization script -->
     <script>
-      // Optimize CSS loading to prevent render blocking
+      // Optimize CSS loading and add performance classes
       (function() {
-        // Preload critical fonts early
-        if (!document.querySelector('[href*="alk-sanet"]')) {
-          const fontLink = document.createElement('link');
-          fontLink.rel = 'preload';
-          fontLink.as = 'font';
-          fontLink.type = 'font/ttf';
-          fontLink.crossOrigin = 'anonymous';
-          fontLink.href = '/assets/alk-sanet_1754502110450.ttf';
-          document.head.appendChild(fontLink);
+        // Fix font loading issue
+        const fontLink = document.querySelector('[href*="Roboto"]');
+        if (fontLink) {
+          fontLink.media = 'all';
         }
         
-        // Defer heavy animations and non-critical styles
-        function deferNonCritical() {
-          // Add performance optimization class to body
-          document.body.classList.add('performance-optimized');
-          
-          // Enable content-visibility for images
-          const images = document.querySelectorAll('img');
-          images.forEach(img => {
-            img.style.contentVisibility = 'auto';
-            img.style.containIntrinsicSize = '300px 200px';
-          });
+        // Fix main CSS loading
+        const cssLink = document.querySelector('[href*="index.css"]');
+        if (cssLink) {
+          cssLink.media = 'all';
         }
         
-        // Run after initial paint
+        // Add performance optimization class to body after load
+        function addPerformanceClass() {
+          document.body.classList.add('performance-optimized', 'critical-path-optimized');
+        }
+        
+        // Run after DOM is ready
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', deferNonCritical);
+          document.addEventListener('DOMContentLoaded', addPerformanceClass);
         } else {
-          deferNonCritical();
+          addPerformanceClass();
         }
       })();
     </script>
