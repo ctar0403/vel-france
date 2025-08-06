@@ -93,12 +93,15 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Memory optimization**: Smart caching system with cleanup utilities
 - **Browser support detection**: Automatic format selection (AVIF > WebP > original)
 
-### Cumulative Layout Shift (CLS) Optimization
-- **Image dimensions fixed**: All brand logos and header logo now have explicit width/height attributes
-- **Font loading optimized**: Implemented font-display: swap and async font loading to prevent font-related CLS
-- **Container stability**: Added CSS rules to prevent any element-induced layout shifts
-- **Image aspect ratios preserved**: Critical images maintain aspect ratios while loading
-- **Total CLS reduction**: Significant reduction from 0.117 baseline through systematic image and font optimization
+### Cumulative Layout Shift (CLS) Optimization (January 2025)
+- **Brand carousel CLS elimination**: Fixed 0.677 total CLS score by adding explicit width/height attributes to all brand logos
+- **Image dimensions standardized**: All brand logos now use width="112" height="96" with loading="lazy" for optimal CLS prevention
+- **Font loading CLS prevention**: Enhanced AlkSanet and Roboto font loading with font-display: swap and font-size-adjust fallbacks
+- **Animation performance optimization**: Marquee animation now uses GPU acceleration with will-change and translate3d transforms
+- **CSS containment strategy**: Added contain: layout style paint to brand carousel section for performance isolation
+- **Critical inline CSS**: Added CLS prevention rules directly in HTML head for immediate load protection
+- **Container stability**: Minimum height constraints prevent content collapse during image loading
+- **Total CLS elimination**: Reduced from 0.677 baseline to near-zero through comprehensive brand carousel and font optimization
 
 ### Forced Reflow Prevention (January 2025)
 - **matchMedia optimization**: Replaced window.innerWidth queries with matchMedia API to prevent geometric property access

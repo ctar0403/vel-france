@@ -5,7 +5,8 @@
   src: url('@assets/alk-sanet_1754502110450.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: swap; /* Prevents CLS during font loading */
+  font-size-adjust: 0.5; /* Fallback font size adjustment */
 }
 
 @tailwind base;
@@ -69,10 +70,82 @@ img[width][height] {
   height: auto;
 }
 
-/* Brand carousel image containers - prevent CLS */
+/* Brand carousel CLS prevention - comprehensive optimization */
 .flex-shrink-0 img {
   display: block;
   object-fit: contain;
+}
+
+/* Marquee animation with GPU acceleration and CLS prevention */
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+  will-change: transform; /* GPU acceleration */
+  transform: translate3d(0, 0, 0); /* Force hardware acceleration */
+}
+
+/* Marquee keyframes optimized for performance */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Brand carousel section stability */
+section.py-16.bg-navy {
+  contain: layout style paint; /* CSS containment for performance */
+  height: auto;
+  min-height: 128px; /* Prevent height collapse during image loading */
+}
+
+/* Brand logo container stability */
+.brand-carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+/* Additional CLS prevention for all text elements */
+* {
+  font-variant-ligatures: none; /* Prevent ligature-based layout shifts */
+}
+
+/* Prevent font-loading CLS */
+body {
+  font-family: 'AlkSanet', 'Roboto', 'Arial', sans-serif;
+  font-optical-sizing: auto;
+  text-rendering: optimizeSpeed; /* Faster text rendering */
+}
+
+/* AlkSanet font fallback chain for CLS prevention */
+.font-alkSanet {
+  font-family: 'AlkSanet', 'Roboto', 'Arial', sans-serif;
+  font-size-adjust: 0.5;
+}
+
+/* Roboto font fallback for system font stability */
+.font-roboto {
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size-adjust: 0.5;
+}
+
+/* Critical section height preservation */
+section {
+  min-height: fit-content;
+  contain: layout;
+}
+
+/* Prevent any unexpected layout shifts from image loading */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
 }
 
 /* Fix flex shrinking issues */

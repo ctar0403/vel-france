@@ -417,68 +417,208 @@ export default function Home() {
       <section className="py-16 bg-navy overflow-hidden">
         <div className="relative">
           <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
-            {/* First set of brand logos - CLS optimized with container sizing */}
+            {/* First set of brand logos - CLS prevention with explicit dimensions */}
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={chanelLogo} alt="Chanel" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={chanelLogo} 
+                alt="Chanel" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={versaceLogo} alt="Versace" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={versaceLogo} 
+                alt="Versace" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={diorLogo} alt="Dior" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={diorLogo} 
+                alt="Dior" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={gucciLogo} alt="Gucci" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={gucciLogo} 
+                alt="Gucci" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={armaneLogo} alt="Armane" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={armaneLogo} 
+                alt="Armane" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={dgLogo} 
+                alt="Dolce & Gabbana" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={creedLogo} alt="Creed" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={creedLogo} 
+                alt="Creed" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={yslLogo} alt="YSL" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={yslLogo} 
+                alt="YSL" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={pradaLogo} alt="Prada" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={pradaLogo} 
+                alt="Prada" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={claireFontaineLogo} 
+                alt="Claire Fontaine" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             
-            {/* Duplicate set for seamless loop - CLS optimized with container sizing */}
+            {/* Duplicate set for seamless loop - CLS prevention with explicit dimensions */}
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={chanelLogo} alt="Chanel" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={chanelLogo} 
+                alt="Chanel" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={versaceLogo} alt="Versace" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={versaceLogo} 
+                alt="Versace" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={diorLogo} alt="Dior" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={diorLogo} 
+                alt="Dior" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={gucciLogo} alt="Gucci" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={gucciLogo} 
+                alt="Gucci" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={armaneLogo} alt="Armane" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={armaneLogo} 
+                alt="Armane" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={dgLogo} alt="Dolce & Gabbana" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={dgLogo} 
+                alt="Dolce & Gabbana" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={creedLogo} alt="Creed" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={creedLogo} 
+                alt="Creed" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={yslLogo} alt="YSL" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={yslLogo} 
+                alt="YSL" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={pradaLogo} alt="Prada" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={pradaLogo} 
+                alt="Prada" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={claireFontaineLogo} alt="Claire Fontaine" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img 
+                src={claireFontaineLogo} 
+                alt="Claire Fontaine" 
+                className="h-full w-full object-contain hover:scale-105 transition-transform duration-300"
+                width="112"
+                height="96"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
