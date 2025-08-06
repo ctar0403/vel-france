@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRoute } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Minus, Plus, Shield, Truck, RotateCcw, Loader2 } from "lucide-react";
@@ -43,6 +44,7 @@ declare global {
 }
 
 function ProductDetailPage() {
+  const { t } = useTranslation();
   const [, params] = useRoute("/product/:id");
   const productId = params?.id;
   const [quantity, setQuantity] = useState(1);
@@ -78,13 +80,13 @@ function ProductDetailPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({ 
-        title: "Added to cart", 
-        description: `${quantity} × ${product?.name} added to your cart` 
+        title: t('product.addedtocart', 'Added to cart'), 
+        description: t('product.addedtocartdescription', '{{quantity}} × {{productName}} added to your cart', { quantity, productName: product?.name })
       });
     },
     onError: (error: Error) => {
       toast({ 
-        title: "Error", 
+        title: t('common.error', 'Error'), 
         description: error.message, 
         variant: "destructive" 
       });
@@ -132,8 +134,11 @@ function ProductDetailPage() {
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted);
     toast({
-      title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
-      description: `${product?.name} ${isWishlisted ? "removed from" : "added to"} your wishlist`
+      title: isWishlisted ? t('product.removedfromwishlist', 'Removed from wishlist') : t('product.addedtowishlist', 'Added to wishlist'),
+      description: t('product.wishlistdescription', '{{productName}} {{action}} your wishlist', { 
+        productName: product?.name, 
+        action: isWishlisted ? t('product.removedfrom', 'removed from') : t('product.addedto', 'added to')
+      })
     });
   };
 
@@ -181,10 +186,10 @@ function ProductDetailPage() {
         />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-navy mb-4">Product not found</h2>
+            <h2 className="text-2xl font-bold text-navy mb-4">{t('product.productnotfound', 'Product not found')}</h2>
             <Button onClick={() => window.history.back()}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Go Back
+              {t('common.goback', 'Go Back')}
             </Button>
           </div>
         </div>
@@ -224,7 +229,7 @@ function ProductDetailPage() {
             className="text-navy hover:text-gold transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Catalogue
+            {t('product.backtocatalogue', 'Back to Catalogue')}
           </Button>
         </motion.div>
 
@@ -291,7 +296,7 @@ function ProductDetailPage() {
                         ₾{(parseFloat(product.price) * (1 - product.discountPercentage / 100)).toFixed(2)}
                       </div>
                       <span className="text-sm sm:text-lg bg-red-500 text-white px-3 py-1 rounded-full font-medium self-start sm:self-center">
-                        -{product.discountPercentage}% OFF
+                        -{product.discountPercentage}% {t('product.off', 'OFF')}
                       </span>
                     </div>
                     <div className="text-lg sm:text-xl lg:text-2xl text-gray-500 line-through">
@@ -308,7 +313,7 @@ function ProductDetailPage() {
 
             {/* Product Description */}
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-navy">Description</h3>
+              <h3 className="text-xl font-semibold text-navy">{t('product.description', 'Description')}</h3>
               <p className="text-navy/80 leading-relaxed">{product.description}</p>
             </div>
 
@@ -316,7 +321,7 @@ function ProductDetailPage() {
             <div className="space-y-6">
               {/* Quantity Selector */}
               <div className="flex items-center gap-4">
-                <span className="text-navy font-medium">Quantity:</span>
+                <span className="text-navy font-medium">{t('product.quantity', 'Quantity')}:</span>
                 <div className="flex items-center border border-gold/30 rounded-full overflow-hidden">
                   <button
                     onClick={() => handleQuantityChange(-1)}
@@ -345,12 +350,12 @@ function ProductDetailPage() {
                   {addToCartMutation.isPending ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Adding to Cart...
+                      {t('product.addingtocart', 'Adding to Cart...')}
                     </>
                   ) : (
                     <>
                       <ShoppingCart className="w-5 h-5 mr-2" />
-                      Add to Cart - ₾{(product.discountPercentage && product.discountPercentage > 0 
+                      {t('product.addtocart', 'Add to Cart')} - ₾{(product.discountPercentage && product.discountPercentage > 0 
                         ? parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity
                         : parseFloat(product.price) * quantity
                       ).toFixed(2)}
@@ -361,7 +366,7 @@ function ProductDetailPage() {
                 {/* Payment Options */}
                 <div className="space-y-3">
                   <div className="text-center text-navy/60 text-sm font-medium mb-4">
-                    Or choose a payment option:
+                    {t('product.orchoosepaymentoption', 'Or choose a payment option:')}
                   </div>
 
                   {/* Compact Card Payment Button */}
@@ -373,7 +378,7 @@ function ProductDetailPage() {
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
                         <div>
-                          <h3 className="text-base font-bold text-slate-800">Instant Card Payment</h3>
+                          <h3 className="text-base font-bold text-slate-800">{t('product.instantcardpayment', 'Instant Card Payment')}</h3>
                         </div>
                       </div>
                       <div className="text-right">
@@ -389,10 +394,10 @@ function ProductDetailPage() {
                     {/* Payment Methods */}
                     <div className="bg-gray-50 rounded-xl p-3">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-slate-600">ACCEPTED METHODS</span>
+                        <span className="text-xs font-medium text-slate-600">{t('product.acceptedmethods', 'ACCEPTED METHODS')}</span>
                         <div className="flex items-center space-x-1">
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-xs text-green-600 font-medium">SECURE</span>
+                          <span className="text-xs text-green-600 font-medium">{t('product.secure', 'SECURE')}</span>
                         </div>
                       </div>
                       
@@ -408,7 +413,7 @@ function ProductDetailPage() {
                           <img src={bankLogo} alt="Bank Transfer" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <img src={bogLogo2} alt="Bank of Georgia" className="h-4 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
-                        <span className="text-xs text-slate-500">Instant</span>
+                        <span className="text-xs text-slate-500">{t('product.instant', 'Instant')}</span>
                       </div>
                     </div>
                   </div>
@@ -429,8 +434,8 @@ function ProductDetailPage() {
                         className="w-8 h-8 sm:w-10 sm:h-10 object-contain mr-2 sm:mr-4 flex-shrink-0"
                       />
                       <div className="text-left min-w-0">
-                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">BOG Installments</div>
-                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">Flexible monthly plan</div>
+                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">{t('product.boginstallments', 'BOG Installments')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">{t('product.flexiblemonthlyplan', 'Flexible monthly plan')}</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10 flex-shrink-0 ml-2">
@@ -439,7 +444,7 @@ function ProductDetailPage() {
                           ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 12
                           : (parseFloat(product.price) * quantity) / 12
                         ).toFixed(2)}/mo</div>
-                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">12 months</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">{t('product.months', '12 months', { count: 12 })}</div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
@@ -460,8 +465,8 @@ function ProductDetailPage() {
                         className="w-8 h-8 sm:w-10 sm:h-10 object-contain mr-2 sm:mr-4 flex-shrink-0"
                       />
                       <div className="text-left min-w-0">
-                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">Part-by-Part</div>
-                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">4 interest-free parts</div>
+                        <div className="font-semibold text-sm sm:text-base tracking-wide truncate">{t('product.partbypart', 'Part-by-Part')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">{t('product.interestfreeparts', '4 interest-free parts', { count: 4 })}</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10 flex-shrink-0 ml-2">
@@ -470,13 +475,13 @@ function ProductDetailPage() {
                           ? (parseFloat(product.price) * (1 - product.discountPercentage / 100) * quantity) / 4
                           : (parseFloat(product.price) * quantity) / 4
                         ).toFixed(2)} × 4</div>
-                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">Zero interest</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">{t('product.zerointerest', 'Zero interest')}</div>
                     </div>
                   </Button>
                 </div>
 
                 {!product.inStock && (
-                  <p className="text-red-600 text-center font-medium">Currently out of stock</p>
+                  <p className="text-red-600 text-center font-medium">{t('product.outofstock', 'Currently out of stock')}</p>
                 )}
 
 
@@ -488,11 +493,11 @@ function ProductDetailPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="flex items-center gap-3 text-navy/70">
                   <Shield className="w-5 h-5 text-gold" />
-                  <span className="text-sm">Authentic Guarantee</span>
+                  <span className="text-sm">{t('product.authenticguarantee', 'Authentic Guarantee')}</span>
                 </div>
                 <div className="flex items-center gap-3 text-navy/70">
                   <Truck className="w-5 h-5 text-gold" />
-                  <span className="text-sm">Free Shipping</span>
+                  <span className="text-sm">{t('product.freeshipping', 'Free Shipping')}</span>
                 </div>
                 
               </div>
