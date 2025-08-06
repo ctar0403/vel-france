@@ -133,17 +133,45 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     }
   };
 
+  // Always show the first slide immediately for optimal LCP, load others progressively
+  const firstSlide = slides[0];
+  
   if (!imagesLoaded) {
     return (
-      <div className={`w-full bg-gray-100 animate-pulse ${className}`}>
-        <div className="aspect-[16/9] md:aspect-[21/9] w-full bg-gray-200"></div>
+      <div className={`relative w-full overflow-hidden ${className}`}>
+        {/* Show first slide immediately for LCP optimization */}
+        <div className="w-full flex-shrink-0">
+          <div 
+            onClick={handleBannerClick}
+            className="cursor-pointer w-full h-full"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
+            aria-label={t('HeroSlider.gotocatalogue', 'Go to catalogue')}
+          >
+            <img
+              src={isMobile ? firstSlide.mobile : firstSlide.desktop}
+              alt={firstSlide.alt}
+              className="w-full h-auto object-cover"
+              loading="eager"
+              width={isMobile ? 480 : 1200}
+              height={isMobile ? 360 : 900}
+              sizes={isMobile ? "480px" : "1200px"}
+              fetchpriority="high"
+              decoding="sync"
+            />
+          </div>
+        </div>
+        
+        {/* Loading skeleton for other slides */}
+        <div className="absolute inset-0 bg-gray-100 animate-pulse opacity-0"></div>
       </div>
     );
   }
 
   return (
     <div 
-      className={`relative w-full overflow-hidden ${className}`}
+      className={`relative w-full overflow-hidden hero-slider-container ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}

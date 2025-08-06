@@ -20,10 +20,11 @@
     <!-- Preload critical font file -->
     <link rel="preload" href="/assets/alk-sanet_1754502110450.ttf" as="font" type="font/ttf" crossorigin>
     
-    <!-- Preload critical images with proper sizing -->
-    <!-- Hero banner images - prioritize first slide -->
-    <link rel="preload" href="/src/assets/4_1754504202405.webp" as="image" media="(min-width: 640px)" fetchpriority="high">
-    <link rel="preload" href="/src/assets/discount_1754505093401_mobile.webp" as="image" media="(max-width: 639px)" fetchpriority="high">
+    <!-- Preload critical LCP images - first slide hero banner -->
+    <!-- Desktop hero image - LCP critical -->
+    <link rel="preload" href="/assets/4_1754504202405-BpCLEn9R.webp" as="image" media="(min-width: 769px)" fetchpriority="high">
+    <!-- Mobile hero image - LCP critical -->
+    <link rel="preload" href="/assets/discount_1754505093401_mobile-Bi8CSbwf.webp" as="image" media="(max-width: 768px)" fetchpriority="high">
     
     <!-- Logo and flag icons - small but critical -->
     <link rel="preload" href="/src/assets/Your%20paragraph%20text%20(4)_1753542106373.webp" as="image" fetchpriority="high">
@@ -75,6 +76,7 @@
         min-height: 400px; 
         overflow: hidden; 
         background: linear-gradient(135deg, #faf7f0, #f5e6e8);
+        contain: layout style paint;
       }
       .hero-image {
         width: 100%;
@@ -83,6 +85,23 @@
         position: absolute;
         top: 0;
         left: 0;
+        will-change: transform;
+        transform: translateZ(0);
+      }
+      
+      /* LCP optimization - ensure first hero image loads immediately */
+      .hero-slider-container {
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        contain: layout style paint;
+      }
+      .hero-slider-container img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transform: translateZ(0);
       }
       
       /* Loading skeleton for better perceived performance */
@@ -100,9 +119,9 @@
     <!-- Preconnect to BOG SDK origin for faster loading when needed -->
     <link rel="preconnect" href="https://webstatic.bog.ge" crossorigin>
     
-    <!-- Preload critical LCP images for immediate discovery -->
-    <link rel="preload" href="/src/assets/Desktop-1_1754051373226.webp" as="image" media="(min-width: 769px)">
-    <link rel="preload" href="/src/assets/Mobile-1_1754051370153.webp" as="image" media="(max-width: 768px)">
+    <!-- Additional LCP optimization with resource hints -->
+    <link rel="prefetch" href="/assets/Desktop-2_1754051373227-CJkEvLOr.webp" as="image">
+    <link rel="prefetch" href="/assets/Mobile-2_1754051370154-CJRDeFQT.webp" as="image">
   </head>
   <body>
     <div id="root"></div>
@@ -174,15 +193,21 @@
           document.head.appendChild(fontCSS);
         }
 
-        // Preload critical resources
+        // Preload critical LCP images
         function preloadCritical() {
-          // Preload hero images based on screen size
+          // Preload actual hero images used in first slide
           var img = new Image();
           if (window.innerWidth > 768) {
-            img.src = '/src/assets/Desktop-1_1754051373226.webp';
+            img.src = '/assets/4_1754504202405-BpCLEn9R.webp';
+            img.fetchPriority = 'high';
           } else {
-            img.src = '/src/assets/Mobile-1_1754051370153.webp';
+            img.src = '/assets/discount_1754505093401_mobile-Bi8CSbwf.webp';
+            img.fetchPriority = 'high';
           }
+          
+          // Ensure LCP image is discoverable immediately
+          img.loading = 'eager';
+          img.decoding = 'sync';
         }
 
         // Initialize optimizations

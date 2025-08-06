@@ -111,9 +111,11 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 
 ### LCP (Largest Contentful Paint) Optimization
 - **Hero image prioritization**: First hero banner image loads with fetchpriority="high" and loading="eager"
-- **HTML preload links**: Critical LCP images preloaded in HTML head with responsive media queries
-- **Immediate discovery**: Hero images now discoverable from initial HTML document for faster LCP
-- **Lazy loading optimization**: Non-critical slides use loading="lazy" for better resource management
+- **HTML preload links**: Correct LCP images (4_1754504202405.webp desktop, discount_1754505093401_mobile.webp mobile) preloaded with fetchpriority="high"
+- **Immediate discovery**: LCP images discoverable from HTML document head, not dependent on JavaScript loading
+- **Progressive loading**: First slide renders immediately while other slides load progressively
+- **Synchronous decoding**: LCP image uses decoding="sync" for immediate rendering
+- **Critical CSS containment**: Hero container uses CSS containment and GPU acceleration for optimal performance
 
 ### Network Dependency Chain Optimization (January 2025)
 - **Font optimization**: Reduced font weight variations from 9 to 4 weights, added proper preconnect hints
