@@ -232,6 +232,7 @@ export default function Home() {
     subject: t('home.personalconsultation'),
     message: ""
   });
+  const [cartUpdateTrigger, setCartUpdateTrigger] = useState(0); // Force re-render trigger
   const isMobile = useIsMobile();
 
 
@@ -241,10 +242,14 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  // Fetch cart items
-  const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
+  // Fetch cart items with aggressive refetching for real-time updates
+  const { data: cartItems = [], isLoading: cartLoading, refetch: refetchCart } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
+    staleTime: 0, // Always fetch fresh data for cart
+    gcTime: 0, // Don't cache cart data aggressively
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 
   // Fetch user orders
@@ -258,18 +263,13 @@ export default function Home() {
     mutationFn: async (productId: string) => {
       await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
     },
-    onSuccess: () => {
-      // Force immediate refetch of cart data for real-time updates
-      queryClient.invalidateQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true,
-        refetchType: 'active'
-      });
-      // Also refetch to ensure immediate UI updates
-      queryClient.refetchQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true
-      });
+    onSuccess: async () => {
+      // Simple and direct approach - just refetch cart data
+      await refetchCart();
+      
+      // Force component re-render to ensure UI updates
+      setCartUpdateTrigger(prev => prev + 1);
+      
       toast({
         title: t('success.itemAdded'),
         description: t('cart.itemAdded'),
@@ -360,7 +360,10 @@ export default function Home() {
     : products.filter(product => product.category === selectedCategory);
 
   const featuredProducts = products.slice(0, 3);
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  // Add trigger dependency to force cart count recalculation
+  const cartItemCount = React.useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cartItems, cartUpdateTrigger]);
 
   // Define specific product lists in ranking order
   const mostSoldProductNames = [

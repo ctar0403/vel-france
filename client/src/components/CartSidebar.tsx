@@ -1,7 +1,8 @@
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
@@ -17,8 +18,16 @@ interface CartSidebarProps {
 }
 
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
+  const queryClientHook = useQueryClient();
   const { toast } = useToast();
   const { t } = useTranslation();
+  
+  // Force cart refetch whenever sidebar opens to ensure fresh data
+  React.useEffect(() => {
+    if (isOpen) {
+      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
+    }
+  }, [isOpen, queryClientHook]);
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -26,16 +35,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("PUT", `/api/cart/${itemId}`, { quantity });
     },
     onSuccess: () => {
-      // Force immediate refetch for real-time updates
-      queryClient.invalidateQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true,
-        refetchType: 'active'
-      });
-      queryClient.refetchQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true
-      });
+      // Simple approach - just refetch
+      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
@@ -61,16 +62,8 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("DELETE", `/api/cart/${itemId}`);
     },
     onSuccess: () => {
-      // Force immediate refetch for real-time updates
-      queryClient.invalidateQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true,
-        refetchType: 'active'
-      });
-      queryClient.refetchQueries({ 
-        queryKey: ["/api/cart"],
-        exact: true
-      });
+      // Simple approach - just refetch
+      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
       toast({
         title: t('cart.itemremoved'),
         description: t('cart.itemRemovedDescription'),
