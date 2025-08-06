@@ -11,6 +11,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 
 
@@ -218,6 +219,9 @@ export default function Home() {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [, setLocation] = useLocation();
+  
+  // Set page title
+  usePageTitle('home');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");

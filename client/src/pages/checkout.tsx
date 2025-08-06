@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { apiRequest } from "@/lib/queryClient";
 import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
@@ -49,6 +50,9 @@ export default function CheckoutPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // Set page title
+  usePageTitle('checkout');
   
   // Fetch cart items
   const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({

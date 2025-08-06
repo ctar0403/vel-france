@@ -6,6 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Product, CartItem } from "@shared/schema";
 import { Plus, Minus, Trash2, ShoppingBag, CreditCard, ArrowLeft } from "lucide-react";
@@ -13,6 +14,9 @@ import { Plus, Minus, Trash2, ShoppingBag, CreditCard, ArrowLeft } from "lucide-
 export default function CartPage() {
   const { toast } = useToast();
   const { t } = useTranslation();
+  
+  // Set page title
+  usePageTitle('cart');
 
   // Fetch cart items
   const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({

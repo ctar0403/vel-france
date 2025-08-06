@@ -43,6 +43,22 @@
     "required": "Required",
     "optional": "Optional"
   },
+  "pageTitle": {
+    "home": "Vel France - Luxury Perfumes",
+    "catalogue": "Catalogue - Vel France",
+    "product": "{{productName}} - Vel France",
+    "cart": "Shopping Cart - Vel France",
+    "checkout": "Checkout - Vel France",
+    "profile": "My Profile - Vel France",
+    "orders": "My Orders - Vel France",
+    "admin": "Admin Panel - Vel France",
+    "contact": "Contact Us - Vel France",
+    "about": "About Us - Vel France",
+    "privacy": "Privacy Policy - Vel France",
+    "terms": "Terms of Service - Vel France",
+    "delivery": "Delivery Information - Vel France",
+    "returns": "Returns Policy - Vel France"
+  },
   "navigation": {
     "home": "Home",
     "catalogue": "Catalogue",
