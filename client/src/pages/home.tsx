@@ -375,7 +375,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream pb-16 md:pb-0">
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}

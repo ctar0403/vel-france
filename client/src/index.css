@@ -44,14 +44,6 @@ header {
 body {
   overflow-x: hidden;
   width: 100%;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-/* Add padding for mobile bottom navigation */
-@media (max-width: 768px) {
-  body {
-    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
-  }
 }
 
 /* Ensure container stability */
