@@ -40,6 +40,100 @@
     <!-- Preconnect for API requests to reduce latency -->
     <link rel="preconnect" href="/" crossorigin>
     
+    <!-- CSS Preload Strategy for Eliminating Render-Blocking Resources -->
+    <script>
+      // Immediate CSS optimization to prevent render blocking
+      (function() {
+        'use strict';
+        
+        // Enhanced CSS loading function with better error handling
+        function loadCSSAsync(href, media) {
+          var link = document.createElement('link');
+          var timeoutId;
+          
+          link.rel = 'preload';
+          link.as = 'style';
+          link.href = href;
+          link.media = 'only x'; // Temporarily disable to avoid blocking
+          
+          // Convert to active stylesheet when loaded
+          function activate() {
+            clearTimeout(timeoutId);
+            if (link.addEventListener) {
+              link.removeEventListener('load', activate);
+              link.removeEventListener('error', activate);
+            }
+            link.media = media || 'all';
+            link.rel = 'stylesheet';
+          }
+          
+          // Set up event listeners
+          if (link.addEventListener) {
+            link.addEventListener('load', activate);
+            link.addEventListener('error', activate);
+          } else if (link.onload !== undefined) {
+            link.onload = activate;
+            link.onerror = activate;
+          }
+          
+          // Fallback timeout to ensure CSS loads even if events fail
+          timeoutId = setTimeout(activate, 100);
+          
+          // Insert into head
+          var firstScript = document.getElementsByTagName('script')[0];
+          firstScript.parentNode.insertBefore(link, firstScript);
+          
+          return link;
+        }
+        
+        // Monitor for Vite CSS insertion and optimize it
+        function interceptViteCSS() {
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              Array.prototype.forEach.call(mutation.addedNodes, function(node) {
+                if (node.nodeType === 1 && 
+                    node.tagName === 'LINK' && 
+                    node.rel === 'stylesheet' && 
+                    (node.href.indexOf('index-') !== -1 || node.href.indexOf('.css') !== -1)) {
+                  
+                  // Capture the href before removing
+                  var cssHref = node.href;
+                  var cssMedia = node.media || 'all';
+                  
+                  // Remove the blocking stylesheet
+                  node.parentNode.removeChild(node);
+                  
+                  // Load it asynchronously instead
+                  loadCSSAsync(cssHref, cssMedia);
+                }
+              });
+            });
+          });
+          
+          // Start observing
+          observer.observe(document.head, {
+            childList: true,
+            subtree: false
+          });
+          
+          // Also handle any existing stylesheets
+          var existingLinks = document.querySelectorAll('link[rel="stylesheet"]');
+          for (var i = 0; i < existingLinks.length; i++) {
+            var link = existingLinks[i];
+            if (link.href.indexOf('index-') !== -1 || link.href.indexOf('main') !== -1) {
+              var href = link.href;
+              var media = link.media || 'all';
+              link.parentNode.removeChild(link);
+              loadCSSAsync(href, media);
+            }
+          }
+        }
+        
+        // Start optimization immediately
+        interceptViteCSS();
+      })();
+    </script>
+    
     <!-- Critical CSS inline optimization with resource hints -->
     <style>
       /* Prevent FOUC with basic styling */
@@ -117,6 +211,12 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Fallback stylesheet loading for users with JavaScript disabled -->
+    <noscript>
+      <link rel="stylesheet" type="text/css">
+    </noscript>
+    
     <script type="module" src="/src/main.tsx"></script>
     
     <!-- Performance optimization and non-critical script loading -->

@@ -90,9 +90,102 @@ export const preloadCriticalImages = () => {
   });
 };
 
+// Advanced CSS loading to eliminate render-blocking warnings
+export const eliminateRenderBlockingCSS = () => {
+  // Monitor for Vite-generated CSS files and convert them to preload
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node instanceof HTMLLinkElement && 
+            node.rel === 'stylesheet' && 
+            node.href.includes('index-') && 
+            node.href.includes('.css')) {
+          
+          // Remove the render-blocking stylesheet
+          const originalHref = node.href;
+          node.remove();
+          
+          // Load it asynchronously with preload technique
+          const preloadLink = document.createElement('link');
+          preloadLink.rel = 'preload';
+          preloadLink.as = 'style';
+          preloadLink.href = originalHref;
+          
+          // Convert to stylesheet once loaded
+          preloadLink.onload = () => {
+            preloadLink.onload = null;
+            preloadLink.rel = 'stylesheet';
+            preloadLink.media = 'all';
+          };
+          
+          document.head.appendChild(preloadLink);
+          
+          // Fallback for browsers without preload support
+          const noscript = document.createElement('noscript');
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = originalHref;
+          noscript.appendChild(fallbackLink);
+          document.head.appendChild(noscript);
+        }
+      });
+    });
+  });
+  
+  // Start observing the document head for new stylesheets
+  observer.observe(document.head, {
+    childList: true,
+    subtree: true
+  });
+  
+  // Also check existing stylesheets that might already be loaded
+  const existingStylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+  existingStylesheets.forEach((link) => {
+    if (link instanceof HTMLLinkElement && 
+        link.href.includes('index-') && 
+        link.href.includes('.css')) {
+      
+      const originalHref = link.href;
+      link.remove();
+      
+      // Load asynchronously
+      loadNonCriticalCSS(originalHref, 'all');
+    }
+  });
+};
+
+// Preload main CSS bundle to improve performance
+export const preloadMainCSS = () => {
+  // Try to detect and preload the main CSS bundle early
+  const possibleCSSPaths = [
+    '/assets/index.css',
+    './index.css'
+  ];
+  
+  possibleCSSPaths.forEach(path => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'style';
+    link.href = path;
+    link.onload = () => {
+      link.onload = null;
+      link.rel = 'stylesheet';
+    };
+    link.onerror = () => {
+      // Silently ignore errors for paths that don't exist
+      link.remove();
+    };
+    document.head.appendChild(link);
+  });
+};
+
 // Initialize all CSS optimizations
 export const initCSSOptimizations = () => {
-  // Run optimizations when DOM is ready
+  // Run optimizations immediately for better performance
+  eliminateRenderBlockingCSS();
+  preloadMainCSS();
+  
+  // Run other optimizations when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       optimizeFontLoading();
