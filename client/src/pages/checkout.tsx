@@ -474,7 +474,7 @@ export default function CheckoutPage() {
                     <div className="flex items-center justify-between mb-2 sm:mb-4">
                       <div className="flex items-center">
                         <div>
-                          <h3 className="text-sm sm:text-lg font-bold text-slate-800">Instant Card Payment</h3>
+                          <h3 className="text-sm sm:text-lg font-bold text-slate-800">{t('checkout.instantcardpayment', 'Instant Card Payment')}</h3>
                         </div>
                       </div>
                       <div className="text-right">
@@ -485,10 +485,10 @@ export default function CheckoutPage() {
                     {/* Payment Methods */}
                     <div className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
                       <div className="flex items-center justify-between mb-2 sm:mb-3">
-                        <span className="text-xs font-medium text-slate-600">ACCEPTED METHODS</span>
+                        <span className="text-xs font-medium text-slate-600">{t('checkout.acceptedmethods', 'ACCEPTED METHODS')}</span>
                         <div className="flex items-center space-x-1">
                           <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-xs text-green-600 font-medium">SECURE</span>
+                          <span className="text-xs text-green-600 font-medium">{t('checkout.secure', 'SECURE')}</span>
                         </div>
                       </div>
                       
@@ -504,7 +504,7 @@ export default function CheckoutPage() {
                           <img src={bankLogo} alt="Bank Transfer" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                           <img src={bogLogo2} alt="Bank of Georgia" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
                         </div>
-                        <span className="text-xs text-slate-500 ml-2">Instant</span>
+                        <span className="text-xs text-slate-500 ml-2">{t('checkout.instant', 'Instant')}</span>
                       </div>
                     </div>
                   </div>
@@ -525,13 +525,13 @@ export default function CheckoutPage() {
                         className="w-10 h-10 sm:w-12 sm:h-12 object-contain mr-3 sm:mr-5 flex-shrink-0"
                       />
                       <div className="text-left min-w-0">
-                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">BOG Installments</div>
-                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">Flexible monthly plan</div>
+                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">{t('checkout.boginstallments', 'BOG Installments')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">{t('checkout.flexiblemonthlyplan', 'Flexible monthly plan')}</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10 flex-shrink-0 ml-2">
                       <div className="text-base sm:text-xl font-bold text-white whitespace-nowrap">₾{(total / 12).toFixed(2)}/mo</div>
-                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">12 months</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">{t('checkout.months12', '12 months')}</div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                   </Button>
@@ -552,13 +552,13 @@ export default function CheckoutPage() {
                         className="w-10 h-10 sm:w-12 sm:h-12 object-contain mr-3 sm:mr-5 flex-shrink-0"
                       />
                       <div className="text-left min-w-0">
-                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">Part-by-Part</div>
-                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">4 interest-free parts</div>
+                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">{t('checkout.partbypart', 'Part-by-Part')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">{t('checkout.interestfreeparts', '4 interest-free parts')}</div>
                       </div>
                     </div>
                     <div className="text-right relative z-10 flex-shrink-0 ml-2">
                       <div className="text-base sm:text-xl font-bold text-white whitespace-nowrap">₾{(total / 4).toFixed(2)} × 4</div>
-                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">Zero interest</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">{t('checkout.zerointerest', 'Zero interest')}</div>
                     </div>
 
                   </Button>
@@ -573,8 +573,8 @@ export default function CheckoutPage() {
                       <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin text-gold" />
                     </div>
                     <div className="text-center">
-                      <p className="text-navy font-roboto font-semibold text-sm sm:text-lg tracking-wide">Processing Payment Request</p>
-                      <p className="text-navy/60 text-xs sm:text-sm mt-1">Connecting to Bank of Georgia secure gateway...</p>
+                      <p className="text-navy font-roboto font-semibold text-sm sm:text-lg tracking-wide">{t('checkout.processingpayment', 'Processing Payment Request')}</p>
+                      <p className="text-navy/60 text-xs sm:text-sm mt-1">{t('checkout.connectinggateway', 'Connecting to Bank of Georgia secure gateway...')}</p>
                     </div>
                   </div>
                 </div>
@@ -591,7 +591,7 @@ export default function CheckoutPage() {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/20 rounded-full flex items-center justify-center mr-2 sm:mr-4">
                   <CreditCard className="h-4 w-4 sm:h-6 sm:w-6 text-navy" />
                 </div>
-                <h2 className="font-roboto text-xl sm:text-3xl font-light text-navy tracking-wide">Order Summary</h2>
+                <h2 className="font-roboto text-xl sm:text-3xl font-light text-navy tracking-wide">{t('checkout.ordersummary', 'Order Summary')}</h2>
               </div>
               
               <div className="space-y-3 sm:space-y-6 mb-4 sm:mb-8">
@@ -607,7 +607,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="font-roboto font-medium text-navy text-sm sm:text-lg tracking-wide truncate">{item.product.name}</h4>
-                        <p className="text-navy/60 font-roboto text-xs sm:text-sm">Quantity: {item.quantity}</p>
+                        <p className="text-navy/60 font-roboto text-xs sm:text-sm">{t('checkout.quantity', 'Quantity')}: {item.quantity}</p>
                         <p className="text-navy/50 text-xs sm:text-sm font-roboto mt-1 truncate">{item.product.brand}</p>
                       </div>
                       <div className="text-right flex-shrink-0">
@@ -645,15 +645,17 @@ export default function CheckoutPage() {
               <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-gold/30">
                 <div className="space-y-2 sm:space-y-4 mb-3 sm:mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">
+                      {t('checkout.subtotal', 'Subtotal')} ({cartItems.length} {cartItems.length === 1 ? t('checkout.item', 'item') : t('checkout.items', 'items')})
+                    </span>
                     <span className="text-navy font-roboto font-semibold text-sm sm:text-lg">₾{total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">Shipping</span>
-                    <span className="text-emerald-600 font-roboto font-semibold text-sm sm:text-base">Free</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.shipping', 'Shipping')}</span>
+                    <span className="text-emerald-600 font-roboto font-semibold text-sm sm:text-base">{t('checkout.free', 'Free')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">VAT included</span>
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.vatincluded', 'VAT included')}</span>
                     <span className="text-navy/70 font-roboto text-sm sm:text-base">₾0.00</span>
                   </div>
                 </div>
@@ -661,7 +663,7 @@ export default function CheckoutPage() {
                 <div className="border-t border-gold/30 pt-3 sm:pt-4">
                   <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-lg sm:rounded-xl p-3 sm:p-4">
                     <div className="flex justify-between items-center">
-                      <span className="font-roboto text-lg sm:text-xl font-medium text-navy tracking-wide">Total Amount</span>
+                      <span className="font-roboto text-lg sm:text-xl font-medium text-navy tracking-wide">{t('checkout.totalamount', 'Total Amount')}</span>
                       <span className="font-roboto text-xl sm:text-3xl font-bold text-gold">₾{total.toFixed(2)}</span>
                     </div>
                   </div>
