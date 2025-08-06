@@ -146,7 +146,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
 
   return (
     <div 
-      className={`relative w-full overflow-hidden ${className}`}
+      className={`relative w-full overflow-hidden hero-slider-container ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -155,14 +155,14 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     >
       {/* Slider container */}
       <div 
-        className="flex transition-transform duration-1000 ease-in-out"
+        className="flex transition-transform duration-1000 ease-in-out h-auto"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => (
           <div key={index} className="w-full flex-shrink-0">
             <div 
               onClick={handleBannerClick}
-              className="cursor-pointer w-full h-full"
+              className="cursor-pointer w-full block"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
@@ -171,12 +171,13 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
               <img
                 src={isMobile ? slide.mobile : slide.desktop}
                 alt={slide.alt}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover block"
                 loading={index === 0 ? "eager" : "lazy"}
                 width={isMobile ? 480 : 1200}
                 height={isMobile ? 360 : 900}
                 sizes={isMobile ? "480px" : "1200px"}
                 {...(index === 0 && { fetchpriority: "high" as const })}
+                style={{ display: 'block' }}
               />
             </div>
           </div>
