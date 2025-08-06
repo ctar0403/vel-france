@@ -232,7 +232,6 @@ export default function Home() {
     subject: t('home.personalconsultation'),
     message: ""
   });
-
   const isMobile = useIsMobile();
 
 
@@ -242,16 +241,10 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  // Fetch cart items with debug logging
+  // Fetch cart items
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
-    onSuccess: (data) => {
-      console.log('Cart data fetched:', data.length, 'items');
-    },
-    onError: (error) => {
-      console.error('Cart fetch error:', error);
-    }
   });
 
   // Fetch user orders
@@ -260,31 +253,13 @@ export default function Home() {
     retry: false,
   });
 
-  // Add to cart mutation with aggressive real-time updates
+  // Add to cart mutation
   const addToCartMutation = useMutation({
     mutationFn: async (productId: string) => {
-      console.log('Adding to cart:', productId);
-      const result = await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
-      console.log('Add to cart result:', result);
-      return result;
+      await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
     },
-    onSuccess: async (data) => {
-      console.log('Add to cart success, invalidating cache...');
-      
-      // Multiple cache invalidation strategies
-      await queryClient.invalidateQueries({ 
-        queryKey: ["/api/cart"],
-        refetchType: 'active'
-      });
-      
-      // Force immediate refetch
-      await queryClient.refetchQueries({ 
-        queryKey: ["/api/cart"],
-        type: 'active'
-      });
-      
-      console.log('Cache invalidated and refetched');
-      
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
         title: t('success.itemAdded'),
         description: t('cart.itemAdded'),
@@ -375,12 +350,7 @@ export default function Home() {
     : products.filter(product => product.category === selectedCategory);
 
   const featuredProducts = products.slice(0, 3);
-  // Calculate cart item count with debug logging
-  const cartItemCount = React.useMemo(() => {
-    const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-    console.log('Cart item count updated:', count, 'from items:', cartItems.length);
-    return count;
-  }, [cartItems]);
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // Define specific product lists in ranking order
   const mostSoldProductNames = [
@@ -438,10 +408,7 @@ export default function Home() {
             showBadges={true}
             badgeText={(index) => `#${index + 1} ${t('home.bestseller')}`}
             badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-            onAddToCart={(productId) => {
-              console.log('Home: onAddToCart callback called with:', productId);
-              addToCartMutation.mutate(productId);
-            }}
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>
@@ -536,10 +503,7 @@ export default function Home() {
             showBadges={true}
             badgeText={() => t('product.newArrival')}
             badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-            onAddToCart={(productId) => {
-              console.log('Home: onAddToCart callback called with:', productId);
-              addToCartMutation.mutate(productId);
-            }}
+            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ImageType, getOptimalImageSize, generateSizesAttribute, getLazyLoadingConfig } from '@/utils/imageOptimization';
 
 interface ResponsiveImageProps {
   src: string;
@@ -10,9 +9,6 @@ interface ResponsiveImageProps {
   priority?: boolean;
   width?: number;
   height?: number;
-  displayWidth?: number; // Expected display width for optimization
-  displayHeight?: number; // Expected display height for optimization
-  imageType?: ImageType; // Type of image for optimization
 }
 
 export default function ResponsiveImage({
@@ -24,9 +20,6 @@ export default function ResponsiveImage({
   priority = false,
   width,
   height,
-  displayWidth,
-  displayHeight,
-  imageType = 'productCard',
 }: ResponsiveImageProps) {
   const [currentSrc, setCurrentSrc] = useState<string>(src);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -87,13 +80,12 @@ export default function ResponsiveImage({
     }, 1000); // Retry after 1 second
   };
 
-  // Get optimal sizing based on image type
-  const optimalSize = getOptimalImageSize(imageType);
-  const optimalWidth = displayWidth || width || optimalSize.width;
-  const optimalHeight = displayHeight || height || optimalSize.height;
-  
   // Determine appropriate sizes attribute
-  const defaultSizes = sizes || generateSizesAttribute(imageType);
+  const defaultSizes = sizes || `
+    (max-width: 640px) 160px,
+    (max-width: 1024px) 240px,
+    320px
+  `.replace(/\s+/g, ' ').trim();
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -101,9 +93,8 @@ export default function ResponsiveImage({
         src={currentSrc}
         alt={alt}
         loading={priority ? 'eager' : loading}
-        width={optimalWidth}
-        height={optimalHeight}
-        sizes={defaultSizes}
+        width={width}
+        height={height}
         className={`
           transition-opacity duration-200 w-full h-full object-cover
           ${isLoaded ? 'opacity-100' : 'opacity-0'}
@@ -112,7 +103,7 @@ export default function ResponsiveImage({
         onLoad={handleLoad}
         onError={handleError}
         style={{
-          aspectRatio: optimalWidth && optimalHeight ? `${optimalWidth}/${optimalHeight}` : undefined,
+          aspectRatio: width && height ? `${width}/${height}` : undefined,
         }}
       />
       
@@ -152,8 +143,6 @@ export function LazyImage(props: ResponsiveImageProps) {
   useEffect(() => {
     if (!imgRef || shouldLoad) return;
 
-    const lazyConfig = getLazyLoadingConfig(props.imageType || 'productCard');
-    
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
@@ -164,8 +153,8 @@ export function LazyImage(props: ResponsiveImageProps) {
         }
       },
       {
-        rootMargin: lazyConfig.rootMargin,
-        threshold: lazyConfig.threshold,
+        rootMargin: '200px', // Load image 200px before it comes into view for smoother experience
+        threshold: 0.01, // Trigger as soon as any part is visible
       }
     );
 
@@ -180,9 +169,7 @@ export function LazyImage(props: ResponsiveImageProps) {
         ref={setImgRef}
         className={`bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse ${props.className}`}
         style={{
-          aspectRatio: (props.displayWidth || props.width) && (props.displayHeight || props.height) 
-            ? `${props.displayWidth || props.width}/${props.displayHeight || props.height}` 
-            : '1',
+          aspectRatio: props.width && props.height ? `${props.width}/${props.height}` : '1',
         }}
       >
         <div className="w-full h-full flex items-center justify-center">
