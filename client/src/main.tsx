@@ -3,7 +3,7 @@ import { preloadCriticalData } from "@/lib/batchRequests";
 import { initCSSOptimizations } from "@/utils/cssOptimization";
 import "./lib/i18n"; // Initialize i18n
 import App from "./App";
-import "./index.css"; // Restore normal CSS import
+import "./index.css";
 
 // Initialize CSS optimizations immediately
 initCSSOptimizations();
