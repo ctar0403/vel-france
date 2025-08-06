@@ -101,11 +101,13 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Total CLS reduction**: Significant reduction from 0.117 baseline through systematic image and font optimization
 
 ### Forced Reflow Prevention (January 2025)
-- **matchMedia optimization**: Replaced window.innerWidth queries with matchMedia API to prevent geometric property access
+- **104ms forced reflow elimination**: Fixed window.innerWidth usage in use-mobile.tsx hook with matchMedia API
+- **FloatingParticles optimization**: Replaced window.innerHeight access during animations with cached viewport state
 - **requestAnimationFrame batching**: Wrapped DOM updates in requestAnimationFrame for smoother transitions
 - **GPU acceleration**: Added will-change properties and translate3d transforms for hardware acceleration
 - **Intersection Observer optimization**: Added threshold and performance optimizations to lazy loading
 - **Animation performance**: Optimized marquee and carousel animations with GPU-accelerated transforms
+- **Performance monitoring**: Comprehensive utility system for preventing future forced reflows
 
 ### LCP (Largest Contentful Paint) Optimization
 - **Hero image prioritization**: First hero banner image loads with fetchpriority="high" and loading="eager"
