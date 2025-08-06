@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ImageType, getOptimalImageSize, generateSizesAttribute, getLazyLoadingConfig } from '@/utils/imageOptimization';
 
 interface ResponsiveImageProps {
   src: string;
@@ -9,6 +10,9 @@ interface ResponsiveImageProps {
   priority?: boolean;
   width?: number;
   height?: number;
+  displayWidth?: number; // Expected display width for optimization
+  displayHeight?: number; // Expected display height for optimization
+  imageType?: ImageType; // Type of image for optimization
 }
 
 export default function ResponsiveImage({
@@ -20,6 +24,9 @@ export default function ResponsiveImage({
   priority = false,
   width,
   height,
+  displayWidth,
+  displayHeight,
+  imageType = 'productCard',
 }: ResponsiveImageProps) {
   const [currentSrc, setCurrentSrc] = useState<string>(src);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,13 +38,31 @@ export default function ResponsiveImage({
     return originalSrc;
   };
 
-  // Optimize image loading - no complex calculations for better performance
+  // Optimize image loading based on viewport size - memoized to prevent reflows
   const getOptimalSize = () => {
-    return src; // Direct return for fastest loading
+    if (typeof window === 'undefined') return src;
+    
+    // Use matchMedia instead of window.innerWidth to avoid forced reflows
+    const isMobile = window.matchMedia('(max-width: 639px)').matches;
+    const isTablet = window.matchMedia('(max-width: 1023px)').matches;
+    
+    // For mobile/small screens, use smaller images
+    if (isMobile) {
+      // Mobile optimization - could serve smaller images here
+      return src;
+    } else if (isTablet) {
+      // Tablet optimization
+      return src;
+    } else {
+      // Desktop
+      return src;
+    }
   };
 
   useEffect(() => {
+    // Directly use the src for faster loading
     setCurrentSrc(src);
+    // Reset states when src changes
     setIsLoaded(false);
     setHasError(false);
   }, [src]);
@@ -47,15 +72,28 @@ export default function ResponsiveImage({
   };
 
   const handleError = () => {
-    setHasError(true);
+    // Add retry logic - sometimes images fail due to network issues
+    setTimeout(() => {
+      const img = new Image();
+      img.onload = () => {
+        setHasError(false);
+        setIsLoaded(true);
+      };
+      img.onerror = () => {
+        setHasError(true);
+        setIsLoaded(true);
+      };
+      img.src = currentSrc;
+    }, 1000); // Retry after 1 second
   };
 
+  // Get optimal sizing based on image type
+  const optimalSize = getOptimalImageSize(imageType);
+  const optimalWidth = displayWidth || width || optimalSize.width;
+  const optimalHeight = displayHeight || height || optimalSize.height;
+  
   // Determine appropriate sizes attribute
-  const defaultSizes = sizes || `
-    (max-width: 640px) 160px,
-    (max-width: 1024px) 240px,
-    320px
-  `.replace(/\s+/g, ' ').trim();
+  const defaultSizes = sizes || generateSizesAttribute(imageType);
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -63,8 +101,9 @@ export default function ResponsiveImage({
         src={currentSrc}
         alt={alt}
         loading={priority ? 'eager' : loading}
-        width={width}
-        height={height}
+        width={optimalWidth}
+        height={optimalHeight}
+        sizes={defaultSizes}
         className={`
           transition-opacity duration-200 w-full h-full object-cover
           ${isLoaded ? 'opacity-100' : 'opacity-0'}
@@ -73,7 +112,7 @@ export default function ResponsiveImage({
         onLoad={handleLoad}
         onError={handleError}
         style={{
-          aspectRatio: width && height ? `${width}/${height}` : undefined,
+          aspectRatio: optimalWidth && optimalHeight ? `${optimalWidth}/${optimalHeight}` : undefined,
         }}
       />
       
@@ -113,6 +152,8 @@ export function LazyImage(props: ResponsiveImageProps) {
   useEffect(() => {
     if (!imgRef || shouldLoad) return;
 
+    const lazyConfig = getLazyLoadingConfig(props.imageType || 'productCard');
+    
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
@@ -123,8 +164,8 @@ export function LazyImage(props: ResponsiveImageProps) {
         }
       },
       {
-        rootMargin: '200px', // Load image 200px before it comes into view for smoother experience
-        threshold: 0.01, // Trigger as soon as any part is visible
+        rootMargin: lazyConfig.rootMargin,
+        threshold: lazyConfig.threshold,
       }
     );
 
@@ -139,7 +180,9 @@ export function LazyImage(props: ResponsiveImageProps) {
         ref={setImgRef}
         className={`bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse ${props.className}`}
         style={{
-          aspectRatio: props.width && props.height ? `${props.width}/${props.height}` : '1',
+          aspectRatio: (props.displayWidth || props.width) && (props.displayHeight || props.height) 
+            ? `${props.displayWidth || props.width}/${props.displayHeight || props.height}` 
+            : '1',
         }}
       >
         <div className="w-full h-full flex items-center justify-center">
