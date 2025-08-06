@@ -113,6 +113,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
                   width={300}
                   height={300}
+                  loading={index < 4 ? "eager" : "lazy"}
+                  priority={index < 2}
                 />
                 
                 {/* Badge - Hidden on mobile */}

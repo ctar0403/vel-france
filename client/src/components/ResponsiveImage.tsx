@@ -25,15 +25,10 @@ export default function ResponsiveImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  // Generate responsive image URLs for different sizes
+  // Simplified image loading - remove unnecessary srcSet for better performance
   const generateSrcSet = (originalSrc: string) => {
-    // For now, we'll use the same image but we could implement server-side resizing
-    // or use a service like Cloudinary/ImageKit in the future
-    const baseSrc = originalSrc;
-    
-    // Generate different sizes - we'll use CSS to scale for now
-    // In a production environment, you'd want actual different sized images
-    return `${baseSrc} 1x, ${baseSrc} 2x`;
+    // Simply return the source for faster loading
+    return originalSrc;
   };
 
   // Optimize image loading based on viewport size - memoized to prevent reflows
@@ -58,9 +53,11 @@ export default function ResponsiveImage({
   };
 
   useEffect(() => {
-    // Use a single call and cache result to prevent reflows
-    const optimizedSrc = getOptimalSize();
-    setCurrentSrc(optimizedSrc);
+    // Directly use the src for faster loading
+    setCurrentSrc(src);
+    // Reset states when src changes
+    setIsLoaded(false);
+    setHasError(false);
   }, [src]);
 
   const handleLoad = () => {
@@ -68,8 +65,19 @@ export default function ResponsiveImage({
   };
 
   const handleError = () => {
-    setHasError(true);
-    setIsLoaded(true);
+    // Add retry logic - sometimes images fail due to network issues
+    setTimeout(() => {
+      const img = new Image();
+      img.onload = () => {
+        setHasError(false);
+        setIsLoaded(true);
+      };
+      img.onerror = () => {
+        setHasError(true);
+        setIsLoaded(true);
+      };
+      img.src = currentSrc;
+    }, 1000); // Retry after 1 second
   };
 
   // Determine appropriate sizes attribute
@@ -83,14 +91,12 @@ export default function ResponsiveImage({
     <div className={`relative overflow-hidden ${className}`}>
       <img
         src={currentSrc}
-        srcSet={generateSrcSet(currentSrc)}
-        sizes={defaultSizes}
         alt={alt}
         loading={priority ? 'eager' : loading}
         width={width}
         height={height}
         className={`
-          transition-opacity duration-300 w-full h-full object-cover
+          transition-opacity duration-200 w-full h-full object-cover
           ${isLoaded ? 'opacity-100' : 'opacity-0'}
           ${hasError ? 'bg-gray-200' : ''}
         `}
@@ -108,10 +114,21 @@ export default function ResponsiveImage({
         </div>
       )}
       
-      {/* Error state */}
+      {/* Error state - retry button */}
       {hasError && (
         <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-          <div className="text-gray-500 text-sm">Image unavailable</div>
+          <button 
+            onClick={() => {
+              setHasError(false);
+              setIsLoaded(false);
+              // Force reload the image
+              const timestamp = new Date().getTime();
+              setCurrentSrc(`${src}?t=${timestamp}`);
+            }}
+            className="text-gray-600 text-sm hover:text-gray-800 transition-colors"
+          >
+            Image unavailable - Click to retry
+          </button>
         </div>
       )}
     </div>
@@ -130,16 +147,14 @@ export function LazyImage(props: ResponsiveImageProps) {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
-          // Use requestAnimationFrame to prevent forced reflows
-          requestAnimationFrame(() => {
-            setShouldLoad(true);
-          });
+          // Load immediately when intersecting for faster response
+          setShouldLoad(true);
           observer.disconnect();
         }
       },
       {
-        rootMargin: '50px', // Load image 50px before it comes into view
-        threshold: 0.1, // Trigger when 10% visible to be more efficient
+        rootMargin: '200px', // Load image 200px before it comes into view for smoother experience
+        threshold: 0.01, // Trigger as soon as any part is visible
       }
     );
 

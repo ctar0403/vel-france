@@ -30,7 +30,7 @@ interface CatalogueFilters {
 }
 
 // Premium Product Card Component
-function LuxuryProductCard({ product }: { product: Product; index?: number }) {
+function LuxuryProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
@@ -96,6 +96,8 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
             sizes="(max-width: 640px) 300px, (max-width: 1024px) 350px, 400px"
             width={400}
             height={400}
+            loading={index < 8 ? "eager" : "lazy"}
+            priority={index < 4}
           />
         </motion.div>
         
