@@ -24,7 +24,7 @@
 /* Prevent layout shift on dropdown */
 [data-radix-popper-content-wrapper] {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 9998 !important;
 }
 
 /* Ensure header doesn't cause layout shift */
@@ -37,13 +37,21 @@ header {
 /* Fix dropdown positioning */
 [data-radix-dropdown-menu-content] {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 9998 !important;
 }
 
 /* Prevent body overflow and maintain layout stability */
 body {
   overflow-x: hidden;
   width: 100%;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Add padding for mobile bottom navigation */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Ensure container stability */
@@ -700,26 +708,6 @@ body {
 .slider-thumb::-moz-range-track {
   background: transparent;
   border: none;
-}
-
-/* Mobile Bottom Navigation - Critical Positioning Fix */
-nav[class*="fixed"][class*="bottom-0"] {
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 9999 !important;
-  width: 100% !important;
-  background-color: white !important;
-  border-top: 1px solid #e5e7eb !important;
-}
-
-/* Ensure mobile nav is always visible on small screens */
-@media (max-width: 768px) {
-  nav[class*="fixed"][class*="bottom-0"] {
-    display: block !important;
-    visibility: visible !important;
-  }
 }
 
 /* AlkSanet Font Application - Entire Website */
