@@ -52,19 +52,40 @@ export const optimizeFontLoading = () => {
   document.head.appendChild(style);
 };
 
-// Preload critical images for LCP optimization
+// Preload critical images for LCP optimization with proper sizing hints
 export const preloadCriticalImages = () => {
-  const images = [
-    { href: '/src/assets/Desktop-1_1754051373226.webp', media: '(min-width: 769px)' },
-    { href: '/src/assets/Mobile-1_1754051370153.webp', media: '(max-width: 768px)' }
+  const criticalImages = [
+    // Hero banner - first slide only for faster LCP
+    { href: '/src/assets/4_1754504202405.webp', media: '(min-width: 640px)', priority: 'high' },
+    { href: '/src/assets/discount_1754505093401_mobile.webp', media: '(max-width: 639px)', priority: 'high' },
+    // Logo - always visible
+    { href: '/src/assets/Your%20paragraph%20text%20(4)_1753542106373.webp', priority: 'high' },
+    // Flag icons - small but visible immediately
+    { href: '/src/assets/197380_1754501720841.png', priority: 'low' },
+    { href: '/src/assets/United-kingdom_flag_icon_round.svg_1754501741206.png', priority: 'low' }
   ];
 
-  images.forEach(({ href, media }) => {
+  criticalImages.forEach(({ href, media, priority }) => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
     link.href = href;
-    link.media = media;
+    if (media) link.media = media;
+    if (priority === 'high') {
+      link.setAttribute('fetchpriority', 'high');
+    }
+    document.head.appendChild(link);
+  });
+
+  // Add resource hints for image domains
+  const resourceHints = [
+    'https://c49faf85-37be-48eb-af28-0889dcc91f60-00-wdfi0w2idbxm.worf.replit.dev'
+  ];
+
+  resourceHints.forEach(domain => {
+    const link = document.createElement('link');
+    link.rel = 'dns-prefetch';
+    link.href = domain;
     document.head.appendChild(link);
   });
 };

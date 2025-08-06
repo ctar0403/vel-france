@@ -110,9 +110,9 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   src={product.imageUrl || '/placeholder-perfume.jpg'}
                   alt={formatProductName(product.name, product.brand)}
                   className="w-full h-full"
-                  sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
-                  width={300}
-                  height={300}
+                  imageType="productCard"
+                  displayWidth={160}
+                  displayHeight={120}
                   loading={index < 4 ? "eager" : "lazy"}
                   priority={index < 2}
                 />

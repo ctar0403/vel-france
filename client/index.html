@@ -20,6 +20,16 @@
     <!-- Preload critical font file -->
     <link rel="preload" href="/assets/alk-sanet_1754502110450.ttf" as="font" type="font/ttf" crossorigin>
     
+    <!-- Preload critical images with proper sizing -->
+    <!-- Hero banner images - prioritize first slide -->
+    <link rel="preload" href="/src/assets/4_1754504202405.webp" as="image" media="(min-width: 640px)" fetchpriority="high">
+    <link rel="preload" href="/src/assets/discount_1754505093401_mobile.webp" as="image" media="(max-width: 639px)" fetchpriority="high">
+    
+    <!-- Logo and flag icons - small but critical -->
+    <link rel="preload" href="/src/assets/Your%20paragraph%20text%20(4)_1753542106373.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="/src/assets/197380_1754501720841.png" as="image">
+    <link rel="preload" href="/src/assets/United-kingdom_flag_icon_round.svg_1754501741206.png" as="image">
+    
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
