@@ -23,15 +23,26 @@ export default function ProductCard({
   
   // Get the appropriate description based on current language
   const getDescription = () => {
-    const isGeorgian = i18n.language === 'ka';
+    const currentLang = i18n.language || 'en';
+    const isGeorgian = currentLang === 'ka' || currentLang.startsWith('ka');
+    
+    // For Georgian language, prefer Georgian description
     if (isGeorgian && product.descriptionGeorgian) {
       return product.descriptionGeorgian;
     }
+    
+    // For English/other languages, prefer English description
     if (!isGeorgian && product.descriptionEnglish) {
       return product.descriptionEnglish;
     }
-    // Fallback to legacy description field
-    return product.description;
+    
+    // Fallback: if Georgian but no Georgian description, try English
+    if (isGeorgian && !product.descriptionGeorgian && product.descriptionEnglish) {
+      return product.descriptionEnglish;
+    }
+    
+    // Final fallback to legacy description field
+    return product.description || '';
   };
   const getCategoryLabel = (category: string) => {
     switch (category.toLowerCase()) {
