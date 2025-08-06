@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Package, Home, Sparkles, Gift, ShoppingBag, ArrowRight, Copy, Check, Heart, Star } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 export default function PaymentSuccess() {
   const [location] = useLocation();
   const [copied, setCopied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const { user } = useAuth();
+  const { t } = useTranslation();
   
   // Extract order code from URL - more reliable method
   const orderCode = useMemo(() => {
@@ -182,8 +184,8 @@ export default function PaymentSuccess() {
                 transition={{ delay: 1, duration: 0.5 }}
                 className="text-gray-600 mb-2 text-xl leading-relaxed"
               >
-                Your exquisite fragrance selection has been 
-                <span className="font-semibold text-navy"> confirmed</span>
+                {t('paymentSuccess.exquisiteFragranceConfirmed', 'Your exquisite fragrance selection has been')} 
+                <span className="font-semibold text-navy"> {t('paymentSuccess.confirmed', 'confirmed')}</span>
               </motion.p>
             </motion.div>
 
@@ -203,8 +205,8 @@ export default function PaymentSuccess() {
                 >
                   <Gift className="w-6 h-6 text-gold mr-3" />
                   <div className="text-center">
-                    <p className="text-lg font-medium text-gray-700">Your Unique Order ID</p>
-                    <p className="text-sm text-gray-500 mt-1">Track your order with this 6-digit code</p>
+                    <p className="text-lg font-medium text-gray-700">{t('paymentSuccess.uniqueOrderId', 'Your Unique Order ID')}</p>
+                    <p className="text-sm text-gray-500 mt-1">{t('paymentSuccess.trackOrderCode', 'Track your order with this 6-digit code')}</p>
                   </div>
                 </motion.div>
                 
@@ -255,7 +257,7 @@ export default function PaymentSuccess() {
                       size="lg"
                     >
                       <ShoppingBag className="mr-3 h-6 w-6" />
-                      View Complete Order Details
+                      {t('paymentSuccess.viewCompleteOrderDetails', 'View Complete Order Details')}
                       <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
                     </Button>
                   </motion.div>
@@ -269,7 +271,7 @@ export default function PaymentSuccess() {
                 className="bg-gradient-to-r from-cream/70 to-pastel-pink/40 rounded-2xl p-6 mb-6 relative z-10 border border-gold/30"
               >
                 <p className="text-center text-gray-600">
-                  Your order is being processed. If you don't see your order code, please check your email or contact support.
+                  {t('paymentSuccess.orderBeingProcessed', 'Your order is being processed. If you don\'t see your order code, please check your email or contact support.')}
                 </p>
               </motion.div>
             )}
@@ -283,7 +285,7 @@ export default function PaymentSuccess() {
             >
               <div className="flex items-center justify-center text-navy mb-4">
                 <Package className="h-6 w-6 mr-3" />
-                <span className="font-playfair font-semibold text-lg">What happens next?</span>
+                <span className="font-playfair font-semibold text-lg">{t('paymentSuccess.whatHappensNext', 'What happens next?')}</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
                 <motion.div
@@ -293,7 +295,7 @@ export default function PaymentSuccess() {
                   className="flex items-center"
                 >
                   <div className="w-2 h-2 bg-gold rounded-full mr-3" />
-                  Order confirmation email sent
+                  {t('paymentSuccess.orderConfirmationSent', 'Order confirmation email sent')}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
@@ -302,7 +304,7 @@ export default function PaymentSuccess() {
                   className="flex items-center"
                 >
                   <div className="w-2 h-2 bg-gold rounded-full mr-3" />
-                  Careful packaging with love
+                  {t('paymentSuccess.carefulPackaging', 'Careful packaging with love')}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -311,7 +313,7 @@ export default function PaymentSuccess() {
                   className="flex items-center"
                 >
                   <div className="w-2 h-2 bg-gold rounded-full mr-3" />
-                  Ships within 1-2 business days
+                  {t('paymentSuccess.shipsWithin', 'Ships within 1-2 business days')}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
@@ -320,7 +322,7 @@ export default function PaymentSuccess() {
                   className="flex items-center"
                 >
                   <div className="w-2 h-2 bg-gold rounded-full mr-3" />
-                  Track your precious delivery
+                  {t('paymentSuccess.trackDelivery', 'Track your precious delivery')}
                 </motion.div>
               </div>
             </motion.div>
@@ -339,7 +341,7 @@ export default function PaymentSuccess() {
                     className="w-full border-2 border-navy text-navy hover:bg-navy/10 hover:text-navy transition-all duration-300 py-3 rounded-xl"
                   >
                     <Home className="mr-2 h-5 w-5" />
-                    Continue Shopping
+                    {t('paymentSuccess.continueShopping', 'Continue Shopping')}
                   </Button>
                 </motion.div>
               </Link>
@@ -352,7 +354,7 @@ export default function PaymentSuccess() {
                       className="w-full border-2 border-gold text-gold hover:bg-gold hover:text-navy transition-all duration-300 py-3 rounded-xl"
                     >
                       <Package className="mr-2 h-5 w-5" />
-                      Order History
+                      {t('paymentSuccess.orderHistory', 'Order History')}
                     </Button>
                   </motion.div>
                 </Link>
