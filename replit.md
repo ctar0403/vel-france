@@ -9,6 +9,7 @@ Order code format: 6-digit numbers only (no letters).
 Design requirements: Very modern and advanced design aesthetic with animations.
 Home page focus: Pure design focus without made-up stories, using product reels for categories like "Most Popular", "Most Sold", etc.
 Font preference: AlkSanet Georgian font applied site-wide to all text elements (both Georgian and English).
+Default language: Georgian (ka) - website loads in Georgian for new users, with English as fallback.
 
 ## System Architecture
 
@@ -58,6 +59,7 @@ Font preference: AlkSanet Georgian font applied site-wide to all text elements (
 - **1000+ total translation entries**: Covers all components including catalogue, profile, payment success, and all legal pages
 - **100% translation coverage**: No hardcoded English text remaining across entire website infrastructure
 - **Editable via admin**: All translations manageable through admin panel at /admin-translations
+- **Default language**: Georgian (ka) set as primary language for new users with automatic fallback to English
 
 ## Recent Performance Optimizations (January 2025)
 

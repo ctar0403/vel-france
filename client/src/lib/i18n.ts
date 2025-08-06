@@ -21,6 +21,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    lng: 'ka', // default language (Georgian)
     fallbackLng: 'en',
     debug: false,
     
@@ -53,6 +54,11 @@ if (typeof window !== 'undefined') {
   const currentLang = i18n.language || 'ka';
   document.documentElement.setAttribute('lang', currentLang);
   document.documentElement.setAttribute('data-language', currentLang);
+  
+  // Set Georgian as default if no language is stored
+  if (!localStorage.getItem('i18nextLng')) {
+    i18n.changeLanguage('ka');
+  }
 }
 
 export default i18n;
