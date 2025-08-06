@@ -148,10 +148,10 @@ export default function Profile() {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-navy mb-4">Please log in to view your profile</h1>
+          <h1 className="text-2xl font-bold text-navy mb-4">{t('profile.pleaselogin', 'Please log in to view your profile')}</h1>
           <Link href="/auth">
             <Button className="bg-gold hover:bg-deep-gold text-navy">
-              Go to Login
+              {t('profile.gotologin', 'Go to Login')}
             </Button>
           </Link>
         </div>
@@ -191,7 +191,7 @@ export default function Profile() {
                   </h1>
                   <p className="text-gray-600">{user.email}</p>
                   <p className="text-sm text-gray-500">
-                    Member since {new Date(user.createdAt!).getFullYear()}
+                    {t('profile.membersince', 'Member since')} {new Date(user.createdAt!).getFullYear()}
                   </p>
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default function Profile() {
                 className="border-gold text-gold hover:bg-gold hover:text-navy"
               >
                 <Edit3 className="h-4 w-4 mr-2" />
-                {isEditing ? 'Cancel' : 'Edit Profile'}
+                {isEditing ? t('profile.cancel', 'Cancel') : t('profile.editprofile', 'Edit Profile')}
               </Button>
             </div>
 
@@ -217,7 +217,7 @@ export default function Profile() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name
+                      {t('profile.firstname', 'First Name')}
                     </label>
                     <Input
                       value={editForm.firstName}
@@ -227,7 +227,7 @@ export default function Profile() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name
+                      {t('profile.lastname', 'Last Name')}
                     </label>
                     <Input
                       value={editForm.lastName}
@@ -238,7 +238,7 @@ export default function Profile() {
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t('profile.email', 'Email')}
                   </label>
                   <Input
                     type="email"
@@ -252,7 +252,7 @@ export default function Profile() {
                   disabled={updateProfileMutation.isPending}
                   className="bg-gold hover:bg-deep-gold text-navy"
                 >
-                  {updateProfileMutation.isPending ? 'Updating...' : 'Update Profile'}
+                  {updateProfileMutation.isPending ? t('profile.updating', 'Updating...') : t('profile.updateprofile', 'Update Profile')}
                 </Button>
               </motion.form>
             )}
@@ -264,21 +264,21 @@ export default function Profile() {
               <CardContent className="p-6 text-center">
                 <ShoppingBag className="h-8 w-8 text-gold mx-auto mb-2" />
                 <h3 className="text-2xl font-bold text-navy">{cartItemCount}</h3>
-                <p className="text-gray-600">Items in Cart</p>
+                <p className="text-gray-600">{t('profile.itemsincart', 'Items in Cart')}</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Package className="h-8 w-8 text-gold mx-auto mb-2" />
                 <h3 className="text-2xl font-bold text-navy">{orders.length}</h3>
-                <p className="text-gray-600">Total Orders</p>
+                <p className="text-gray-600">{t('profile.totalorders', 'Total Orders')}</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6 text-center">
                 <Calendar className="h-8 w-8 text-gold mx-auto mb-2" />
                 <h3 className="text-2xl font-bold text-navy">₾{totalSpent.toFixed(2)}</h3>
-                <p className="text-gray-600">Total Spent</p>
+                <p className="text-gray-600">{t('profile.totalspent', 'Total Spent')}</p>
               </CardContent>
             </Card>
           </div>
@@ -286,8 +286,8 @@ export default function Profile() {
           {/* Main Content Tabs */}
           <Tabs defaultValue="orders" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="orders">Order History</TabsTrigger>
-              <TabsTrigger value="settings">Account Settings</TabsTrigger>
+              <TabsTrigger value="orders">{t('profile.orderhistory', 'Order History')}</TabsTrigger>
+              <TabsTrigger value="settings">{t('profile.accountsettings', 'Account Settings')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="orders" className="space-y-6">
@@ -295,7 +295,7 @@ export default function Profile() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Package className="h-5 w-5 mr-2" />
-                    Order History
+                    {t('profile.orderhistory', 'Order History')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -311,11 +311,11 @@ export default function Profile() {
                   ) : orders.length === 0 ? (
                     <div className="text-center py-8">
                       <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No orders yet</h3>
-                      <p className="text-gray-600 mb-4">Start shopping to see your orders here</p>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('profile.noordersyet', 'No orders yet')}</h3>
+                      <p className="text-gray-600 mb-4">{t('profile.startshoppingmessage', 'Start shopping to see your orders here')}</p>
                       <Link href="/catalogue">
                         <Button className="bg-gold hover:bg-deep-gold text-navy">
-                          Browse Products
+                          {t('profile.browseproducts', 'Browse Products')}
                         </Button>
                       </Link>
                     </div>
@@ -326,7 +326,7 @@ export default function Profile() {
                           <div className="flex justify-between items-start mb-4">
                             <div>
                               <h3 className="font-semibold text-lg text-navy">
-                                Order #{order.orderCode}
+                                {t('profile.ordernum', 'Order')} #{order.orderCode}
                               </h3>
                               <p className="text-gray-600">
                                 {new Date(order.createdAt!).toLocaleDateString('en-US', {
@@ -350,7 +350,7 @@ export default function Profile() {
                             <Link href={`/order/${order.orderCode}`}>
                               <Button variant="outline" size="sm">
                                 <Eye className="h-4 w-4 mr-2" />
-                                View Details
+                                {t('profile.viewdetails', 'View Details')}
                               </Button>
                             </Link>
                           </div>
@@ -365,32 +365,32 @@ export default function Profile() {
             <TabsContent value="settings" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Information</CardTitle>
+                  <CardTitle>{t('profile.accountinformation', 'Account Information')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        First Name
+                        {t('profile.firstname', 'First Name')}
                       </label>
                       <p className="text-gray-900">{user.firstName}</p>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Name
+                        {t('profile.lastname', 'Last Name')}
                       </label>
                       <p className="text-gray-900">{user.lastName}</p>
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
+                      {t('profile.emailaddress', 'Email Address')}
                     </label>
                     <p className="text-gray-900">{user.email}</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Member Since
+                      {t('profile.membersince', 'Member Since')}
                     </label>
                     <p className="text-gray-900">
                       {new Date(user.createdAt!).toLocaleDateString('en-US', {
@@ -405,11 +405,11 @@ export default function Profile() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Preferences</CardTitle>
+                  <CardTitle>{t('profile.preferences', 'Preferences')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600">
-                    Additional account preferences and settings will be available here in future updates.
+                    {t('profile.additionalpreferences', 'Additional account preferences and settings will be available here in future updates.')}
                   </p>
                 </CardContent>
               </Card>
