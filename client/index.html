@@ -184,27 +184,11 @@
       }
     </style>
     
-    <!-- CSS Optimization for Render Blocking -->
-    <link rel="preload" href="/src/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'" media="print">
-    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
-    
     <!-- Performance optimization script -->
     <script>
-      // Optimize CSS loading and add performance classes
+      // Smart CSS loading optimization to reduce render blocking while preserving design
       (function() {
-        // Fix font loading issue
-        const fontLink = document.querySelector('[href*="Roboto"]');
-        if (fontLink) {
-          fontLink.media = 'all';
-        }
-        
-        // Fix main CSS loading
-        const cssLink = document.querySelector('[href*="index.css"]');
-        if (cssLink) {
-          cssLink.media = 'all';
-        }
-        
-        // Add performance optimization class to body after load
+        // Add performance optimization class to body after initial render
         function addPerformanceClass() {
           document.body.classList.add('performance-optimized', 'critical-path-optimized');
         }
@@ -214,6 +198,12 @@
           document.addEventListener('DOMContentLoaded', addPerformanceClass);
         } else {
           addPerformanceClass();
+        }
+        
+        // Optimize Google Fonts loading
+        const fontLink = document.querySelector('[href*="Roboto"]');
+        if (fontLink && fontLink.media === 'print') {
+          fontLink.media = 'all';
         }
       })();
     </script>
