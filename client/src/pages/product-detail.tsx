@@ -412,7 +412,6 @@ function ProductDetailPage() {
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-slate-600">{t('product.acceptedmethods', 'ACCEPTED METHODS')}</span>
                         <div className="flex items-center space-x-1">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                           <span className="text-xs text-green-600 font-medium">{t('product.secure', 'SECURE')}</span>
                         </div>
                       </div>
