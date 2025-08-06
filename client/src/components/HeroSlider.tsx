@@ -136,17 +136,9 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
   // Always show the first slide immediately for optimal LCP, load others progressively
   const firstSlide = slides[0];
   
-  if (!imagesLoaded) {
-    return (
-      <div className={`w-full bg-gray-100 animate-pulse ${className}`}>
-        <div className="aspect-[16/9] md:aspect-[21/9] w-full bg-gray-200"></div>
-      </div>
-    );
-  }
-
   return (
     <div 
-      className={`relative w-full overflow-hidden hero-slider-container ${className}`}
+      className={`relative w-full overflow-hidden ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -155,31 +147,19 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     >
       {/* Slider container */}
       <div 
-        className="flex transition-transform duration-1000 ease-in-out h-auto"
+        className="flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => (
           <div key={index} className="w-full flex-shrink-0">
-            <div 
+            <img
+              src={isMobile ? slide.mobile : slide.desktop}
+              alt={slide.alt}
+              className="w-full h-auto object-cover cursor-pointer"
               onClick={handleBannerClick}
-              className="cursor-pointer w-full block"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
-              aria-label={t('HeroSlider.gotocatalogue', 'Go to catalogue')}
-            >
-              <img
-                src={isMobile ? slide.mobile : slide.desktop}
-                alt={slide.alt}
-                className="w-full h-auto object-cover block"
-                loading={index === 0 ? "eager" : "lazy"}
-                width={isMobile ? 480 : 1200}
-                height={isMobile ? 360 : 900}
-                sizes={isMobile ? "480px" : "1200px"}
-                {...(index === 0 && { fetchpriority: "high" as const })}
-                style={{ display: 'block' }}
-              />
-            </div>
+              loading={index === 0 ? "eager" : "lazy"}
+              {...(index === 0 && { fetchpriority: "high" as const })}
+            />
           </div>
         ))}
       </div>
@@ -195,7 +175,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
                 ? 'bg-white opacity-100 scale-125' 
                 : 'bg-white opacity-50 hover:opacity-75'
             }`}
-            aria-label={t('HeroSlider.gotoslide', `Go to slide ${index + 1}`)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
@@ -204,7 +184,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
       <button
         onClick={() => setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)}
         className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
-        aria-label={t('HeroSlider.previousslide', 'Previous slide')}
+        aria-label="Previous slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -214,7 +194,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
       <button
         onClick={() => setCurrentSlide((currentSlide + 1) % slides.length)}
         className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
-        aria-label={t('HeroSlider.nextslide', 'Next slide')}
+        aria-label="Next slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
