@@ -411,9 +411,6 @@ function ProductDetailPage() {
                     <div className="bg-gray-50 rounded-xl p-3">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-slate-600">{t('product.acceptedmethods', 'ACCEPTED METHODS')}</span>
-                        <div className="flex items-center space-x-1">
-                          <span className="text-xs text-green-600 font-medium">{t('product.secure', 'SECURE')}</span>
-                        </div>
                       </div>
                       
                       <div className="flex items-center justify-between">
