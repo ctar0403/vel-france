@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import footerLogoImage from "@assets/Your paragraph text (5)_1753895494203.webp";
 
 export default function Footer() {
@@ -20,34 +21,26 @@ export default function Footer() {
               />
             </Link>
             
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 mt-4">
               <a 
-                href="#" 
-                className="text-navy hover:text-gold transition-colors"
-                aria-label={t('Footer.facebook', 'Facebook')}
+                href="https://www.facebook.com/velfrance" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 bg-[#1877F2] hover:bg-[#166FE5] text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label={t('contact.facebook', 'Facebook')}
+                data-testid="footer-facebook-link"
               >
-                <i className="fab fa-facebook-f text-lg"></i>
+                <FaFacebookF className="text-sm" />
               </a>
               <a 
-                href="#" 
-                className="text-navy hover:text-gold transition-colors"
-                aria-label={t('Footer.instagram', 'Instagram')}
+                href="https://www.instagram.com/velfrance.ge/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 bg-gradient-to-r from-[#E4405F] via-[#F77737] to-[#FCAF45] hover:from-[#D63384] hover:via-[#FD7E14] hover:to-[#FFC107] text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label={t('contact.instagram', 'Instagram')}
+                data-testid="footer-instagram-link"
               >
-                <i className="fab fa-instagram text-lg"></i>
-              </a>
-              <a 
-                href="#" 
-                className="text-navy hover:text-gold transition-colors"
-                aria-label={t('Footer.twitter', 'Twitter')}
-              >
-                <i className="fab fa-twitter text-lg"></i>
-              </a>
-              <a 
-                href="#" 
-                className="text-navy hover:text-gold transition-colors"
-                aria-label={t('Footer.youtube', 'YouTube')}
-              >
-                <i className="fab fa-youtube text-lg"></i>
+                <FaInstagram className="text-sm" />
               </a>
             </div>
           </div>
