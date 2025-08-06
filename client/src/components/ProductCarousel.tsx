@@ -92,94 +92,69 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       >
         {products.map((product, index) => (
           <SwiperSlide key={product.id}>
+            <Link 
+              to={`/product/${product.id}`}
+              className="block h-full"
+            >
             <motion.div
-              className="swiper-product-card group h-full relative"
+              className="swiper-product-card group cursor-pointer h-full"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5 }}
             >
-              <Link 
-                to={`/product/${product.id}`}
-                className="block h-full cursor-pointer"
-              >
-                {/* Product Image */}
-                <div className="product-image relative">
-                  <LazyImage
-                    src={product.imageUrl || '/placeholder-perfume.jpg'}
-                    alt={formatProductName(product.name, product.brand)}
-                    className="w-full h-full"
-                    imageType="productCard"
-                    displayWidth={160}
-                    displayHeight={120}
-                    loading={index < 4 ? "eager" : "lazy"}
-                    priority={index < 2}
-                  />
-                  
-                  {/* Badge - Hidden on mobile */}
-                  {showBadges && badgeText && (
-                    <div className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-1 rounded-full ${badgeColor} hidden md:block`}>
-                      {badgeText(index)}
-                    </div>
-                  )}
-                </div>
-
-                {/* Product Content - Matching Catalogue Exactly */}
-                <div className="p-6 flex-grow flex flex-col min-h-[120px]">
-                  <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
-                    {formatProductName(product.name, product.brand)}
-                  </h3>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-col gap-1">
-                      {product.discountPercentage && product.discountPercentage > 0 ? (
-                        <>
-                          <div className="flex items-center gap-2">
-                            <span className="text-base text-gold font-normal">
-                              ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
-                            </span>
-                            <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
-                              -{product.discountPercentage}%
-                            </span>
-                          </div>
-                          <span className="text-sm text-gray-500 line-through">
-                            ₾{parseFloat(product.price.toString()).toFixed(2)}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-base text-gold font-normal">
-                          ₾{parseFloat(product.price.toString()).toFixed(2)}
-                        </span>
-                      )}
-                    </div>
+              {/* Product Image */}
+              <div className="product-image relative">
+                <LazyImage
+                  src={product.imageUrl || '/placeholder-perfume.jpg'}
+                  alt={formatProductName(product.name, product.brand)}
+                  className="w-full h-full"
+                  sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 250px"
+                  width={300}
+                  height={300}
+                  loading={index < 4 ? "eager" : "lazy"}
+                  priority={index < 2}
+                />
+                
+                {/* Badge - Hidden on mobile */}
+                {showBadges && badgeText && (
+                  <div className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-1 rounded-full ${badgeColor} hidden md:block`}>
+                    {badgeText(index)}
                   </div>
-                </div>
-              </Link>
-              
-              {/* Add to Cart Button - Outside Link to prevent conflict */}
-              {onAddToCart && (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('ProductCarousel: Add to cart clicked for product:', product.id);
-                    onAddToCart(product.id);
-                  }}
-                  disabled={isAddingToCart}
-                  className="absolute bottom-6 right-6 bg-navy hover:bg-navy/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105 flex items-center justify-center min-w-[36px] h-9 z-10"
-                  title="Add to Cart"
-                >
-                  {isAddingToCart ? (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                )}
+              </div>
+
+              {/* Product Content - Matching Catalogue Exactly */}
+              <div className="p-6 flex-grow flex flex-col min-h-[120px]">
+                <h3 className="text-lg text-navy leading-tight line-clamp-2 mb-3 font-normal">
+                  {formatProductName(product.name, product.brand)}
+                </h3>
+
+                <div className="flex flex-col gap-1">
+                  {product.discountPercentage && product.discountPercentage > 0 ? (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <span className="text-base text-gold font-normal">
+                          ₾{(parseFloat(product.price.toString()) * (1 - product.discountPercentage / 100)).toFixed(2)}
+                        </span>
+                        <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-medium">
+                          -{product.discountPercentage}%
+                        </span>
+                      </div>
+                      <span className="text-sm text-gray-500 line-through">
+                        ₾{parseFloat(product.price.toString()).toFixed(2)}
+                      </span>
+                    </>
                   ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
+                    <span className="text-base text-gold font-normal">
+                      ₾{parseFloat(product.price.toString()).toFixed(2)}
+                    </span>
                   )}
-                </button>
-              )}
+                </div>
+              </div>
             </motion.div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

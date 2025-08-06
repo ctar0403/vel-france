@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { refreshTranslations } from '@/lib/translations';
-import ResponsiveImage from '@/components/ResponsiveImage';
 import georgianFlag from '@assets/197380_1754501720841.png';
 import ukFlag from '@assets/United-kingdom_flag_icon_round.svg_1754501741206.png';
 
@@ -37,15 +36,10 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) =
           }`}
           aria-label={`Switch to ${language.name}`}
         >
-          <ResponsiveImage
+          <img
             src={language.flag}
             alt={language.name}
             className="w-full h-full object-cover"
-            imageType="flagIcon"
-            width={28}
-            height={28}
-            loading="eager"
-            priority={true}
           />
         </button>
       ))}

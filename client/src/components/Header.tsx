@@ -85,7 +85,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 className="h-12 sm:h-10 lg:h-12 cursor-pointer"
                 width="120"
                 height="48"
-                loading="eager"
               />
             </Link>
           </div>

@@ -133,9 +133,14 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     }
   };
 
-  // Always show the first slide immediately for optimal LCP, load others progressively
-  const firstSlide = slides[0];
-  
+  if (!imagesLoaded) {
+    return (
+      <div className={`w-full bg-gray-100 animate-pulse ${className}`}>
+        <div className="aspect-[16/9] md:aspect-[21/9] w-full bg-gray-200"></div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className={`relative w-full overflow-hidden ${className}`}
@@ -152,51 +157,59 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
       >
         {slides.map((slide, index) => (
           <div key={index} className="w-full flex-shrink-0">
-            <img
-              src={isMobile ? slide.mobile : slide.desktop}
-              alt={slide.alt}
-              className="w-full h-auto object-cover cursor-pointer"
+            <div 
               onClick={handleBannerClick}
-              loading={index === 0 ? "eager" : "lazy"}
-              {...(index === 0 && { fetchpriority: "high" as const })}
-            />
+              className="cursor-pointer w-full h-full"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleBannerClick()}
+              aria-label={t('HeroSlider.gotocatalogue', 'Go to catalogue')}
+            >
+              <img
+                src={isMobile ? slide.mobile : slide.desktop}
+                alt={slide.alt}
+                className="w-full h-auto object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+                {...(index === 0 && { fetchpriority: "high" as const })}
+              />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Slide indicators */}
+      {/* Enhanced slide indicators - larger on mobile for better touch targets */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
               index === currentSlide 
                 ? 'bg-white opacity-100 scale-125' 
                 : 'bg-white opacity-50 hover:opacity-75'
             }`}
-            aria-label={`Go to slide ${index + 1}`}
+            aria-label={t('HeroSlider.gotoslide', `Go to slide ${index + 1}`)}
           />
         ))}
       </div>
 
-      {/* Navigation arrows */}
+      {/* Always visible navigation arrows for both desktop and mobile */}
       <button
         onClick={() => setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
-        aria-label="Previous slide"
+        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
+        aria-label={t('HeroSlider.previousslide', 'Previous slide')}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={() => setCurrentSlide((currentSlide + 1) % slides.length)}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
-        aria-label="Next slide"
+        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
+        aria-label={t('HeroSlider.nextslide', 'Next slide')}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>

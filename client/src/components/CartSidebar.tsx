@@ -1,8 +1,7 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
@@ -18,11 +17,8 @@ interface CartSidebarProps {
 }
 
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
-  const queryClientHook = useQueryClient();
   const { toast } = useToast();
   const { t } = useTranslation();
-  
-
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
