@@ -65,7 +65,7 @@ export default function Terms() {
                 <p><strong>{t('terms.companyName', 'Company Name:')}:</strong> I/E PERFUMETRADE NETWORK</p>
                 <p><strong>{t('terms.identificationNumber', 'Identification Number:')}:</strong> 39001004952</p>
                 <p><strong>{t('terms.address', 'Address:')}:</strong> Tbilisi, Vaja Pshavela 70g</p>
-                <p><strong>{t('terms.country', 'Country:')}:</strong> {t('terms.country' === 'Country:' ? 'Georgia' : 'საქართველო', 'Georgia')}</p>
+                <p><strong>{t('terms.country', 'Country:')}:</strong> Georgia</p>
               </div>
             </div>
 
@@ -78,31 +78,31 @@ export default function Terms() {
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div className="flex items-center mb-6">
               <Scale className="h-6 w-6 text-gold mr-3" />
-              <h2 className="text-2xl font-semibold text-navy">Use of Website</h2>
+              <h2 className="text-2xl font-semibold text-navy">{t('terms.useOfWebsite', 'Use of Website')}</h2>
             </div>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Acceptable Use</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.acceptableUse', 'Acceptable Use')}</h3>
                 <p className="text-gray-600">
-                  You may use our website for lawful purposes only. You agree not to use the site in any way that violates applicable laws or regulations.
+                  {t('terms.acceptableUseDesc', 'You may use our website for lawful purposes only. You agree not to use the site in any way that violates applicable laws or regulations.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Account Responsibility</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.accountResponsibility', 'Account Responsibility')}</h3>
                 <p className="text-gray-600">
-                  You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.
+                  {t('terms.accountResponsibilityDesc', 'You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Prohibited Activities</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.prohibitedActivities', 'Prohibited Activities')}</h3>
                 <ul className="list-disc list-inside text-gray-600 space-y-1">
-                  <li>Attempting to gain unauthorized access to our systems</li>
-                  <li>Using the website for fraudulent purposes</li>
-                  <li>Interfering with the website's operation</li>
-                  <li>Violating intellectual property rights</li>
+                  <li>{t('terms.prohibitedList1', 'Attempting to gain unauthorized access to our systems')}</li>
+                  <li>{t('terms.prohibitedList2', 'Using the website for fraudulent purposes')}</li>
+                  <li>{t('terms.prohibitedList3', 'Interfering with the website\'s operation')}</li>
+                  <li>{t('terms.prohibitedList4', 'Violating intellectual property rights')}</li>
                 </ul>
               </div>
             </div>
@@ -110,27 +110,27 @@ export default function Terms() {
 
           {/* Orders and Payments */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-semibold text-navy mb-6">Orders and Payments</h2>
+            <h2 className="text-2xl font-semibold text-navy mb-6">{t('terms.ordersAndPayments', 'Orders and Payments')}</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Order Acceptance</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.orderAcceptance', 'Order Acceptance')}</h3>
                 <p className="text-gray-600">
-                  All orders are subject to acceptance and availability. We reserve the right to refuse or cancel any order at our discretion.
+                  {t('terms.orderAcceptanceDesc', 'All orders are subject to acceptance and availability. We reserve the right to refuse or cancel any order at our discretion.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Pricing</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.pricing', 'Pricing')}</h3>
                 <p className="text-gray-600">
-                  All prices are listed in Georgian Lari (₾) and include applicable taxes. Prices may change without notice, but confirmed orders will honor the price at the time of purchase.
+                  {t('terms.pricingDesc', 'All prices are listed in Georgian Lari (₾) and include applicable taxes. Prices may change without notice, but confirmed orders will honor the price at the time of purchase.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Payment</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.payment', 'Payment')}</h3>
                 <p className="text-gray-600">
-                  Payment is required at the time of order. We accept various payment methods as displayed during checkout. All transactions are processed securely.
+                  {t('terms.paymentDesc', 'Payment is required at the time of order. We accept various payment methods as displayed during checkout. All transactions are processed securely.')}
                 </p>
               </div>
             </div>
@@ -138,22 +138,22 @@ export default function Terms() {
 
           {/* Product Information */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-semibold text-navy mb-6">Product Information</h2>
+            <h2 className="text-2xl font-semibold text-navy mb-6">{t('terms.productInformation', 'Product Information')}</h2>
             
             <div className="space-y-4">
               
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Product Descriptions</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.productDescriptions', 'Product Descriptions')}</h3>
                 <p className="text-gray-600">
-                  While we strive for accuracy in product descriptions and images, slight variations may occur. Fragrance perception can vary between individuals.
+                  {t('terms.productDescriptionsDesc', 'While we strive for accuracy in product descriptions and images, slight variations may occur. Fragrance perception can vary between individuals.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Returns Policy</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.returnsPolicy', 'Returns Policy')}</h3>
                 <p className="text-gray-600">
-                  Due to hygiene and safety considerations, we do not accept returns on perfume products. Please review our Returns Policy for complete details.
+                  {t('terms.returnsPolicyDesc', 'Due to hygiene and safety considerations, we do not accept returns on perfume products. Please review our Returns Policy for complete details.')}
                 </p>
               </div>
             </div>
@@ -161,20 +161,20 @@ export default function Terms() {
 
           {/* Limitation of Liability */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-semibold text-navy mb-6">Limitation of Liability</h2>
+            <h2 className="text-2xl font-semibold text-navy mb-6">{t('terms.limitationOfLiability', 'Limitation of Liability')}</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Service Availability</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.serviceAvailability', 'Service Availability')}</h3>
                 <p className="text-gray-600">
-                  While we strive to maintain uninterrupted service, we cannot guarantee that our website will be available at all times or free from technical issues.
+                  {t('terms.serviceAvailabilityDesc', 'While we strive to maintain uninterrupted service, we cannot guarantee that our website will be available at all times or free from technical issues.')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-navy mb-2">Damages</h3>
+                <h3 className="text-lg font-medium text-navy mb-2">{t('terms.damages', 'Damages')}</h3>
                 <p className="text-gray-600">
-                  Our liability for any damages arising from your use of our website or products is limited to the amount you paid for the specific product or service.
+                  {t('terms.damagesDesc', 'Our liability for any damages arising from your use of our website or products is limited to the amount you paid for the specific product or service.')}
                 </p>
               </div>
             </div>
@@ -184,19 +184,19 @@ export default function Terms() {
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center mb-6">
               <Info className="h-6 w-6 text-gold mr-3" />
-              <h2 className="text-2xl font-semibold text-navy">Contact Information</h2>
+              <h2 className="text-2xl font-semibold text-navy">{t('terms.contactInformation', 'Contact Information')}</h2>
             </div>
             
             <p className="text-gray-600 mb-4">
-              If you have any questions about these Terms & Conditions, please contact us:
+              {t('terms.contactDesc', 'If you have any questions about these Terms & Conditions, please contact us:')}
             </p>
             
             <div className="bg-gold/10 rounded-lg p-4">
               <p className="text-navy font-medium">I/E PERFUMETRADE NETWORK</p>
-              <p className="text-gray-600">Operating as: Vel France</p>
+              <p className="text-gray-600">{t('terms.operatingAs', 'Operating as:')}: Vel France</p>
               <p className="text-gray-600">ID: 39001004952</p>
-              <p className="text-gray-600">Address: Tbilisi, Vaja Pshavela 70g</p>
-              <p className="text-gray-600">Email: info@velfrance.ge</p>
+              <p className="text-gray-600">{t('terms.address', 'Address:')}: Tbilisi, Vaja Pshavela 70g</p>
+              <p className="text-gray-600">{t('terms.email', 'Email:')}: info@velfrance.ge</p>
             </div>
           </div>
         </div>
