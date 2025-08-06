@@ -42,7 +42,9 @@ export const users = pgTable("users", {
 export const products = pgTable("products", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name", { length: 255 }).notNull(),
-  description: text("description").notNull(),
+  description: text("description").notNull(), // Legacy field, kept for migration
+  descriptionGeorgian: text("description_georgian"), // Georgian description
+  descriptionEnglish: text("description_english"), // English description
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   discountPercentage: integer("discount_percentage").default(0), // Discount percentage (0-100)
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
@@ -189,6 +191,9 @@ export const insertProductSchema = createInsertSchema(products).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  descriptionGeorgian: z.string().optional(),
+  descriptionEnglish: z.string().optional(),
 });
 
 export const insertCartItemSchema = createInsertSchema(cartItems).omit({

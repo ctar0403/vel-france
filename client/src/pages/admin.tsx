@@ -1299,6 +1299,8 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
   const [formData, setFormData] = useState<InsertProduct>({
     name: '',
     description: '',
+    descriptionGeorgian: '',
+    descriptionEnglish: '',
     price: '0.00',
     category: 'Unisex',
     brand: '',
@@ -1390,6 +1392,8 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
         setFormData({
           name: product.name || '',
           description: product.description || '',
+          descriptionGeorgian: product.descriptionGeorgian || '',
+          descriptionEnglish: product.descriptionEnglish || '',
           price: product.price || '0.00',
           category: product.category || 'Unisex',
           brand: product.brand || '',
@@ -1409,10 +1413,11 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
         setFormData({
           name: '',
           description: '',
+          descriptionGeorgian: '',
+          descriptionEnglish: '',
           price: '0.00',
           category: 'Unisex',
           brand: '',
-
           imageUrl: '',
           inStock: true,
         });
@@ -1591,18 +1596,45 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
             </p>
           </div>
 
-          {/* Product Description */}
+          {/* Product Descriptions - Dual Language */}
           <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="descriptionGeorgian">Georgian Description *</Label>
+                <Textarea
+                  id="descriptionGeorgian"
+                  value={formData.descriptionGeorgian || ''}
+                  onChange={(e) => setFormData({ ...formData, descriptionGeorgian: e.target.value })}
+                  placeholder="ქართული აღწერა..."
+                  className="min-h-[120px]"
+                  required
+                />
+                <p className="text-xs text-gray-500">Georgian language product description</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="descriptionEnglish">English Description *</Label>
+                <Textarea
+                  id="descriptionEnglish"
+                  value={formData.descriptionEnglish || ''}
+                  onChange={(e) => setFormData({ ...formData, descriptionEnglish: e.target.value })}
+                  placeholder="English description..."
+                  className="min-h-[120px]"
+                  required
+                />
+                <p className="text-xs text-gray-500">English language product description</p>
+              </div>
+            </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description *</Label>
+              <Label htmlFor="description">Legacy Description (for backward compatibility)</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Detailed product description, story, and features..."
-                className="min-h-[100px]"
-                required
+                placeholder="Legacy description field..."
+                className="min-h-[80px]"
+                disabled
               />
+              <p className="text-xs text-gray-500">This field is kept for database compatibility. New products use the language-specific fields above.</p>
             </div>
           </div>
 

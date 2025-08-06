@@ -19,7 +19,20 @@ export default function ProductCard({
   isAddingToCart = false,
   showAddToCart = true 
 }: ProductCardProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  // Get the appropriate description based on current language
+  const getDescription = () => {
+    const isGeorgian = i18n.language === 'ka';
+    if (isGeorgian && product.descriptionGeorgian) {
+      return product.descriptionGeorgian;
+    }
+    if (!isGeorgian && product.descriptionEnglish) {
+      return product.descriptionEnglish;
+    }
+    // Fallback to legacy description field
+    return product.description;
+  };
   const getCategoryLabel = (category: string) => {
     switch (category.toLowerCase()) {
       case 'women': 
@@ -88,7 +101,7 @@ export default function ProductCard({
           </div>
           
           <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-            {product.description}
+            {getDescription()}
           </p>
           
           <div className="flex items-center justify-between">
