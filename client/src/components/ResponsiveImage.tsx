@@ -31,31 +31,13 @@ export default function ResponsiveImage({
     return originalSrc;
   };
 
-  // Optimize image loading based on viewport size - memoized to prevent reflows
+  // Optimize image loading - no complex calculations for better performance
   const getOptimalSize = () => {
-    if (typeof window === 'undefined') return src;
-    
-    // Use matchMedia instead of window.innerWidth to avoid forced reflows
-    const isMobile = window.matchMedia('(max-width: 639px)').matches;
-    const isTablet = window.matchMedia('(max-width: 1023px)').matches;
-    
-    // For mobile/small screens, use smaller images
-    if (isMobile) {
-      // Mobile optimization - could serve smaller images here
-      return src;
-    } else if (isTablet) {
-      // Tablet optimization
-      return src;
-    } else {
-      // Desktop
-      return src;
-    }
+    return src; // Direct return for fastest loading
   };
 
   useEffect(() => {
-    // Directly use the src for faster loading
     setCurrentSrc(src);
-    // Reset states when src changes
     setIsLoaded(false);
     setHasError(false);
   }, [src]);
@@ -65,19 +47,7 @@ export default function ResponsiveImage({
   };
 
   const handleError = () => {
-    // Add retry logic - sometimes images fail due to network issues
-    setTimeout(() => {
-      const img = new Image();
-      img.onload = () => {
-        setHasError(false);
-        setIsLoaded(true);
-      };
-      img.onerror = () => {
-        setHasError(true);
-        setIsLoaded(true);
-      };
-      img.src = currentSrc;
-    }, 1000); // Retry after 1 second
+    setHasError(true);
   };
 
   // Determine appropriate sizes attribute

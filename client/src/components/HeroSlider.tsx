@@ -61,34 +61,41 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
     return () => mediaQuery.removeEventListener('change', checkMobile);
   }, []);
 
-  // Preload all images
+  // Optimized image loading - prioritize first slide for LCP
   useEffect(() => {
-    const imagePromises: Promise<void>[] = [];
+    // Load first slide immediately for LCP
+    const firstSlide = slides[0];
+    const firstImage = new Image();
     
-    slides.forEach(slide => {
-      // Preload desktop image
-      const desktopImg = new Image();
-      const desktopPromise = new Promise<void>((resolve) => {
-        desktopImg.onload = () => resolve();
-        desktopImg.onerror = () => resolve(); // Continue even if image fails
-      });
-      desktopImg.src = slide.desktop;
-      imagePromises.push(desktopPromise);
-
-      // Preload mobile image
-      const mobileImg = new Image();
-      const mobilePromise = new Promise<void>((resolve) => {
-        mobileImg.onload = () => resolve();
-        mobileImg.onerror = () => resolve(); // Continue even if image fails
-      });
-      mobileImg.src = slide.mobile;
-      imagePromises.push(mobilePromise);
-    });
-
-    Promise.all(imagePromises).then(() => {
+    firstImage.onload = () => {
       setImagesLoaded(true);
-    });
-  }, []);
+      
+      // Lazy load remaining slides after first is loaded
+      const loadRemainingSlides = () => {
+        const remainingSlides = slides.slice(1);
+        remainingSlides.forEach(slide => {
+          const desktopImg = new Image();
+          const mobileImg = new Image();
+          desktopImg.src = slide.desktop;
+          mobileImg.src = slide.mobile;
+        });
+      };
+      
+      // Use requestIdleCallback for low priority loading
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadRemainingSlides);
+      } else {
+        setTimeout(loadRemainingSlides, 100);
+      }
+    };
+    
+    firstImage.onerror = () => {
+      setImagesLoaded(true);
+    };
+    
+    // Load first slide based on screen size
+    firstImage.src = isMobile ? firstSlide.mobile : firstSlide.desktop;
+  }, [isMobile]);
 
   // Auto-advance slides with pause on hover/touch
   const [isPaused, setIsPaused] = useState(false);
@@ -143,7 +150,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
 
   return (
     <div 
-      className={`relative w-full overflow-hidden ${className}`}
+      className={`hero-banner relative w-full overflow-hidden ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -168,8 +175,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
               <img
                 src={isMobile ? slide.mobile : slide.desktop}
                 alt={slide.alt}
+                width={isMobile ? 768 : 1920}
+                height={isMobile ? 432 : 600}
                 className="w-full h-auto object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
                 {...(index === 0 && { fetchpriority: "high" as const })}
               />
             </div>

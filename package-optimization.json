@@ -1,0 +1,32 @@
+{
+  "scripts": {
+    "build:optimized": "bash ./optimize-build.sh",
+    "analyze": "npm run build && npx vite-bundle-analyzer dist/assets",
+    "performance:audit": "lighthouse https://your-domain.replit.app --only-categories=performance --chrome-flags=\"--headless\" --output=json --output-path=./performance-report.json",
+    "performance:local": "lighthouse http://localhost:5000 --only-categories=performance --chrome-flags=\"--headless\" --output=html --output-path=./performance-report.html"
+  },
+  "performance": {
+    "targets": {
+      "desktop": {
+        "lcp": "< 2.5s",
+        "fcp": "< 1.8s", 
+        "cls": "< 0.1",
+        "fid": "< 100ms"
+      },
+      "mobile": {
+        "lcp": "< 4.0s",
+        "fcp": "< 3.0s",
+        "cls": "< 0.1", 
+        "fid": "< 100ms"
+      }
+    },
+    "optimizations": {
+      "images": "WebP format with lazy loading",
+      "fonts": "Preload critical fonts with font-display: swap",
+      "javascript": "Code splitting and tree shaking",
+      "css": "Critical CSS inlined, non-critical deferred",
+      "compression": "Brotli and Gzip enabled",
+      "caching": "Aggressive caching with cache-first strategy"
+    }
+  }
+}

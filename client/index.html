@@ -9,39 +9,93 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     
-    <!-- Optimize font loading with proper preconnects and resource hints -->
+    <!-- Optimize font loading with proper preconnects and reduced font weights -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap"></noscript>
+    
+    <!-- Preload critical AlkSanet font -->
+    <link rel="preload" href="/src/assets/alk-sanet_1754502110450.ttf" as="font" type="font/ttf" crossorigin>
     
     <!-- Critical CSS inline optimization with resource hints -->
     <style>
       /* Prevent FOUC with basic styling */
       html { 
         font-family: system-ui, -apple-system, sans-serif; 
-        font-display: swap; /* Better font loading performance */
+        font-display: swap;
+        scroll-behavior: smooth;
       }
       body { 
         margin: 0; 
         background: linear-gradient(135deg, #faf7f0 0%, #ffffff 50%, #f5e6e8 100%);
-        /* Prevent layout shifts during font loading */
         font-synthesis: none;
         text-rendering: optimizeSpeed;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
-      #root { min-height: 100vh; }
-      .loading { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+      #root { 
+        min-height: 100vh; 
+        contain: layout style paint;
+      }
+      .loading { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 100vh; 
+      }
       
-      /* Critical resource loading indicators */
-      img { content-visibility: auto; }
+      /* Critical performance optimizations */
+      img { 
+        content-visibility: auto;
+        contain-intrinsic-size: 400px 300px;
+        will-change: auto;
+      }
+      
+      /* Header optimization for CLS */
+      header { 
+        contain: layout style;
+        will-change: transform;
+      }
+      
+      /* Hero section immediate paint */
+      .hero-banner {
+        contain: layout style paint;
+        transform: translateZ(0);
+      }
+      
+      /* Carousel optimization */
+      .carousel-container {
+        contain: layout;
+        will-change: transform;
+      }
+      
+      /* Critical layout stability */
+      * { 
+        box-sizing: border-box;
+      }
+      
+      /* Prevent horizontal scroll */
+      body, html {
+        overflow-x: hidden;
+        width: 100%;
+      }
     </style>
     
     <!-- Preconnect to BOG SDK origin for faster loading when needed -->
     <link rel="preconnect" href="https://webstatic.bog.ge" crossorigin>
     
-    <!-- Preload critical LCP images for immediate discovery -->
-    <link rel="preload" href="/src/assets/Desktop-1_1754051373226.webp" as="image" media="(min-width: 769px)">
-    <link rel="preload" href="/src/assets/Mobile-1_1754051370153.webp" as="image" media="(max-width: 768px)">
+    <!-- Preload critical LCP images for immediate discovery with explicit dimensions -->
+    <link rel="preload" href="/src/assets/Desktop-1_1754051373226.webp" as="image" media="(min-width: 769px)" imagesizes="100vw">
+    <link rel="preload" href="/src/assets/Mobile-1_1754051370153.webp" as="image" media="(max-width: 768px)" imagesizes="100vw">
+    
+    <!-- Preload critical logo -->
+    <link rel="preload" href="/src/assets/Your paragraph text (4)_1753542106373.webp" as="image">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//webstatic.bog.ge">
   </head>
   <body>
     <div id="root"></div>

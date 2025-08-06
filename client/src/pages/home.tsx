@@ -413,19 +413,19 @@ export default function Home() {
           />
         </div>
       </section>
-      {/* Brand Logos Auto-Moving Carousel */}
+      {/* Brand Logos Auto-Moving Carousel - optimized for performance */}
       <section className="py-16 bg-navy overflow-hidden">
         <div className="relative">
-          <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
-            {/* First set of brand logos - CLS optimized with container sizing */}
+          <div className="carousel-container flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
+            {/* First set of brand logos - CLS optimized with explicit dimensions */}
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={chanelLogo} alt="Chanel" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={chanelLogo} alt="Chanel" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={versaceLogo} alt="Versace" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={versaceLogo} alt="Versace" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={diorLogo} alt="Dior" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
+              <img src={diorLogo} alt="Dior" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
               <img src={gucciLogo} alt="Gucci" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
