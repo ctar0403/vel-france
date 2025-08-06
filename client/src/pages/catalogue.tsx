@@ -863,26 +863,6 @@ export default function Catalogue() {
             >
               <div className="flex flex-col gap-2">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy mb-2">{t('catalogue.catalogue', 'Catalogue')}</h1>
-                <p className="text-gray-600 font-roboto">
-                  {isFiltering ? (
-                    <span className="animate-pulse">{t('catalogue.filtering', 'Filtering...')}</span>
-                  ) : (
-                    <>
-                      {filteredProducts.length} {t('catalogue.product', filteredProducts.length !== 1 ? 'products' : 'product')} {t('catalogue.found', 'found')}
-                      {activeFiltersCount > 0 && (
-                        <>
-                          {' '}{t('catalogue.with', 'with')} {activeFiltersCount} {t('catalogue.activefilter', activeFiltersCount !== 1 ? 'active filters' : 'active filter')}{' '}
-                          <button 
-                            onClick={clearAllFilters}
-                            className="text-navy hover:text-gold underline font-medium"
-                          >
-                            ({t('catalogue.clearall', 'clear all')})
-                          </button>
-                        </>
-                      )}
-                    </>
-                  )}
-                </p>
               </div>
 
               <div className="flex items-center gap-4">
