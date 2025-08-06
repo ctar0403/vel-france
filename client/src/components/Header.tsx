@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
 import LogoutButton from "@/components/LogoutButton";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -372,6 +373,32 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                       />
                     </div>
                   )}
+
+                  {/* Social Media Icons */}
+                  <div className="border-t border-gold/20 pt-6 mt-auto">
+                    <div className="flex justify-center space-x-4">
+                      <a 
+                        href="https://www.facebook.com/velfrance" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 bg-[#1877F2] hover:bg-[#166FE5] text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                        aria-label={t('contact.facebook', 'Facebook')}
+                        data-testid="mobile-menu-facebook-link"
+                      >
+                        <FaFacebookF className="text-lg" />
+                      </a>
+                      <a 
+                        href="https://www.instagram.com/velfrance.ge/" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 bg-gradient-to-r from-[#E4405F] via-[#F77737] to-[#FCAF45] hover:from-[#D63384] hover:via-[#FD7E14] hover:to-[#FFC107] text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                        aria-label={t('contact.instagram', 'Instagram')}
+                        data-testid="mobile-menu-instagram-link"
+                      >
+                        <FaInstagram className="text-lg" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
