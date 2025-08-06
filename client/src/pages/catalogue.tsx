@@ -664,7 +664,7 @@ export default function Catalogue() {
                           onCheckedChange={() => toggleCategory(category)}
                         />
                         <Label htmlFor={`category-${category}`} className="text-sm font-medium cursor-pointer">
-                          {category}
+                          {t(`categories.${category.toLowerCase().replace("'", "")}`, category)}
                         </Label>
                       </div>
                     ))}
@@ -829,7 +829,7 @@ export default function Catalogue() {
                                 onCheckedChange={() => toggleCategory(category)}
                               />
                               <Label htmlFor={`mobile-category-${category}`} className="text-sm font-medium cursor-pointer">
-                                {category}
+                                {t(`categories.${category.toLowerCase().replace("'", "")}`, category)}
                               </Label>
                             </div>
                           ))}
@@ -924,7 +924,7 @@ export default function Catalogue() {
                   {/* Category Filters */}
                   {filters.selectedCategories.map(category => (
                     <Badge key={category} variant="secondary" className="gap-1 bg-black text-white border-black">
-                      {category}
+                      {t(`categories.${category.toLowerCase().replace("'", "")}`, category)}
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => toggleCategory(category)}
