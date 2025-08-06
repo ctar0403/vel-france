@@ -242,10 +242,16 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  // Fetch cart items
+  // Fetch cart items with debug logging
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
+    onSuccess: (data) => {
+      console.log('Cart data fetched:', data.length, 'items');
+    },
+    onError: (error) => {
+      console.error('Cart fetch error:', error);
+    }
   });
 
   // Fetch user orders
@@ -254,13 +260,31 @@ export default function Home() {
     retry: false,
   });
 
-  // Add to cart mutation
+  // Add to cart mutation with aggressive real-time updates
   const addToCartMutation = useMutation({
     mutationFn: async (productId: string) => {
-      await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
+      console.log('Adding to cart:', productId);
+      const result = await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
+      console.log('Add to cart result:', result);
+      return result;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+    onSuccess: async (data) => {
+      console.log('Add to cart success, invalidating cache...');
+      
+      // Multiple cache invalidation strategies
+      await queryClient.invalidateQueries({ 
+        queryKey: ["/api/cart"],
+        refetchType: 'active'
+      });
+      
+      // Force immediate refetch
+      await queryClient.refetchQueries({ 
+        queryKey: ["/api/cart"],
+        type: 'active'
+      });
+      
+      console.log('Cache invalidated and refetched');
+      
       toast({
         title: t('success.itemAdded'),
         description: t('cart.itemAdded'),
@@ -351,7 +375,12 @@ export default function Home() {
     : products.filter(product => product.category === selectedCategory);
 
   const featuredProducts = products.slice(0, 3);
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  // Calculate cart item count with debug logging
+  const cartItemCount = React.useMemo(() => {
+    const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    console.log('Cart item count updated:', count, 'from items:', cartItems.length);
+    return count;
+  }, [cartItems]);
 
   // Define specific product lists in ranking order
   const mostSoldProductNames = [
