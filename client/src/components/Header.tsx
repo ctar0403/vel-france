@@ -164,6 +164,11 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           
           {/* Action Buttons */}
           <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 ml-auto">
+            {/* Language Switcher - Desktop only */}
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
+            
             {/* Search */}
             <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <SheetTrigger asChild>
@@ -190,11 +195,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 </div>
               </SheetContent>
             </Sheet>
-
-            {/* Language Switcher - Desktop only */}
-            <div className="hidden lg:block">
-              <LanguageSwitcher />
-            </div>
             
             {/* Desktop User Account & Cart - Hidden on Mobile */}
             <div className="hidden md:flex items-center space-x-3">
