@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
+import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Filter, X, Grid, List, ShoppingCart } from "lucide-react";
+import { Filter, X, Grid, List, ShoppingCart, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -28,6 +28,9 @@ interface CatalogueFilters {
   sortBy: string;
   viewMode: 'grid' | 'list';
 }
+
+const PRODUCTS_PER_PAGE = 12; // 3 rows x 4 columns
+const PRODUCTS_PER_ROW = 4;
 
 // Premium Product Card Component
 function LuxuryProductCard({ product, index = 0 }: { product: Product; index?: number }) {
@@ -246,6 +249,11 @@ export default function Catalogue() {
   const [isFiltering, setIsFiltering] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [priceRangeModified, setPriceRangeModified] = useState(false);
+  
+  // Infinite scrolling state
+  const [displayedCount, setDisplayedCount] = useState(PRODUCTS_PER_PAGE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const observerRef = useRef<HTMLDivElement>(null);
 
   // Load products
   const { data: products = [], isLoading, error } = useQuery<Product[]>({
@@ -442,6 +450,54 @@ export default function Catalogue() {
 
     return filtered;
   }, [processedProducts, filters, priceRange]);
+
+  // Reset displayed count when filters change
+  useEffect(() => {
+    setDisplayedCount(PRODUCTS_PER_PAGE);
+  }, [filteredProducts]);
+
+  // Get currently displayed products
+  const displayedProducts = useMemo(() => {
+    return filteredProducts.slice(0, displayedCount);
+  }, [filteredProducts, displayedCount]);
+
+  // Load more products function
+  const loadMoreProducts = useCallback(() => {
+    if (displayedCount >= filteredProducts.length || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    // Simulate loading delay for smooth UX
+    setTimeout(() => {
+      setDisplayedCount(prev => Math.min(prev + PRODUCTS_PER_PAGE, filteredProducts.length));
+      setIsLoadingMore(false);
+    }, 300);
+  }, [displayedCount, filteredProducts.length, isLoadingMore]);
+
+  // Intersection observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && displayedCount < filteredProducts.length && !isLoadingMore) {
+          loadMoreProducts();
+        }
+      },
+      {
+        rootMargin: '200px', // Start loading 200px before the element comes into view
+        threshold: 0.1,
+      }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [displayedCount, filteredProducts.length, isLoadingMore, loadMoreProducts]);
 
   // Clear all filters
   const clearAllFilters = useCallback(() => {
@@ -969,28 +1025,75 @@ export default function Catalogue() {
                   )}
                 </div>
               ) : (
-                <div
-                  className={filters.viewMode === 'grid' 
-                    ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6" 
-                    : "space-y-4"
-                  }
-                >
-                  {filteredProducts.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className="opacity-0 animate-fade-in"
-                      style={{
-                        animationDelay: `${index * 20}ms`,
-                        animationFillMode: 'forwards'
-                      }}
-                    >
-                      <LuxuryProductCard 
-                        product={product} 
-                        index={index} 
-                      />
+                <>
+                  <div
+                    className={filters.viewMode === 'grid' 
+                      ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6" 
+                      : "space-y-4"
+                    }
+                  >
+                    {displayedProducts.map((product, index) => (
+                      <div
+                        key={product.id}
+                        className="opacity-0 animate-fade-in"
+                        style={{
+                          animationDelay: `${index * 20}ms`,
+                          animationFillMode: 'forwards'
+                        }}
+                      >
+                        <LuxuryProductCard 
+                          product={product} 
+                          index={index} 
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Load More Trigger & Loading Indicator */}
+                  {displayedCount < filteredProducts.length && (
+                    <div className="mt-8 flex flex-col items-center gap-4">
+                      {/* Intersection Observer Target */}
+                      <div ref={observerRef} className="h-2 w-full" />
+                      
+                      {/* Loading Indicator */}
+                      {isLoadingMore && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          className="flex items-center gap-3 text-navy"
+                        >
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          <span className="text-sm font-medium">
+                            {t('catalogue.loadingmore', 'Loading more products...')}
+                          </span>
+                        </motion.div>
+                      )}
+                      
+                      {/* Manual Load More Button (backup) */}
+                      {!isLoadingMore && (
+                        <Button
+                          onClick={loadMoreProducts}
+                          variant="outline"
+                          className="border-gold/30 hover:border-gold hover:bg-gold/10 transition-all duration-300"
+                        >
+                          {t('catalogue.loadmore', 'Load More')} 
+                          ({filteredProducts.length - displayedCount} {t('catalogue.remaining', 'remaining')})
+                        </Button>
+                      )}
                     </div>
-                  ))}
-                </div>
+                  )}
+
+                  {/* End of Results Indicator */}
+                  {displayedCount >= filteredProducts.length && filteredProducts.length > PRODUCTS_PER_PAGE && (
+                    <div className="mt-8 text-center text-gray-500">
+                      <p className="text-sm">
+                        {t('catalogue.allproductsloaded', 'All products loaded')} 
+                        ({filteredProducts.length} {t('catalogue.total', 'total')})
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
