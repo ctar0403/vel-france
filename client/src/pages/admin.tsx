@@ -1036,15 +1036,11 @@ export default function Admin() {
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-center space-x-2">
-                    <Calendar className="h-5 w-5 text-green-600" />
+                    <ShoppingCart className="h-5 w-5 text-green-600" />
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Today's Orders</p>
+                      <p className="text-sm font-medium text-gray-600">Confirmed Orders</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        {orders.filter(order => {
-                          const today = new Date().toDateString();
-                          const orderDate = new Date(order.createdAt).toDateString();
-                          return today === orderDate;
-                        }).length}
+                        {orders.filter(order => order.status === 'confirmed').length}
                       </p>
                     </div>
                   </div>
@@ -1056,9 +1052,12 @@ export default function Admin() {
                   <div className="flex items-center space-x-2">
                     <DollarSign className="h-5 w-5 text-gold" />
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                      <p className="text-sm font-medium text-gray-600">Total Revenue (Confirmed)</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        ₾{orders.reduce((sum, order) => sum + parseFloat(order.total || '0'), 0).toFixed(2)}
+                        ₾{orders
+                          .filter(order => order.status === 'confirmed')
+                          .reduce((sum, order) => sum + parseFloat(order.total || '0'), 0)
+                          .toFixed(2)}
                       </p>
                     </div>
                   </div>
