@@ -93,11 +93,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             <LanguageSwitcher />
           </div>
           
-          {/* Mobile Language Flags - Center */}
-          <div className="lg:hidden flex-1 flex justify-center">
-            <LanguageSwitcher />
-          </div>
-          
           {/* Desktop Navigation - Absolutely Centered */}
           <div className="hidden lg:flex items-center justify-center space-x-4 xl:space-x-6 font-roboto absolute left-1/2 transform -translate-x-1/2">
             <Link 
