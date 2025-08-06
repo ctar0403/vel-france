@@ -183,13 +183,13 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
         ))}
       </div>
 
-      {/* Enhanced slide indicators - larger on mobile for better touch targets */}
+      {/* Slide indicators */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentSlide 
                 ? 'bg-white opacity-100 scale-125' 
                 : 'bg-white opacity-50 hover:opacity-75'
@@ -199,23 +199,23 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
         ))}
       </div>
 
-      {/* Always visible navigation arrows for both desktop and mobile */}
+      {/* Navigation arrows */}
       <button
         onClick={() => setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)}
-        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
         aria-label={t('HeroSlider.previousslide', 'Previous slide')}
       >
-        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={() => setCurrentSlide((currentSlide + 1) % slides.length)}
-        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-10 opacity-90 hover:opacity-100"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full transition-all duration-300 z-10"
         aria-label={t('HeroSlider.nextslide', 'Next slide')}
       >
-        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
