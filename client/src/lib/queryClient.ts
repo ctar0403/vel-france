@@ -56,9 +56,8 @@ export const queryClient = new QueryClient({
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      // Disable caching for cart data to ensure real-time updates
-      staleTime: 0, // Always consider cart data stale
-      gcTime: 0, // Don't cache cart data
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 15 * 60 * 1000, // 15 minutes garbage collection time (v5 syntax)
       retry: (failureCount, error) => {
         // Don't retry 401/403 errors but retry network errors up to 1 time
         if (error instanceof Error && error.message.includes('401')) return false;
@@ -66,7 +65,7 @@ export const queryClient = new QueryClient({
         return failureCount < 1; // Reduced retries for faster failure handling
       },
       networkMode: 'online',
-      refetchOnMount: true,
+      refetchOnMount: false,
       refetchOnReconnect: 'always',
     },
     mutations: {

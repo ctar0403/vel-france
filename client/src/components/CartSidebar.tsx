@@ -22,12 +22,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
   const { toast } = useToast();
   const { t } = useTranslation();
   
-  // Force cart refetch whenever sidebar opens to ensure fresh data
-  React.useEffect(() => {
-    if (isOpen) {
-      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
-    }
-  }, [isOpen, queryClientHook]);
+
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -35,8 +30,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("PUT", `/api/cart/${itemId}`, { quantity });
     },
     onSuccess: () => {
-      // Simple approach - just refetch
-      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {
@@ -62,8 +56,7 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
       await apiRequest("DELETE", `/api/cart/${itemId}`);
     },
     onSuccess: () => {
-      // Simple approach - just refetch
-      queryClientHook.refetchQueries({ queryKey: ["/api/cart"], exact: true });
+      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
         title: t('cart.itemremoved'),
         description: t('cart.itemRemovedDescription'),
