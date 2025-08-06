@@ -12,7 +12,7 @@ import desktop5 from '@assets/Desktop-5_1754051373228.webp';
 import desktop6 from '@assets/Desktop-6_1754051373224.webp';
 
 // Import mobile images
-import mobile1 from '@assets/4_1754504202405_mobile.webp';
+import mobile1 from '@assets/discount_1754505093401_mobile.webp';
 import mobile2 from '@assets/Mobile-2_1754051370154.webp';
 import mobile3 from '@assets/Mobile-3_1754051370154.webp';
 import mobile4 from '@assets/Mobile-4_1754051370154.webp';
