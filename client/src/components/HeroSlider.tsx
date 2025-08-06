@@ -138,8 +138,8 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
   
   if (!imagesLoaded) {
     return (
-      <div className={`relative w-full overflow-hidden ${className}`}>
-        {/* Show first slide immediately for LCP optimization */}
+      <div className={`relative w-full overflow-hidden hero-slider-container ${className}`}>
+        {/* Show first slide immediately for LCP optimization with proper styling */}
         <div className="w-full flex-shrink-0">
           <div 
             onClick={handleBannerClick}
@@ -152,7 +152,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
             <img
               src={isMobile ? firstSlide.mobile : firstSlide.desktop}
               alt={firstSlide.alt}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover aspect-[16/9] md:aspect-[21/9]"
               loading="eager"
               width={isMobile ? 480 : 1200}
               height={isMobile ? 360 : 900}
@@ -163,8 +163,32 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
           </div>
         </div>
         
-        {/* Loading skeleton for other slides */}
-        <div className="absolute inset-0 bg-gray-100 animate-pulse opacity-0"></div>
+        {/* Show navigation and indicators even during loading for better UX */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+          {slides.map((_, index) => (
+            <div
+              key={index}
+              className={`w-3 h-3 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
+                index === 0 
+                  ? 'bg-white opacity-100 scale-125' 
+                  : 'bg-white opacity-30'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Navigation arrows */}
+        <div className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 sm:p-3 rounded-full z-10 opacity-50">
+          <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </div>
+
+        <div className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 sm:p-3 rounded-full z-10 opacity-50">
+          <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
       </div>
     );
   }
@@ -196,7 +220,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ className = '' }) => {
               <img
                 src={isMobile ? slide.mobile : slide.desktop}
                 alt={slide.alt}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover aspect-[16/9] md:aspect-[21/9]"
                 loading={index === 0 ? "eager" : "lazy"}
                 width={isMobile ? 480 : 1200}
                 height={isMobile ? 360 : 900}
