@@ -102,7 +102,7 @@ export default function CartPage() {
           <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center animate-pulse">
             <ShoppingBag className="h-8 w-8 text-navy/40" />
           </div>
-          <p className="font-roboto text-lg text-navy/70 tracking-wide">Loading your collection...</p>
+          <p className="font-roboto text-lg text-navy/70 tracking-wide">{t('cart.loadingcollection', 'Loading your collection...')}</p>
         </div>
       </div>
     );
@@ -121,12 +121,12 @@ export default function CartPage() {
                 className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-3 sm:px-6 py-2 sm:py-3 group"
               >
                 <ArrowLeft className="mr-1 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                <span className="hidden sm:inline">Continue Shopping</span>
-                <span className="sm:hidden">Back</span>
+                <span className="hidden sm:inline">{t('cart.continueshopping', 'Continue Shopping')}</span>
+                <span className="sm:hidden">{t('cart.back', 'Back')}</span>
               </Button>
             </Link>
             <div className="text-center flex-1">
-              <h1 className="font-roboto text-2xl sm:text-4xl font-light text-navy tracking-wide">Shopping Cart</h1>
+              <h1 className="font-roboto text-2xl sm:text-4xl font-light text-navy tracking-wide">{t('cart.shoppingcart', 'Shopping Cart')}</h1>
             </div>
             <div className="w-16 sm:w-[180px]"></div> {/* Spacer for centering */}
           </div>
@@ -142,15 +142,15 @@ export default function CartPage() {
             <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center">
               <ShoppingBag className="h-16 w-16 text-navy/40" />
             </div>
-            <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">Your collection awaits</h2>
+            <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">{t('cart.collectionawaits', 'Your collection awaits')}</h2>
             <p className="text-navy/60 text-lg mb-8 max-w-md mx-auto leading-relaxed">
-              Discover our curated selection of luxury fragrances crafted for the discerning connoisseur
+              {t('cart.discoverfragrances', 'Discover our curated selection of luxury fragrances crafted for the discerning connoisseur')}
             </p>
             <Link href="/catalogue">
               <Button className="bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative flex items-center">
-                  <span className="text-lg">Explore Fragrances</span>
+                  <span className="text-lg">{t('cart.explorefragrances', 'Explore Fragrances')}</span>
                   <ArrowLeft className="ml-3 h-5 w-5 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
               </Button>
@@ -162,9 +162,11 @@ export default function CartPage() {
             <div className="xl:col-span-2">
               <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-3 sm:p-6 lg:p-8">
                 <div className="flex items-center justify-between mb-4 sm:mb-8">
-                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">Your Selection</h2>
+                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">{t('cart.yourselection', 'Your Selection')}</h2>
                   <div className="bg-gradient-to-r from-navy/10 to-gold/10 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
-                    <span className="font-roboto text-xs sm:text-sm font-medium text-navy">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</span>
+                    <span className="font-roboto text-xs sm:text-sm font-medium text-navy">
+                      {cartItems.length} {cartItems.length === 1 ? t('cart.item', 'item') : t('cart.items', 'items')}
+                    </span>
                   </div>
                 </div>
                 <div className="space-y-2 sm:space-y-8">
@@ -281,7 +283,7 @@ export default function CartPage() {
                           ) : (
                             <div className="text-center">
                               <div className="text-3xl mb-1">🌸</div>
-                              <div className="text-xs text-navy/60 font-roboto">Fragrance</div>
+                              <div className="text-xs text-navy/60 font-roboto">{t('cart.fragrance', 'Fragrance')}</div>
                             </div>
                           )}
                           <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-gold to-deep-gold rounded-full opacity-80"></div>
@@ -372,29 +374,31 @@ export default function CartPage() {
             <div className="xl:col-span-1">
               <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8 sticky top-8">
                 <div className="text-center mb-4 sm:mb-8">
-                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide mb-2">Order Summary</h2>
+                  <h2 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide mb-2">{t('cart.ordersummary', 'Order Summary')}</h2>
                   <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
                 </div>
                 
                 <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                   <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl p-3 sm:p-4 border border-gold/20">
                     <div className="flex justify-between items-center mb-2 sm:mb-3">
-                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">Subtotal ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">
+                        {t('cart.subtotal', 'Subtotal')} ({cartItems.length} {cartItems.length === 1 ? t('cart.item', 'item') : t('cart.items', 'items')})
+                      </span>
                       <span className="text-navy font-roboto font-semibold text-sm sm:text-base">₾{total.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center mb-2 sm:mb-3">
-                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">Shipping</span>
-                      <span className="text-emerald-600 font-roboto font-medium text-sm sm:text-base">Free</span>
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">{t('cart.shipping', 'Shipping')}</span>
+                      <span className="text-emerald-600 font-roboto font-medium text-sm sm:text-base">{t('cart.free', 'Free')}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">VAT included</span>
+                      <span className="text-navy/70 font-roboto text-xs sm:text-sm">{t('cart.vatincluded', 'VAT included')}</span>
                       <span className="text-navy/70 font-roboto text-xs sm:text-sm">₾0.00</span>
                     </div>
                   </div>
                   
                   <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl p-4 sm:p-5 border border-gold/30">
                     <div className="flex justify-between items-center">
-                      <span className="font-roboto text-base sm:text-lg font-medium text-navy">Total</span>
+                      <span className="font-roboto text-base sm:text-lg font-medium text-navy">{t('cart.total', 'Total')}</span>
                       <span className="font-roboto text-xl sm:text-2xl font-bold text-gold">₾{total.toFixed(2)}</span>
                     </div>
                   </div>
@@ -409,7 +413,7 @@ export default function CartPage() {
                       <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="relative flex items-center justify-center">
                         <CreditCard className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-3 transition-transform duration-300" />
-                        <span className="text-base sm:text-lg">Proceed to Checkout</span>
+                        <span className="text-base sm:text-lg">{t('cart.proceedtocheckout', 'Proceed to Checkout')}</span>
                       </div>
                       <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                     </Button>
@@ -423,7 +427,7 @@ export default function CartPage() {
                       <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="relative flex items-center justify-center">
                         <ArrowLeft className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                        <span className="text-sm sm:text-base">Continue Shopping</span>
+                        <span className="text-sm sm:text-base">{t('cart.continueshopping', 'Continue Shopping')}</span>
                       </div>
                     </Button>
                   </Link>
