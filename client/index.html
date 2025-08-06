@@ -36,7 +36,7 @@
     
     <!-- Critical CSS inline optimization with resource hints -->
     <style>
-      /* Prevent FOUC with basic styling and CLS prevention */
+      /* Prevent FOUC with basic styling */
       html { 
         font-family: system-ui, -apple-system, sans-serif; 
         font-display: swap; /* Better font loading performance */
@@ -47,20 +47,6 @@
         /* Prevent layout shifts during font loading */
         font-synthesis: none;
         text-rendering: optimizeSpeed;
-        font-size-adjust: 0.5; /* Fallback font sizing adjustment */
-      }
-      
-      /* Critical CLS prevention for AlkSanet font loading */
-      .font-alkSanet, * {
-        font-family: 'AlkSanet', 'Roboto', system-ui, -apple-system, sans-serif;
-        font-display: swap;
-        font-size-adjust: 0.5;
-      }
-      
-      /* Prevent brand carousel layout shifts */
-      .py-16.bg-navy {
-        min-height: 128px;
-        contain: layout style paint;
       }
       #root { min-height: 100vh; }
       .loading { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
