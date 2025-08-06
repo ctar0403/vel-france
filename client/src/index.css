@@ -1,5 +1,13 @@
 /* Fonts are loaded via preload in index.html for optimal performance */
 
+@font-face {
+  font-family: 'AlkSanet';
+  src: url('@assets/alk-sanet_1754502110450.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -692,4 +700,24 @@ body {
 .slider-thumb::-moz-range-track {
   background: transparent;
   border: none;
+}
+
+/* Georgian Font Application - Only for Georgian Language */
+:root[data-language="ka"] *,
+:root[data-language="ka-GE"] *,
+html[lang="ka"] *,
+html[lang="ka-GE"] *,
+body[data-language="ka"] *,
+body[data-language="ka-GE"] * {
+  font-family: 'AlkSanet', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Ensure English text keeps original fonts */
+:root[data-language="en"] *,
+:root[data-language="en-US"] *,
+html[lang="en"] *,
+html[lang="en-US"] *,
+body[data-language="en"] *,
+body[data-language="en-US"] * {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
 }
