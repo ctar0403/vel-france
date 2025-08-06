@@ -5,9 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import type { CartItem, Product } from "@shared/schema";
 import { FileText, Building, Info, Scale } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Terms() {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { t } = useTranslation();
 
   // Fetch cart items for header
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
@@ -32,7 +34,7 @@ export default function Terms() {
       
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-navy mb-8 text-center">Terms & Conditions</h1>
+          <h1 className="text-4xl font-bold text-navy mb-8 text-center">{t('terms.title', 'Terms & Conditions')}</h1>
           
           {/* Introduction */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -40,13 +42,13 @@ export default function Terms() {
               <div className="bg-gold/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <FileText className="h-8 w-8 text-gold" />
               </div>
-              <h2 className="text-2xl font-semibold text-navy mb-4">Terms of Service</h2>
+              <h2 className="text-2xl font-semibold text-navy mb-4">{t('terms.termsOfService', 'Terms of Service')}</h2>
               <p className="text-gray-700">
-                Welcome to Vel France. By using our website and services, you agree to comply with these terms and conditions.
+                {t('terms.termsDesc', 'Welcome to Vel France. By using our website and services, you agree to comply with these terms and conditions.')}
               </p>
             </div>
             <p className="text-sm text-gray-600 text-center">
-              <strong>Last updated:</strong> January 2025
+              <strong>{t('privacy.lastUpdated', 'Last updated:')}:</strong> January 2025
             </p>
           </div>
 
@@ -54,22 +56,21 @@ export default function Terms() {
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div className="flex items-center mb-6">
               <Building className="h-6 w-6 text-gold mr-3" />
-              <h2 className="text-2xl font-semibold text-navy">About Vel France</h2>
+              <h2 className="text-2xl font-semibold text-navy">{t('terms.aboutVelFrance', 'About Vel France')}</h2>
             </div>
             
             <div className="bg-gold/10 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-navy mb-4">Company Information</h3>
+              <h3 className="text-lg font-semibold text-navy mb-4">{t('terms.companyInformation', 'Company Information')}</h3>
               <div className="space-y-2 text-gray-700">
-                <p><strong>Company Name:</strong> I/E PERFUMETRADE NETWORK</p>
-                <p><strong>Identification Number:</strong> 39001004952</p>
-                <p><strong>Address:</strong> Tbilisi, Vaja Pshavela 70g</p>
-                <p><strong>Country:</strong> Georgia</p>
+                <p><strong>{t('terms.companyName', 'Company Name:')}:</strong> I/E PERFUMETRADE NETWORK</p>
+                <p><strong>{t('terms.identificationNumber', 'Identification Number:')}:</strong> 39001004952</p>
+                <p><strong>{t('terms.address', 'Address:')}:</strong> Tbilisi, Vaja Pshavela 70g</p>
+                <p><strong>{t('terms.country', 'Country:')}:</strong> {t('terms.country' === 'Country:' ? 'Georgia' : 'საქართველო', 'Georgia')}</p>
               </div>
             </div>
 
             <p className="text-gray-600">
-              Vel France operates under I/E PERFUMETRADE NETWORK, a registered company specializing in luxury perfume retail. 
-              We are committed to providing high-quality fragrances from the world's most prestigious brands.
+              {t('terms.companyDesc', 'Vel France operates under I/E PERFUMETRADE NETWORK, a registered company specializing in luxury perfume retail. We are committed to providing high-quality fragrances from the world\'s most prestigious brands.')}
             </p>
           </div>
 
