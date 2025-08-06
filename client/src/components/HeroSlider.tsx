@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
 // Import desktop images
-import desktop1 from '@assets/Desktop-1_1754051373226.webp';
+import desktop1 from '@assets/4_1754504202405.webp';
 import desktop2 from '@assets/Desktop-2_1754051373227.webp';
 import desktop3 from '@assets/Desktop-3_1754051373227.webp';
 import desktop4 from '@assets/Desktop-4_1754051373228.webp';
@@ -12,7 +12,7 @@ import desktop5 from '@assets/Desktop-5_1754051373228.webp';
 import desktop6 from '@assets/Desktop-6_1754051373224.webp';
 
 // Import mobile images
-import mobile1 from '@assets/Mobile-1_1754051370153.webp';
+import mobile1 from '@assets/4_1754504202405_mobile.webp';
 import mobile2 from '@assets/Mobile-2_1754051370154.webp';
 import mobile3 from '@assets/Mobile-3_1754051370154.webp';
 import mobile4 from '@assets/Mobile-4_1754051370154.webp';
