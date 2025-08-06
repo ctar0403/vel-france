@@ -905,26 +905,6 @@ export default function Catalogue() {
             {/* Mobile Page Title */}
             <div className="lg:hidden mb-6">
               <h1 className="text-2xl font-bold text-navy mb-2">{t('catalogue.catalogue', 'Catalogue')}</h1>
-              <p className="text-gray-600 font-roboto text-sm">
-                {isFiltering ? (
-                  <span className="animate-pulse">{t('catalogue.filtering', 'Filtering...')}</span>
-                ) : (
-                  <>
-                    {filteredProducts.length} {t('catalogue.product', filteredProducts.length !== 1 ? 'products' : 'product')} {t('catalogue.found', 'found')}
-                    {activeFiltersCount > 0 && (
-                      <>
-                        {' '}{t('catalogue.with', 'with')} {activeFiltersCount} {t('catalogue.activefilter', activeFiltersCount !== 1 ? 'active filters' : 'active filter')}{' '}
-                        <button 
-                          onClick={clearAllFilters}
-                          className="text-navy hover:text-gold underline font-medium"
-                        >
-                          ({t('catalogue.clearall', 'clear all')})
-                        </button>
-                      </>
-                    )}
-                  </>
-                )}
-              </p>
             </div>
 
             {/* Active Filters Display */}
