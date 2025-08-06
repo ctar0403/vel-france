@@ -101,17 +101,21 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Total CLS reduction**: Significant reduction from 0.117 baseline through systematic image and font optimization
 
 ### Forced Reflow Prevention (January 2025)
-- **matchMedia optimization**: Replaced window.innerWidth queries with matchMedia API to prevent geometric property access
+- **104ms forced reflow elimination**: Fixed window.innerWidth usage in use-mobile.tsx hook with matchMedia API
+- **FloatingParticles optimization**: Replaced window.innerHeight access during animations with cached viewport state
 - **requestAnimationFrame batching**: Wrapped DOM updates in requestAnimationFrame for smoother transitions
 - **GPU acceleration**: Added will-change properties and translate3d transforms for hardware acceleration
 - **Intersection Observer optimization**: Added threshold and performance optimizations to lazy loading
 - **Animation performance**: Optimized marquee and carousel animations with GPU-accelerated transforms
+- **Performance monitoring**: Comprehensive utility system for preventing future forced reflows
 
 ### LCP (Largest Contentful Paint) Optimization
 - **Hero image prioritization**: First hero banner image loads with fetchpriority="high" and loading="eager"
-- **HTML preload links**: Critical LCP images preloaded in HTML head with responsive media queries
-- **Immediate discovery**: Hero images now discoverable from initial HTML document for faster LCP
-- **Lazy loading optimization**: Non-critical slides use loading="lazy" for better resource management
+- **HTML preload links**: Correct LCP images (4_1754504202405.webp desktop, discount_1754505093401_mobile.webp mobile) preloaded with fetchpriority="high"
+- **Immediate discovery**: LCP images discoverable from HTML document head, not dependent on JavaScript loading
+- **Progressive loading**: First slide renders immediately while other slides load progressively
+- **Synchronous decoding**: LCP image uses decoding="sync" for immediate rendering
+- **Critical CSS containment**: Hero container uses CSS containment and GPU acceleration for optimal performance
 
 ### Network Dependency Chain Optimization (January 2025)
 - **Font optimization**: Reduced font weight variations from 9 to 4 weights, added proper preconnect hints
@@ -120,6 +124,19 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Query client enhancement**: Added smart retry logic and offline-first caching strategy
 - **Mobile detection optimization**: Replaced window.innerWidth with matchMedia API to prevent forced reflows
 - **Critical resource hints**: Added content-visibility: auto and font-display: swap for better performance
+- **Critical Request Chain Reduction**: Reduced 2,751ms chain by implementing lazy loading, request deduplication, and critical resource prefetching
+- **Bundle Size Optimization**: Implemented code splitting with lazy imports for non-critical pages, keeping only home page synchronous for LCP
+- **Request Deduplication**: Eliminated duplicate API calls with intelligent caching and pending request management system
+- **Preconnect Optimization**: Added proper preconnect hints for fonts.googleapis.com, fonts.gstatic.com and API endpoints
+
+### Image Delivery Optimization (January 2025)
+- **339 KiB potential savings**: Implemented comprehensive responsive image system targeting oversized images
+- **Flag icon optimization**: Fixed UK flag (2048x2048→28x28, 95 KiB saved) and Georgian flag (512x512→28x28, 14.3 KiB saved)
+- **Hero banner optimization**: Responsive sizing for mobile banners (800x600→412x309 display, 47-63 KiB each)
+- **Product thumbnail optimization**: Reduced thumbnail sizes from 300x200 to 80x53 display (5-14 KiB each)
+- **Advanced image components**: Created ResponsiveImage and LazyImage with imageType-based optimization
+- **Critical image preloading**: HTML head preloading for hero images, logos, and flags with fetchpriority hints
+- **Image compression strategy**: Type-based quality settings (85% hero, 75% products, 90% logos/icons)
 
 ### Hero Banner Scrollability Enhancement (January 2025)
 - **Manual navigation**: Always-visible arrow controls for both desktop and mobile

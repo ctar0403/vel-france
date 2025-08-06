@@ -86,7 +86,6 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 width="120"
                 height="48"
                 loading="eager"
-
               />
             </Link>
           </div>

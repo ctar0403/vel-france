@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { requestDeduplicator } from "@/utils/requestDeduplication";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -12,6 +13,11 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<any> {
+  // Use deduplicator for GET requests to prevent duplicates
+  if (method === 'GET') {
+    return requestDeduplicator.fetch(method, url);
+  }
+
   const res = await fetch(url, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
@@ -29,16 +35,19 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
-      credentials: "include",
-    });
-
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
+    const url = queryKey.join("/") as string;
+    
+    try {
+      // Use deduplicator for all query requests
+      return await requestDeduplicator.fetch('GET', url);
+    } catch (error) {
+      if (unauthorizedBehavior === "returnNull" && 
+          error instanceof Error && 
+          error.message.includes('401')) {
+        return null;
+      }
+      throw error;
     }
-
-    await throwIfResNotOk(res);
-    return await res.json();
   };
 
 export const queryClient = new QueryClient({
@@ -47,14 +56,18 @@ export const queryClient = new QueryClient({
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutes instead of Infinity for better cache management
+      // Set very short cache times for real-time cart updates
+      staleTime: 0, // Always refetch
+      gcTime: 1000, // Clean up cache quickly
       retry: (failureCount, error) => {
-        // Don't retry 401/403 errors but retry network errors up to 2 times
+        // Don't retry 401/403 errors but retry network errors up to 1 time
         if (error instanceof Error && error.message.includes('401')) return false;
         if (error instanceof Error && error.message.includes('403')) return false;
-        return failureCount < 2;
+        return failureCount < 1; // Reduced retries for faster failure handling
       },
-      networkMode: 'offlineFirst', // Serve from cache when possible
+      networkMode: 'online',
+      refetchOnMount: true,
+      refetchOnReconnect: 'always',
     },
     mutations: {
       retry: false,

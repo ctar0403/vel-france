@@ -232,6 +232,7 @@ export default function Home() {
     subject: t('home.personalconsultation'),
     message: ""
   });
+
   const isMobile = useIsMobile();
 
 
@@ -241,10 +242,16 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  // Fetch cart items
+  // Fetch cart items with debug logging
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
+    onSuccess: (data) => {
+      console.log('Cart data fetched:', data.length, 'items');
+    },
+    onError: (error) => {
+      console.error('Cart fetch error:', error);
+    }
   });
 
   // Fetch user orders
@@ -253,13 +260,31 @@ export default function Home() {
     retry: false,
   });
 
-  // Add to cart mutation
+  // Add to cart mutation with aggressive real-time updates
   const addToCartMutation = useMutation({
     mutationFn: async (productId: string) => {
-      await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
+      console.log('Adding to cart:', productId);
+      const result = await apiRequest("POST", "/api/cart", { productId, quantity: 1 });
+      console.log('Add to cart result:', result);
+      return result;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+    onSuccess: async (data) => {
+      console.log('Add to cart success, invalidating cache...');
+      
+      // Multiple cache invalidation strategies
+      await queryClient.invalidateQueries({ 
+        queryKey: ["/api/cart"],
+        refetchType: 'active'
+      });
+      
+      // Force immediate refetch
+      await queryClient.refetchQueries({ 
+        queryKey: ["/api/cart"],
+        type: 'active'
+      });
+      
+      console.log('Cache invalidated and refetched');
+      
       toast({
         title: t('success.itemAdded'),
         description: t('cart.itemAdded'),
@@ -350,7 +375,12 @@ export default function Home() {
     : products.filter(product => product.category === selectedCategory);
 
   const featuredProducts = products.slice(0, 3);
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  // Calculate cart item count with debug logging
+  const cartItemCount = React.useMemo(() => {
+    const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    console.log('Cart item count updated:', count, 'from items:', cartItems.length);
+    return count;
+  }, [cartItems]);
 
   // Define specific product lists in ranking order
   const mostSoldProductNames = [
@@ -375,7 +405,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-cream pb-16 md:pb-0">
+    <div className="min-h-screen bg-cream">
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
@@ -408,24 +438,27 @@ export default function Home() {
             showBadges={true}
             badgeText={(index) => `#${index + 1} ${t('home.bestseller')}`}
             badgeColor="bg-gradient-to-r from-red-500 to-pink-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            onAddToCart={(productId) => {
+              console.log('Home: onAddToCart callback called with:', productId);
+              addToCartMutation.mutate(productId);
+            }}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>
       </section>
-      {/* Brand Logos Auto-Moving Carousel - optimized for performance */}
+      {/* Brand Logos Auto-Moving Carousel */}
       <section className="py-16 bg-navy overflow-hidden">
         <div className="relative">
-          <div className="carousel-container flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
-            {/* First set of brand logos - CLS optimized with explicit dimensions */}
+          <div className="flex animate-marquee space-x-8 sm:space-x-12 lg:space-x-16 items-center">
+            {/* First set of brand logos - CLS optimized with container sizing */}
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={chanelLogo} alt="Chanel" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
+              <img src={chanelLogo} alt="Chanel" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={versaceLogo} alt="Versace" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
+              <img src={versaceLogo} alt="Versace" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
-              <img src={diorLogo} alt="Dior" width="112" height="96" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" loading="lazy" />
+              <img src={diorLogo} alt="Dior" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="flex-shrink-0 h-16 sm:h-20 lg:h-24 w-20 sm:w-24 lg:w-28">
               <img src={gucciLogo} alt="Gucci" className="h-full w-full object-contain hover:scale-105 transition-transform duration-300" />
@@ -503,7 +536,10 @@ export default function Home() {
             showBadges={true}
             badgeText={() => t('product.newArrival')}
             badgeColor="bg-gradient-to-r from-green-500 to-emerald-500"
-            onAddToCart={(productId) => addToCartMutation.mutate(productId)}
+            onAddToCart={(productId) => {
+              console.log('Home: onAddToCart callback called with:', productId);
+              addToCartMutation.mutate(productId);
+            }}
             isAddingToCart={addToCartMutation.isPending}
           />
         </div>

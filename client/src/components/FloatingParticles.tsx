@@ -11,8 +11,25 @@ interface Particle {
 
 export default function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [viewportHeight, setViewportHeight] = useState(1000); // Default fallback
 
   useEffect(() => {
+    // Calculate viewport height once to avoid forced reflows during animations
+    const calculateViewportHeight = () => {
+      setViewportHeight(window.innerHeight);
+    };
+    
+    // Set initial viewport height
+    calculateViewportHeight();
+    
+    // Update on resize (debounced to prevent excessive calculations)
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(calculateViewportHeight, 150);
+    };
+    
+    window.addEventListener('resize', handleResize);
     const createParticle = (): Particle => ({
       id: Math.random(),
       x: Math.random() * 100,
@@ -35,7 +52,11 @@ export default function FloatingParticles() {
       });
     }, 2000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
 
   return (
@@ -58,7 +79,7 @@ export default function FloatingParticles() {
               rotate: 0 
             }}
             animate={{ 
-              y: -window.innerHeight - 100, 
+              y: -viewportHeight - 100, 
               opacity: [0, 1, 1, 0], 
               rotate: 360 
             }}
