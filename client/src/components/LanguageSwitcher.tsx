@@ -1,22 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
 import { refreshTranslations } from '@/lib/translations';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
+import georgianFlag from '@assets/197380_1754501720841.png';
+import ukFlag from '@assets/United-kingdom_flag_icon_round.svg_1754501741206.png';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ka', name: 'ქართული', flag: '🇬🇪' },
+  { code: 'en', name: 'English', flag: ukFlag },
+  { code: 'ka', name: 'ქართული', flag: georgianFlag },
 ];
 
-const LanguageSwitcher: React.FC = () => {
-  const { i18n, t } = useTranslation();
+interface LanguageSwitcherProps {
+  className?: string;
+}
+
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) => {
+  const { i18n } = useTranslation();
 
   const changeLanguage = async (languageCode: string) => {
     // First refresh translations to get the latest from database
@@ -25,39 +23,27 @@ const LanguageSwitcher: React.FC = () => {
     i18n.changeLanguage(languageCode);
   };
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
-
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-9 px-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"
-          aria-label={t('header.language')}
+    <div className={`flex items-center space-x-2 ${className}`}>
+      {languages.map((language) => (
+        <button
+          key={language.code}
+          onClick={() => changeLanguage(language.code)}
+          className={`w-8 h-8 rounded-full overflow-hidden border-2 transition-all duration-200 hover:scale-110 ${
+            i18n.language === language.code
+              ? 'border-gold shadow-lg'
+              : 'border-gray-300 hover:border-gray-400'
+          }`}
+          aria-label={`Switch to ${language.name}`}
         >
-          <Globe className="h-4 w-4 mr-1" />
-          <span className="hidden sm:inline">{currentLanguage.flag}</span>
-          <span className="ml-1 hidden md:inline">{currentLanguage.name}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
-        {languages.map((language) => (
-          <DropdownMenuItem
-            key={language.code}
-            onClick={() => changeLanguage(language.code)}
-            className={`flex items-center space-x-2 cursor-pointer ${
-              i18n.language === language.code
-                ? 'bg-gray-100 dark:bg-gray-800 font-medium'
-                : ''
-            }`}
-          >
-            <span className="text-lg">{language.flag}</span>
-            <span>{language.name}</span>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <img
+            src={language.flag}
+            alt={language.name}
+            className="w-full h-full object-cover"
+          />
+        </button>
+      ))}
+    </div>
   );
 };
 

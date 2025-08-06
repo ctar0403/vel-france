@@ -88,6 +88,16 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
             </Link>
           </div>
           
+          {/* Mobile Language Flags - Center */}
+          <div className="lg:hidden flex-1 flex justify-center">
+            <LanguageSwitcher />
+          </div>
+          
+          {/* Mobile Language Flags - Center */}
+          <div className="lg:hidden flex-1 flex justify-center">
+            <LanguageSwitcher />
+          </div>
+          
           {/* Desktop Navigation - Absolutely Centered */}
           <div className="hidden lg:flex items-center justify-center space-x-4 xl:space-x-6 font-roboto absolute left-1/2 transform -translate-x-1/2">
             <Link 
@@ -186,8 +196,10 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               </SheetContent>
             </Sheet>
 
-            {/* Language Switcher */}
-            <LanguageSwitcher />
+            {/* Language Switcher - Desktop only */}
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
             
             {/* Desktop User Account & Cart - Hidden on Mobile */}
             <div className="hidden md:flex items-center space-x-3">
