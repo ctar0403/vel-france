@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
 import { LazyImage } from "@/components/ResponsiveImage";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -33,6 +34,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
   const [isCardHovered, setIsCardHovered] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
@@ -44,13 +46,13 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({ 
-        title: "Added to cart", 
-        description: `${product.name} has been added to your cart` 
+        title: t('catalogue.addedtocart', 'Added to cart'), 
+        description: `${product.name} ${t('catalogue.hasbeenaddedtoyourcart', 'has been added to your cart')}` 
       });
     },
     onError: (error: Error) => {
       toast({ 
-        title: "Error", 
+        title: t('common.error', 'Error'), 
         description: error.message, 
         variant: "destructive" 
       });
@@ -133,7 +135,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
                 transition={{ duration: 0.1 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                Add to Cart
+                {t('catalogue.addtocart', 'Add to Cart')}
               </motion.span>
               
               <motion.div
@@ -153,7 +155,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
                 >
                   <ShoppingCart className={`h-4 w-4 ${isButtonHovered ? 'text-white' : 'text-black'}`} />
                 </motion.div>
-                <span>Add to Cart</span>
+                <span>{t('catalogue.addtocart', 'Add to Cart')}</span>
               </motion.div>
             </motion.div>
           </motion.button>
@@ -221,6 +223,7 @@ function LuxuryProductCard({ product }: { product: Product; index?: number }) {
 
 export default function Catalogue() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [location] = useLocation();
   
   // Parse URL parameters for initial filters
@@ -478,15 +481,15 @@ export default function Catalogue() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
       toast({
-        title: "Added to Cart",
-        description: "Product successfully added to your cart!",
+        title: t('catalogue.addedtocart', 'Added to Cart'),
+        description: t('catalogue.productsuccessfullyadded', 'Product successfully added to your cart!'),
       });
     },
     onError: (error) => {
       console.error("Add to cart error:", error);
       toast({
-        title: "Error",
-        description: "Unable to add product to cart. Please try again.",
+        title: t('common.error', 'Error'),
+        description: t('catalogue.unabletoaddproduct', 'Unable to add product to cart. Please try again.'),
         variant: "destructive",
       });
     },
@@ -547,7 +550,7 @@ export default function Catalogue() {
               {/* Search Section */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-bold text-navy tracking-wide">Discover Perfumes</h4>
+                  <h4 className="text-lg font-bold text-navy tracking-wide">{t('catalogue.discoverperfumes', 'Discover Perfumes')}</h4>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 sm:p-6 border border-[#00000088] shadow-sm">
@@ -555,7 +558,7 @@ export default function Catalogue() {
                     <div className="relative">
                       <input
                         type="text"
-                        placeholder="Search luxury fragrances, brands, or scent notes..."
+                        placeholder={t('catalogue.searchplaceholder', 'Search luxury fragrances, brands, or scent notes...')}
                         value={tempSearchQuery}
                         onChange={(e) => setTempSearchQuery(e.target.value)}
                         onKeyDown={(e) => {
@@ -583,7 +586,7 @@ export default function Catalogue() {
                           size="sm"
                           className="bg-[#000000] hover:bg-[#000000] text-white font-medium h-8 px-3"
                         >
-                          Search
+                          {t('catalogue.search', 'Search')}
                         </Button>
                       </div>
                     </div>
@@ -594,7 +597,7 @@ export default function Catalogue() {
               {/* Price Filter */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-bold text-navy tracking-wide">Price Range</h4>
+                  <h4 className="text-lg font-bold text-navy tracking-wide">{t('catalogue.pricerange', 'Price Range')}</h4>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
@@ -622,7 +625,7 @@ export default function Catalogue() {
               {/* Brand Filter */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-bold text-navy tracking-wide">Brands</h4>
+                  <h4 className="text-lg font-bold text-navy tracking-wide">{t('catalogue.brands', 'Brands')}</h4>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
@@ -648,7 +651,7 @@ export default function Catalogue() {
               {/* Category Filter */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-bold text-navy tracking-wide">Categories</h4>
+                  <h4 className="text-lg font-bold text-navy tracking-wide">{t('catalogue.categories', 'Categories')}</h4>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                 </div>
                 <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-6 border border-[#00000088] shadow-sm">
@@ -676,7 +679,7 @@ export default function Catalogue() {
                   variant="outline"
                   className="w-full border-[#00000088] text-navy hover:bg-[#00000088]"
                 >
-                  Clear All Filters ({activeFiltersCount})
+{t('catalogue.clearallfilters', 'Clear All Filters')} ({activeFiltersCount})
                 </Button>
               )}
             </div>
@@ -691,7 +694,7 @@ export default function Catalogue() {
                 <SheetTrigger asChild>
                   <Button variant="outline" className="flex items-center gap-2 border-gold/30 hover:border-gold">
                     <Filter className="h-4 w-4" />
-                    Filters
+                    {t('catalogue.filters', 'Filters')}
                     {activeFiltersCount > 0 && (
                       <span className="bg-gold text-navy rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                         {activeFiltersCount}
@@ -702,10 +705,10 @@ export default function Catalogue() {
                 <SheetContent side="left" className="w-80 sm:w-96 overflow-y-auto" onOpenAutoFocus={(e) => e.preventDefault()}>
                   <div className="space-y-6 pt-6">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold text-navy">Filters</h3>
+                      <h3 className="text-lg font-bold text-navy">{t('catalogue.filters', 'Filters')}</h3>
                       {activeFiltersCount > 0 && (
                         <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-navy hover:text-gold">
-                          Clear All
+                          {t('catalogue.clearall', 'Clear All')}
                         </Button>
                       )}
                     </div>
@@ -713,14 +716,14 @@ export default function Catalogue() {
                     {/* Mobile Search Section */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-base font-bold text-navy tracking-wide">Search</h4>
+                        <h4 className="text-base font-bold text-navy tracking-wide">{t('catalogue.search', 'Search')}</h4>
                         <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                       </div>
                       <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
                         <div className="relative">
                           <input
                             type="text"
-                            placeholder="Search fragrances..."
+                            placeholder={t('catalogue.searchfragrances', 'Search fragrances...')}
                             value={tempSearchQuery}
                             onChange={(e) => setTempSearchQuery(e.target.value)}
                             onKeyDown={(e) => {
@@ -749,7 +752,7 @@ export default function Catalogue() {
                               size="sm"
                               className="bg-gold hover:bg-deep-gold text-navy font-medium h-7 px-2 text-xs"
                             >
-                              Go
+                              {t('catalogue.go', 'Go')}
                             </Button>
                           </div>
                         </div>
@@ -759,7 +762,7 @@ export default function Catalogue() {
                     {/* Mobile Price Filter */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-base font-bold text-navy tracking-wide">Price Range</h4>
+                        <h4 className="text-base font-bold text-navy tracking-wide">{t('catalogue.pricerange', 'Price Range')}</h4>
                         <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                       </div>
                       <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
@@ -787,7 +790,7 @@ export default function Catalogue() {
                     {/* Mobile Brand Filter */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-base font-bold text-navy tracking-wide">Brands</h4>
+                        <h4 className="text-base font-bold text-navy tracking-wide">{t('catalogue.brands', 'Brands')}</h4>
                         <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                       </div>
                       <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
@@ -813,7 +816,7 @@ export default function Catalogue() {
                     {/* Mobile Category Filter */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-base font-bold text-navy tracking-wide">Categories</h4>
+                        <h4 className="text-base font-bold text-navy tracking-wide">{t('catalogue.categories', 'Categories')}</h4>
                         <div className="h-px flex-1 bg-gradient-to-r from-[#00000088] to-transparent ml-4"></div>
                       </div>
                       <div className="bg-gradient-to-br from-white to-cream/30 rounded-xl p-4 border border-[#00000088] shadow-sm">
@@ -840,14 +843,14 @@ export default function Catalogue() {
               {/* Mobile Sort Dropdown */}
               <Select onValueChange={(value) => updateFilter('sortBy', value)} value={filters.sortBy}>
                 <SelectTrigger className="w-32 sm:w-40 border-gold/30 hover:border-gold">
-                  <SelectValue placeholder="Sort" />
+                  <SelectValue placeholder={t('catalogue.sort', 'Sort')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-                  <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-                  <SelectItem value="price-asc">Price (Low to High)</SelectItem>
-                  <SelectItem value="price-desc">Price (High to Low)</SelectItem>
-                  <SelectItem value="brand">Brand</SelectItem>
+                  <SelectItem value="name-asc">{t('catalogue.nameaz', 'Name (A-Z)')}</SelectItem>
+                  <SelectItem value="name-desc">{t('catalogue.nameza', 'Name (Z-A)')}</SelectItem>
+                  <SelectItem value="price-asc">{t('catalogue.pricelowtohigh', 'Price (Low to High)')}</SelectItem>
+                  <SelectItem value="price-desc">{t('catalogue.pricehightolow', 'Price (High to Low)')}</SelectItem>
+                  <SelectItem value="brand">{t('catalogue.brand', 'Brand')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -859,21 +862,21 @@ export default function Catalogue() {
               className="hidden lg:flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
             >
               <div className="flex flex-col gap-2">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy mb-2">Catalogue</h1>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy mb-2">{t('catalogue.catalogue', 'Catalogue')}</h1>
                 <p className="text-gray-600 font-roboto">
                   {isFiltering ? (
-                    <span className="animate-pulse">Filtering...</span>
+                    <span className="animate-pulse">{t('catalogue.filtering', 'Filtering...')}</span>
                   ) : (
                     <>
-                      {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                      {filteredProducts.length} {t('catalogue.product', filteredProducts.length !== 1 ? 'products' : 'product')} {t('catalogue.found', 'found')}
                       {activeFiltersCount > 0 && (
                         <>
-                          {' '}with {activeFiltersCount} active filter{activeFiltersCount !== 1 ? 's' : ''}{' '}
+                          {' '}{t('catalogue.with', 'with')} {activeFiltersCount} {t('catalogue.activefilter', activeFiltersCount !== 1 ? 'active filters' : 'active filter')}{' '}
                           <button 
                             onClick={clearAllFilters}
                             className="text-navy hover:text-gold underline font-medium"
                           >
-                            (clear all)
+                            ({t('catalogue.clearall', 'clear all')})
                           </button>
                         </>
                       )}
@@ -886,14 +889,14 @@ export default function Catalogue() {
                 {/* Sort Dropdown */}
                 <Select value={filters.sortBy} onValueChange={(value) => updateFilter('sortBy', value)}>
                   <SelectTrigger className="w-48 bg-white border-[#00000088] hover:border-[#000000] transition-colors">
-                    <SelectValue placeholder="Sort by..." />
+                    <SelectValue placeholder={t('catalogue.sortby', 'Sort by...')} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-[#00000088]">
-                    <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-                    <SelectItem value="name-desc">Name (Z-A)</SelectItem>
-                    <SelectItem value="price-asc">Price (Low to High)</SelectItem>
-                    <SelectItem value="price-desc">Price (High to Low)</SelectItem>
-                    <SelectItem value="brand">Brand</SelectItem>
+                    <SelectItem value="name-asc">{t('catalogue.nameaz', 'Name (A-Z)')}</SelectItem>
+                    <SelectItem value="name-desc">{t('catalogue.nameza', 'Name (Z-A)')}</SelectItem>
+                    <SelectItem value="price-asc">{t('catalogue.pricelowtohigh', 'Price (Low to High)')}</SelectItem>
+                    <SelectItem value="price-desc">{t('catalogue.pricehightolow', 'Price (High to Low)')}</SelectItem>
+                    <SelectItem value="brand">{t('catalogue.brand', 'Brand')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -901,21 +904,21 @@ export default function Catalogue() {
 
             {/* Mobile Page Title */}
             <div className="lg:hidden mb-6">
-              <h1 className="text-2xl font-bold text-navy mb-2">Catalogue</h1>
+              <h1 className="text-2xl font-bold text-navy mb-2">{t('catalogue.catalogue', 'Catalogue')}</h1>
               <p className="text-gray-600 font-roboto text-sm">
                 {isFiltering ? (
-                  <span className="animate-pulse">Filtering...</span>
+                  <span className="animate-pulse">{t('catalogue.filtering', 'Filtering...')}</span>
                 ) : (
                   <>
-                    {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                    {filteredProducts.length} {t('catalogue.product', filteredProducts.length !== 1 ? 'products' : 'product')} {t('catalogue.found', 'found')}
                     {activeFiltersCount > 0 && (
                       <>
-                        {' '}with {activeFiltersCount} active filter{activeFiltersCount !== 1 ? 's' : ''}{' '}
+                        {' '}{t('catalogue.with', 'with')} {activeFiltersCount} {t('catalogue.activefilter', activeFiltersCount !== 1 ? 'active filters' : 'active filter')}{' '}
                         <button 
                           onClick={clearAllFilters}
                           className="text-navy hover:text-gold underline font-medium"
                         >
-                          (clear all)
+                          ({t('catalogue.clearall', 'clear all')})
                         </button>
                       </>
                     )}
@@ -936,7 +939,7 @@ export default function Catalogue() {
                   {/* Search Query Filter */}
                   {filters.searchQuery.trim() && (
                     <Badge variant="secondary" className="gap-1 bg-black text-white border-black">
-                      Search: "{filters.searchQuery}"
+{t('catalogue.search', 'Search')}: "{filters.searchQuery}"
                       <X 
                         className="h-3 w-3 cursor-pointer hover:text-red-400" 
                         onClick={() => {
@@ -995,11 +998,11 @@ export default function Catalogue() {
                   <div className="text-gray-400 mb-4">
                     <Filter className="h-12 w-12 mx-auto" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">No products found</h3>
-                  <p className="text-gray-500 mb-4">Try adjusting your filters to see more results</p>
+                  <h3 className="text-lg font-semibold text-gray-600 mb-2">{t('catalogue.noproductsfound', 'No products found')}</h3>
+                  <p className="text-gray-500 mb-4">{t('catalogue.tryadjustingfilters', 'Try adjusting your filters to see more results')}</p>
                   {activeFiltersCount > 0 && (
                     <Button onClick={clearAllFilters} variant="outline">
-                      Clear all filters
+                      {t('catalogue.clearallfilters', 'Clear all filters')}
                     </Button>
                   )}
                 </div>
