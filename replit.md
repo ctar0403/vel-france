@@ -61,6 +61,14 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Editable via admin**: All translations manageable through admin panel at /admin-translations
 - **Default language**: Georgian (ka) set as primary language for new users with automatic fallback to English
 
+### Social Media Sharing Integration (January 2025)
+- **Comprehensive Open Graph tags**: Implemented across all main pages with custom thumbnail and descriptions
+- **Custom social thumbnail**: User-provided luxury perfume collage image used for all page shares
+- **Dual-language meta descriptions**: Professional Georgian and English descriptions for each page type
+- **Complete social coverage**: Facebook, Instagram, Twitter, and all major platforms supported
+- **Dynamic content**: Product pages use specific product names in titles and descriptions
+- **SEO optimization**: Enhanced with proper meta descriptions and structured social sharing data
+
 ## Recent Performance Optimizations (January 2025)
 
 ### Render-Blocking Resource Optimization

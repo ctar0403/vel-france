@@ -19,7 +19,7 @@ import CartSidebar from "@/components/CartSidebar";
 import { LazyImage } from "@/components/ResponsiveImage";
 import { Link, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
-import { usePageTitle } from "@/hooks/usePageTitle";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 interface CatalogueFilters {
   searchQuery: string;
@@ -233,7 +233,7 @@ export default function Catalogue() {
   const [location] = useLocation();
   
   // Set page title
-  usePageTitle('catalogue');
+  usePageMeta('catalogue', 'catalogue');
   
   // Parse URL parameters for initial filters
   const urlParams = new URLSearchParams(location.split('?')[1] || '');

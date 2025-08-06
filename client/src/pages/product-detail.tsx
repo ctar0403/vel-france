@@ -25,7 +25,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSidebar from "@/components/CartSidebar";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { usePageTitle } from "@/hooks/usePageTitle";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 // Declare BOG global for TypeScript
 declare global {
@@ -70,8 +70,8 @@ function ProductDetailPage() {
     enabled: !!productId,
   });
 
-  // Set page title with product name
-  usePageTitle('product', { productName: product?.name || 'Product' });
+  // Set page title and meta tags with product name
+  usePageMeta('product', 'product', { productName: product?.name || 'Product' });
 
   // Add to cart mutation
   const addToCartMutation = useMutation({

@@ -31,12 +31,16 @@ import {
   CheckCircle,
   Clock
 } from "lucide-react";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 export default function Profile() {
   const { user } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  // Set page title and meta tags
+  usePageMeta('profile', 'profile');
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     firstName: user?.firstName || "",

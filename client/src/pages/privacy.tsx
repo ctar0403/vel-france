@@ -6,14 +6,16 @@ import type { CartItem, Product } from "@shared/schema";
 import { Shield, Eye, Lock, Database } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { usePageTitle } from "@/hooks/usePageTitle";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 export default function Privacy() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { t } = useTranslation();
   
-  // Set page title
-  usePageTitle('privacy');
+  // Set page title and meta tags
+  usePageMeta('privacy', 'privacy');
+  
+
 
   // Fetch cart items for header
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({

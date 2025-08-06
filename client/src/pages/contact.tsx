@@ -19,6 +19,7 @@ import CartSidebar from "@/components/CartSidebar";
 import type { CartItem, Product } from "@shared/schema";
 import { Phone, Mail, Clock, Send, MessageSquare, User } from "lucide-react";
 import { useState } from "react";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -35,6 +36,9 @@ export default function Contact() {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  // Set page title and meta tags
+  usePageMeta('contact', 'contact');
 
   // Fetch cart items for header
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({

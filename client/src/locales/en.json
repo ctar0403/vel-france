@@ -59,6 +59,19 @@
     "delivery": "Delivery Information - Vel France",
     "returns": "Returns Policy - Vel France"
   },
+  "pageDescription": {
+    "home": "Discover the world's finest luxury perfumes and fragrances at Vel France. Shop premium brands with exclusive collections, authentic products, and fast delivery across Georgia.",
+    "catalogue": "Browse our extensive collection of luxury perfumes and fragrances. Find your perfect scent from world-renowned brands with detailed product information and customer reviews.",
+    "product": "Experience the luxury of {{productName}} - authentic perfume with detailed notes, reviews, and exclusive pricing. Fast delivery and quality guarantee at Vel France.",
+    "contact": "Get in touch with Vel France customer service. We're here to help with orders, product information, and any questions about our luxury perfume collection.",
+    "cart": "Review your selected luxury perfumes and fragrances. Secure checkout with multiple payment options and fast delivery across Georgia.",
+    "checkout": "Complete your luxury perfume purchase with secure payment and fast delivery. Shop with confidence at Vel France's trusted checkout system.",
+    "profile": "Manage your Vel France account, view order history, track deliveries, and update your preferences for luxury perfume shopping.",
+    "privacy": "Read Vel France's privacy policy to understand how we protect your personal information and ensure secure luxury perfume shopping.",
+    "terms": "Review the terms and conditions for shopping at Vel France. Understand our policies for luxury perfume purchases and customer service.",
+    "delivery": "Learn about Vel France delivery options, shipping times, and coverage areas for luxury perfume orders across Georgia and beyond.",
+    "returns": "Understand our return and exchange policy for luxury perfumes. Easy returns process with quality guarantee at Vel France."
+  },
   "navigation": {
     "home": "Home",
     "catalogue": "Catalogue",

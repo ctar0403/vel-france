@@ -6,10 +6,14 @@ import type { CartItem, Product } from "@shared/schema";
 import { FileText, Building, Info, Scale } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { usePageMeta } from "@/hooks/usePageTitle";
 
 export default function Terms() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { t } = useTranslation();
+  
+  // Set page title and meta tags
+  usePageMeta('terms', 'terms');
 
   // Fetch cart items for header
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
