@@ -380,6 +380,8 @@ export default function Catalogue() {
         product.name,
         product.brand,
         product.description,
+        product.descriptionGeorgian,
+        product.descriptionEnglish,
         product.category
       ].filter(Boolean).join(' ').toLowerCase(),
       numericPrice: parseFloat(product.price.toString())

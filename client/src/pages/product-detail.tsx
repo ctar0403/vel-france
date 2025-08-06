@@ -314,7 +314,24 @@ function ProductDetailPage() {
             {/* Product Description */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-navy">{t('product.description', 'Description')}</h3>
-              <p className="text-navy/80 leading-relaxed">{product.description}</p>
+              <p className="text-navy/80 leading-relaxed">
+                {(() => {
+                  const { i18n } = useTranslation();
+                  const currentLang = i18n.language || 'en';
+                  const isGeorgian = currentLang === 'ka' || currentLang.startsWith('ka');
+                  
+                  if (isGeorgian && product.descriptionGeorgian) {
+                    return product.descriptionGeorgian;
+                  }
+                  if (!isGeorgian && product.descriptionEnglish) {
+                    return product.descriptionEnglish;
+                  }
+                  if (isGeorgian && !product.descriptionGeorgian && product.descriptionEnglish) {
+                    return product.descriptionEnglish;
+                  }
+                  return product.description || '';
+                })()}
+              </p>
             </div>
 
             {/* Quantity & Purchase */}
