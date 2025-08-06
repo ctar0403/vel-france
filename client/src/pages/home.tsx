@@ -246,13 +246,14 @@ export default function Home() {
   const { data: cartItems = [], isLoading: cartLoading } = useQuery<(CartItem & { product: Product })[]>({
     queryKey: ["/api/cart"],
     retry: false,
-    onSuccess: (data) => {
-      console.log('Cart data fetched:', data.length, 'items');
-    },
-    onError: (error) => {
-      console.error('Cart fetch error:', error);
-    }
   });
+
+  // Use useEffect for data logging instead of deprecated onSuccess/onError
+  React.useEffect(() => {
+    if (cartItems && cartItems.length >= 0) {
+      console.log('Cart data fetched:', cartItems.length, 'items');
+    }
+  }, [cartItems]);
 
   // Fetch user orders
   const { data: orders = [], isLoading: ordersLoading } = useQuery<(Order & { orderItems: any[] })[]>({
@@ -377,7 +378,8 @@ export default function Home() {
   const featuredProducts = products.slice(0, 3);
   // Calculate cart item count with debug logging
   const cartItemCount = React.useMemo(() => {
-    const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    if (!Array.isArray(cartItems)) return 0;
+    const count = cartItems.reduce((sum: number, item: CartItem & { product: Product }) => sum + item.quantity, 0);
     console.log('Cart item count updated:', count, 'from items:', cartItems.length);
     return count;
   }, [cartItems]);
@@ -413,7 +415,7 @@ export default function Home() {
       <CartSidebar 
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
+        cartItems={Array.isArray(cartItems) ? cartItems : []}
         isLoading={cartLoading}
       />
       {/* Hero Banner Section */}

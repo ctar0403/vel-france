@@ -8,6 +8,8 @@ import { useTranslationsReady } from "@/lib/translations";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect } from "react";
 import { initializeCriticalResources } from "@/utils/criticalResourceLoader";
+import { initializeAllOptimizations } from "@/utils/resourceOptimization";
+import CriticalCSS from "@/components/CriticalCSS";
 import { lazy, Suspense } from "react";
 import Home from "@/pages/home"; // Keep home page synchronous for LCP
 
@@ -59,9 +61,13 @@ function Router() {
   const { user, isLoading } = useAuth();
   const translationsReady = useTranslationsReady();
 
-  // Initialize critical resources early
+  // Initialize critical resources and performance optimizations early
   useEffect(() => {
+    // Initialize critical resources for core functionality
     initializeCriticalResources().catch(console.error);
+    
+    // Initialize all performance optimizations for 100/100 PageSpeed score
+    initializeAllOptimizations();
   }, []);
 
   if (isLoading || !translationsReady) {
@@ -156,6 +162,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
+          <CriticalCSS />
           <Toaster />
           <Router />
           <MobileBottomNav />
