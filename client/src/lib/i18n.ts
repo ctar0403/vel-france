@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { loadTranslations } from './translations';
 
 import enTranslations from '../locales/en.json';
@@ -17,19 +16,12 @@ const resources = {
 };
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
     lng: 'ka', // default language (Georgian)
     fallbackLng: 'en',
     debug: false,
-    
-    detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
-      caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng',
-    },
 
     interpolation: {
       escapeValue: false,
@@ -54,11 +46,6 @@ if (typeof window !== 'undefined') {
   const currentLang = i18n.language || 'ka';
   document.documentElement.setAttribute('lang', currentLang);
   document.documentElement.setAttribute('data-language', currentLang);
-  
-  // Set Georgian as default if no language is stored
-  if (!localStorage.getItem('i18nextLng')) {
-    i18n.changeLanguage('ka');
-  }
 }
 
 export default i18n;

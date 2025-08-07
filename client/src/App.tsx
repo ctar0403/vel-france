@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { useTranslationsReady } from "@/lib/translations";
+import { initializeLanguageFromURL } from "@/lib/language-router";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { useEffect } from "react";
 import Home from "@/pages/home";
@@ -28,9 +29,14 @@ import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
 
-// Component to handle scroll restoration on route changes
+// Component to handle scroll restoration on route changes and language initialization
 function ScrollToTop() {
   const [location] = useLocation();
+  
+  useEffect(() => {
+    // Initialize language from URL on first load
+    initializeLanguageFromURL();
+  }, []);
   
   useEffect(() => {
     // Scroll to top when location changes
@@ -56,14 +62,17 @@ function Router() {
     <>
       <ScrollToTop />
       <Switch>
-        {/* Payment routes available to all users */}
+        {/* Payment routes available to all users (both languages) */}
         <Route path="/payment-success" component={PaymentSuccess} />
+        <Route path="/en/payment-success" component={PaymentSuccess} />
         <Route path="/payment-cancel" component={PaymentCancel} />
+        <Route path="/en/payment-cancel" component={PaymentCancel} />
         
-        {/* Public order route for unique URLs */}
+        {/* Public order route for unique URLs (both languages) */}
         <Route path="/order/:orderCode" component={OrderPage} />
+        <Route path="/en/order/:orderCode" component={OrderPage} />
         
-        {/* Public routes */}
+        {/* Georgian routes (default, no prefix) */}
         <Route path="/" component={Home} />
         <Route path="/catalogue" component={Catalogue} />
         <Route path="/product/:id" component={ProductDetail} />
@@ -73,17 +82,37 @@ function Router() {
         <Route path="/auth" component={AuthPage} />
         <Route path="/admin" component={AdminLogin} />
         <Route path="/admin-panel" component={Admin} />
-        <Route path="/admin-translations" component={AdminTranslations} />
         <Route path="/delivery" component={Delivery} />
         <Route path="/returns" component={Returns} />
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
         
-        {/* Protected routes - only accessible when logged in */}
+        {/* English routes (with /en prefix) */}
+        <Route path="/en" component={Home} />
+        <Route path="/en/catalogue" component={Catalogue} />
+        <Route path="/en/product/:id" component={ProductDetail} />
+        <Route path="/en/contact" component={Contact} />
+        <Route path="/en/cart" component={Cart} />
+        <Route path="/en/checkout" component={Checkout} />
+        <Route path="/en/auth" component={AuthPage} />
+        <Route path="/en/admin" component={AdminLogin} />
+        <Route path="/en/admin-panel" component={Admin} />
+        <Route path="/en/delivery" component={Delivery} />
+        <Route path="/en/returns" component={Returns} />
+        <Route path="/en/privacy" component={Privacy} />
+        <Route path="/en/terms" component={Terms} />
+        
+        {/* Admin routes */}
+        <Route path="/admin-translations" component={AdminTranslations} />
+        <Route path="/en/admin-translations" component={AdminTranslations} />
+        
+        {/* Protected routes - only accessible when logged in (both languages) */}
         {user && (
           <>
             <Route path="/profile" component={Profile} />
+            <Route path="/en/profile" component={Profile} />
             <Route path="/order/:orderId" component={OrderDetails} />
+            <Route path="/en/order/:orderId" component={OrderDetails} />
           </>
         )}
         

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguageRouter } from "@/lib/language-router";
 import LogoutButton from "@/components/LogoutButton";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoImage from "@assets/Your paragraph text (4)_1753542106373.webp";
@@ -21,7 +22,7 @@ interface HeaderProps {
 export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const [, setLocation] = useLocation();
+  const { navigateToPath } = useLanguageRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
@@ -55,7 +56,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
     e.preventDefault();
     if (searchQuery.trim()) {
       // Navigate to catalogue page with search query
-      setLocation(`/catalogue?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigateToPath(`/catalogue?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
       setIsSearchOpen(false);
     }
@@ -69,7 +70,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
 
   const handleCategoryClick = (category: string) => {
     // Navigate to catalogue page with category filter
-    setLocation(`/catalogue?category=${encodeURIComponent(category)}`);
+    navigateToPath(`/catalogue?category=${encodeURIComponent(category)}`);
   };
 
   return (
@@ -78,7 +79,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
         <div className="flex items-center min-w-0 gap-2 sm:gap-4 relative">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
-            <Link href="/">
+            <button onClick={() => navigateToPath('/')}>
               <img 
                 src={logoImage}
                 alt={t('Header.velfrancelogo', 'Vel France Logo')}
@@ -86,7 +87,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 width="120"
                 height="48"
               />
-            </Link>
+            </button>
           </div>
           
           {/* Mobile spacer to push content right */}
@@ -94,12 +95,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
           
           {/* Desktop Navigation - Absolutely Centered */}
           <div className="hidden lg:flex items-center justify-center space-x-4 xl:space-x-6 font-roboto absolute left-1/2 transform -translate-x-1/2">
-            <Link 
-              href="/"
+            <button 
+              onClick={() => navigateToPath('/')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               {t('navigation.home')}
-            </Link>
+            </button>
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center text-navy hover:text-gold transition-colors duration-300 font-medium group">
@@ -132,12 +133,12 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                         <div className="grid grid-cols-2 gap-1 ml-8">
                           {brandsByLetter[letter].map((brand) => (
                             <DropdownMenuItem key={brand} asChild>
-                              <Link
-                                href={`/catalogue?brand=${encodeURIComponent(brand)}`}
-                                className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200 rounded block"
+                              <button
+                                onClick={() => navigateToPath(`/catalogue?brand=${encodeURIComponent(brand)}`)}
+                                className="cursor-pointer text-xs px-2 py-1.5 hover:bg-cream hover:text-gold transition-colors duration-200 rounded block w-full text-left"
                               >
                                 {brand}
-                              </Link>
+                              </button>
                             </DropdownMenuItem>
                           ))}
                         </div>
@@ -147,18 +148,18 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link 
-              href="/catalogue"
+            <button 
+              onClick={() => navigateToPath('/catalogue')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               {t('navigation.catalogue')}
-            </Link>
-            <Link 
-              href="/contact"
+            </button>
+            <button 
+              onClick={() => navigateToPath('/contact')}
               className="text-navy hover:text-gold transition-colors duration-300 font-medium"
             >
               {t('navigation.contact')}
-            </Link>
+            </button>
           </div>
           
           {/* Action Buttons */}
@@ -225,16 +226,15 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                   />
                 </div>
               ) : (
-                <Link to="/auth">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-navy hover:text-gold p-2"
-                  >
-                    <User className="h-5 w-5 mr-2" />
-                    <span>{t('navigation.login')}</span>
-                  </Button>
-                </Link>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-navy hover:text-gold p-2"
+                  onClick={() => navigateToPath('/auth')}
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  <span>{t('navigation.login')}</span>
+                </Button>
               )}
 
               {/* Cart */}
@@ -263,7 +263,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
               <SheetContent side="right" className="w-72 sm:w-80 border-gold/20">
                 <div className="flex flex-col space-y-6 mt-8">
                   <div className="flex items-center justify-center">
-                    <button onClick={() => setLocation('/')}>
+                    <button onClick={() => navigateToPath('/')}>
                       <img 
                         src={logoImage}
                         alt={t('Header.velfrancelogo', 'Vel France Logo')}
@@ -274,13 +274,13 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                   
                   <nav className="flex flex-col space-y-4 font-roboto">
                     <button 
-                      onClick={() => setLocation('/')}
+                      onClick={() => navigateToPath('/')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       {t('navigation.home')}
                     </button>
                     <button 
-                      onClick={() => setLocation('/catalogue')}
+                      onClick={() => navigateToPath('/catalogue')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       {t('navigation.catalogue')}
@@ -320,7 +320,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                                     <button
                                       key={brand}
                                       onClick={() => {
-                                        setLocation(`/catalogue?brand=${encodeURIComponent(brand)}`);
+                                        navigateToPath(`/catalogue?brand=${encodeURIComponent(brand)}`);
                                         setIsBrandsOpen(false);
                                       }}
                                       className="block w-full text-left text-sm text-navy hover:text-gold transition-colors duration-300 py-1 font-roboto"
@@ -337,7 +337,7 @@ export default function Header({ cartItemCount = 0, onCartClick }: HeaderProps) 
                     </div>
 
                     <button 
-                      onClick={() => setLocation('/contact')}
+                      onClick={() => navigateToPath('/contact')}
                       className="text-left text-navy hover:text-gold transition-colors duration-300 py-2 font-medium block w-full"
                     >
                       {t('navigation.contact')}

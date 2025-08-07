@@ -1,10 +1,10 @@
 import { Home, Store, ShoppingCart, User, LogIn } from 'lucide-react';
-import { Link, useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useLanguageRouter } from '@/lib/language-router';
 
 export function MobileBottomNav() {
-  const [location] = useLocation();
+  const { navigateToPath, pathWithoutLanguage = '' } = useLanguageRouter();
   const { t } = useTranslation();
   
   // Get cart items count
@@ -25,26 +25,26 @@ export function MobileBottomNav() {
       icon: Home,
       label: t('MobileBottomNav.home', 'Home'),
       path: '/',
-      isActive: location === '/'
+      isActive: pathWithoutLanguage === '/'
     },
     {
       icon: Store,
       label: t('MobileBottomNav.store', 'Store'),
       path: '/catalogue',
-      isActive: location === '/catalogue' || location.startsWith('/product/')
+      isActive: pathWithoutLanguage === '/catalogue' || (pathWithoutLanguage && pathWithoutLanguage.startsWith('/product/'))
     },
     {
       icon: ShoppingCart,
       label: t('MobileBottomNav.cart', 'Cart'),
       path: '/cart',
-      isActive: location === '/cart',
+      isActive: pathWithoutLanguage === '/cart',
       badge: cartCount > 0 ? cartCount : null
     },
     {
       icon: isLoggedIn ? User : LogIn,
       label: t('MobileBottomNav.account', 'Account'),
       path: isLoggedIn ? '/profile' : '/auth',
-      isActive: location === '/profile' || location === '/admin' || location.startsWith('/order/') || location === '/auth'
+      isActive: pathWithoutLanguage === '/profile' || pathWithoutLanguage === '/admin' || (pathWithoutLanguage && pathWithoutLanguage.startsWith('/order/')) || pathWithoutLanguage === '/auth'
     }
   ];
 
@@ -54,7 +54,7 @@ export function MobileBottomNav() {
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
-            <Link key={item.path} to={item.path} className="flex-1">
+            <button key={item.path} onClick={() => navigateToPath(item.path)} className="flex-1">
               <div className="flex flex-col items-center py-2 px-3">
                 <div className="relative">
                   <Icon 
@@ -80,7 +80,7 @@ export function MobileBottomNav() {
                   {item.label}
                 </span>
               </div>
-            </Link>
+            </button>
           );
         })}
       </div>
