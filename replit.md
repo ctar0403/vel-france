@@ -68,6 +68,7 @@ Default language: Georgian (ka) - website loads in Georgian for new users, with 
 - **Complete social coverage**: Facebook, Instagram, Twitter, and all major platforms supported
 - **Dynamic content**: Product pages use specific product names in titles and descriptions
 - **SEO optimization**: Enhanced with proper meta descriptions and structured social sharing data
+- **Meta Pixel integration**: Facebook tracking pixel (ID: 1450972155929953) installed for visitor behavior tracking, conversion measurement, and advertising optimization
 
 ## Recent Performance Optimizations (January 2025)
 
