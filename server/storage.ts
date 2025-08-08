@@ -136,27 +136,11 @@ export class DatabaseStorage implements IStorage {
 
   async deleteProduct(id: string): Promise<boolean> {
     try {
-      // Check if product is referenced in any order items
-      const orderItemsWithProduct = await db
-        .select()
-        .from(orderItems)
-        .where(eq(orderItems.productId, id))
-        .limit(1);
-      
-      if (orderItemsWithProduct.length > 0) {
-        throw new Error("PRODUCT_IN_ORDERS");
-      }
-      
-      // Check if product is in any cart items
-      const cartItemsWithProduct = await db
-        .select()
-        .from(cartItems)
-        .where(eq(cartItems.productId, id));
-      
       // Delete cart items first if they exist
-      if (cartItemsWithProduct.length > 0) {
-        await db.delete(cartItems).where(eq(cartItems.productId, id));
-      }
+      await db.delete(cartItems).where(eq(cartItems.productId, id));
+      
+      // Delete order items that reference this product
+      await db.delete(orderItems).where(eq(orderItems.productId, id));
       
       // Now delete the product
       const result = await db.delete(products).where(eq(products.id, id));

@@ -141,15 +141,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting product:", error);
-      
-      // Check if it's a constraint error
-      if (error instanceof Error && error.message === "PRODUCT_IN_ORDERS") {
-        return res.status(400).json({ 
-          message: "Cannot delete product", 
-          error: "This product has been purchased and cannot be deleted." 
-        });
-      }
-      
       res.status(500).json({ 
         message: "Failed to delete product",
         error: error instanceof Error ? error.message : "Unknown error"
