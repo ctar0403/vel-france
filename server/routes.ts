@@ -13,6 +13,14 @@ import {
 } from "@shared/schema";
 import { sendOrderNotificationEmail, sendOrderConfirmationToCustomer } from './email';
 
+// Helper function to build language-aware URLs
+function buildLanguageAwareURL(baseUrl: string, path: string, language?: string): string {
+  if (language === 'en') {
+    return `${baseUrl}/en${path}`;
+  }
+  return `${baseUrl}${path}`;
+}
+
 // Helper function to configure BOG payment options
 function getBOGPaymentConfig(paymentMethod: string, totalAmount: number): { 
   payment_method: string[], 
@@ -350,7 +358,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payments/initiate-with-calculator", async (req: any, res) => {
     try {
       const userId = (req.session as any).userId || null;
-      const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod } = req.body;
+      const { shippingAddress, billingAddress, items, calculatorResult, paymentMethod, language } = req.body;
       
       // Calculate total with discounts
       let total = 0;
@@ -437,8 +445,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }))
         },
         redirect_urls: {
-          success: `${baseUrl}/payment-success?orderCode=${order.orderCode}`,
-          fail: `${baseUrl}/payment-cancel`
+          success: buildLanguageAwareURL(baseUrl, `/payment-success?orderCode=${order.orderCode}`, language),
+          fail: buildLanguageAwareURL(baseUrl, `/payment-cancel`, language)
         },
         ttl: 60,
         ...paymentConfig,
@@ -474,7 +482,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payments/initiate", async (req: any, res) => {
     try {
       const userId = (req.session as any).userId || null;
-      const { shippingAddress, billingAddress, items, paymentMethod = 'card' } = req.body;
+      const { shippingAddress, billingAddress, items, paymentMethod = 'card', language } = req.body;
       
       // Calculate total with discounts
       let total = 0;
@@ -531,8 +539,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }))
         },
         redirect_urls: {
-          success: `${baseUrl}/payment-success?orderCode=${order.orderCode}`,
-          fail: `${baseUrl}/payment-cancel`
+          success: buildLanguageAwareURL(baseUrl, `/payment-success?orderCode=${order.orderCode}`, language),
+          fail: buildLanguageAwareURL(baseUrl, `/payment-cancel`, language)
         },
         ttl: 60, // 60 minutes to complete payment
         ...paymentConfig, // Set payment method and bnpl config

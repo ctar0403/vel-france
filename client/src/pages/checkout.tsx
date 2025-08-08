@@ -13,6 +13,7 @@ import { isUnauthorizedError } from "@/lib/authUtils";
 import { usePageMeta } from "@/hooks/usePageTitle";
 import { apiRequest } from "@/lib/queryClient";
 import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
+import { useLanguageRouter } from "@/lib/language-router";
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
 import type { CartItem, Product } from "@shared/schema";
 
@@ -50,6 +51,7 @@ export default function CheckoutPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const [, setLocation] = useLocation();
+  const { navigateToPath, currentLanguage } = useLanguageRouter();
   
   // Set page title and meta tags
   usePageMeta('checkout', 'checkout');
@@ -89,7 +91,8 @@ export default function CheckoutPage() {
           shippingAddress: JSON.stringify(shippingForm),
           billingAddress: JSON.stringify(billingAddress),
           items,
-          paymentMethod: 'card'
+          paymentMethod: 'card',
+          language: currentLanguage
         });
         return response;
       } else {
@@ -99,7 +102,8 @@ export default function CheckoutPage() {
           billingAddress: JSON.stringify(billingAddress),
           items,
           calculatorResult: paymentData.calculatorResult,
-          paymentMethod: paymentData.paymentMethod
+          paymentMethod: paymentData.paymentMethod,
+          language: currentLanguage
         });
         return response;
       }
@@ -107,6 +111,15 @@ export default function CheckoutPage() {
     onSuccess: (data: any) => {
       // Debug: Log the complete response
       console.log("Payment response received:", data);
+      
+      // Track payment initiation with Meta Pixel
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'InitiateCheckout', {
+          content_type: 'product',
+          currency: 'GEL',
+          value: total
+        });
+      }
       
       // Redirect to BOG payment page
       if (data.paymentUrl) {
@@ -181,6 +194,16 @@ export default function CheckoutPage() {
   // Payment method handlers
   const handleCardPayment = () => {
     if (!validateForm()) return;
+    
+    // Track card payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total
+      });
+    }
+    
     paymentMutation.mutate({ paymentMethod: 'card' });
   };
 
@@ -188,6 +211,16 @@ export default function CheckoutPage() {
 
   const handleInstallmentPayment = async () => {
     if (!validateForm()) return;
+    
+    // Track installment payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total,
+        payment_method: 'installment'
+      });
+    }
     
     console.log("Attempting installment payment with total:", total);
     
@@ -241,6 +274,16 @@ export default function CheckoutPage() {
 
   const handleBnplPayment = async () => {
     if (!validateForm()) return;
+    
+    // Track BNPL payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total,
+        payment_method: 'bnpl'
+      });
+    }
     
     console.log("Attempting BNPL payment with total:", total);
   
@@ -470,9 +513,10 @@ export default function CheckoutPage() {
                 
                 <div className="space-y-3 sm:space-y-6">
                   {/* Mobile-Optimized Card Payment Button */}
-                  <div
+                  <button
+                    type="button"
                     onClick={handleCardPayment}
-                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-xl sm:rounded-2xl p-3 sm:p-6 group relative bg-[#e8e8e8]"
+                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-xl sm:rounded-2xl p-3 sm:p-6 group relative bg-[#e8e8e8] text-left"
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -508,7 +552,7 @@ export default function CheckoutPage() {
                         
                       </div>
                     </div>
-                  </div>
+                  </button>
 
                   {/* Premium Installment Payment Button */}
                   <Button
