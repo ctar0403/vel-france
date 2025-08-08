@@ -144,7 +144,7 @@ export class DatabaseStorage implements IStorage {
         .limit(1);
       
       if (orderItemsWithProduct.length > 0) {
-        throw new Error("Cannot delete product that has been ordered. Product is referenced in existing orders.");
+        throw new Error("PRODUCT_IN_ORDERS");
       }
       
       // Check if product is in any cart items
