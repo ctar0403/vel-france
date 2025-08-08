@@ -135,8 +135,36 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteProduct(id: string): Promise<boolean> {
-    const result = await db.delete(products).where(eq(products.id, id));
-    return (result.rowCount || 0) > 0;
+    try {
+      // Check if product is referenced in any order items
+      const orderItemsWithProduct = await db
+        .select()
+        .from(orderItems)
+        .where(eq(orderItems.productId, id))
+        .limit(1);
+      
+      if (orderItemsWithProduct.length > 0) {
+        throw new Error("Cannot delete product that has been ordered. Product is referenced in existing orders.");
+      }
+      
+      // Check if product is in any cart items
+      const cartItemsWithProduct = await db
+        .select()
+        .from(cartItems)
+        .where(eq(cartItems.productId, id));
+      
+      // Delete cart items first if they exist
+      if (cartItemsWithProduct.length > 0) {
+        await db.delete(cartItems).where(eq(cartItems.productId, id));
+      }
+      
+      // Now delete the product
+      const result = await db.delete(products).where(eq(products.id, id));
+      return (result.rowCount || 0) > 0;
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      throw error;
+    }
   }
 
   async getProductById(id: string): Promise<Product | undefined> {

@@ -141,7 +141,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting product:", error);
-      res.status(500).json({ message: "Failed to delete product" });
+      
+      // Check if it's a foreign key constraint error
+      if (error instanceof Error && error.message.includes("Cannot delete product that has been ordered")) {
+        return res.status(400).json({ 
+          message: "Cannot delete product", 
+          error: "This product cannot be deleted because it has been ordered by customers. Products with order history must be kept for record-keeping purposes." 
+        });
+      }
+      
+      res.status(500).json({ 
+        message: "Failed to delete product",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
     }
   });
 
