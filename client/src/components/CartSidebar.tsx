@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useLanguageRouter } from "@/lib/language-router";
 import type { Product, CartItem } from "@shared/schema";
 import { X, Plus, Minus, Trash2, ShoppingCart, CreditCard, Eye } from "lucide-react";
 
@@ -19,6 +20,7 @@ interface CartSidebarProps {
 export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: CartSidebarProps) {
   const { toast } = useToast();
   const { t } = useTranslation();
+  const { navigateToPath } = useLanguageRouter();
 
   // Update cart item quantity
   const updateQuantityMutation = useMutation({
@@ -274,31 +276,35 @@ export default function CartSidebar({ isOpen, onClose, cartItems, isLoading }: C
                   
                   {/* Luxury Action Buttons */}
                   <div className="space-y-3">
-                    <Link href="/cart" onClick={onClose} className="block">
-                      <Button
-                        variant="outline"
-                        className="w-full h-12 border-2 border-navy/20 text-navy hover:border-navy hover:bg-navy/5 hover:text-navy font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl group relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative flex items-center justify-center">
-                          <Eye className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-                          <span className="text-base">{t('cart.viewfullcart')}</span>
-                        </div>
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={() => {
+                        onClose();
+                        navigateToPath('/cart');
+                      }}
+                      variant="outline"
+                      className="w-full h-12 border-2 border-navy/20 text-navy hover:border-navy hover:bg-navy/5 hover:text-navy font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl group relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative flex items-center justify-center">
+                        <Eye className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+                        <span className="text-base">{t('cart.viewfullcart')}</span>
+                      </div>
+                    </Button>
                     
-                    <Link href="/checkout" onClick={onClose} className="block">
-                      <Button
-                        className="w-full h-14 bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative flex items-center justify-center">
-                          <CreditCard className="mr-3 h-6 w-6 group-hover:rotate-3 transition-transform duration-300" />
-                          <span className="text-lg">{t('cart.proceedtocheckout')}</span>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={() => {
+                        onClose();
+                        navigateToPath('/checkout');
+                      }}
+                      className="w-full h-14 bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-xl group relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative flex items-center justify-center">
+                        <CreditCard className="mr-3 h-6 w-6 group-hover:rotate-3 transition-transform duration-300" />
+                        <span className="text-lg">{t('cart.proceedtocheckout')}</span>
+                      </div>
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
+                    </Button>
                   </div>
                 </div>
               )}

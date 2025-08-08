@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
+import { useLanguageRouter } from "@/lib/language-router";
 import type { Product, CartItem } from "@shared/schema";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -53,6 +54,7 @@ function ProductDetailPage() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
+  const { navigateToPath } = useLanguageRouter();
 
   // Fetch cart items for header (with product data for sidebar)
   const { data: cartItems = [] } = useQuery<(CartItem & { product: Product })[]>({
@@ -109,7 +111,7 @@ function ProductDetailPage() {
     // Add to cart and redirect to checkout
     addToCartMutation.mutate();
     setTimeout(() => {
-      window.location.href = "/checkout";
+      navigateToPath('/checkout');
     }, 500);
   };
 
@@ -117,21 +119,21 @@ function ProductDetailPage() {
   const handleCardPayment = () => {
     handleAddToCart();
     setTimeout(() => {
-      window.location.href = "/checkout";
+      navigateToPath('/checkout');
     }, 500);
   };
 
   const handleInstallmentPayment = () => {
     handleAddToCart();
     setTimeout(() => {
-      window.location.href = "/checkout";
+      navigateToPath('/checkout');
     }, 500);
   };
 
   const handleBnplPayment = () => {
     handleAddToCart();
     setTimeout(() => {
-      window.location.href = "/checkout";
+      navigateToPath('/checkout');
     }, 500);
   };
 
