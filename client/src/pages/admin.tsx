@@ -320,20 +320,7 @@ export default function Admin() {
     enabled: isAuthenticated,
   });
 
-  // Show login screen if not authenticated
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <AdminLogin />;
-  }
-
-  // Filter and sort products
+  // Filter and sort products - must be before conditional returns
   const filteredAndSortedProducts = React.useMemo(() => {
     if (!products) return [];
     
@@ -382,7 +369,7 @@ export default function Admin() {
     return filtered;
   }, [products, searchQuery, sortBy, sortOrder]);
 
-  // Product mutations
+  // Product mutations - must be before conditional returns
   const createProductMutation = useMutation({
     mutationFn: async (product: InsertProduct) => {
       return await apiRequest("POST", "/api/admin/products", product);
@@ -513,6 +500,19 @@ export default function Admin() {
       });
     },
   });
+
+  // Show login screen if not authenticated
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
 
   const handleCreateProduct = () => {
     setSelectedProduct(null);
