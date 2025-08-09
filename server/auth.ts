@@ -200,7 +200,8 @@ export function setupAuth(app: Express) {
       const { username, password } = req.body;
       
       // Check admin credentials (hardcoded for security - only giorgi/random12)
-      if (username === "giorgi" && password === "random12") {
+      // Case-insensitive comparison to handle AlkSanet font display issues
+      if (username.toLowerCase() === "giorgi" && password.toLowerCase() === "random12") {
         (req.session as any).isAdminAuthenticated = true;
         res.json({ success: true, message: "Admin authenticated successfully" });
       } else {
