@@ -315,6 +315,16 @@ function ProductDetailPage() {
                   </div>
                 )}
               </div>
+
+              {/* Capacity */}
+              {product.capacity && (
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-medium text-navy/70">{t('product.capacity', 'Volume')}:</span>
+                  <span className="text-lg font-semibold text-navy bg-gold/10 px-3 py-1 rounded-full">
+                    {product.capacity}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Product Description */}
