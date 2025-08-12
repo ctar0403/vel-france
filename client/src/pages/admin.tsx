@@ -1306,6 +1306,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
     brand: '',
     imageUrl: '',
     inStock: true,
+    capacity: '',
   });
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['Unisex']);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -1399,6 +1400,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           brand: product.brand || '',
           imageUrl: product.imageUrl || '',
           inStock: product.inStock ?? true,
+          capacity: product.capacity || '',
         });
         // Initialize with all categories from both category and categories array
         const allCategories: string[] = [];
@@ -1420,6 +1422,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           brand: '',
           imageUrl: '',
           inStock: true,
+          capacity: '',
         });
         setSelectedCategories(['Unisex']);
       }
@@ -1499,7 +1502,7 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
           </div>
 
           {/* Basic Product Information */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Product Name *</Label>
               <Input
@@ -1519,6 +1522,16 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
                 placeholder="e.g., Tom Ford"
                 required
               />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="capacity">Capacity</Label>
+              <Input
+                id="capacity"
+                value={formData.capacity || ''}
+                onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
+                placeholder="e.g., 100ML, 50ML"
+              />
+              <p className="text-xs text-gray-500">Product volume/size (e.g., 100ML)</p>
             </div>
           </div>
 
@@ -1658,6 +1671,10 @@ function ProductDialog({ isOpen, onOpenChange, mode, product, onSubmit, isSubmit
                 <div>
                   <span className="text-blue-700 font-medium">Brand:</span>
                   <span className="ml-2">{product.brand}</span>
+                </div>
+                <div>
+                  <span className="text-blue-700 font-medium">Capacity:</span>
+                  <span className="ml-2">{product.capacity || 'Not set'}</span>
                 </div>
               </div>
             </div>
