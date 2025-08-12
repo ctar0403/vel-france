@@ -354,7 +354,7 @@ export default function Home() {
 
   // Define specific product lists in ranking order
   const mostSoldProductNames = [
-    "Delina", "Bleu de Chanel", "Goddess", "Kirke", "Chance Eau Tendre", 
+    "Mademoiselle EDp", "Bleu de Chanel", "Goddess", "Black Opium", "Chance Eau Tendre", 
     "Libre", "Sauvage Elixir", "N5", "Stronger With You Intensely", 
     "Queen Of Silk", "K", "Le Male Elixir"
   ];
