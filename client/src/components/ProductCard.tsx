@@ -118,7 +118,7 @@ export default function ProductCard({
           {/* Capacity */}
           {product.capacity && (
             <div className="flex items-center gap-1 mb-3">
-              <span className="text-xs font-medium text-navy/60">{t('product.capacity', 'Volume')}:</span>
+              <span className="text-xs font-medium text-navy/60">{t('product.capacity', 'Capacity')}:</span>
               <span className="text-xs font-semibold text-navy bg-gold/15 px-2 py-0.5 rounded-full">
                 {product.capacity}
               </span>
