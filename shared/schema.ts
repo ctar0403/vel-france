@@ -50,6 +50,7 @@ export const products = pgTable("products", {
   category: varchar("category", { length: 50 }).notNull(), // 'women', 'men', 'unisex'
   categories: text("categories").array().notNull().default(sql`'{}'`), // Multiple categories for filtering
   brand: varchar("brand", { length: 100 }), // brand name
+  capacity: varchar("capacity", { length: 20 }), // product capacity/volume (e.g., 100ML, 75ML)
   imageUrl: text("image_url"),
   inStock: boolean("in_stock").default(true),
   createdAt: timestamp("created_at").defaultNow(),
@@ -194,6 +195,7 @@ export const insertProductSchema = createInsertSchema(products).omit({
 }).extend({
   descriptionGeorgian: z.string().optional(),
   descriptionEnglish: z.string().optional(),
+  capacity: z.string().optional(),
 });
 
 export const insertCartItemSchema = createInsertSchema(cartItems).omit({
