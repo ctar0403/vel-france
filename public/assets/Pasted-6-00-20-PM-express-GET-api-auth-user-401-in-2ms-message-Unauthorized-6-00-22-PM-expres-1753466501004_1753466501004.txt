@@ -1,0 +1,25 @@
+6:00:20 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+6:00:22 PM [express] GET /api/auth/user 401 in 0ms :: {"message":"Unauthorized"}
+6:00:22 PM [express] GET /api/products 304 in 110ms :: [{"id":"a250dd0c-35ca-43de-bf52-fe252818d6de"…
+6:00:24 PM [express] GET /api/products 304 in 65ms :: [{"id":"a250dd0c-35ca-43de-bf52-fe252818d6de",…
+6:00:24 PM [express] GET /api/auth/user 304 in 69ms :: {"id":"44327968","email":"leafygeo123@gmail.c…
+6:00:25 PM [express] GET /api/cart 304 in 76ms :: [{"id":"3fdf5ae2-186e-4016-9196-db5b336476be","use…
+6:00:25 PM [express] GET /api/orders 200 in 494ms :: [{"id":"1e55fd02-1156-4012-bf75-35177f7ca950","…
+BOG API Response: {"error_code":404,"error_message":"Merchant with client_id (10001216) not found","information_link":"","details":null}
+Error getting BOG access token: Error: BOG token request failed: 404 - {"error_code":404,"error_message":"Merchant with client_id (10001216) not found","information_link":"","details":null}
+    at BOGPaymentService.getAccessToken (/home/runner/workspace/server/bogPayment.ts:77:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BOGPaymentService.createPayment (/home/runner/workspace/server/bogPayment.ts:101:21)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:229:26)
+Error creating BOG payment: Error: BOG token request failed: 404 - {"error_code":404,"error_message":"Merchant with client_id (10001216) not found","information_link":"","details":null}
+    at BOGPaymentService.getAccessToken (/home/runner/workspace/server/bogPayment.ts:77:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BOGPaymentService.createPayment (/home/runner/workspace/server/bogPayment.ts:101:21)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:229:26)
+Error initiating payment: Error: BOG token request failed: 404 - {"error_code":404,"error_message":"Merchant with client_id (10001216) not found","information_link":"","details":null}
+    at BOGPaymentService.getAccessToken (/home/runner/workspace/server/bogPayment.ts:77:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BOGPaymentService.createPayment (/home/runner/workspace/server/bogPayment.ts:101:21)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:229:26)
+6:00:54 PM [express] POST /api/payments/initiate 500 in 1255ms :: {"message":"Failed to initiate pay…
+^C

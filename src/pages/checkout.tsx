@@ -1,0 +1,723 @@
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
+import { isUnauthorizedError } from "@/lib/authUtils";
+import { usePageMeta } from "@/hooks/usePageTitle";
+import { apiRequest } from "@/lib/queryClient";
+import { loadBOGSDK, isBOGSDKAvailable, preloadBOGSDK } from "@/lib/bogSDK";
+import { useLanguageRouter } from "@/lib/language-router";
+import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from "lucide-react";
+import type { CartItem, Product } from "@shared/schema";
+
+// Payment method logos
+import bogLogo from "@assets/BGEO.L-9c80f039_1753638321901.webp";
+import bogLogo2 from "@assets/BGEO.L-9c80f039_1753639252317.webp";
+import bogInstallmentLogo from "@assets/Untitled design (30)_1753640190162.webp";
+import bankLogo from "@assets/Untitled design (29)_1753639145761.webp";
+import visaLogo from "@assets/Visa_2021.svg_1753638560432.webp";
+import mastercardLogo from "@assets/Mastercard-logo.svg_1753638587439.webp";
+import amexLogo from "@assets/American-Express-Color_1753638617821.webp";
+import googlePayLogo from "@assets/Google_Pay_Logo.svg_1753638503746.webp";
+import applePayLogo from "@assets/Apple_Pay_logo.svg_1753638450992.webp";
+import partByPartLogo from "@assets/Untitled (500 x 200 px)_1753642797466.webp";
+
+// Declare BOG global for TypeScript
+declare global {
+  interface Window {
+    BOG: {
+      Calculator: {
+        open: (config: {
+          amount: number;
+          bnpl?: boolean;
+          onClose?: () => void;
+          onRequest?: (selected: { amount: number; month: number; discount_code: string }, successCb: (orderId: string) => void, closeCb: () => void) => void;
+          onComplete?: (data: { redirectUrl: string }) => boolean;
+        }) => void;
+      };
+    };
+  }
+}
+
+export default function CheckoutPage() {
+  const { toast } = useToast();
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const [, setLocation] = useLocation();
+  const { navigateToPath, currentLanguage } = useLanguageRouter();
+  
+  // Set page title and meta tags
+  usePageMeta('checkout', 'checkout');
+  
+  // Fetch cart items
+  const { data: cartItems = [], isLoading } = useQuery<(CartItem & { product: Product })[]>({
+    queryKey: ["/api/cart"],
+  });
+
+  const [shippingForm, setShippingForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    additionalAddress: "",
+    city: "",
+    additionalInfo: "",
+    country: t('checkout.georgia')
+  });
+  
+  
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'card' | 'installment' | 'bnpl'>('card');
+
+  const paymentMutation = useMutation({
+    mutationFn: async (paymentData: {paymentMethod: 'card', calculatorResult?: never} | {paymentMethod: 'installment' | 'bnpl', calculatorResult: any}) => {
+      const items = cartItems.map((item: CartItem & { product: Product }) => ({
+        productId: item.productId,
+        quantity: item.quantity
+      }));
+
+      const billingAddress = shippingForm;
+
+      // Use different endpoints based on payment method
+      if (paymentData.paymentMethod === 'card') {
+        const response = await apiRequest("POST", "/api/payments/initiate", {
+          shippingAddress: JSON.stringify(shippingForm),
+          billingAddress: JSON.stringify(billingAddress),
+          items,
+          paymentMethod: 'card',
+          language: currentLanguage
+        });
+        return response;
+      } else {
+        // Use calculator endpoint for installment/bnpl
+        const response = await apiRequest("POST", "/api/payments/initiate-with-calculator", {
+          shippingAddress: JSON.stringify(shippingForm),
+          billingAddress: JSON.stringify(billingAddress),
+          items,
+          calculatorResult: paymentData.calculatorResult,
+          paymentMethod: paymentData.paymentMethod,
+          language: currentLanguage
+        });
+        return response;
+      }
+    },
+    onSuccess: (data: any) => {
+      // Debug: Log the complete response
+      console.log("Payment response received:", data);
+      
+      // Track payment initiation with Meta Pixel
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'InitiateCheckout', {
+          content_type: 'product',
+          currency: 'GEL',
+          value: total
+        });
+      }
+      
+      // Redirect to BOG payment page
+      if (data.paymentUrl) {
+        console.log("Redirecting to:", data.paymentUrl);
+        window.location.href = data.paymentUrl;
+      } else {
+        console.error("No paymentUrl in response:", data);
+        toast({
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentRedirectError'),
+          variant: "destructive",
+        });
+      }
+    },
+    onError: (error) => {
+      console.error("Payment error:", error);
+      if (isUnauthorizedError(error)) {
+        toast({
+          title: t('checkout.unauthorized'),
+          description: t('auth.loginError'),
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 500);
+        return;
+      }
+      toast({
+        title: t('checkout.paymentFailed'),
+        description: t('checkout.paymentFailedDescription'),
+        variant: "destructive",
+      });
+    },
+  });
+
+  const validateForm = (): boolean => {
+    // Only validate required fields that actually exist in the form
+    const requiredFields = ['firstName', 'lastName', 'phone', 'address', 'city'];
+    const isShippingValid = requiredFields.every(field => {
+      const value = shippingForm[field as keyof typeof shippingForm];
+      return value && value.toString().trim() !== '';
+    });
+    
+    if (!isShippingValid) {
+      toast({
+        title: t('checkout.missingInformation'),
+        description: t('checkout.missingInformationDescription'),
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Form validation is now handled by individual payment buttons
+  };
+
+  const calculateTotal = () => {
+    return cartItems.reduce((total: number, item: CartItem & { product: Product }) => {
+      const itemPrice = item.product.discountPercentage && item.product.discountPercentage > 0 
+        ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)
+        : parseFloat(item.product.price);
+      return total + (itemPrice * item.quantity);
+    }, 0);
+  };
+
+  const total = calculateTotal();
+
+  // Payment method handlers
+  const handleCardPayment = () => {
+    if (!validateForm()) return;
+    
+    // Track card payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total
+      });
+    }
+    
+    paymentMutation.mutate({ paymentMethod: 'card' });
+  };
+
+
+
+  const handleInstallmentPayment = async () => {
+    if (!validateForm()) return;
+    
+    // Track installment payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total,
+        payment_method: 'installment'
+      });
+    }
+    
+    console.log("Attempting installment payment with total:", total);
+    
+    try {
+      // Load BOG SDK dynamically
+      await loadBOGSDK();
+      
+      if (!isBOGSDKAvailable()) {
+        console.error("BOG SDK failed to load");
+        toast({
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentSystemLoading'),
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log("Opening BOG Calculator for installments with amount:", total);
+      window.BOG.Calculator.open({
+        amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
+        bnpl: false, // Standard installment plan
+        onClose: () => {
+          console.log("BOG Calculator closed by user");
+        },
+        onRequest: (selected, successCb, closeCb) => {
+          console.log("BOG Calculator installment selection:", selected);
+          
+          // Use the calculator results to create payment
+          paymentMutation.mutate({ 
+            paymentMethod: 'installment', 
+            calculatorResult: selected 
+          });
+          
+          // Close the modal since we're handling the flow ourselves
+          closeCb();
+        },
+        onComplete: ({ redirectUrl }) => {
+          console.log("BOG Calculator onComplete called with:", redirectUrl);
+          return false; // Prevent automatic redirect
+        }
+      });
+    } catch (error) {
+      console.error("Error loading BOG SDK or opening Calculator:", error);
+      toast({
+        title: t('checkout.paymentError'),
+        description: t('checkout.paymentLoadError'),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleBnplPayment = async () => {
+    if (!validateForm()) return;
+    
+    // Track BNPL payment button click with Meta Pixel
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'AddPaymentInfo', {
+        content_type: 'product',
+        currency: 'GEL',
+        value: total,
+        payment_method: 'bnpl'
+      });
+    }
+    
+    console.log("Attempting BNPL payment with total:", total);
+  
+    try {
+      // Load BOG SDK dynamically
+      await loadBOGSDK();
+      
+      if (!isBOGSDKAvailable()) {
+        console.error("BOG SDK failed to load");
+        toast({
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentSystemLoading'),
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log("Opening BOG Calculator for BNPL with amount:", total);
+      window.BOG.Calculator.open({
+        amount: parseFloat(total.toFixed(2)), // Keep as lari with decimal precision
+        bnpl: true, // Part-by-part plan
+        onClose: () => {
+          console.log("BOG Calculator closed by user");
+        },
+        onRequest: (selected, successCb, closeCb) => {
+          console.log("BOG Calculator BNPL selection:", selected);
+          
+          // Use the calculator results to create payment
+          paymentMutation.mutate({ 
+            paymentMethod: 'bnpl', 
+            calculatorResult: selected 
+          });
+          
+          // Close the modal since we're handling the flow ourselves
+          closeCb();
+        },
+        onComplete: ({ redirectUrl }) => {
+          console.log("BOG Calculator onComplete called with:", redirectUrl);
+          return false; // Prevent automatic redirect
+        }
+      });
+    } catch (error) {
+      console.error("Error loading BOG SDK or opening Calculator:", error);
+      toast({
+        title: t('checkout.paymentError'),
+        description: t('checkout.paymentLoadError'),
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center animate-pulse">
+            <CreditCard className="h-8 w-8 text-navy/40" />
+          </div>
+          <p className="font-roboto text-lg text-navy/70 tracking-wide">{t('checkout.preparingSecure')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center">
+            <CreditCard className="h-16 w-16 text-navy/40" />
+          </div>
+          <h2 className="font-roboto text-3xl font-light text-navy mb-4 tracking-wide">{t('cart.empty')}</h2>
+          <p className="text-navy/60 text-lg mb-8">{t('cart.emptyDescription')}</p>
+          <Link href="/catalogue">
+            <Button className="bg-gradient-to-r from-[#00000088] via-[#000000] to-[#000000] text-white font-roboto font-semibold tracking-wide px-8 py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
+              {t('navigation.catalogue')}
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-pastel-pink">
+      {/* Mobile-Optimized Luxury Header */}
+      <div className="relative bg-gradient-to-r from-white via-cream/50 to-white border-b border-gold/30 shadow-sm">
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5"></div>
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 relative">
+          <div className="flex items-center justify-between">
+            <Link href="/cart">
+              <Button 
+                variant="ghost" 
+                className="text-navy/70 hover:text-navy hover:bg-gold/10 font-roboto font-medium tracking-wide transition-all duration-300 rounded-xl px-3 sm:px-6 py-2 sm:py-3 group"
+              >
+                <ArrowLeft className="mr-1 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                <span className="hidden sm:inline">{t('checkout.backToCart')}</span>
+                <span className="sm:hidden">{t('checkout.back')}</span>
+              </Button>
+            </Link>
+            <div className="text-center flex-1 mx-2 sm:mx-0">
+              <h1 className="font-roboto text-xl sm:text-4xl font-light text-navy tracking-wide">{t('checkout.secureCheckout')}</h1>
+            </div>
+            <div className="w-[70px] sm:w-[160px]"></div> {/* Responsive spacer for centering */}
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-12 pb-20 sm:pb-12">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 sm:gap-12">
+          {/* Mobile-Optimized Checkout Form */}
+          <div className="xl:col-span-3 space-y-6 sm:space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Mobile-Optimized Shipping Information */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8">
+                <div className="flex items-center mb-4 sm:mb-6">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">1</span>
+                    </div>
+                  </div>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">{t('checkout.shippingInformation')}</h3>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-firstName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.name')} *</Label>
+                    <Input
+                      id="shipping-firstName"
+                      value={shippingForm.firstName}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, firstName: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.enterName')}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-lastName" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.lastName')} *</Label>
+                    <Input
+                      id="shipping-lastName"
+                      value={shippingForm.lastName}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, lastName: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.enterLastName')}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-city" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.cityRegion')} *</Label>
+                    <Input
+                      id="shipping-city"
+                      value={shippingForm.city}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, city: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.cityPlaceholder')}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-phone" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.phone')} *</Label>
+                    <Input
+                      id="shipping-phone"
+                      value={shippingForm.phone}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, phone: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.phonePlaceholder')}
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-2 space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-address" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.streetAddress')} *</Label>
+                    <Textarea
+                      id="shipping-address"
+                      value={shippingForm.address}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, address: e.target.value }))}
+                      className="min-h-[70px] sm:min-h-[90px] border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 resize-none text-sm sm:text-base"
+                      placeholder={t('checkout.enterAddress')}
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-2 space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-additionalAddress" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.additionalAddressInfo')}</Label>
+                    <Input
+                      id="shipping-additionalAddress"
+                      value={shippingForm.additionalAddress}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, additionalAddress: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.additionalAddress')}
+                    />
+                  </div>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-email" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.email')}</Label>
+                    <Input
+                      id="shipping-email"
+                      type="email"
+                      value={shippingForm.email}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, email: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.emailPlaceholder')}
+                    />
+                  </div>
+                  <div className="space-y-1 sm:space-y-2">
+                    <Label htmlFor="shipping-additionalInfo" className="text-navy/80 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.additionalInfo')}</Label>
+                    <Input
+                      id="shipping-additionalInfo"
+                      value={shippingForm.additionalInfo}
+                      onChange={(e) => setShippingForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
+                      className="h-10 sm:h-12 border-2 border-navy/10 focus:border-gold/60 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl transition-all duration-300 font-roboto text-navy placeholder:text-navy/40 hover:border-navy/20 text-sm sm:text-base"
+                      placeholder={t('checkout.deliveryNotes')}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              
+
+              
+
+              {/* Mobile-Optimized Payment Method Selection */}
+              <div className="bg-gradient-to-br from-white via-cream/20 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-xl p-4 sm:p-8">
+                <div className="flex items-center mb-4 sm:mb-8">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/10 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r from-navy to-gold rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">2</span>
+                    </div>
+                  </div>
+                  <h3 className="font-roboto text-lg sm:text-2xl font-light text-navy tracking-wide">{t('checkout.choosePaymentMethod')}</h3>
+                </div>
+                
+                <div className="space-y-3 sm:space-y-6">
+                  {/* Mobile-Optimized Card Payment Button */}
+                  <button
+                    type="button"
+                    onClick={handleCardPayment}
+                    className="w-full shadow-md hover:shadow-lg cursor-pointer font-roboto hover:scale-[1.01] transition-all duration-200 rounded-xl sm:rounded-2xl p-3 sm:p-6 group relative bg-[#e8e8e8] text-left"
+                  >
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <div className="flex items-center">
+                        <div>
+                          <h3 className="text-sm sm:text-lg font-bold text-slate-800">{t('checkout.instantcardpayment', 'Instant Card Payment')}</h3>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg sm:text-2xl font-bold text-slate-800">₾{total.toFixed(2)}</div>
+                      </div>
+                    </div>
+
+                    {/* Payment Methods */}
+                    <div className="bg-gray-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
+                      <div className="flex items-center justify-between mb-2 sm:mb-3">
+                        <span className="text-xs font-medium text-slate-600">{t('checkout.acceptedmethods', 'ACCEPTED METHODS')}</span>
+                        
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2 sm:space-x-3 overflow-x-auto">
+                          <img src={visaLogo} alt="Visa" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={mastercardLogo} alt="Mastercard" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={amexLogo} alt="American Express" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <div className="w-px h-4 sm:h-5 bg-gray-300"></div>
+                          <img src={googlePayLogo} alt="Google Pay" className="h-3 sm:h-5 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={applePayLogo} alt="Apple Pay" className="h-3 sm:h-5 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <div className="w-px h-4 sm:h-5 bg-gray-300"></div>
+                          <img src={bankLogo} alt="Bank Transfer" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                          <img src={bogLogo2} alt="Bank of Georgia" className="h-4 sm:h-6 w-auto object-contain opacity-80 hover:opacity-100 flex-shrink-0" loading="eager" />
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Premium Installment Payment Button */}
+                  <Button
+                    type="button"
+                    onClick={handleInstallmentPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
+                    className="w-full h-16 sm:h-20 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-6 group relative overflow-hidden"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="flex items-center relative z-10 min-w-0 flex-1">
+                      <img 
+                        src={bogInstallmentLogo} 
+                        alt="Bank of Georgia"
+                        className="w-10 h-10 sm:w-12 sm:h-12 object-contain mr-3 sm:mr-5 flex-shrink-0"
+                      />
+                      <div className="text-left min-w-0">
+                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">{t('checkout.boginstallments', 'BOG Installments')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-orange-100 truncate">{t('checkout.flexiblemonthlyplan', 'Flexible monthly plan')}</div>
+                      </div>
+                    </div>
+                    <div className="text-right relative z-10 flex-shrink-0 ml-2">
+                      <div className="text-base sm:text-xl font-bold text-white whitespace-nowrap">₾{(total / 12).toFixed(2)}/mo</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-orange-100 whitespace-nowrap">{t('checkout.months12', '12 months')}</div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
+                  </Button>
+
+                  {/* Premium Part-by-Part Payment Button */}
+                  <Button
+                    type="button"
+                    onClick={handleBnplPayment}
+                    onMouseEnter={() => preloadBOGSDK()}
+                    className="w-full h-16 sm:h-20 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white font-roboto font-medium hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-between rounded-2xl p-3 sm:p-6 group relative overflow-hidden"
+                    disabled={paymentMutation.isPending}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-purple-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="flex items-center relative z-10 min-w-0 flex-1">
+                      <img 
+                        src={partByPartLogo} 
+                        alt="Part by Part"
+                        className="w-10 h-10 sm:w-12 sm:h-12 object-contain mr-3 sm:mr-5 flex-shrink-0"
+                      />
+                      <div className="text-left min-w-0">
+                        <div className="font-semibold text-sm sm:text-lg tracking-wide truncate">{t('checkout.partbypart', 'Part-by-Part')}</div>
+                        <div className="text-xs sm:text-sm opacity-90 text-purple-100 truncate">{t('checkout.interestfreeparts', '4 interest-free parts')}</div>
+                      </div>
+                    </div>
+                    <div className="text-right relative z-10 flex-shrink-0 ml-2">
+                      <div className="text-base sm:text-xl font-bold text-white whitespace-nowrap">₾{(total / 4).toFixed(2)} × 4</div>
+                      <div className="text-xs sm:text-sm opacity-90 text-purple-100 whitespace-nowrap">{t('checkout.zerointerest', 'Zero interest')}</div>
+                    </div>
+
+                  </Button>
+                </div>
+              </div>
+
+              {/* Mobile-Optimized Processing State */}
+              {paymentMutation.isPending && (
+                <div className="bg-gradient-to-r from-gold/10 via-white to-gold/10 rounded-2xl sm:rounded-3xl border border-gold/30 shadow-lg p-4 sm:p-6">
+                  <div className="flex items-center justify-center">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-gold/20 to-navy/10 rounded-full flex items-center justify-center mr-2 sm:mr-4 animate-pulse">
+                      <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin text-gold" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-navy font-roboto font-semibold text-sm sm:text-lg tracking-wide">{t('checkout.processingpayment', 'Processing Payment Request')}</p>
+                      <p className="text-navy/60 text-xs sm:text-sm mt-1">{t('checkout.connectinggateway', 'Connecting to Bank of Georgia secure gateway...')}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              
+            </form>
+          </div>
+
+          {/* Mobile-Optimized Order Summary */}
+          <div className="xl:col-span-2">
+            <div className="bg-gradient-to-br from-white via-cream/30 to-white rounded-2xl sm:rounded-3xl border border-gold/30 shadow-2xl p-4 sm:p-8 sticky top-4 sm:top-8">
+              <div className="flex items-center mb-4 sm:mb-8">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-navy/10 to-gold/20 rounded-full flex items-center justify-center mr-2 sm:mr-4">
+                  <CreditCard className="h-4 w-4 sm:h-6 sm:w-6 text-navy" />
+                </div>
+                <h2 className="font-roboto text-xl sm:text-3xl font-light text-navy tracking-wide">{t('checkout.ordersummary', 'Order Summary')}</h2>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-6 mb-4 sm:mb-8">
+                {cartItems.map((item: CartItem & { product: Product }) => (
+                  <div key={item.id} className="bg-gradient-to-r from-white/60 to-cream/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-gold/20 shadow-md">
+                    <div className="flex items-center space-x-2 sm:space-x-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gold/10 to-navy/5 rounded-lg sm:rounded-xl flex items-center justify-center shadow-inner flex-shrink-0">
+                        <img 
+                          src={item.product.imageUrl || "/placeholder-perfume.jpg"} 
+                          alt={item.product.name}
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-md sm:rounded-lg"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-roboto font-medium text-navy text-sm sm:text-lg tracking-wide truncate">{item.product.name}</h4>
+                        <p className="text-navy/60 font-roboto text-xs sm:text-sm">{t('checkout.quantity', 'Quantity')}: {item.quantity}</p>
+                        <p className="text-navy/50 text-xs sm:text-sm font-roboto mt-1 truncate">{item.product.brand}</p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="font-roboto font-bold text-navy text-sm sm:text-xl">
+                          ₾{(item.product.discountPercentage && item.product.discountPercentage > 0 
+                            ? parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100) * item.quantity
+                            : parseFloat(item.product.price) * item.quantity
+                          ).toFixed(2)}
+                        </p>
+                        <div className="text-xs sm:text-sm font-roboto">
+                          {item.product.discountPercentage && item.product.discountPercentage > 0 ? (
+                            <div className="flex flex-col items-end gap-0.5 sm:gap-1">
+                              <div className="flex items-center gap-1 sm:gap-2">
+                                <p className="text-navy/60 text-xs sm:text-sm">
+                                  ₾{(parseFloat(item.product.price) * (1 - item.product.discountPercentage / 100)).toFixed(2)}
+                                </p>
+                                <span className="text-xs bg-red-500 text-white px-1 sm:px-1.5 py-0.5 rounded-full font-medium">
+                                  -{item.product.discountPercentage}%
+                                </span>
+                              </div>
+                              <p className="text-gray-500 line-through text-xs">
+                                ₾{parseFloat(item.product.price).toFixed(2)}
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="text-navy/60 text-xs sm:text-sm">₾{parseFloat(item.product.price).toFixed(2)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-gradient-to-r from-cream/30 to-white rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-gold/30">
+                <div className="space-y-2 sm:space-y-4 mb-3 sm:mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">
+                      {t('checkout.subtotal', 'Subtotal')} ({cartItems.length} {cartItems.length === 1 ? t('checkout.item', 'item') : t('checkout.items', 'items')})
+                    </span>
+                    <span className="text-navy font-roboto font-semibold text-sm sm:text-lg">₾{total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.shipping', 'Shipping')}</span>
+                    <span className="text-emerald-600 font-roboto font-semibold text-sm sm:text-base">{t('checkout.free', 'Free')}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-navy/70 font-roboto font-medium tracking-wide text-sm sm:text-base">{t('checkout.vatincluded', 'VAT included')}</span>
+                    <span className="text-navy/70 font-roboto text-sm sm:text-base">₾0.00</span>
+                  </div>
+                </div>
+                
+                <div className="border-t border-gold/30 pt-3 sm:pt-4">
+                  <div className="bg-gradient-to-r from-navy/5 to-gold/5 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                    <div className="flex justify-between items-center">
+                      <span className="font-roboto text-lg sm:text-xl font-medium text-navy tracking-wide">{t('checkout.totalamount', 'Total Amount')}</span>
+                      <span className="font-roboto text-xl sm:text-3xl font-bold text-gold">₾{total.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
