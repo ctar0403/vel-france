@@ -1,0 +1,1032 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vel France - Parfumerie de Luxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'playfair': ['Playfair Display', 'serif'],
+                    'great-vibes': ['Great Vibes', 'cursive'],
+                    'inter': ['Inter', 'sans-serif']
+                },
+                colors: {
+                    'cream': '#FAF7F0',
+                    'champagne': '#D4AF37',
+                    'pastel-pink': '#F8E8E8',
+                    'navy': '#1E3A5F',
+                    'rose-gold': '#E8B4B8'
+                },
+                animation: {
+                    'float': 'float 6s ease-in-out infinite',
+                    'fade-in': 'fadeIn 0.8s ease-out',
+                    'slide-up': 'slideUp 0.6s ease-out',
+                    'scale-hover': 'scaleHover 0.3s ease-out'
+                }
+            }
+        }
+    };
+    </script>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .luxury-gradient {
+            background: linear-gradient(135deg, #FAF7F0 0%, #F8E8E8 50%, #E8B4B8 100%);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #F7DC6F 100%);
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        .product-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .elegant-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #D4AF37, #E8B4B8) border-box;
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(135deg, #D4AF37, #E8B4B8);
+            transition: left 0.4s ease;
+        }
+        
+        .nav-link:hover::after {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body class="font-inter text-navy">
+    <!-- @COMPONENT: NavigationHeader -->
+    <nav class="fixed top-0 w-full z-50 glass-morphism border-b border-champagne/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                        <i class="fas fa-spray-can text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-playfair text-2xl font-bold text-navy">Vel France</h1>
+                        <p class="font-great-vibes text-sm text-champagne -mt-1">Parfumerie</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link font-medium text-navy hover:text-champagne transition-colors">Accueil</a>
+                    <a href="#parfums" class="nav-link font-medium text-navy hover:text-champagne transition-colors">Parfums</a>
+                    <a href="#about" class="nav-link font-medium text-navy hover:text-champagne transition-colors">Notre Histoire</a>
+                    <a href="#contact" class="nav-link font-medium text-navy hover:text-champagne transition-colors">Contact</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-navy hover:text-champagne transition-colors" data-event="click:toggleSearch">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="text-navy hover:text-champagne transition-colors relative" data-event="click:openCart">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span class="absolute -top-2 -right-2 bg-rose-gold text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" data-bind="cart.itemCount">3</span>
+                    </button>
+                    <button class="text-navy hover:text-champagne transition-colors" data-event="click:openUserMenu">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    <button class="md:hidden text-navy" data-event="click:toggleMobileMenu">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: NavigationHeader -->
+
+    <!-- @COMPONENT: HeroSection -->
+    <section id="home" class="relative min-h-screen flex items-center luxury-gradient overflow-hidden">
+        <!-- Floating Particles -->
+        <div class="floating-particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="text-center lg:text-left animate-fade-in">
+                    <p class="font-great-vibes text-3xl text-champagne mb-4">L'art de la parfumerie</p>
+                    <h1 class="font-playfair text-5xl lg:text-7xl font-bold text-navy mb-6 leading-tight">
+                        Élégance
+                        <span class="text-champagne block">Française</span>
+                    </h1>
+                    <p class="text-lg text-navy/80 mb-8 max-w-xl">
+                        Découvrez notre collection exclusive de parfums français, créés avec les ingrédients les plus précieux et l'artisanat traditionnel de la parfumerie de luxe.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="gold-gradient text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300" data-event="click:exploreCollection">
+                            Découvrir la Collection
+                        </button>
+                        <button class="elegant-border bg-transparent text-navy px-8 py-4 rounded-full font-semibold hover:bg-navy hover:text-white transition-all duration-300" data-event="click:watchStory">
+                            <i class="fas fa-play mr-2"></i>
+                            Notre Histoire
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="relative animate-float">
+                    <!-- Elegant perfume bottle display with luxury French aesthetic -->
+                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800" alt="Luxury French perfume bottle" class="w-full max-w-md mx-auto rounded-3xl shadow-2xl" />
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-champagne/20 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-rose-gold/30 rounded-full blur-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- @COMPONENT: FeaturedProducts -->
+    <section class="py-20 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-slide-up">
+                <p class="font-great-vibes text-2xl text-champagne mb-4">Nos Créations</p>
+                <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-navy mb-6">Collection Signature</h2>
+                <p class="text-lg text-navy/70 max-w-2xl mx-auto">
+                    Chaque parfum raconte une histoire unique, inspirée par la beauté et l'élégance de la France.
+                </p>
+            </div>
+            
+            <!-- Product Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- @MAP: featuredProducts.map(product => ( -->
+                
+                <!-- Product 1 -->
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg">
+                    <!-- Luxury perfume bottle with rose gold accents -->
+                    <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Élégance Royale perfume" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2" data-bind="product.name">Élégance Royale</h3>
+                        <p class="text-navy/60 text-sm mb-3" data-bind="product.description">Notes florales délicates</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne" data-bind="product.price">€185</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors" data-event="click:addToCart" data-product-id="1">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg">
+                    <!-- Classic French perfume bottle with golden details -->
+                    <img src="https://pixabay.com/get/g04d08d922f9f3a43ecc6a590cd39b7c64ed29c8394cc72ca3ca0a429f364068a37f58a18fe77bda4d13fbb9f5a70fc18939bb2c1af7e49387ef348bf59a2148b_1280.jpg" alt="Mystère Parisien perfume" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2" data-bind="product.name">Mystère Parisien</h3>
+                        <p class="text-navy/60 text-sm mb-3" data-bind="product.description">Essence orientale captivante</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne" data-bind="product.price">€225</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors" data-event="click:addToCart" data-product-id="2">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg">
+                    <!-- Minimalist luxury perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Jardin Secret perfume" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2" data-bind="product.name">Jardin Secret</h3>
+                        <p class="text-navy/60 text-sm mb-3" data-bind="product.description">Fraîcheur printanière</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne" data-bind="product.price">€165</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors" data-event="click:addToCart" data-product-id="3">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg">
+                    <!-- Vintage-inspired luxury perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Nuit Étoilée perfume" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2" data-bind="product.name">Nuit Étoilée</h3>
+                        <p class="text-navy/60 text-sm mb-3" data-bind="product.description">Profondeur veloutée</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne" data-bind="product.price">€295</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors" data-event="click:addToCart" data-product-id="4">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- @END_MAP )) -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="elegant-border bg-transparent text-navy px-8 py-4 rounded-full font-semibold hover:bg-navy hover:text-white transition-all duration-300" data-event="click:viewAllProducts">
+                    Voir Toute la Collection
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FeaturedProducts -->
+
+    <!-- @COMPONENT: AboutSection -->
+    <section id="about" class="py-20 relative">
+        <!-- Luxury French atelier background with soft lighting -->
+        <div class="absolute inset-0 parallax" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080'); opacity: 0.1;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Content -->
+                <div class="animate-slide-up">
+                    <p class="font-great-vibes text-3xl text-champagne mb-4">Notre Héritage</p>
+                    <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-navy mb-6">
+                        Trois Générations de Maîtrise
+                    </h2>
+                    <div class="space-y-6 text-navy/80">
+                        <p class="text-lg leading-relaxed">
+                            Depuis 1923, la maison Vel France perpétue l'art ancestral de la parfumerie française. 
+                            Fondée par Marcel Velmont dans les rues pavées de Grasse, notre atelier familial 
+                            continue de créer des fragrances d'exception.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            Chaque création naît de la passion pour les matières premières les plus nobles : 
+                            rose de Bulgarie, jasmin de Grasse, bois de santal des Indes. Nos maîtres parfumeurs 
+                            composent avec l'âme, révélant l'essence de l'élégance française.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            Aujourd'hui, Amélie Velmont, petite-fille du fondateur, guide la maison vers 
+                            l'avenir tout en préservant l'héritage familial. Chaque flacon raconte une 
+                            histoire, chaque parfum capture un moment d'éternité.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center space-x-6">
+                        <div class="text-center">
+                            <div class="font-playfair text-3xl font-bold text-champagne">100+</div>
+                            <div class="text-navy/60 text-sm">Années d'Excellence</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-playfair text-3xl font-bold text-champagne">50+</div>
+                            <div class="text-navy/60 text-sm">Créations Uniques</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-playfair text-3xl font-bold text-champagne">3</div>
+                            <div class="text-navy/60 text-sm">Générations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Images -->
+                <div class="relative">
+                    <!-- French perfume atelier with traditional equipment -->
+                    <img src="https://pixabay.com/get/g97e5d5ca339c568a06e74e1a7ec7add0d48a2cc4c9f7377ad7622f75a13f3e40df06172fa7e1b98401921e75e8d9efd5071b4d6dab7436e6da952d379bc7c66c_1280.jpg" alt="Vel France atelier" class="rounded-2xl shadow-2xl w-full animate-float" />
+                    
+                    <!-- Overlapping smaller image -->
+                    <div class="absolute -bottom-6 -left-6 w-48 h-48 glass-morphism rounded-2xl p-4">
+                        <!-- Vintage perfume bottle collection -->
+                        <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300" alt="Collection vintage" class="w-full h-full object-cover rounded-xl" />
+                    </div>
+                    
+                    <!-- Decorative quote -->
+                    <div class="absolute -top-6 -right-6 glass-morphism rounded-2xl p-6 max-w-xs">
+                        <p class="font-great-vibes text-lg text-champagne text-center">
+                            "L'art de capturer l'âme dans un flacon"
+                        </p>
+                        <p class="text-navy/60 text-sm text-center mt-2">- Marcel Velmont</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: AboutSection -->
+
+    <!-- @COMPONENT: ProductCatalog -->
+    <section id="parfums" class="py-20 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="font-great-vibes text-2xl text-champagne mb-4">Toute la Collection</p>
+                <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-navy mb-6">Nos Parfums</h2>
+            </div>
+            
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="px-6 py-3 rounded-full gold-gradient text-white font-medium" data-filter="all">Tous</button>
+                <button class="px-6 py-3 rounded-full bg-white text-navy font-medium hover:bg-navy hover:text-white transition-all" data-filter="femme">Femme</button>
+                <button class="px-6 py-3 rounded-full bg-white text-navy font-medium hover:bg-navy hover:text-white transition-all" data-filter="homme">Homme</button>
+                <button class="px-6 py-3 rounded-full bg-white text-navy font-medium hover:bg-navy hover:text-white transition-all" data-filter="unisex">Unisexe</button>
+            </div>
+            
+            <!-- Product Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- @MAP: allProducts.map(product => ( -->
+                
+                <!-- Product Cards -->
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="femme">
+                    <!-- Elegant pink perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Rose Éternelle" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Rose Éternelle</h3>
+                        <p class="text-navy/60 text-sm mb-3">Pétales de rose et musc blanc</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(124)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€195</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="homme">
+                    <!-- Masculine dark perfume bottle -->
+                    <img src="https://pixabay.com/get/gfe21979fb3dcf989ec36e4786fd18242fef36a691c0cdbb98a67e732ee3c62823247e027298dfb85b2e30bbbe8ab5fc213411ae5859a38ad372f6ca5ffe797ea_1280.jpg" alt="Noblesse Noire" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Noblesse Noire</h3>
+                        <p class="text-navy/60 text-sm mb-3">Cuir fumé et épices orientales</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(89)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€245</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="femme">
+                    <!-- Crystal clear perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Cristal Divin" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Cristal Divin</h3>
+                        <p class="text-navy/60 text-sm mb-3">Lys blanc et notes poudrées</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(67)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€175</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="unisex">
+                    <!-- Modern minimalist perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Essence Pure" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Essence Pure</h3>
+                        <p class="text-navy/60 text-sm mb-3">Bergamote et cèdre blanc</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(156)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€155</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="homme">
+                    <!-- Vintage-style masculine perfume -->
+                    <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Gentleman Vintage" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Gentleman Vintage</h3>
+                        <p class="text-navy/60 text-sm mb-3">Tabac blond et vanille bourbon</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(98)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€215</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="femme">
+                    <!-- Delicate floral perfume bottle -->
+                    <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Jardin de Provence" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Jardin de Provence</h3>
+                        <p class="text-navy/60 text-sm mb-3">Lavande et notes herbacées</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(203)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€165</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="unisex">
+                    <!-- Modern unisex perfume design -->
+                    <img src="https://pixabay.com/get/g03a554e9b27a0a98b1886e0a7fa779856f5f6f991a9f91e9274c5891a313ba7ae03090137a75788a9ebae28cf3ea2dcac107d3628c5b645418ae71c9614e3ed1_1280.jpg" alt="Lumière Dorée" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Lumière Dorée</h3>
+                        <p class="text-navy/60 text-sm mb-3">Ambre doré et bois de rose</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(87)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€275</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-hover bg-white rounded-2xl p-6 shadow-lg" data-category="femme">
+                    <!-- Luxury limited edition perfume -->
+                    <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Édition Limitée" class="w-full h-64 object-cover rounded-xl mb-4" />
+                    <div class="text-center">
+                        <h3 class="font-playfair text-xl font-semibold text-navy mb-2">Édition Limitée</h3>
+                        <p class="text-navy/60 text-sm mb-3">Oud royal et safran précieux</p>
+                        <div class="flex items-center justify-center mb-3">
+                            <div class="flex text-champagne">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-navy/60 text-sm ml-2">(45)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-lg text-champagne">€395</span>
+                            <button class="bg-navy text-white px-4 py-2 rounded-full text-sm hover:bg-navy/80 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ProductCatalog -->
+
+    <!-- @COMPONENT: ContactSection -->
+    <section id="contact" class="py-20 bg-navy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="font-great-vibes text-2xl text-champagne mb-4">Nous Contacter</p>
+                <h2 class="font-playfair text-4xl lg:text-5xl font-bold text-white mb-6">Visitez Notre Atelier</h2>
+                <p class="text-lg text-white/70 max-w-2xl mx-auto">
+                    Découvrez l'art de la parfumerie dans notre atelier historique à Paris. 
+                    Consultations privées et créations sur mesure disponibles sur rendez-vous.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="glass-morphism rounded-2xl p-8">
+                    <h3 class="font-playfair text-2xl font-semibold text-white mb-6">Envoyez-nous un Message</h3>
+                    <form class="space-y-6" data-implementation="Contact form with validation">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white/80 text-sm font-medium mb-2">Prénom</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-champagne focus:outline-none" placeholder="Votre prénom" />
+                            </div>
+                            <div>
+                                <label class="block text-white/80 text-sm font-medium mb-2">Nom</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-champagne focus:outline-none" placeholder="Votre nom" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm font-medium mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-champagne focus:outline-none" placeholder="votre@email.com" />
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm font-medium mb-2">Sujet</label>
+                            <select class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-champagne focus:outline-none">
+                                <option value="">Choisissez un sujet</option>
+                                <option value="consultation">Consultation privée</option>
+                                <option value="custom">Création sur mesure</option>
+                                <option value="order">Commande spéciale</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm font-medium mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-champagne focus:outline-none resize-none" placeholder="Dites-nous en plus sur votre projet..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full gold-gradient text-white font-semibold py-4 rounded-xl hover:shadow-lg transition-all duration-300" data-event="click:submitContact">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Envoyer le Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info & Map -->
+                <div class="space-y-8">
+                    <!-- Contact Details -->
+                    <div class="glass-morphism rounded-2xl p-8">
+                        <h3 class="font-playfair text-2xl font-semibold text-white mb-6">Notre Atelier</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Adresse</h4>
+                                    <p class="text-white/70">
+                                        15 Rue des Parfumeurs<br>
+                                        75001 Paris, France
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Téléphone</h4>
+                                    <p class="text-white/70">+33 1 42 33 44 55</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Email</h4>
+                                    <p class="text-white/70">contact@velfrance.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Horaires</h4>
+                                    <p class="text-white/70">
+                                        Lun-Sam: 10h-19h<br>
+                                        Dimanche: 14h-18h
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Placeholder -->
+                    <div class="glass-morphism rounded-2xl p-8">
+                        <h3 class="font-playfair text-2xl font-semibold text-white mb-6">Nous Trouver</h3>
+                        <div class="bg-white/10 rounded-xl h-64 flex items-center justify-center">
+                            <div class="text-center text-white/70">
+                                <i class="fas fa-map text-4xl mb-4"></i>
+                                <p>Carte Interactive</p>
+                                <p class="text-sm"><!-- TODO: Embed Paris map location --></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ContactSection -->
+
+    <!-- @COMPONENT: Newsletter -->
+    <section class="py-16 luxury-gradient">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-slide-up">
+                <p class="font-great-vibes text-2xl text-champagne mb-4">Restez Informé</p>
+                <h2 class="font-playfair text-3xl lg:text-4xl font-bold text-navy mb-6">
+                    Recevez Nos Dernières Créations
+                </h2>
+                <p class="text-lg text-navy/70 mb-8 max-w-2xl mx-auto">
+                    Soyez les premiers à découvrir nos nouvelles fragrances et bénéficiez d'offres exclusives.
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" data-implementation="Newsletter signup with validation">
+                    <input type="email" placeholder="Votre adresse email" class="flex-1 px-6 py-4 rounded-full border-2 border-white/50 bg-white/80 text-navy placeholder-navy/60 focus:border-champagne focus:outline-none" />
+                    <button type="submit" class="gold-gradient text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300" data-event="click:subscribeNewsletter">
+                        S'abonner
+                    </button>
+                </form>
+                
+                <p class="text-navy/60 text-sm mt-4">
+                    En vous abonnant, vous acceptez de recevoir nos communications marketing.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Newsletter -->
+
+    <!-- @COMPONENT: Footer -->
+    <footer class="bg-navy text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+                            <i class="fas fa-spray-can text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-playfair text-2xl font-bold">Vel France</h3>
+                            <p class="font-great-vibes text-champagne">Parfumerie de Luxe</p>
+                        </div>
+                    </div>
+                    <p class="text-white/70 mb-6 max-w-md">
+                        Depuis 1923, nous créons des parfums d'exception qui capturent l'essence 
+                        de l'élégance française. Chaque fragrance raconte une histoire unique.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 glass-morphism rounded-full flex items-center justify-center hover:bg-champagne/20 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass-morphism rounded-full flex items-center justify-center hover:bg-champagne/20 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass-morphism rounded-full flex items-center justify-center hover:bg-champagne/20 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass-morphism rounded-full flex items-center justify-center hover:bg-champagne/20 transition-colors">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-playfair text-lg font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-white/70 hover:text-champagne transition-colors">Accueil</a></li>
+                        <li><a href="#parfums" class="text-white/70 hover:text-champagne transition-colors">Nos Parfums</a></li>
+                        <li><a href="#about" class="text-white/70 hover:text-champagne transition-colors">Notre Histoire</a></li>
+                        <li><a href="#contact" class="text-white/70 hover:text-champagne transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">Ateliers</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="font-playfair text-lg font-semibold mb-4">Service Client</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">Mon Compte</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">Suivi Commande</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">Livraison</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">Retours</a></li>
+                        <li><a href="#" class="text-white/70 hover:text-champagne transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-white/60 text-sm">
+                        © 2024 Vel France. Tous droits réservés.
+                    </p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="text-white/60 hover:text-champagne text-sm transition-colors">Conditions d'utilisation</a>
+                        <a href="#" class="text-white/60 hover:text-champagne text-sm transition-colors">Politique de confidentialité</a>
+                        <a href="#" class="text-white/60 hover:text-champagne text-sm transition-colors">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <!-- @COMPONENT: ShoppingCart (Sidebar) -->
+    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50" data-implementation="Shopping cart with add/remove functionality">
+        <div class="p-6 border-b">
+            <div class="flex items-center justify-between">
+                <h3 class="font-playfair text-xl font-semibold">Votre Panier</h3>
+                <button class="text-navy hover:text-champagne" data-event="click:closeCart">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto p-6">
+            <!-- Cart Items -->
+            <div class="space-y-4" data-bind="cart.items">
+                <!-- Cart Item Template -->
+                <div class="flex items-center space-x-4 p-4 bg-cream rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100" alt="Product" class="w-16 h-16 object-cover rounded-lg" />
+                    <div class="flex-1">
+                        <h4 class="font-medium text-navy">Élégance Royale</h4>
+                        <p class="text-navy/60 text-sm">50ml</p>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-semibold text-champagne">€185</span>
+                            <div class="flex items-center space-x-2">
+                                <button class="w-6 h-6 bg-navy text-white rounded-full flex items-center justify-center text-xs">-</button>
+                                <span>1</span>
+                                <button class="w-6 h-6 bg-navy text-white rounded-full flex items-center justify-center text-xs">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-6 border-t">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-playfair text-lg font-semibold">Total</span>
+                <span class="font-playfair text-xl font-bold text-champagne" data-bind="cart.total">€555</span>
+            </div>
+            <button class="w-full gold-gradient text-white py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300" data-event="click:proceedToCheckout">
+                Procéder au Paiement
+            </button>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: ShoppingCart -->
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 opacity-0 invisible transition-all duration-300 z-40" data-event="click:closeCart"></div>
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        
+        (function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Product filtering
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const products = document.querySelectorAll('[data-category]');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('gold-gradient'));
+                    filterButtons.forEach(btn => btn.classList.add('bg-white', 'text-navy'));
+                    this.classList.add('gold-gradient');
+                    this.classList.remove('bg-white', 'text-navy');
+                    
+                    // Filter products
+                    products.forEach(product => {
+                        if (filter === 'all' || product.dataset.category === filter) {
+                            product.style.display = 'block';
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Cart functionality
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            
+            function openCart() {
+                cartSidebar.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'invisible');
+            }
+            
+            function closeCart() {
+                cartSidebar.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'invisible');
+            }
+            
+            // Cart event listeners
+            document.querySelector('[data-event="click:openCart"]').addEventListener('click', openCart);
+            document.querySelector('[data-event="click:closeCart"]').addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // Add to cart buttons
+            document.querySelectorAll('[data-event="click:addToCart"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    // TODO: Add product to cart logic
+                    console.log('Adding product to cart:', this.dataset.productId);
+                    
+                    // Show success feedback
+                    this.innerHTML = '<i class="fas fa-check mr-1"></i>Ajouté';
+                    this.classList.add('bg-green-600');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-plus mr-1"></i>Ajouter';
+                        this.classList.remove('bg-green-600');
+                    }, 2000);
+                });
+            });
+
+            // Parallax effect for hero section
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.parallax');
+                
+                parallaxElements.forEach(element => {
+                    const speed = 0.5;
+                    element.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.animate-slide-up, .animate-fade-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                el.style.transition = 'all 0.8s ease-out';
+                observer.observe(el);
+            });
+
+            // Form validation placeholder
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // TODO: Implement form validation and submission
+                    console.log('Form submitted:', this);
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html>
